@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bytes"
+	"fmt"
 	"os"
-	"strconv"
 
 	"gopkg.in/urfave/cli.v1"
 )
@@ -12,42 +11,46 @@ const (
 	environmentDev  = "dev"
 	environmentProd = "prod"
 
-	envVarsEnvironment    = "GAUNTLET_ENV"
-	envVarsPort           = "GAUNTLET_PORT, PORT"
-	envVarsDbAddress      = "GAUNTLET_DB_ADDR, GAUNTLET_DB_PORT_5432_TCP_ADDR"
-	envVarsMigrationsPath = "GAUNTLET_MIGRATIONS_PATH"
+	envVarsEnvironment = "GAUNTLET_ENV"
+	envVarsPort        = "PORT, GAUNTLET_PORT"
+	envVarsDbAddress   = "GAUNTLET_DB_ADDR"
+	envVarsDbUser      = "GAUNTLET_DB_USER"
+	envVarsDbPass      = "GAUNTLET_DB_PASS"
+	envVarsDbName      = "GAUNTLET_DB_NAME"
+	envVarsImagesPath  = "GAUNTLET_IMG_PATH"
 )
 
 // Config contains vital environment metadata used through out the backend.
 type Config struct {
-	IsDev          bool
-	Port           int
-	DbAddress      string
-	MigrationsPath string
+	IsDev      bool
+	Port       int
+	DbAddress  string
+	DbUser     string
+	DbPass     string
+	DbName     string
+	ImagesPath string
 }
 
 func (c *Config) String() string {
-	var buffer bytes.Buffer
-
-	buffer.WriteString("Is dev:             ")
-	buffer.WriteString(strconv.FormatBool(c.IsDev))
-	buffer.WriteString("\nPort:               ")
-	buffer.WriteString(strconv.Itoa(c.Port))
-	buffer.WriteString("\nDatabase address:   ")
-	buffer.WriteString(c.DbAddress)
-	buffer.WriteString("\nMigrations path:    ")
-	buffer.WriteString(c.MigrationsPath)
-
-	return buffer.String()
+	return fmt.Sprintf(`Is dev:            %v
+Port:              %d
+Database address:  %s
+Database name:     %s
+Database user:     %s
+Database password: %s
+Images Path:       %s`, c.IsDev, c.Port, c.DbAddress, c.DbName, c.DbUser, c.DbPass, c.ImagesPath)
 }
 
 // GetConfig gets the configuration for the current execution environment.
-func GetConfig() *Config {
+func getConfig() *Config {
 	var (
-		environment    string
-		port           int
-		dbAddress      string
-		migrationsPath string
+		environment string
+		port        int
+		dbAddress   string
+		dbUser      string
+		dbPass      string
+		dbName      string
+		imagesPath  string
 
 		app            = cli.NewApp()
 		actionExecuted = false
@@ -59,32 +62,48 @@ func GetConfig() *Config {
 	// Map config variables 1:1 with flags.
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:        "environment, e",
+			Name:        "environment",
 			Value:       environmentDev,
 			Usage:       "execution context of this binary",
 			EnvVar:      envVarsEnvironment,
 			Destination: &environment,
 		},
 		cli.IntFlag{
-			Name:        "port, p",
+			Name:        "port",
 			Value:       3000,
 			Usage:       "http port to exposed by this binary",
 			EnvVar:      envVarsPort,
 			Destination: &port,
 		},
 		cli.StringFlag{
-			Name:        "db-address, d",
-			Value:       "127.0.0.1",
+			Name:        "db-address",
 			Usage:       "address of the database",
 			EnvVar:      envVarsDbAddress,
 			Destination: &dbAddress,
 		},
 		cli.StringFlag{
-			Name:        "migrations-path, m",
-			Value:       "/gauntlet/migrations",
-			Usage:       "path to the db migration files",
-			EnvVar:      envVarsMigrationsPath,
-			Destination: &migrationsPath,
+			Name:        "db-user",
+			Usage:       "user of the database",
+			EnvVar:      envVarsDbUser,
+			Destination: &dbUser,
+		},
+		cli.StringFlag{
+			Name:        "db-pass",
+			Usage:       "password of the database",
+			EnvVar:      envVarsDbPass,
+			Destination: &dbPass,
+		},
+		cli.StringFlag{
+			Name:        "db-name",
+			Usage:       "address of the database",
+			EnvVar:      envVarsDbName,
+			Destination: &dbName,
+		},
+		cli.StringFlag{
+			Name:        "img-path",
+			Usage:       "path to images",
+			EnvVar:      envVarsImagesPath,
+			Destination: &imagesPath,
 		},
 	}
 
@@ -99,8 +118,14 @@ func GetConfig() *Config {
 		if len(dbAddress) < 1 {
 			return cli.NewExitError("invalid db address", 3)
 		}
-		if len(migrationsPath) < 1 {
-			return cli.NewExitError("invalid migrations path", 4)
+		if len(dbUser) < 1 {
+			return cli.NewExitError("invalid db user", 4)
+		}
+		if len(dbName) < 1 {
+			return cli.NewExitError("invalid db name", 5)
+		}
+		if len(imagesPath) < 1 {
+			return cli.NewExitError("invalid images path", 6)
 		}
 
 		actionExecuted = true
@@ -116,9 +141,12 @@ func GetConfig() *Config {
 	}
 
 	return &Config{
-		IsDev:          environment == environmentDev,
-		Port:           port,
-		DbAddress:      dbAddress,
-		MigrationsPath: migrationsPath,
+		IsDev:      environment == environmentDev,
+		Port:       port,
+		DbAddress:  dbAddress,
+		DbUser:     dbUser,
+		DbPass:     dbPass,
+		DbName:     dbName,
+		ImagesPath: imagesPath,
 	}
 }
