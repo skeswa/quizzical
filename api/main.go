@@ -48,6 +48,12 @@ func main() {
 	r.HandleFunc("/api/quizzes/{id:[0-9]+}", getQuizHandler(db)).Methods("GET")
 	r.HandleFunc("/api/quizzes/{id:[0-9]+}", deleteQuizHandler(db)).Methods("DELETE")
 
+	// Takes.
+	r.HandleFunc("/api/takes", getTakesHandler(db)).Methods("GET")
+	r.HandleFunc("/api/takes", createTakeHandler(db)).Methods("POST")
+	r.HandleFunc("/api/takes/{id:[0-9]+}", getTakeHandler(db)).Methods("GET")
+	r.HandleFunc("/api/takes/{id:[0-9]+}", deleteTakeHandler(db)).Methods("DELETE")
+
 	// Start serving.
 	log.Printf("Servicing HTTP requests on port %d.\n", config.Port)
 	http.ListenAndServe(fmt.Sprintf(":%d", config.Port), r)
