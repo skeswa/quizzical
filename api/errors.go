@@ -13,3 +13,7 @@ func errorInvalidJSONPayloadField(field string) string {
 func errorInvalidRouteVar(routeVar string) string {
 	return fmt.Sprintf(`Invalid value found for route variable "%s".`, routeVar)
 }
+
+func errorNoSuchEntity(id int) string {
+	return fmt.Sprintf(`No such entity with id "%d".`, id)
+}

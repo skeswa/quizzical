@@ -42,6 +42,12 @@ func main() {
 	r.HandleFunc("/api/questions", createQuestionHandler(db, config)).Methods("POST")
 	r.HandleFunc("/api/questions/{id:[0-9]+}", deleteQuestionHandler(db)).Methods("DELETE")
 
+	// Quizzes.
+	r.HandleFunc("/api/quizzes", getQuizzesHandler(db)).Methods("GET")
+	r.HandleFunc("/api/quizzes", createQuizHandler(db)).Methods("POST")
+	r.HandleFunc("/api/quizzes/{id:[0-9]+}", getQuizHandler(db)).Methods("GET")
+	r.HandleFunc("/api/quizzes/{id:[0-9]+}", deleteQuizHandler(db)).Methods("DELETE")
+
 	// Start serving.
 	log.Printf("Servicing HTTP requests on port %d.\n", config.Port)
 	http.ListenAndServe(fmt.Sprintf(":%d", config.Port), r)

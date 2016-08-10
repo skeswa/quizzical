@@ -77,7 +77,7 @@ func deleteCategoryHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) 
 		}
 
 		// Respond with success.
-		respondWithSuccess(w, []byte{})
+		respondWithSuccess(w, nil)
 		return
 	}
 }
