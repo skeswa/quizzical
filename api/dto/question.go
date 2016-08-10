@@ -12,7 +12,7 @@ type Question struct {
 	Category       *Category   `json:"category,omitempty"`
 	CategoryID     *int        `json:"categoryId,omitempty"`
 	Difficulty     *Difficulty `json:"difficulty,omitempty"`
-	DateCreated    time.Time   `json:"dateCreated"`
+	DateCreated    *time.Time  `json:"dateCreated,omitempty"`
 	DifficultyID   *int        `json:"difficultyId,omitempty"`
 	MultipleChoice bool        `json:"multipleChoice"`
 }

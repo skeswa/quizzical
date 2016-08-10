@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	fflib "github.com/pquerna/ffjson/fflib/v1"
+	"time"
 )
 
 func (mj *Question) MarshalJSON() ([]byte, error) {
@@ -83,18 +84,22 @@ func (mj *Question) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 			buf.WriteByte(',')
 		}
 	}
-	buf.WriteString(`"dateCreated":`)
+	if mj.DateCreated != nil {
+		if true {
+			buf.WriteString(`"dateCreated":`)
 
-	{
+			{
 
-		obj, err = mj.DateCreated.MarshalJSON()
-		if err != nil {
-			return err
+				obj, err = mj.DateCreated.MarshalJSON()
+				if err != nil {
+					return err
+				}
+				buf.Write(obj)
+
+			}
+			buf.WriteByte(',')
 		}
-		buf.Write(obj)
-
 	}
-	buf.WriteByte(',')
 	if mj.DifficultyID != nil {
 		if true {
 			buf.WriteString(`"difficultyId":`)
@@ -567,6 +572,8 @@ handle_DateCreated:
 	{
 		if tok == fflib.FFTok_null {
 
+			uj.DateCreated = nil
+
 			state = fflib.FFParse_after_value
 			goto mainparse
 		}
@@ -574,6 +581,10 @@ handle_DateCreated:
 		tbuf, err := fs.CaptureField(tok)
 		if err != nil {
 			return fs.WrapErr(err)
+		}
+
+		if uj.DateCreated == nil {
+			uj.DateCreated = new(time.Time)
 		}
 
 		err = uj.DateCreated.UnmarshalJSON(tbuf)

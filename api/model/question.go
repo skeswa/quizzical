@@ -51,7 +51,7 @@ func (q *Question) ToDTO() *dto.Question {
 		Picture:        q.Picture,
 		Category:       category,
 		Difficulty:     difficulty,
-		DateCreated:    q.DateCreated,
+		DateCreated:    &q.DateCreated,
 		MultipleChoice: q.MultipleChoice,
 	}
 }
@@ -103,6 +103,7 @@ func InsertQuestion(
 			multipleChoice,
 		).
 		Suffix(returningIDClause).
+		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
 		QueryRow().
 		Scan(&id)
@@ -119,6 +120,7 @@ func DeleteQuestion(db *sql.DB, id int) error {
 	// TODO(skeswa): remove replace all linked records with null.
 	_, err := sq.Delete(tableQuestion).
 		Where(sq.Eq{columnQuestionID: id}).
+		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
 		Exec()
 
@@ -138,7 +140,7 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 		questions = []*Question{}
 	)
 
-	rows, err = sq.Select(tableQuestion).
+	rows, err = sq.Select().
 		Columns(
 			column(tableQuestion, columnQuestionID),
 			column(tableQuestion, columnQuestionAnswer),
@@ -151,6 +153,7 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 			column(tableDifficulty, columnDifficultyName),
 			column(tableDifficulty, columnDifficultyColor),
 		).
+		From(tableQuestion).
 		Join(on(
 			tableCategory,
 			column(tableCategory, columnCategoryID),
