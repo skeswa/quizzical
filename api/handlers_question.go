@@ -18,6 +18,7 @@ import (
 const (
 	// maxPictureFileSize is the maximum picture size (2 MB).
 	maxPictureFileSize              = 2 * 1024 * 1024
+	routeVarQuestionID              = "id"
 	questionFormFieldAnswer         = "answer"
 	questionFormFieldPicture        = "picture"
 	questionFormFieldCategoryID     = "categoryId"
@@ -54,7 +55,7 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 
 		// Read the input picture file from the form.
 		r.ParseMultipartForm(maxPictureFileSize)
-		inputPictureFile, _, err := r.FormFile(questionFormFieldPicture)
+		inputPictureFile, inputPictureFileHeader, err := r.FormFile(questionFormFieldPicture)
 		if err != nil {
 			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldPicture))
 			return
@@ -64,7 +65,8 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 		defer inputPictureFile.Close()
 
 		// Create the output picture file.
-		outputPictureFileName := uuid.NewV4().String()
+		inputPictureFileExt := filepath.Ext(inputPictureFileHeader.Filename)
+		outputPictureFileName := uuid.NewV4().String() + inputPictureFileExt
 		outputPictureFile, err := os.Create(filepath.Join(c.ImagesPath, outputPictureFileName))
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, err.Error())
@@ -111,10 +113,10 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 func deleteQuestionHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the question id.
-		idStr := mux.Vars(r)["id"]
+		idStr := mux.Vars(r)[routeVarQuestionID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidIDParam)
+			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarQuestionID))
 			return
 		}
 

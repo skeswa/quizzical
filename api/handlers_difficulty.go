@@ -12,6 +12,10 @@ import (
 	"github.com/skeswa/gauntlet/api/model"
 )
 
+const (
+	routeVarDifficultyID = "id"
+)
+
 func createDifficultyHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read body.
@@ -61,10 +65,10 @@ func createDifficultyHandler(db *sql.DB) func(http.ResponseWriter, *http.Request
 func deleteDifficultyHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the difficulty id.
-		idStr := mux.Vars(r)["id"]
+		idStr := mux.Vars(r)[routeVarDifficultyID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidIDParam)
+			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarDifficultyID))
 			return
 		}
 

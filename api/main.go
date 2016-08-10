@@ -24,6 +24,9 @@ func main() {
 	// Register all of the routes.
 	r := mux.NewRouter()
 
+	// Pictures.
+	r.HandleFunc("/api/pictures/{name}", getPictureHandler(config)).Methods("GET")
+
 	// Categories.
 	r.HandleFunc("/api/categories", getCategoriesHandler(db)).Methods("GET")
 	r.HandleFunc("/api/categories", createCategoryHandler(db)).Methods("POST")

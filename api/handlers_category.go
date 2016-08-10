@@ -12,6 +12,10 @@ import (
 	"github.com/skeswa/gauntlet/api/model"
 )
 
+const (
+	routeVarCategoryID = "id"
+)
+
 func createCategoryHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read body.
@@ -58,10 +62,10 @@ func createCategoryHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) 
 func deleteCategoryHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the category id.
-		idStr := mux.Vars(r)["id"]
+		idStr := mux.Vars(r)[routeVarCategoryID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidIDParam)
+			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarCategoryID))
 			return
 		}
 
