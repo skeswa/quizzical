@@ -130,7 +130,7 @@ func getQuizHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 			return
 		} else if quiz == nil {
 			// If the quiz is nil, then there is none.
-			respondWithError(w, http.StatusBadRequest, errorNoSuchEntity(id))
+			respondWithError(w, http.StatusBadRequest, errorNoSuchRecord(id))
 			return
 		}
 

@@ -30,16 +30,19 @@ func main() {
 	// Categories.
 	r.HandleFunc("/api/categories", getCategoriesHandler(db)).Methods("GET")
 	r.HandleFunc("/api/categories", createCategoryHandler(db)).Methods("POST")
+	r.HandleFunc("/api/categories/{id:[0-9]+}", getCategoryHandler(db)).Methods("GET")
 	r.HandleFunc("/api/categories/{id:[0-9]+}", deleteCategoryHandler(db)).Methods("DELETE")
 
 	// Difficulties.
 	r.HandleFunc("/api/difficulties", getDifficultiesHandler(db)).Methods("GET")
 	r.HandleFunc("/api/difficulties", createDifficultyHandler(db)).Methods("POST")
+	r.HandleFunc("/api/difficulties/{id:[0-9]+}", getDifficultyHandler(db)).Methods("GET")
 	r.HandleFunc("/api/difficulties/{id:[0-9]+}", deleteDifficultyHandler(db)).Methods("DELETE")
 
 	// Questions.
 	r.HandleFunc("/api/questions", getQuestionsHandler(db)).Methods("GET")
 	r.HandleFunc("/api/questions", createQuestionHandler(db, config)).Methods("POST")
+	r.HandleFunc("/api/questions/{id:[0-9]+}", getQuestionHandler(db)).Methods("GET")
 	r.HandleFunc("/api/questions/{id:[0-9]+}", deleteQuestionHandler(db)).Methods("DELETE")
 
 	// Quizzes.

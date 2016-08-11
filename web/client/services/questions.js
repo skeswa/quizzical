@@ -1,5 +1,11 @@
 export const endpoint = '/api/questions';
 
+export function get(id) {
+  return fetch(endpoint + '/' + id, { method: 'GET' })
+    .then(response => response.ok ?
+      response.json() : Promise.reject(response.json()));
+}
+
 export function getAll() {
   return fetch(endpoint, { method: 'GET' })
     .then(response => response.ok ?
@@ -15,5 +21,5 @@ export function create(payload) {
 export function delete(id) {
   return fetch(endpoint + '/' + id, { method: 'POST' })
     .then(response => response.ok ?
-      response.json() : Promise.reject(response.json()));
+      Promise.resolve({ id }) : Promise.reject(response.json()));
 }

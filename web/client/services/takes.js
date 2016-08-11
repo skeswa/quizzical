@@ -21,5 +21,5 @@ export function create(payload) {
 export function delete(id) {
   return fetch(endpoint + '/' + id, { method: 'POST' })
     .then(response => response.ok ?
-      response.json() : Promise.reject(response.json()));
+      Promise.resolve({ id }) : Promise.reject(response.json()));
 }

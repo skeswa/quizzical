@@ -106,3 +106,37 @@ func getDifficultiesHandler(db *sql.DB) func(http.ResponseWriter, *http.Request)
 		return
 	}
 }
+
+func getDifficultyHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Read the quiz id.
+		idStr := mux.Vars(r)[routeVarDifficultyID]
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarDifficultyID))
+			return
+		}
+
+		// Interface with the database.
+		difficulty, err := model.SelectDifficulty(db, id)
+		if err != nil {
+			respondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		} else if difficulty == nil {
+			// If the quiz is nil, then there is none.
+			respondWithError(w, http.StatusBadRequest, errorNoSuchRecord(id))
+			return
+		}
+
+		// Marshal a response.
+		response, err := ffjson.Marshal(difficulty.ToDTO())
+		if err != nil {
+			respondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		// Respond with success.
+		respondWithSuccess(w, response)
+		return
+	}
+}

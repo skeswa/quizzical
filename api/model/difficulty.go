@@ -84,6 +84,37 @@ func DeleteDifficulty(db *sql.DB, id int) error {
 	return nil
 }
 
+// SelectDifficulty get a difficulty from the db.
+func SelectDifficulty(db *sql.DB, id int) (*Difficulty, error) {
+	var (
+		err  error
+		rows *sql.Rows
+
+		difficulty = Difficulty{}
+	)
+
+	if rows, err = sq.Select(columnDifficultyID, columnDifficultyName, columnDifficultyColor).
+		From(tableDifficulty).
+		Where(sq.Eq{columnDifficultyID: id}).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(&difficulty.ID, &difficulty.Name, &difficulty.Color); err != nil {
+			return nil, err
+		}
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		return nil, nil
+	}
+
+	return &difficulty, nil
+}
+
 // SelectDifficulties gets all difficulties from the db.
 func SelectDifficulties(db *sql.DB) (Difficulties, error) {
 	var (

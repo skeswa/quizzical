@@ -14,6 +14,6 @@ func errorInvalidRouteVar(routeVar string) string {
 	return fmt.Sprintf(`Invalid value found for route variable "%s".`, routeVar)
 }
 
-func errorNoSuchEntity(id int) string {
-	return fmt.Sprintf(`No such entity with id "%d".`, id)
+func errorNoSuchRecord(id int) string {
+	return fmt.Sprintf(`Could not find record with id "%d".`, id)
 }

@@ -21,7 +21,7 @@ const (
 	routeVarQuestionID              = "id"
 	questionFormFieldAnswer         = "answer"
 	questionFormFieldPicture        = "picture"
-	questionFormFieldCategoryID     = "categoryId"
+	questionFormFieldQuestionID     = "questionId"
 	questionFormFieldDifficultyID   = "difficultyId"
 	questionFormFieldMultipleChoice = "multipleChoice"
 )
@@ -34,10 +34,10 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldAnswer))
 			return
 		}
-		categoryIDStr := r.FormValue(questionFormFieldCategoryID)
-		categoryID, err := strconv.Atoi(categoryIDStr)
+		questionIDStr := r.FormValue(questionFormFieldQuestionID)
+		questionID, err := strconv.Atoi(questionIDStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldCategoryID))
+			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldQuestionID))
 			return
 		}
 		difficultyIDStr := r.FormValue(questionFormFieldDifficultyID)
@@ -88,7 +88,7 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 			db,
 			answer,
 			outputPictureFileName,
-			categoryID,
+			questionID,
 			difficultyID,
 			multipleChoice,
 		)
@@ -144,6 +144,40 @@ func getQuestionsHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 
 		// Marshal a response.
 		response, err := ffjson.Marshal(questions.ToDTO())
+		if err != nil {
+			respondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		// Respond with success.
+		respondWithSuccess(w, response)
+		return
+	}
+}
+
+func getQuestionHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Read the quiz id.
+		idStr := mux.Vars(r)[routeVarQuestionID]
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarQuestionID))
+			return
+		}
+
+		// Interface with the database.
+		question, err := model.SelectQuestion(db, id)
+		if err != nil {
+			respondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		} else if question == nil {
+			// If the quiz is nil, then there is none.
+			respondWithError(w, http.StatusBadRequest, errorNoSuchRecord(id))
+			return
+		}
+
+		// Marshal a response.
+		response, err := ffjson.Marshal(question.ToDTO())
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return

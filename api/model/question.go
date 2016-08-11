@@ -131,6 +131,75 @@ func DeleteQuestion(db *sql.DB, id int) error {
 	return nil
 }
 
+// SelectQuestion get a difficulty from the db.
+func SelectQuestion(db *sql.DB, id int) (*Question, error) {
+	var (
+		err  error
+		rows *sql.Rows
+
+		category   = Category{}
+		difficulty = Difficulty{}
+		question   = Question{
+			Category:   &category,
+			Difficulty: &difficulty,
+		}
+	)
+
+	if rows, err = sq.Select().
+		Columns(
+			column(tableQuestion, columnQuestionID),
+			column(tableQuestion, columnQuestionAnswer),
+			column(tableQuestion, columnQuestionPicture),
+			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionMultipleChoice),
+			column(tableCategory, columnCategoryID),
+			column(tableCategory, columnCategoryName),
+			column(tableDifficulty, columnDifficultyID),
+			column(tableDifficulty, columnDifficultyName),
+			column(tableDifficulty, columnDifficultyColor),
+		).
+		From(tableQuestion).
+		Where(sq.Eq{column(tableQuestion, columnQuestionID): id}).
+		Join(on(
+			tableCategory,
+			column(tableCategory, columnCategoryID),
+			column(tableQuestion, columnQuestionCategoryID),
+		)).
+		Join(on(
+			tableDifficulty,
+			column(tableDifficulty, columnDifficultyID),
+			column(tableQuestion, columnQuestionDifficultyID),
+		)).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(
+			&question.ID,
+			&question.Answer,
+			&question.Picture,
+			&question.DateCreated,
+			&question.MultipleChoice,
+			&category.ID,
+			&category.Name,
+			&difficulty.ID,
+			&difficulty.Name,
+			&difficulty.Color,
+		); err != nil {
+			return nil, err
+		}
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		return nil, nil
+	}
+
+	return &question, nil
+}
+
 // SelectQuestions gets all questions from the db.
 func SelectQuestions(db *sql.DB) (Questions, error) {
 	var (

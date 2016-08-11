@@ -81,6 +81,37 @@ func DeleteCategory(db *sql.DB, id int) error {
 	return nil
 }
 
+// SelectCategory get a category from the db.
+func SelectCategory(db *sql.DB, id int) (*Category, error) {
+	var (
+		err  error
+		rows *sql.Rows
+
+		category = Category{}
+	)
+
+	if rows, err = sq.Select(columnCategoryID, columnCategoryName).
+		From(tableCategory).
+		Where(sq.Eq{columnCategoryID: id}).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(&category.ID, &category.Name); err != nil {
+			return nil, err
+		}
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		return nil, nil
+	}
+
+	return &category, nil
+}
+
 // SelectCategories gets all categories from the db.
 func SelectCategories(db *sql.DB) (Categories, error) {
 	var (

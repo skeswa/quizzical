@@ -51,6 +51,7 @@ module.exports = {
     ],
   },
   resolve: {
+    root: path.join(__dirname, './client'),
     extensions: ['', '.js', '.jsx']
   },
   postcss: [
