@@ -1,0 +1,24 @@
+.main {
+  box-shadow: 0 0 .1rem rgba(0,0,0,.15);
+  background: #fff;
+  padding: 1.8rem 2rem;
+}
+
+.middle {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  color: #222;
+  font-size: 2rem;
+}
+
+.account {
+  color: #7f7f7f;
+}
+
+.accountIcon {
+  font-size: 3rem;
+}

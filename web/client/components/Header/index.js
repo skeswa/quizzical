@@ -1,25 +1,20 @@
 
+import classNames from 'classnames'
+
 import React, { Component } from 'react'
-import TodoTextInput from '../TodoTextInput'
+import style from './style.css'
 
-class Header extends Component {
-  handleSave(text) {
-    if (text.length) {
-      this.props.addTodo(text)
-    }
-  }
-
+export default class Header extends Component {
   render() {
     return (
-      <header>
-        <h1>Todos</h1>
-        <TodoTextInput
-          newTodo
-          onSave={::this.handleSave}
-          placeholder="What needs to be done?" />
+      <header className={style.main}>
+        <div className={style.middle}>
+          <div className={style.logo}>Gauntlet</div>
+          <div className={style.account}>
+            <i className={classNames(style.accountIcon, 'material-icons')}>account_circle</i>
+          </div>
+        </div>
       </header>
     )
   }
 }
-
-export default Header
