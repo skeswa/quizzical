@@ -1,4 +1,4 @@
-package main
+package common
 
 import (
 	"fmt"
@@ -42,7 +42,7 @@ Images Path:       %s`, c.IsDev, c.Port, c.DbAddress, c.DbName, c.DbUser, c.DbPa
 }
 
 // GetConfig gets the configuration for the current execution environment.
-func getConfig() *Config {
+func GetConfig() *Config {
 	var (
 		environment string
 		port        int

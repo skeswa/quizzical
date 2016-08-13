@@ -6,12 +6,13 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/skeswa/gauntlet/api/common"
 )
 
 func main() {
 	// Get the environment configuration or die trying.
-	config := getConfig()
-	db, err := startDBConnection(config)
+	config := common.GetConfig()
+	db, err := common.StartDBConnection(config)
 	if err != nil {
 		log.Fatalln("Failed to connect to the database:", err)
 	} else {

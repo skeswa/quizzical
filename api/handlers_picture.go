@@ -5,13 +5,14 @@ import (
 	"path/filepath"
 
 	"github.com/gorilla/mux"
+	"github.com/skeswa/gauntlet/api/common"
 )
 
 const (
 	routeVarPictureName = "name"
 )
 
-func getPictureHandler(c *Config) func(http.ResponseWriter, *http.Request) {
+func getPictureHandler(c *common.Config) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the category id.
 		name := mux.Vars(r)[routeVarPictureName]

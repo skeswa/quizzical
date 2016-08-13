@@ -405,7 +405,7 @@ handle_Questions:
 			uj.Questions = nil
 		} else {
 
-			uj.Questions = make([]*Question, 0)
+			uj.Questions = []*Question{}
 
 			wantVal := true
 
@@ -455,6 +455,7 @@ handle_Questions:
 				}
 
 				uj.Questions = append(uj.Questions, tmp_uj__Questions)
+
 				wantVal = false
 			}
 		}
@@ -479,7 +480,7 @@ handle_QuestionIDs:
 			uj.QuestionIDs = nil
 		} else {
 
-			uj.QuestionIDs = make([]int, 0)
+			uj.QuestionIDs = []int{}
 
 			wantVal := true
 
@@ -532,6 +533,7 @@ handle_QuestionIDs:
 				}
 
 				uj.QuestionIDs = append(uj.QuestionIDs, tmp_uj__QuestionIDs)
+
 				wantVal = false
 			}
 		}

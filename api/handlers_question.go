@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pquerna/ffjson/ffjson"
 	"github.com/satori/go.uuid"
+	"github.com/skeswa/gauntlet/api/common"
 	"github.com/skeswa/gauntlet/api/dto"
 	"github.com/skeswa/gauntlet/api/model"
 )
@@ -26,7 +27,7 @@ const (
 	questionFormFieldMultipleChoice = "multipleChoice"
 )
 
-func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *http.Request) {
+func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the basic fields first.
 		answer := r.FormValue(questionFormFieldAnswer)
@@ -98,7 +99,7 @@ func createQuestionHandler(db *sql.DB, c *Config) func(http.ResponseWriter, *htt
 		}
 
 		// Marshal a response.
-		response, err := ffjson.MarshalFast(&dto.CreationRecord{NewRecordID: id})
+		response, err := ffjson.MarshalFast(&dto.CreationRecord{CreatedRecordID: id})
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return
