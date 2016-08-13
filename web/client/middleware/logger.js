@@ -1,5 +1,14 @@
 
+import debug from 'debug'
+
+const logger = debug('gauntlet:redux')
+
 export default store => next => action  => {
-  console.log(action)
+  if (action.error) {
+    logger(action.type, 'error:', action.error, '\npayload:', action.payload, )
+  } else {
+    logger(action.type, '\npayload:', action.payload)
+  }
+
   return next(action)
 }

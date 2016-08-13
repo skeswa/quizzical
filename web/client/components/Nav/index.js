@@ -1,7 +1,7 @@
 
+import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import React, { Component } from 'react'
 import style from './style.css'
 
 const NavItem = (props, context) => {

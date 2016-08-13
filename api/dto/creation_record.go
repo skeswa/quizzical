@@ -4,5 +4,5 @@ package dto
 
 // CreationRecord is the DTO used for creation records.
 type CreationRecord struct {
-	NewRecordID int `json:"newRecordId"`
+	CreatedRecordID int `json:"createdRecordId"`
 }
