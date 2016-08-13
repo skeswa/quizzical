@@ -50,7 +50,7 @@ func createDifficultyHandler(db *sql.DB) func(http.ResponseWriter, *http.Request
 		}
 
 		// Marshal a response.
-		response, err := ffjson.MarshalFast(&dto.CreationRecord{NewRecordID: id})
+		response, err := ffjson.MarshalFast(&dto.CreationRecord{CreatedRecordID: id})
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return

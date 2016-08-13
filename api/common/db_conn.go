@@ -1,13 +1,14 @@
-package main
+package common
 
 import (
 	"bytes"
 	"database/sql"
 
+	// Enable usage of postgres connector.
 	_ "github.com/lib/pq"
 )
 
-func startDBConnection(config *Config) (*sql.DB, error) {
+func StartDBConnection(config *Config) (*sql.DB, error) {
 	connStrBuffer := bytes.Buffer{}
 	connStrBuffer.WriteString("host=")
 	connStrBuffer.WriteString(config.DbAddress)

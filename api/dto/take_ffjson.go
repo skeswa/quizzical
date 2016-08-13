@@ -417,7 +417,7 @@ handle_Answers:
 			uj.Answers = nil
 		} else {
 
-			uj.Answers = make([]TakeAnswer, 0)
+			uj.Answers = []TakeAnswer{}
 
 			wantVal := true
 
@@ -461,6 +461,7 @@ handle_Answers:
 				}
 
 				uj.Answers = append(uj.Answers, tmp_uj__Answers)
+
 				wantVal = false
 			}
 		}
