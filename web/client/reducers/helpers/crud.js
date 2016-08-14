@@ -21,6 +21,7 @@ export function createCrudReducer(entity, actionHandlerExtensions, initialStateE
     [`load ${pluralize(entity)}`]: handleLoadAllAction,
     [`create ${entity}`]: handleCreateAction,
     [`delete ${entity}`]: handleDeleteAction,
+    [`bump pending ${entity} requests`]: handleBumpPendingRequestsAction,
   }, actionHandlerExtensions)
 
   return handleActions(actionHandlers, initialState)
@@ -93,6 +94,16 @@ function handleDeleteAction(state, action) {
   })
 }
 
+function handleBumpPendingRequestsAction(state, action) {
+  return Object.assign({}, state, {
+    pendingRequests: incrementedPendingRequests(state),
+  })
+}
+
 function decrementedPendingRequests(state) {
   return state.pendingRequests > 0 ? (state.pendingRequests - 1) : 0
+}
+
+function incrementedPendingRequests(state) {
+  return state.pendingRequests < 0 ? 1 : (state.pendingRequests + 1)
 }

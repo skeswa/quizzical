@@ -1,7 +1,7 @@
 
 import { createStore, applyMiddleware } from 'redux'
 
-import { logger, promise } from '../middleware'
+import { logger, promise, preAction } from '../middleware'
 import rootReducer from '../reducers'
 
 export default function configure(initialState) {
@@ -11,6 +11,7 @@ export default function configure(initialState) {
 
   const createStoreWithMiddleware = applyMiddleware(
     logger,
+    preAction,
     promise,
   )(create)
 

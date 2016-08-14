@@ -21,23 +21,23 @@ class QuestionList extends Component {
     const props = this.props
 
     // Attempt to load questions.
-    if (!props.questions.loaded && props.questions.pendingRequests < 1) {
+    if (props.questionsShouldBeLoaded) {
       props.actions.loadQuestions()
     }
     // Attempt to load categories.
-    if (!props.questions.loaded && props.questions.pendingRequests < 1) {
+    if (props.categoriesShouldBeLoaded) {
       props.actions.loadCategories()
     }
     // Attempt to load questions.
-    if (!props.questions.loaded && props.questions.pendingRequests < 1) {
+    if (props.difficultiesShouldBeLoaded) {
       props.actions.loadDifficulties()
     }
   }
 
   render() {
-    console.log('questions', this.props.questions)
+    console.log('props', this.props)
 
-    const listItems = this.props.questions.list
+    const listItems = this.props.questions
       .map(question => (
         <QuestionListItem
           key={question.id}
@@ -89,9 +89,17 @@ const QuestionListItem = (props, context) => {
 
 const reduxify = connect(
   (state, props) => ({
-    questions: state.question,
-    categories: state.category,
-    difficulties: state.difficulty,
+    questions: state.question.list,
+    categories: state.category.list,
+    difficulties: state.difficulty.list,
+
+    questionsLoading: state.question.pendingRequests > 0,
+    categoriesLoading: state.category.pendingRequests > 0,
+    difficultiesLoading: state.difficulty.pendingRequests > 0,
+
+    questionsShouldBeLoaded: !state.question.loaded && state.question.pendingRequests < 1,
+    categoriesShouldBeLoaded: !state.category.loaded && state.category.pendingRequests < 1,
+    difficultiesShouldBeLoaded: !state.difficulty.loaded && state.difficulty.pendingRequests < 1,
   }),
   (dispatch, props) => ({
     actions: Object.assign(
