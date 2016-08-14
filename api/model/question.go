@@ -9,50 +9,70 @@ import (
 )
 
 const (
-	tableQuestion                = "gauntlet.question"
-	columnQuestionID             = "id"
-	columnQuestionAnswer         = "answer"
-	columnQuestionPicture        = "picture"
-	columnQuestionCategoryID     = "category_id"
-	columnQuestionDateCreated    = "date_created"
-	columnQuestionDifficultyID   = "difficulty_id"
-	columnQuestionMultipleChoice = "multiple_choice"
+	tableQuestion                    = "gauntlet.question"
+	columnQuestionID                 = "id"
+	columnQuestionAnswer             = "answer"
+	columnQuestionSource             = "source"
+	columnQuestionSourcePage         = "source_page"
+	columnQuestionCategoryID         = "category_id"
+	columnQuestionDateCreated        = "date_created"
+	columnQuestionDifficultyID       = "difficulty_id"
+	columnQuestionAnswerPicture      = "answer_picture"
+	columnQuestionMultipleChoice     = "multiple_choice"
+	columnQuestionQuestionPicture    = "question_picture"
+	columnQuestionRequiresCalculator = "requires_calculator"
 )
 
 // Question is the model used for questions.
 type Question struct {
-	ID             int
-	Answer         string
-	Picture        string
-	Category       *Category
-	Difficulty     *Difficulty
-	DateCreated    time.Time
-	MultipleChoice bool
+	ID                 int
+	Answer             string
+	Source             sql.NullString
+	Category           *Category
+	SourcePage         sql.NullInt64
+	Difficulty         *Difficulty
+	DateCreated        time.Time
+	AnswerPicture      string
+	MultipleChoice     bool
+	QuestionPicture    string
+	RequiresCalculator bool
 }
 
 // ToDTO turns this model into a DTO.
 func (q *Question) ToDTO() *dto.Question {
 	var (
+		source     *string
 		category   *dto.Category
+		sourcePage *int
 		difficulty *dto.Difficulty
 	)
 
 	if q.Category != nil {
 		category = q.Category.ToDTO()
 	}
-
 	if q.Difficulty != nil {
 		difficulty = q.Difficulty.ToDTO()
 	}
+	if q.Source.Valid {
+		source = &q.Source.String
+	}
+	if q.SourcePage.Valid {
+		sourcePageValue := int(q.SourcePage.Int64)
+		sourcePage = &sourcePageValue
+	}
 
 	return &dto.Question{
-		ID:             &q.ID,
-		Answer:         q.Answer,
-		Picture:        q.Picture,
-		Category:       category,
-		Difficulty:     difficulty,
-		DateCreated:    &q.DateCreated,
-		MultipleChoice: q.MultipleChoice,
+		ID:                 &q.ID,
+		Answer:             q.Answer,
+		Source:             source,
+		Category:           category,
+		SourcePage:         sourcePage,
+		Difficulty:         difficulty,
+		DateCreated:        &q.DateCreated,
+		AnswerPicture:      q.AnswerPicture,
+		MultipleChoice:     q.MultipleChoice,
+		QuestionPicture:    q.QuestionPicture,
+		RequiresCalculator: q.RequiresCalculator,
 	}
 }
 
@@ -75,32 +95,54 @@ func (q Questions) ToDTO() []*dto.Question {
 func InsertQuestion(
 	db *sql.DB,
 	answer string,
-	picture string,
+	source *string,
+	sourcePage *int,
 	categoryID int,
 	difficultyID int,
+	answerPicture string,
 	multipleChoice bool,
+	questionPicture string,
+	requiresCalculator bool,
 ) (int, error) {
 	var (
 		id  int
 		err error
+
+		sourceValue     interface{}
+		sourcePageValue interface{}
 	)
+
+	if source != nil {
+		sourceValue = *source
+	}
+	if sourcePage != nil {
+		sourcePageValue = *sourcePage
+	}
 
 	err = sq.Insert(tableQuestion).
 		Columns(
 			columnQuestionAnswer,
-			columnQuestionPicture,
+			columnQuestionSource,
+			columnQuestionSourcePage,
 			columnQuestionCategoryID,
 			columnQuestionDateCreated,
 			columnQuestionDifficultyID,
+			columnQuestionAnswerPicture,
 			columnQuestionMultipleChoice,
+			columnQuestionQuestionPicture,
+			columnQuestionRequiresCalculator,
 		).
 		Values(
 			answer,
-			picture,
+			sourceValue,
+			sourcePageValue,
 			categoryID,
 			sqlNow,
 			difficultyID,
+			answerPicture,
 			multipleChoice,
+			questionPicture,
+			requiresCalculator,
 		).
 		Suffix(returningIDClause).
 		PlaceholderFormat(sq.Dollar).
@@ -148,10 +190,14 @@ func SelectQuestion(db *sql.DB, id int) (*Question, error) {
 	if rows, err = sq.Select().
 		Columns(
 			column(tableQuestion, columnQuestionID),
+			column(tableQuestion, columnQuestionSource),
 			column(tableQuestion, columnQuestionAnswer),
-			column(tableQuestion, columnQuestionPicture),
+			column(tableQuestion, columnQuestionSourcePage),
 			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionAnswerPicture),
 			column(tableQuestion, columnQuestionMultipleChoice),
+			column(tableQuestion, columnQuestionQuestionPicture),
+			column(tableQuestion, columnQuestionRequiresCalculator),
 			column(tableCategory, columnCategoryID),
 			column(tableCategory, columnCategoryName),
 			column(tableDifficulty, columnDifficultyID),
@@ -179,10 +225,14 @@ func SelectQuestion(db *sql.DB, id int) (*Question, error) {
 	if rows.Next() {
 		if err = rows.Scan(
 			&question.ID,
+			&question.Source,
 			&question.Answer,
-			&question.Picture,
+			&question.SourcePage,
 			&question.DateCreated,
+			&question.AnswerPicture,
 			&question.MultipleChoice,
+			&question.QuestionPicture,
+			&question.RequiresCalculator,
 			&category.ID,
 			&category.Name,
 			&difficulty.ID,
@@ -212,10 +262,14 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 	rows, err = sq.Select().
 		Columns(
 			column(tableQuestion, columnQuestionID),
+			column(tableQuestion, columnQuestionSource),
 			column(tableQuestion, columnQuestionAnswer),
-			column(tableQuestion, columnQuestionPicture),
+			column(tableQuestion, columnQuestionSourcePage),
 			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionAnswerPicture),
 			column(tableQuestion, columnQuestionMultipleChoice),
+			column(tableQuestion, columnQuestionQuestionPicture),
+			column(tableQuestion, columnQuestionRequiresCalculator),
 			column(tableCategory, columnCategoryID),
 			column(tableCategory, columnCategoryName),
 			column(tableDifficulty, columnDifficultyID),
@@ -252,10 +306,14 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 
 		err = rows.Scan(
 			&question.ID,
+			&question.Source,
 			&question.Answer,
-			&question.Picture,
+			&question.SourcePage,
 			&question.DateCreated,
+			&question.AnswerPicture,
 			&question.MultipleChoice,
+			&question.QuestionPicture,
+			&question.RequiresCalculator,
 			&category.ID,
 			&category.Name,
 			&difficulty.ID,

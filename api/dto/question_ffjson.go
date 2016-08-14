@@ -44,8 +44,12 @@ func (mj *Question) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	}
 	buf.WriteString(`"answer":`)
 	fflib.WriteJsonString(buf, string(mj.Answer))
-	buf.WriteString(`,"picture":`)
-	fflib.WriteJsonString(buf, string(mj.Picture))
+	if mj.Source != nil {
+		buf.WriteString(`,"source":`)
+		fflib.WriteJsonString(buf, string(*mj.Source))
+	} else {
+		buf.WriteString(`,"source":null`)
+	}
 	buf.WriteByte(',')
 	if mj.Category != nil {
 		if true {
@@ -62,6 +66,13 @@ func (mj *Question) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 			buf.WriteByte(',')
 		}
 	}
+	if mj.SourcePage != nil {
+		buf.WriteString(`"sourcePage":`)
+		fflib.FormatBits2(buf, uint64(*mj.SourcePage), 10, *mj.SourcePage < 0)
+	} else {
+		buf.WriteString(`"sourcePage":null`)
+	}
+	buf.WriteByte(',')
 	if mj.CategoryID != nil {
 		if true {
 			buf.WriteString(`"categoryId":`)
@@ -107,10 +118,19 @@ func (mj *Question) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 			buf.WriteByte(',')
 		}
 	}
+	buf.WriteString(`"answerPicture":`)
+	fflib.WriteJsonString(buf, string(mj.AnswerPicture))
 	if mj.MultipleChoice {
-		buf.WriteString(`"multipleChoice":true`)
+		buf.WriteString(`,"multipleChoice":true`)
 	} else {
-		buf.WriteString(`"multipleChoice":false`)
+		buf.WriteString(`,"multipleChoice":false`)
+	}
+	buf.WriteString(`,"questionPicture":`)
+	fflib.WriteJsonString(buf, string(mj.QuestionPicture))
+	if mj.RequiresCalculator {
+		buf.WriteString(`,"requiresCalculator":true`)
+	} else {
+		buf.WriteString(`,"requiresCalculator":false`)
 	}
 	buf.WriteByte('}')
 	return nil
@@ -124,9 +144,11 @@ const (
 
 	ffj_t_Question_Answer
 
-	ffj_t_Question_Picture
+	ffj_t_Question_Source
 
 	ffj_t_Question_Category
+
+	ffj_t_Question_SourcePage
 
 	ffj_t_Question_CategoryID
 
@@ -136,16 +158,24 @@ const (
 
 	ffj_t_Question_DifficultyID
 
+	ffj_t_Question_AnswerPicture
+
 	ffj_t_Question_MultipleChoice
+
+	ffj_t_Question_QuestionPicture
+
+	ffj_t_Question_RequiresCalculator
 )
 
 var ffj_key_Question_ID = []byte("id")
 
 var ffj_key_Question_Answer = []byte("answer")
 
-var ffj_key_Question_Picture = []byte("picture")
+var ffj_key_Question_Source = []byte("source")
 
 var ffj_key_Question_Category = []byte("category")
+
+var ffj_key_Question_SourcePage = []byte("sourcePage")
 
 var ffj_key_Question_CategoryID = []byte("categoryId")
 
@@ -155,7 +185,13 @@ var ffj_key_Question_DateCreated = []byte("dateCreated")
 
 var ffj_key_Question_DifficultyID = []byte("difficultyId")
 
+var ffj_key_Question_AnswerPicture = []byte("answerPicture")
+
 var ffj_key_Question_MultipleChoice = []byte("multipleChoice")
+
+var ffj_key_Question_QuestionPicture = []byte("questionPicture")
+
+var ffj_key_Question_RequiresCalculator = []byte("requiresCalculator")
 
 func (uj *Question) UnmarshalJSON(input []byte) error {
 	fs := fflib.NewFFLexer(input)
@@ -222,6 +258,11 @@ mainparse:
 						currentKey = ffj_t_Question_Answer
 						state = fflib.FFParse_want_colon
 						goto mainparse
+
+					} else if bytes.Equal(ffj_key_Question_AnswerPicture, kn) {
+						currentKey = ffj_t_Question_AnswerPicture
+						state = fflib.FFParse_want_colon
+						goto mainparse
 					}
 
 				case 'c':
@@ -271,18 +312,57 @@ mainparse:
 						goto mainparse
 					}
 
-				case 'p':
+				case 'q':
 
-					if bytes.Equal(ffj_key_Question_Picture, kn) {
-						currentKey = ffj_t_Question_Picture
+					if bytes.Equal(ffj_key_Question_QuestionPicture, kn) {
+						currentKey = ffj_t_Question_QuestionPicture
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 'r':
+
+					if bytes.Equal(ffj_key_Question_RequiresCalculator, kn) {
+						currentKey = ffj_t_Question_RequiresCalculator
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 's':
+
+					if bytes.Equal(ffj_key_Question_Source, kn) {
+						currentKey = ffj_t_Question_Source
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_Question_SourcePage, kn) {
+						currentKey = ffj_t_Question_SourcePage
 						state = fflib.FFParse_want_colon
 						goto mainparse
 					}
 
 				}
 
+				if fflib.EqualFoldRight(ffj_key_Question_RequiresCalculator, kn) {
+					currentKey = ffj_t_Question_RequiresCalculator
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.EqualFoldRight(ffj_key_Question_QuestionPicture, kn) {
+					currentKey = ffj_t_Question_QuestionPicture
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
 				if fflib.SimpleLetterEqualFold(ffj_key_Question_MultipleChoice, kn) {
 					currentKey = ffj_t_Question_MultipleChoice
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.EqualFoldRight(ffj_key_Question_AnswerPicture, kn) {
+					currentKey = ffj_t_Question_AnswerPicture
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
@@ -311,14 +391,20 @@ mainparse:
 					goto mainparse
 				}
 
+				if fflib.EqualFoldRight(ffj_key_Question_SourcePage, kn) {
+					currentKey = ffj_t_Question_SourcePage
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
 				if fflib.SimpleLetterEqualFold(ffj_key_Question_Category, kn) {
 					currentKey = ffj_t_Question_Category
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
 
-				if fflib.SimpleLetterEqualFold(ffj_key_Question_Picture, kn) {
-					currentKey = ffj_t_Question_Picture
+				if fflib.EqualFoldRight(ffj_key_Question_Source, kn) {
+					currentKey = ffj_t_Question_Source
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
@@ -358,11 +444,14 @@ mainparse:
 				case ffj_t_Question_Answer:
 					goto handle_Answer
 
-				case ffj_t_Question_Picture:
-					goto handle_Picture
+				case ffj_t_Question_Source:
+					goto handle_Source
 
 				case ffj_t_Question_Category:
 					goto handle_Category
+
+				case ffj_t_Question_SourcePage:
+					goto handle_SourcePage
 
 				case ffj_t_Question_CategoryID:
 					goto handle_CategoryID
@@ -376,8 +465,17 @@ mainparse:
 				case ffj_t_Question_DifficultyID:
 					goto handle_DifficultyID
 
+				case ffj_t_Question_AnswerPicture:
+					goto handle_AnswerPicture
+
 				case ffj_t_Question_MultipleChoice:
 					goto handle_MultipleChoice
+
+				case ffj_t_Question_QuestionPicture:
+					goto handle_QuestionPicture
+
+				case ffj_t_Question_RequiresCalculator:
+					goto handle_RequiresCalculator
 
 				case ffj_t_Questionno_such_key:
 					err = fs.SkipField(tok)
@@ -452,9 +550,9 @@ handle_Answer:
 	state = fflib.FFParse_after_value
 	goto mainparse
 
-handle_Picture:
+handle_Source:
 
-	/* handler: uj.Picture type=string kind=string quoted=false*/
+	/* handler: uj.Source type=string kind=string quoted=false*/
 
 	{
 
@@ -466,11 +564,15 @@ handle_Picture:
 
 		if tok == fflib.FFTok_null {
 
+			uj.Source = nil
+
 		} else {
 
+			var tval string
 			outBuf := fs.Output.Bytes()
 
-			uj.Picture = string(string(outBuf))
+			tval = string(string(outBuf))
+			uj.Source = &tval
 
 		}
 	}
@@ -500,6 +602,39 @@ handle_Category:
 			return err
 		}
 		state = fflib.FFParse_after_value
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_SourcePage:
+
+	/* handler: uj.SourcePage type=int kind=int quoted=false*/
+
+	{
+		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+			uj.SourcePage = nil
+
+		} else {
+
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			ttypval := int(tval)
+			uj.SourcePage = &ttypval
+
+		}
 	}
 
 	state = fflib.FFParse_after_value
@@ -630,6 +765,32 @@ handle_DifficultyID:
 	state = fflib.FFParse_after_value
 	goto mainparse
 
+handle_AnswerPicture:
+
+	/* handler: uj.AnswerPicture type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.AnswerPicture = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
 handle_MultipleChoice:
 
 	/* handler: uj.MultipleChoice type=bool kind=bool quoted=false*/
@@ -653,6 +814,67 @@ handle_MultipleChoice:
 			} else if bytes.Compare([]byte{'f', 'a', 'l', 's', 'e'}, tmpb) == 0 {
 
 				uj.MultipleChoice = false
+
+			} else {
+				err = errors.New("unexpected bytes for true/false value")
+				return fs.WrapErr(err)
+			}
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_QuestionPicture:
+
+	/* handler: uj.QuestionPicture type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.QuestionPicture = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_RequiresCalculator:
+
+	/* handler: uj.RequiresCalculator type=bool kind=bool quoted=false*/
+
+	{
+		if tok != fflib.FFTok_bool && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for bool", tok))
+		}
+	}
+
+	{
+		if tok == fflib.FFTok_null {
+
+		} else {
+			tmpb := fs.Output.Bytes()
+
+			if bytes.Compare([]byte{'t', 'r', 'u', 'e'}, tmpb) == 0 {
+
+				uj.RequiresCalculator = true
+
+			} else if bytes.Compare([]byte{'f', 'a', 'l', 's', 'e'}, tmpb) == 0 {
+
+				uj.RequiresCalculator = false
 
 			} else {
 				err = errors.New("unexpected bytes for true/false value")

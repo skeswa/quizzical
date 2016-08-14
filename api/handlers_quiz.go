@@ -15,6 +15,7 @@ import (
 const (
 	routeVarQuizID              = "id"
 	quizPayloadFieldName        = "name"
+	quizPayloadFieldQuizTypeID  = "typeId"
 	quizPayloadFieldDescription = "description"
 	quizPayloadFieldQuestionIDs = "questionIds"
 )
@@ -46,10 +47,13 @@ func createQuizHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 		} else if len(payload.QuestionIDs) < 1 {
 			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(quizPayloadFieldQuestionIDs))
 			return
+		} else if payload.TypeID == nil {
+			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(quizPayloadFieldQuizTypeID))
+			return
 		}
 
 		// Interface with the database.
-		id, err := model.InsertQuiz(db, payload.Name, payload.Description, payload.QuestionIDs)
+		id, err := model.InsertQuiz(db, payload.Name, *payload.TypeID, payload.Description, payload.QuestionIDs)
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return

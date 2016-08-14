@@ -7,6 +7,7 @@ package dto
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	fflib "github.com/pquerna/ffjson/fflib/v1"
 	"time"
@@ -44,6 +45,24 @@ func (mj *Quiz) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	buf.WriteString(`"name":`)
 	fflib.WriteJsonString(buf, string(mj.Name))
 	buf.WriteByte(',')
+	if mj.Type != nil {
+		if true {
+			/* Struct fall back. type=dto.QuizType kind=struct */
+			buf.WriteString(`"type":`)
+			err = buf.Encode(mj.Type)
+			if err != nil {
+				return err
+			}
+			buf.WriteByte(',')
+		}
+	}
+	if mj.TypeID != nil {
+		if true {
+			buf.WriteString(`"typeId":`)
+			fflib.FormatBits2(buf, uint64(*mj.TypeID), 10, *mj.TypeID < 0)
+			buf.WriteByte(',')
+		}
+	}
 	if len(mj.Questions) != 0 {
 		buf.WriteString(`"questions":`)
 		if mj.Questions != nil {
@@ -121,6 +140,10 @@ const (
 
 	ffj_t_Quiz_Name
 
+	ffj_t_Quiz_Type
+
+	ffj_t_Quiz_TypeID
+
 	ffj_t_Quiz_Questions
 
 	ffj_t_Quiz_QuestionIDs
@@ -133,6 +156,10 @@ const (
 var ffj_key_Quiz_ID = []byte("id")
 
 var ffj_key_Quiz_Name = []byte("name")
+
+var ffj_key_Quiz_Type = []byte("type")
+
+var ffj_key_Quiz_TypeID = []byte("typeId")
 
 var ffj_key_Quiz_Questions = []byte("questions")
 
@@ -243,6 +270,19 @@ mainparse:
 						goto mainparse
 					}
 
+				case 't':
+
+					if bytes.Equal(ffj_key_Quiz_Type, kn) {
+						currentKey = ffj_t_Quiz_Type
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_Quiz_TypeID, kn) {
+						currentKey = ffj_t_Quiz_TypeID
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
 				}
 
 				if fflib.SimpleLetterEqualFold(ffj_key_Quiz_DateCreated, kn) {
@@ -265,6 +305,18 @@ mainparse:
 
 				if fflib.EqualFoldRight(ffj_key_Quiz_Questions, kn) {
 					currentKey = ffj_t_Quiz_Questions
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_Quiz_TypeID, kn) {
+					currentKey = ffj_t_Quiz_TypeID
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_Quiz_Type, kn) {
+					currentKey = ffj_t_Quiz_Type
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
@@ -303,6 +355,12 @@ mainparse:
 
 				case ffj_t_Quiz_Name:
 					goto handle_Name
+
+				case ffj_t_Quiz_Type:
+					goto handle_Type
+
+				case ffj_t_Quiz_TypeID:
+					goto handle_TypeID
 
 				case ffj_t_Quiz_Questions:
 					goto handle_Questions
@@ -389,6 +447,59 @@ handle_Name:
 	state = fflib.FFParse_after_value
 	goto mainparse
 
+handle_Type:
+
+	/* handler: uj.Type type=dto.QuizType kind=struct quoted=false*/
+
+	{
+		/* Falling back. type=dto.QuizType kind=struct */
+		tbuf, err := fs.CaptureField(tok)
+		if err != nil {
+			return fs.WrapErr(err)
+		}
+
+		err = json.Unmarshal(tbuf, &uj.Type)
+		if err != nil {
+			return fs.WrapErr(err)
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_TypeID:
+
+	/* handler: uj.TypeID type=int kind=int quoted=false*/
+
+	{
+		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+			uj.TypeID = nil
+
+		} else {
+
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			ttypval := int(tval)
+			uj.TypeID = &ttypval
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
 handle_Questions:
 
 	/* handler: uj.Questions type=[]*dto.Question kind=slice quoted=false*/
@@ -405,7 +516,7 @@ handle_Questions:
 			uj.Questions = nil
 		} else {
 
-			uj.Questions = []*Question{}
+			uj.Questions = make([]*Question, 0)
 
 			wantVal := true
 
@@ -455,7 +566,6 @@ handle_Questions:
 				}
 
 				uj.Questions = append(uj.Questions, tmp_uj__Questions)
-
 				wantVal = false
 			}
 		}
@@ -480,7 +590,7 @@ handle_QuestionIDs:
 			uj.QuestionIDs = nil
 		} else {
 
-			uj.QuestionIDs = []int{}
+			uj.QuestionIDs = make([]int, 0)
 
 			wantVal := true
 
@@ -533,7 +643,6 @@ handle_QuestionIDs:
 				}
 
 				uj.QuestionIDs = append(uj.QuestionIDs, tmp_uj__QuestionIDs)
-
 				wantVal = false
 			}
 		}

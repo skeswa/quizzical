@@ -12,6 +12,7 @@ const (
 	tableQuiz             = "gauntlet.quiz"
 	columnQuizID          = "id"
 	columnQuizName        = "name"
+	columnQuizQuizTypeID  = "quiz_type_id"
 	columnQuizDescription = "description"
 	columnQuizDateCreated = "date_created"
 
@@ -26,6 +27,7 @@ const (
 type Quiz struct {
 	ID          int
 	Name        string
+	Type        *QuizType
 	Questions   []*Question
 	Description string
 	DateCreated time.Time
@@ -33,15 +35,22 @@ type Quiz struct {
 
 // ToDTO turns this model into a DTO.
 func (d *Quiz) ToDTO() *dto.Quiz {
-	var questions []*dto.Question
+	var (
+		quizType  *dto.QuizType
+		questions []*dto.Question
+	)
 
 	if d.Questions != nil {
 		questions = Questions(d.Questions).ToDTO()
+	}
+	if d.Type != nil {
+		quizType = d.Type.ToDTO()
 	}
 
 	return &dto.Quiz{
 		ID:          &d.ID,
 		Name:        d.Name,
+		Type:        quizType,
 		Questions:   questions,
 		Description: d.Description,
 		DateCreated: &d.DateCreated,
@@ -64,7 +73,7 @@ func (d Quizzes) ToDTO() []*dto.Quiz {
 }
 
 // InsertQuiz inserts a quiz into the db.
-func InsertQuiz(db *sql.DB, name string, description string, questionIDs []int) (int, error) {
+func InsertQuiz(db *sql.DB, name string, quizTypeID int, description string, questionIDs []int) (int, error) {
 	var (
 		id  int
 		err error
@@ -78,8 +87,8 @@ func InsertQuiz(db *sql.DB, name string, description string, questionIDs []int) 
 
 	// Create the quiz first and foremost.
 	if err = sq.Insert(tableQuiz).
-		Columns(columnQuizName, columnQuizDescription, columnQuizDateCreated).
-		Values(name, description, sqlNow).
+		Columns(columnQuizName, columnQuizQuizTypeID, columnQuizDescription, columnQuizDateCreated).
+		Values(name, quizTypeID, description, sqlNow).
 		Suffix(returningIDClause).
 		PlaceholderFormat(sq.Dollar).
 		RunWith(tx).
@@ -132,9 +141,21 @@ func DeleteQuiz(db *sql.DB, id int) error {
 // SelectQuiz gets all the information about a specific quiz.
 func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 	// Get the quiz itself.
-	rows, err := sq.Select(columnQuizName, columnQuizDescription, columnQuestionDateCreated).
+	rows, err := sq.Select().
+		Columns(
+			column(tableQuiz, columnQuizName),
+			column(tableQuiz, columnQuizDescription),
+			column(tableQuiz, columnQuestionDateCreated),
+			column(tableQuizType, columnQuizTypeID),
+			column(tableQuizType, columnQuizTypeName),
+		).
 		From(tableQuiz).
 		Where(sq.Eq{columnQuizID: id}).
+		Join(on(
+			tableQuizType,
+			column(tableQuiz, columnQuizQuizTypeID),
+			column(tableQuizType, columnQuizTypeID),
+		)).
 		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
 		Query()
@@ -143,9 +164,9 @@ func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 	}
 
 	// Load the results into memory.
-	quiz := Quiz{ID: id}
+	quiz := Quiz{ID: id, Type: &QuizType{}}
 	if rows.Next() {
-		rows.Scan(&quiz.Name, &quiz.Description, &quiz.DateCreated)
+		rows.Scan(&quiz.Name, &quiz.Description, &quiz.DateCreated, &quiz.Type.ID, &quiz.Type.Name)
 		rows.Close()
 	} else if err := rows.Err(); err != nil {
 		return nil, err
@@ -158,9 +179,10 @@ func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 		Columns(
 			column(tableQuestion, columnQuestionID),
 			column(tableQuestion, columnQuestionAnswer),
-			column(tableQuestion, columnQuestionPicture),
 			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionAnswerPicture),
 			column(tableQuestion, columnQuestionMultipleChoice),
+			column(tableQuestion, columnQuestionQuestionPicture),
 			column(tableCategory, columnCategoryID),
 			column(tableCategory, columnCategoryName),
 			column(tableDifficulty, columnDifficultyID),
@@ -203,19 +225,19 @@ func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 			}
 		)
 
-		err = rows.Scan(
+		if err = rows.Scan(
 			&question.ID,
 			&question.Answer,
-			&question.Picture,
 			&question.DateCreated,
+			&question.AnswerPicture,
 			&question.MultipleChoice,
+			&question.QuestionPicture,
 			&category.ID,
 			&category.Name,
 			&difficulty.ID,
 			&difficulty.Name,
 			&difficulty.Color,
-		)
-		if err != nil {
+		); err != nil {
 			return nil, err
 		}
 
@@ -242,8 +264,21 @@ func SelectQuizzes(db *sql.DB) (Quizzes, error) {
 		quizzes = []*Quiz{}
 	)
 
-	rows, err = sq.Select(columnQuizID, columnQuizName, columnQuizDescription, columnQuestionDateCreated).
+	rows, err = sq.Select().
+		Columns(
+			column(tableQuiz, columnQuizID),
+			column(tableQuiz, columnQuizName),
+			column(tableQuiz, columnQuizDescription),
+			column(tableQuiz, columnQuestionDateCreated),
+			column(tableQuizType, columnQuizTypeID),
+			column(tableQuizType, columnQuizTypeName),
+		).
 		From(tableQuiz).
+		Join(on(
+			tableQuizType,
+			column(tableQuiz, columnQuizQuizTypeID),
+			column(tableQuizType, columnQuizTypeID),
+		)).
 		RunWith(db).
 		Query()
 
@@ -252,10 +287,16 @@ func SelectQuizzes(db *sql.DB) (Quizzes, error) {
 	}
 
 	for rows.Next() {
-		quiz := Quiz{}
+		quiz := Quiz{Type: &QuizType{}}
 
-		err = rows.Scan(&quiz.ID, &quiz.Name, &quiz.Description, &quiz.DateCreated)
-		if err != nil {
+		if err = rows.Scan(
+			&quiz.ID,
+			&quiz.Name,
+			&quiz.Description,
+			&quiz.DateCreated,
+			&quiz.Type.ID,
+			&quiz.Type.Name,
+		); err != nil {
 			return nil, err
 		}
 
