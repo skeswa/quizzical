@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"database/sql"
@@ -13,6 +13,7 @@ import (
 	"github.com/satori/go.uuid"
 	"github.com/skeswa/gauntlet/api/common"
 	"github.com/skeswa/gauntlet/api/dto"
+	"github.com/skeswa/gauntlet/api/handler/helpers"
 	"github.com/skeswa/gauntlet/api/model"
 )
 
@@ -31,30 +32,30 @@ const (
 	questionFormFieldRequiresCalculator = "requiresCalculator"
 )
 
-func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWriter, *http.Request) {
+func CreateQuestion(db *sql.DB, c *common.Config) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the basic fields first.
 		answer := r.FormValue(questionFormFieldAnswer)
 		if len(answer) < 1 {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldAnswer))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldAnswer))
 			return
 		}
 		questionIDStr := r.FormValue(questionFormFieldQuestionID)
 		questionID, err := strconv.Atoi(questionIDStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldQuestionID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldQuestionID))
 			return
 		}
 		difficultyIDStr := r.FormValue(questionFormFieldDifficultyID)
 		difficultyID, err := strconv.Atoi(difficultyIDStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldDifficultyID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldDifficultyID))
 			return
 		}
 		multipleChoiceStr := r.FormValue(questionFormFieldMultipleChoice)
 		multipleChoice, err := strconv.ParseBool(multipleChoiceStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldMultipleChoice))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldMultipleChoice))
 			return
 		}
 		sourceStr := r.FormValue(questionFormFieldSource)
@@ -67,7 +68,7 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		if len(sourcePageStr) > 0 {
 			sourcePageNumber, conversionErr := strconv.Atoi(sourcePageStr)
 			if conversionErr != nil {
-				respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldSourcePage))
+				helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldSourcePage))
 				return
 			}
 
@@ -76,7 +77,7 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		requiresCalculatorStr := r.FormValue(questionFormFieldRequiresCalculator)
 		requiresCalculator, err := strconv.ParseBool(requiresCalculatorStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldRequiresCalculator))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldRequiresCalculator))
 			return
 		}
 
@@ -86,14 +87,14 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		// Read the input question picture file from the form.
 		inputAnswerPictureFile, inputAnswerPictureFileHeader, err := r.FormFile(questionFormFieldAnswerPicture)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldAnswerPicture))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldAnswerPicture))
 			return
 		}
 
 		// Read the input question picture file from the form.
 		inputQuestionPictureFile, inputQuestionPictureFileHeader, err := r.FormFile(questionFormFieldQuestionPicture)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidJSONPayloadField(questionFormFieldQuestionPicture))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldQuestionPicture))
 			return
 		}
 
@@ -106,7 +107,7 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		outputAnswerPictureFileName := uuid.NewV4().String() + inputAnswerPictureFileExt
 		outputAnswerPictureFile, err := os.Create(filepath.Join(c.ImagesPath, outputAnswerPictureFileName))
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -118,7 +119,7 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		outputQuestionPictureFileName := uuid.NewV4().String() + inputQuestionPictureFileExt
 		outputQuestionPictureFile, err := os.Create(filepath.Join(c.ImagesPath, outputQuestionPictureFileName))
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -128,14 +129,14 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 		// Perform the copy from input to output.
 		_, err = io.Copy(outputAnswerPictureFile, inputAnswerPictureFile)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Perform the copy from input to output.
 		_, err = io.Copy(outputQuestionPictureFile, inputQuestionPictureFile)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -153,98 +154,98 @@ func createQuestionHandler(db *sql.DB, c *common.Config) func(http.ResponseWrite
 			requiresCalculator,
 		)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Marshal a response.
 		response, err := ffjson.MarshalFast(&dto.CreationRecord{CreatedRecordID: id})
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Respond with success.
-		respondWithSuccess(w, response)
+		helpers.RespondWithSuccess(w, response)
 		return
 	}
 }
 
-func deleteQuestionHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func DeleteQuestion(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the question id.
 		idStr := mux.Vars(r)[routeVarQuestionID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarQuestionID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarQuestionID))
 			return
 		}
 
 		// Interface with the database.
 		err = model.DeleteQuestion(db, id)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Respond with success.
-		respondWithSuccess(w, nil)
+		helpers.RespondWithSuccess(w, nil)
 		return
 	}
 }
 
-func getQuestionsHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func GetQuestions(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Interface with the database.
 		questions, err := model.SelectQuestions(db)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Marshal a response.
 		response, err := ffjson.Marshal(questions.ToDTO())
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Respond with success.
-		respondWithSuccess(w, response)
+		helpers.RespondWithSuccess(w, response)
 		return
 	}
 }
 
-func getQuestionHandler(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func GetQuestion(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the quiz id.
 		idStr := mux.Vars(r)[routeVarQuestionID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarQuestionID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarQuestionID))
 			return
 		}
 
 		// Interface with the database.
 		question, err := model.SelectQuestion(db, id)
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		} else if question == nil {
 			// If the quiz is nil, then there is none.
-			respondWithError(w, http.StatusBadRequest, errorNoSuchRecord(id))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorNoSuchRecord(id))
 			return
 		}
 
 		// Marshal a response.
 		response, err := ffjson.Marshal(question.ToDTO())
 		if err != nil {
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Respond with success.
-		respondWithSuccess(w, response)
+		helpers.RespondWithSuccess(w, response)
 		return
 	}
 }

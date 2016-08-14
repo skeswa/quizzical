@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"net/http"
@@ -6,18 +6,19 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/skeswa/gauntlet/api/common"
+	"github.com/skeswa/gauntlet/api/handler/helpers"
 )
 
 const (
 	routeVarPictureName = "name"
 )
 
-func getPictureHandler(c *common.Config) func(http.ResponseWriter, *http.Request) {
+func GetPicture(c *common.Config) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the category id.
 		name := mux.Vars(r)[routeVarPictureName]
 		if len(name) < 1 {
-			respondWithError(w, http.StatusBadRequest, errorInvalidRouteVar(routeVarPictureName))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarPictureName))
 			return
 		}
 

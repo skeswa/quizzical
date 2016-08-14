@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"github.com/skeswa/gauntlet/api/dto"
 )
 
-func respondWithError(w http.ResponseWriter, code int, message string) {
+func RespondWithError(w http.ResponseWriter, code int, message string) {
 	// Serialize the error message.
 	errorMessage := &dto.Error{Message: message}
 	serializedErrorMessage, err := errorMessage.MarshalJSON()
@@ -18,7 +18,7 @@ func respondWithError(w http.ResponseWriter, code int, message string) {
 	http.Error(w, string(serializedErrorMessage), code)
 }
 
-func respondWithSuccess(w http.ResponseWriter, data []byte) {
+func RespondWithSuccess(w http.ResponseWriter, data []byte) {
 	// Write a response.
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
