@@ -1,0 +1,17 @@
+
+.main {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.buttons {
+  bottom: 2.4rem;
+  right: 2.4rem;
+  position: absolute;
+}

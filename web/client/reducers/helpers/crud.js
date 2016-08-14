@@ -4,8 +4,11 @@ import { handleActions } from 'redux-actions'
 
 const baseInitialState = {
   list:            [],
-  error:           null,
   loaded:          false,
+  createError:    null,
+  deleteError:    null,
+  loadOneError:    null,
+  loadAllError:    null,
   pendingRequests: 0,
 }
 
@@ -30,7 +33,7 @@ export function createCrudReducer(entity, actionHandlerExtensions, initialStateE
 function handleLoadOneAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      error: action.payload,
+      loadOneError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
@@ -43,7 +46,7 @@ function handleLoadOneAction(state, action) {
 
       return item
     }),
-    error: null,
+    loadOneError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -51,15 +54,15 @@ function handleLoadOneAction(state, action) {
 function handleLoadAllAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      error: action.payload,
+      loadAllError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
 
   return Object.assign({}, state, {
     list: action.payload,
-    error: null,
     loaded: true,
+    loadAllError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -67,14 +70,14 @@ function handleLoadAllAction(state, action) {
 function handleCreateAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      error: action.payload,
+      createError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
 
   return Object.assign({}, state, {
     list: [...state.list, action.payload],
-    error: null,
+    createError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -89,7 +92,7 @@ function handleDeleteAction(state, action) {
 
   return Object.assign({}, state, {
     list: state.list.filter(item => item.id !== action.payload.deletedRecordId),
-    error: null,
+    deleteError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }

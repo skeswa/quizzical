@@ -4,9 +4,7 @@ import QuestionList from 'components/QuestionList'
 
 const QuestionListPage = (props, context) => {
   return (
-    <div>
-      <QuestionList />
-    </div>
+    <QuestionList />
   )
 }
 

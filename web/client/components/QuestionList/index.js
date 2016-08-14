@@ -6,12 +6,14 @@ import classNames from 'classnames'
 
 import style from './style.css'
 import actions from 'actions'
+import ListError from 'components/ListError'
+import ListEmpty from 'components/ListEmpty'
+import ListLoader from 'components/ListLoader'
+import ListButtons from 'components/ListButtons'
 import { pictureNameToBackgroundUrl } from './helpers'
 
 class QuestionList extends Component {
   componentWillMount() {
-    const props = this.props
-
     // Load data pre-emptively.
     this.loadData()
   }
@@ -28,19 +30,44 @@ class QuestionList extends Component {
     }
   }
 
-  render() {
-    console.log('props', this.props)
+  onRefreshClicked() {
+    loadData();
+  }
 
-    const listItems = this.props.questions
-      .map(question => (
-        <QuestionListItem
-          key={question.id}
-          question={question}
-          onClick={::this.onClick} />
-      ))
+  onCreateClicked() {
+    // TODO(skeswa): show the create form.
+  }
+
+  render() {
+    const { questions, loadingError, isDataLoading } = this.props;
+
+    let content;
+    if (loadingError) {
+      content = <ListError error={loadingError} />
+    } else if (isDataLoading) {
+      content = <ListLoader />
+    } else if (questions.length < 1) {
+      content = <ListEmpty />
+    } else {
+      content = questions
+        .map(question => (
+          <QuestionListItem
+            key={question.id}
+            onClick={::this.onClick}
+            question={question} />
+        ))
+    }
 
     return (
-      <div className={style.main}>{listItems}</div>
+      <div className={style.main}>
+        <div className={style.content}>{content}</div>
+        <div className={style.buttons}>
+          <ListButtons
+            disabled={isDataLoading}
+            onCreateClicked={::this.onCreateClicked}
+            onRefreshClicked={::this.onRefreshClicked} />
+        </div>
+      </div>
     )
   }
 }
@@ -87,6 +114,11 @@ const reduxify = connect(
     categories: state.category.list,
     difficulties: state.difficulty.list,
 
+    loadingError: (
+      state.question.loadAllError ||
+      state.category.loadAllError ||
+      state.difficulty.loadAllError
+    ),
     isDataLoading: (
       state.question.pendingRequests > 0 ||
       state.category.pendingRequests > 0 ||

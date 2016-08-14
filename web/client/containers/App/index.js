@@ -10,10 +10,16 @@ import style from './style.css'
 class App extends Component {
   render() {
     return (
-      <div>
-        <Header />
-        {this.props.children}
-        <Footer />
+      <div className={style.main}>
+        <div className={style.top}>
+          <Header />
+        </div>
+        <div className={style.middle}>
+          {this.props.children}
+        </div>
+        <div className={style.bottom}>
+          <Footer />
+        </div>
       </div>
     )
   }
