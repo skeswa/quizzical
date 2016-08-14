@@ -21,15 +21,9 @@ class QuestionList extends Component {
     const props = this.props
 
     // Attempt to load questions.
-    if (props.questionsShouldBeLoaded) {
+    if (props.dataShouldBeLoaded) {
       props.actions.loadQuestions()
-    }
-    // Attempt to load categories.
-    if (props.categoriesShouldBeLoaded) {
       props.actions.loadCategories()
-    }
-    // Attempt to load questions.
-    if (props.difficultiesShouldBeLoaded) {
       props.actions.loadDifficulties()
     }
   }
@@ -93,13 +87,16 @@ const reduxify = connect(
     categories: state.category.list,
     difficulties: state.difficulty.list,
 
-    questionsLoading: state.question.pendingRequests > 0,
-    categoriesLoading: state.category.pendingRequests > 0,
-    difficultiesLoading: state.difficulty.pendingRequests > 0,
-
-    questionsShouldBeLoaded: !state.question.loaded && state.question.pendingRequests < 1,
-    categoriesShouldBeLoaded: !state.category.loaded && state.category.pendingRequests < 1,
-    difficultiesShouldBeLoaded: !state.difficulty.loaded && state.difficulty.pendingRequests < 1,
+    isDataLoading: (
+      state.question.pendingRequests > 0 ||
+      state.category.pendingRequests > 0 ||
+      state.difficulty.pendingRequests > 0
+    ),
+    dataShouldBeLoaded: (
+      !state.question.loaded ||
+      !state.category.loaded ||
+      !state.difficulty.loaded
+    ),
   }),
   (dispatch, props) => ({
     actions: Object.assign(
