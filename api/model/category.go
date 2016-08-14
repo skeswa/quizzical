@@ -147,3 +147,40 @@ func SelectCategories(db *sql.DB) (Categories, error) {
 
 	return categories, nil
 }
+
+// ProvideCategory finds a category by name, or creates it if it does not exist.
+func ProvideCategory(db *sql.DB, name string) (*Category, error) {
+	var (
+		id   int
+		err  error
+		rows *sql.Rows
+
+		category = Category{}
+	)
+
+	if rows, err = sq.Select(columnCategoryID, columnCategoryName).
+		From(tableCategory).
+		Where(sq.Eq{lower(columnCategoryName): lower(name)}).
+		Limit(1).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(&category.ID, &category.Name); err != nil {
+			return nil, err
+		}
+
+		return &category, nil
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		if id, err = InsertCategory(db, name); err != nil {
+			return nil, err
+		}
+
+		return SelectCategory(db, id)
+	}
+}

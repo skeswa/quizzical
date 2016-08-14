@@ -147,3 +147,40 @@ func SelectQuizTypes(db *sql.DB) (QuizTypes, error) {
 
 	return quizTypes, nil
 }
+
+// ProvideQuizType finds a quiz type by name, or creates it if it does not exist.
+func ProvideQuizType(db *sql.DB, name string) (*QuizType, error) {
+	var (
+		id   int
+		err  error
+		rows *sql.Rows
+
+		quizType = QuizType{}
+	)
+
+	if rows, err = sq.Select(columnQuizTypeID, columnQuizTypeName).
+		From(tableQuizType).
+		Where(sq.Eq{lower(columnQuizTypeName): lower(name)}).
+		Limit(1).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(&quizType.ID, &quizType.Name); err != nil {
+			return nil, err
+		}
+
+		return &quizType, nil
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		if id, err = InsertQuizType(db, name); err != nil {
+			return nil, err
+		}
+
+		return SelectQuizType(db, id)
+	}
+}

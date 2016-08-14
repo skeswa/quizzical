@@ -14,7 +14,9 @@ import (
 )
 
 const (
-	routeVarDifficultyID = "id"
+	routeVarDifficultyID          = "id"
+	queryStringVarDifficultyName  = "name"
+	queryStringVarDifficultyColor = "color"
 )
 
 func CreateDifficulty(db *sql.DB) func(http.ResponseWriter, *http.Request) {
@@ -126,6 +128,48 @@ func GetDifficulty(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 		} else if difficulty == nil {
 			// If the quiz is nil, then there is none.
 			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorNoSuchRecord(id))
+			return
+		}
+
+		// Marshal a response.
+		response, err := ffjson.Marshal(difficulty.ToDTO())
+		if err != nil {
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		// Respond with success.
+		helpers.RespondWithSuccess(w, response)
+		return
+	}
+}
+
+func ProvideDifficulty(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Read the quiz id.
+		name := r.URL.Query().Get(queryStringVarDifficultyName)
+		if len(name) < 1 {
+			helpers.RespondWithError(
+				w,
+				http.StatusBadRequest,
+				helpers.ErrorInvalidQueryStringVar(queryStringVarDifficultyName),
+			)
+			return
+		}
+		color := r.URL.Query().Get(queryStringVarDifficultyColor)
+		if len(color) < 1 {
+			helpers.RespondWithError(
+				w,
+				http.StatusBadRequest,
+				helpers.ErrorInvalidQueryStringVar(queryStringVarDifficultyColor),
+			)
+			return
+		}
+
+		// Interface with the database.
+		difficulty, err := model.ProvideDifficulty(db, name, color)
+		if err != nil {
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 

@@ -14,6 +14,10 @@ func ErrorInvalidRouteVar(routeVar string) string {
 	return fmt.Sprintf(`Invalid value found for route variable "%s".`, routeVar)
 }
 
+func ErrorInvalidQueryStringVar(qsVar string) string {
+	return fmt.Sprintf(`Invalid value found for query string variable variable "%s".`, qsVar)
+}
+
 func ErrorNoSuchRecord(id int) string {
 	return fmt.Sprintf(`Could not find record with id "%d".`, id)
 }

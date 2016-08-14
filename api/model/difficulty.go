@@ -150,3 +150,41 @@ func SelectDifficulties(db *sql.DB) (Difficulties, error) {
 
 	return difficulties, nil
 }
+
+// ProvideDifficulty finds a category by name, or creates it if it does not
+// exist.
+func ProvideDifficulty(db *sql.DB, name string, color string) (*Difficulty, error) {
+	var (
+		id   int
+		err  error
+		rows *sql.Rows
+
+		difficulty = Difficulty{}
+	)
+
+	if rows, err = sq.Select(columnDifficultyID, columnDifficultyName, columnDifficultyColor).
+		From(tableDifficulty).
+		Where(sq.Eq{lower(columnDifficultyName): lower(name)}).
+		Limit(1).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db).
+		Query(); err != nil {
+		return nil, err
+	}
+
+	if rows.Next() {
+		if err = rows.Scan(&difficulty.ID, &difficulty.Name, &difficulty.Color); err != nil {
+			return nil, err
+		}
+
+		return &difficulty, nil
+	} else if err = rows.Err(); err != nil {
+		return nil, err
+	} else {
+		if id, err = InsertDifficulty(db, name, color); err != nil {
+			return nil, err
+		}
+
+		return SelectDifficulty(db, id)
+	}
+}

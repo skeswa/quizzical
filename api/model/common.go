@@ -26,3 +26,12 @@ func on(table string, fromColumn string, toColumn string) string {
 
 	return buffer.String()
 }
+
+func lower(column string) string {
+	buffer := bytes.Buffer{}
+	buffer.WriteString("LOWER(")
+	buffer.WriteString(column)
+	buffer.WriteByte(')')
+
+	return buffer.String()
+}

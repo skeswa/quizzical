@@ -32,12 +32,14 @@ func main() {
 	// Categories.
 	r.HandleFunc("/api/categories", handler.GetCategories(db)).Methods("GET")
 	r.HandleFunc("/api/categories", handler.CreateCategory(db)).Methods("POST")
+	r.HandleFunc("/api/categories/provide", handler.ProvideCategory(db)).Methods("GET")
 	r.HandleFunc("/api/categories/{id:[0-9]+}", handler.GetCategory(db)).Methods("GET")
 	r.HandleFunc("/api/categories/{id:[0-9]+}", handler.DeleteCategory(db)).Methods("DELETE")
 
 	// Difficulties.
 	r.HandleFunc("/api/difficulties", handler.GetDifficulties(db)).Methods("GET")
 	r.HandleFunc("/api/difficulties", handler.CreateDifficulty(db)).Methods("POST")
+	r.HandleFunc("/api/difficulties/provide", handler.ProvideDifficulty(db)).Methods("GET")
 	r.HandleFunc("/api/difficulties/{id:[0-9]+}", handler.GetDifficulty(db)).Methods("GET")
 	r.HandleFunc("/api/difficulties/{id:[0-9]+}", handler.DeleteDifficulty(db)).Methods("DELETE")
 
@@ -52,6 +54,13 @@ func main() {
 	r.HandleFunc("/api/quizzes", handler.CreateQuiz(db)).Methods("POST")
 	r.HandleFunc("/api/quizzes/{id:[0-9]+}", handler.GetQuiz(db)).Methods("GET")
 	r.HandleFunc("/api/quizzes/{id:[0-9]+}", handler.DeleteQuiz(db)).Methods("DELETE")
+
+	// Quiz Types.
+	r.HandleFunc("/api/quiztypes", handler.GetQuizTypes(db)).Methods("GET")
+	r.HandleFunc("/api/quiztypes", handler.CreateQuizType(db)).Methods("POST")
+	r.HandleFunc("/api/quiztypes/provide", handler.ProvideQuizType(db)).Methods("GET")
+	r.HandleFunc("/api/quiztypes/{id:[0-9]+}", handler.GetQuizType(db)).Methods("GET")
+	r.HandleFunc("/api/quiztypes/{id:[0-9]+}", handler.DeleteQuizType(db)).Methods("DELETE")
 
 	// Takes.
 	r.HandleFunc("/api/takes", handler.GetTakes(db)).Methods("GET")

@@ -14,11 +14,11 @@ import (
 )
 
 const (
-	routeVarCategoryID         = "id"
-	queryStringVarCategoryName = "name"
+	routeVarQuizTypeID         = "id"
+	queryStringVarQuizTypeName = "name"
 )
 
-func CreateCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func CreateQuizType(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read body.
 		body, err := ioutil.ReadAll(r.Body)
@@ -28,7 +28,7 @@ func CreateCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 		}
 
 		// Read payload.
-		var payload dto.Category
+		var payload dto.QuizType
 		err = ffjson.Unmarshal(body, &payload)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayload)
@@ -42,7 +42,7 @@ func CreateCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 		}
 
 		// Interface with the database.
-		id, err := model.InsertCategory(db, payload.Name)
+		id, err := model.InsertQuizType(db, payload.Name)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
@@ -61,18 +61,18 @@ func CreateCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func DeleteCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func DeleteQuizType(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Read the category id.
-		idStr := mux.Vars(r)[routeVarCategoryID]
+		// Read the quizType id.
+		idStr := mux.Vars(r)[routeVarQuizTypeID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarCategoryID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarQuizTypeID))
 			return
 		}
 
 		// Interface with the database.
-		err = model.DeleteCategory(db, id)
+		err = model.DeleteQuizType(db, id)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
@@ -84,17 +84,17 @@ func DeleteCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func GetCategories(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func GetQuizTypes(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Interface with the database.
-		categories, err := model.SelectCategories(db)
+		quizTypes, err := model.SelectQuizTypes(db)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Marshal a response.
-		response, err := ffjson.Marshal(categories.ToDTO())
+		response, err := ffjson.Marshal(quizTypes.ToDTO())
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
@@ -106,29 +106,29 @@ func GetCategories(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func GetCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func GetQuizType(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the quiz id.
-		idStr := mux.Vars(r)[routeVarCategoryID]
+		idStr := mux.Vars(r)[routeVarQuizTypeID]
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarCategoryID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidRouteVar(routeVarQuizTypeID))
 			return
 		}
 
 		// Interface with the database.
-		category, err := model.SelectCategory(db, id)
+		quizType, err := model.SelectQuizType(db, id)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
-		} else if category == nil {
+		} else if quizType == nil {
 			// If the quiz is nil, then there is none.
 			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorNoSuchRecord(id))
 			return
 		}
 
 		// Marshal a response.
-		response, err := ffjson.Marshal(category.ToDTO())
+		response, err := ffjson.Marshal(quizType.ToDTO())
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
@@ -140,28 +140,28 @@ func GetCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func ProvideCategory(db *sql.DB) func(http.ResponseWriter, *http.Request) {
+func ProvideQuizType(db *sql.DB) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the quiz id.
-		name := r.URL.Query().Get(queryStringVarCategoryName)
+		name := r.URL.Query().Get(queryStringVarQuizTypeName)
 		if len(name) < 1 {
 			helpers.RespondWithError(
 				w,
 				http.StatusBadRequest,
-				helpers.ErrorInvalidQueryStringVar(queryStringVarCategoryName),
+				helpers.ErrorInvalidQueryStringVar(queryStringVarQuizTypeName),
 			)
 			return
 		}
 
 		// Interface with the database.
-		category, err := model.ProvideCategory(db, name)
+		quizType, err := model.ProvideQuizType(db, name)
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		// Marshal a response.
-		response, err := ffjson.Marshal(category.ToDTO())
+		response, err := ffjson.Marshal(quizType.ToDTO())
 		if err != nil {
 			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 			return
