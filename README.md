@@ -20,3 +20,10 @@ Tada! The `gauntlet` development environment should be ready for you. Each of th
 ```shell
 ./infra/scripts/stop-containers.sh
 ```
+## Dockerizing
+gauntlet git:(master) docker-compose -f ./infra/docker-compose.yml build 
+gauntlet git:(master) ✗ docker-compose -f ./infra/docker-compose.yml down
+docker-compose -f ./infra/docker-compose.yml up -d
+## REST notes
+See /Users/mduduzikeswa/Documents/dev/mazasoft/go/src/github.com/skeswa/gauntlet/api/main.go for routes/endpoints
+See /Users/mduduzikeswa/Documents/dev/mazasoft/go/src/github.com/skeswa/gauntlet/api/dto for JSOn structure
