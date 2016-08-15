@@ -1,4 +1,14 @@
 
 .main {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
 
+.message {
+  color: #444;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  max-width: 60%;
 }

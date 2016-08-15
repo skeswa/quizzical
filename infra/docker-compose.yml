@@ -3,8 +3,8 @@ version: '2'
 services:
   api:
     build:
-      context: ./images/api
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: infra/images/api/Dockerfile
     image: gauntlet-api
     depends_on:
       - db
