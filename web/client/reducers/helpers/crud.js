@@ -3,13 +3,13 @@ import pluralize from 'pluralize'
 import { handleActions } from 'redux-actions'
 
 const baseInitialState = {
-  list:            [],
-  loaded:          false,
-  createError:    null,
-  deleteError:    null,
-  loadOneError:    null,
-  loadAllError:    null,
-  pendingRequests: 0,
+  list:             [],
+  loaded:           false,
+  createError:      null,
+  deleteError:      null,
+  loadOneError:     null,
+  loadAllError:     null,
+  pendingRequests:  0,
 }
 
 export function createCrudReducer(entity, actionHandlerExtensions, initialStateExtensions) {

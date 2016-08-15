@@ -4,7 +4,7 @@ import style from './style.css'
 
 const ListError = (props, context) => (
   <div className={style.main}>
-    empty
+    <div className={style.message}>There are no records to show.</div>
   </div>
 )
 

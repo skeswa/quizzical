@@ -1,8 +1,11 @@
 
 import { bindActionCreators } from 'redux'
 import React, { Component } from 'react'
+import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
+import FlatButton from 'material-ui/FlatButton'
 import classNames from 'classnames'
+import Dialog from 'material-ui/Dialog'
 
 import style from './style.css'
 import actions from 'actions'
@@ -10,36 +13,49 @@ import ListError from 'components/ListError'
 import ListEmpty from 'components/ListEmpty'
 import ListLoader from 'components/ListLoader'
 import ListButtons from 'components/ListButtons'
-import { pictureNameToBackgroundUrl } from './helpers'
+import QuestionCreationForm from 'components/QuestionCreationForm'
 
 class QuestionList extends Component {
-  componentWillMount() {
-    // Load data pre-emptively.
-    this.loadData()
+  state = {
+    creationDialogVisible: false,
   }
 
-  // Gets data needed to render this component form the database.
-  loadData() {
-    const props = this.props
-
+  componentWillMount() {
     // Attempt to load questions.
-    if (props.dataShouldBeLoaded) {
-      props.actions.loadQuestions()
-      props.actions.loadCategories()
-      props.actions.loadDifficulties()
+    if (this.props.dataShouldBeLoaded) {
+      this.props.actions.loadQuestions()
+      this.props.actions.loadCategories()
+      this.props.actions.loadDifficulties()
     }
   }
 
-  onRefreshClicked() {
-    loadData();
+  onRefreshListClicked() {
+    // Re-load everything.
+    this.props.actions.loadQuestions()
+    this.props.actions.loadCategories()
+    this.props.actions.loadDifficulties()
   }
 
-  onCreateClicked() {
+  onOpenCreateClicked() {
     // TODO(skeswa): show the create form.
+    this.setState({ creationDialogVisible: true })
+  }
+
+  onItemClicked() {
+    // TODO(skeswa): activate any selection events that may exist.
+  }
+
+  onCreateQuestionClicked() {
+    // TODO(skeswa): implement this.
+  }
+
+  onCancelQuestionClicked() {
+    this.setState({ creationDialogVisible: false })
   }
 
   render() {
-    const { questions, loadingError, isDataLoading } = this.props;
+    const { creationDialogVisible } = this.state
+    const { questions, loadingError, isDataLoading } = this.props
 
     let content;
     if (loadingError) {
@@ -53,10 +69,21 @@ class QuestionList extends Component {
         .map(question => (
           <QuestionListItem
             key={question.id}
-            onClick={::this.onClick}
+            onClick={::this.onItemClicked}
             question={question} />
         ))
     }
+
+    const dialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={::this.onCancelQuestionClicked} />,
+      <RaisedButton
+        label="Create"
+        primary={true}
+        onTouchTap={::this.onCreateQuestionClicked} />
+    ]
 
     return (
       <div className={style.main}>
@@ -64,9 +91,19 @@ class QuestionList extends Component {
         <div className={style.buttons}>
           <ListButtons
             disabled={isDataLoading}
-            onCreateClicked={::this.onCreateClicked}
-            onRefreshClicked={::this.onRefreshClicked} />
+            onCreateClicked={::this.onOpenCreateClicked}
+            onRefreshClicked={::this.onRefreshListClicked} />
         </div>
+
+        <Dialog
+          title="Create New Question"
+          actions={dialogActions}
+          modal={true}
+          open={creationDialogVisible}
+          onRequestClose={::this.onCancelQuestionClicked}
+          autoScrollBodyContent={true}>
+          <QuestionCreationForm />
+        </Dialog>
       </div>
     )
   }
@@ -106,6 +143,10 @@ const QuestionListItem = (props, context) => {
       </div>
     </div>
   )
+}
+
+function pictureNameToBackgroundUrl(pictureName) {
+  return `/api/pictures/${pictureName}`
 }
 
 const reduxify = connect(
