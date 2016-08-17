@@ -99,6 +99,8 @@ func SelectCategory(db *sql.DB, id int) (*Category, error) {
 		return nil, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		if err = rows.Scan(&category.ID, &category.Name); err != nil {
 			return nil, err
@@ -167,6 +169,8 @@ func ProvideCategory(db *sql.DB, name string) (*Category, error) {
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	if rows.Next() {
 		if err = rows.Scan(&category.ID, &category.Name); err != nil {

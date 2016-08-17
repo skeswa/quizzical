@@ -8,6 +8,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const (
+	maxDBConnections = 10
+)
+
+// StartDBConnection opens a connection to the database and performs some
+// initializations.
 func StartDBConnection(config *Config) (*sql.DB, error) {
 	connStrBuffer := bytes.Buffer{}
 	connStrBuffer.WriteString("host=")
@@ -20,5 +26,13 @@ func StartDBConnection(config *Config) (*sql.DB, error) {
 	connStrBuffer.WriteString(config.DbName)
 	connStrBuffer.WriteString(" sslmode=disable")
 
-	return sql.Open("postgres", connStrBuffer.String())
+	db, err := sql.Open("postgres", connStrBuffer.String())
+	if err != nil {
+		return nil, err
+	}
+
+	// Make sure we don't overrun the poor database.
+	db.SetMaxOpenConns(maxDBConnections)
+
+	return db, nil
 }

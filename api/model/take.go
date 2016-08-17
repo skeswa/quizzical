@@ -172,17 +172,23 @@ func DeleteTake(db *sql.DB, id int) error {
 
 // SelectTake gets all the information about a specific take.
 func SelectTake(db *sql.DB, id int) (*Take, error) {
+	var (
+		rows *sql.Rows
+		err  error
+	)
+
 	// Get the take itself.
-	rows, err := sq.Select().
+	if rows, err = sq.Select().
 		Columns(columnTakeQuizID, columnTakeDateTaken).
 		From(tableTake).
 		Where(sq.Eq{columnTakeID: id}).
 		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
-		Query()
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	var (
 		take   = Take{ID: id}
@@ -246,6 +252,8 @@ func SelectTake(db *sql.DB, id int) (*Take, error) {
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	// Create each question in memory.
 	answers := []*TakeAnswer{}
@@ -327,6 +335,8 @@ func SelectTakes(db *sql.DB) (Takes, error) {
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		quiz := Quiz{}

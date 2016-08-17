@@ -68,13 +68,11 @@ func InsertQuizType(db *sql.DB, name string) (int, error) {
 // DeleteQuizType deletes a quizType from the db.
 func DeleteQuizType(db *sql.DB, id int) error {
 	// TODO(skeswa): remove replace all linked records with null.
-	_, err := sq.Delete(tableQuizType).
+	if _, err := sq.Delete(tableQuizType).
 		Where(sq.Eq{columnQuizTypeID: id}).
 		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
-		Exec()
-
-	if err != nil {
+		Exec(); err != nil {
 		return err
 	}
 
@@ -99,6 +97,8 @@ func SelectQuizType(db *sql.DB, id int) (*QuizType, error) {
 		return nil, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		if err = rows.Scan(&quizType.ID, &quizType.Name); err != nil {
 			return nil, err
@@ -121,14 +121,14 @@ func SelectQuizTypes(db *sql.DB) (QuizTypes, error) {
 		quizTypes = []*QuizType{}
 	)
 
-	rows, err = sq.Select(columnQuizTypeID, columnQuizTypeName).
+	if rows, err = sq.Select(columnQuizTypeID, columnQuizTypeName).
 		From(tableQuizType).
 		RunWith(db).
-		Query()
-
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		quizType := QuizType{}
@@ -167,6 +167,8 @@ func ProvideQuizType(db *sql.DB, name string) (*QuizType, error) {
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	if rows.Next() {
 		if err = rows.Scan(&quizType.ID, &quizType.Name); err != nil {

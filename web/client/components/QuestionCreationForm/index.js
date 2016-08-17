@@ -12,11 +12,13 @@ class QuestionCreationForm extends Component {
       <div className={style.main}>
         <form ref="form">
           <TextField
+            name="answer"
             hintText="e.g. A...E or 123.4 or 1/2"
             floatingLabelText="Answer" />
           <TextField
-            hintText="Hint Text"
-            floatingLabelText="Floating Label Text" />
+            name="source"
+            hintText="e.g. Barron's Book"
+            floatingLabelText="Question Source" />
         </form>
       </div>
     )

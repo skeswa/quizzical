@@ -222,6 +222,8 @@ func SelectQuestion(db *sql.DB, id int) (*Question, error) {
 		return nil, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		if err = rows.Scan(
 			&question.ID,
@@ -259,7 +261,7 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 		questions = []*Question{}
 	)
 
-	rows, err = sq.Select().
+	if rows, err = sq.Select().
 		Columns(
 			column(tableQuestion, columnQuestionID),
 			column(tableQuestion, columnQuestionSource),
@@ -288,11 +290,11 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 			column(tableQuestion, columnQuestionDifficultyID),
 		)).
 		RunWith(db).
-		Query()
-
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		var (

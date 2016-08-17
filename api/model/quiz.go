@@ -140,8 +140,13 @@ func DeleteQuiz(db *sql.DB, id int) error {
 
 // SelectQuiz gets all the information about a specific quiz.
 func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
+	var (
+		rows *sql.Rows
+		err  error
+	)
+
 	// Get the quiz itself.
-	rows, err := sq.Select().
+	if rows, err = sq.Select().
 		Columns(
 			column(tableQuiz, columnQuizName),
 			column(tableQuiz, columnQuizDescription),
@@ -158,10 +163,11 @@ func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 		)).
 		PlaceholderFormat(sq.Dollar).
 		RunWith(db).
-		Query()
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	// Load the results into memory.
 	quiz := Quiz{ID: id, Type: &QuizType{}}
@@ -212,6 +218,8 @@ func SelectQuiz(db *sql.DB, id int) (*Quiz, error) {
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	// Create each question in memory.
 	questions := []*Question{}
@@ -264,7 +272,7 @@ func SelectQuizzes(db *sql.DB) (Quizzes, error) {
 		quizzes = []*Quiz{}
 	)
 
-	rows, err = sq.Select().
+	if rows, err = sq.Select().
 		Columns(
 			column(tableQuiz, columnQuizID),
 			column(tableQuiz, columnQuizName),
@@ -280,11 +288,11 @@ func SelectQuizzes(db *sql.DB) (Quizzes, error) {
 			column(tableQuizType, columnQuizTypeID),
 		)).
 		RunWith(db).
-		Query()
-
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		quiz := Quiz{Type: &QuizType{}}

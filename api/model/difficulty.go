@@ -102,6 +102,8 @@ func SelectDifficulty(db *sql.DB, id int) (*Difficulty, error) {
 		return nil, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		if err = rows.Scan(&difficulty.ID, &difficulty.Name, &difficulty.Color); err != nil {
 			return nil, err
@@ -124,14 +126,14 @@ func SelectDifficulties(db *sql.DB) (Difficulties, error) {
 		difficulties = []*Difficulty{}
 	)
 
-	rows, err = sq.Select(columnDifficultyID, columnDifficultyName, columnDifficultyColor).
+	if rows, err = sq.Select(columnDifficultyID, columnDifficultyName, columnDifficultyColor).
 		From(tableDifficulty).
 		RunWith(db).
-		Query()
-
-	if err != nil {
+		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		difficulty := Difficulty{}
@@ -171,6 +173,8 @@ func ProvideDifficulty(db *sql.DB, name string, color string) (*Difficulty, erro
 		Query(); err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	if rows.Next() {
 		if err = rows.Scan(&difficulty.ID, &difficulty.Name, &difficulty.Color); err != nil {
