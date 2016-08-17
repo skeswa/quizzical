@@ -24,7 +24,7 @@ const (
 	questionFormFieldAnswer             = "answer"
 	questionFormFieldSource             = "source"
 	questionFormFieldSourcePage         = "sourcePage"
-	questionFormFieldQuestionID         = "questionId"
+	questionFormFieldCategoryID         = "categoryId"
 	questionFormFieldDifficultyID       = "difficultyId"
 	questionFormFieldAnswerPicture      = "answerPicture"
 	questionFormFieldMultipleChoice     = "multipleChoice"
@@ -40,10 +40,10 @@ func CreateQuestion(db *sql.DB, c *common.Config) func(http.ResponseWriter, *htt
 			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldAnswer))
 			return
 		}
-		questionIDStr := r.FormValue(questionFormFieldQuestionID)
-		questionID, err := strconv.Atoi(questionIDStr)
+		categoryIDStr := r.FormValue(questionFormFieldCategoryID)
+		categoryID, err := strconv.Atoi(categoryIDStr)
 		if err != nil {
-			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldQuestionID))
+			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldCategoryID))
 			return
 		}
 		difficultyIDStr := r.FormValue(questionFormFieldDifficultyID)
@@ -146,7 +146,7 @@ func CreateQuestion(db *sql.DB, c *common.Config) func(http.ResponseWriter, *htt
 			answer,
 			source,
 			sourcePage,
-			questionID,
+			categoryID,
 			difficultyID,
 			outputAnswerPictureFileName,
 			multipleChoice,
