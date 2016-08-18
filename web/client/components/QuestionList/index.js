@@ -47,14 +47,46 @@ class QuestionList extends Component {
 
   onCreateQuestionClicked() {
     // TODO(skeswa): implement this.
+    const formData = this.refs.creationForm.getFormData()
+    console.log('FORM DATA', Array.from(formData.keys()))
   }
 
   onCancelQuestionClicked() {
     this.setState({ creationDialogVisible: false })
   }
 
-  render() {
+  renderCreationDialog() {
     const { creationDialogVisible } = this.state
+    const { categories, difficulties } = this.props
+
+    const dialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={::this.onCancelQuestionClicked} />,
+      <RaisedButton
+        label="Create"
+        primary={true}
+        onTouchTap={::this.onCreateQuestionClicked} />
+    ]
+
+    return (
+      <Dialog
+        title="Create New Question"
+        actions={dialogActions}
+        modal={true}
+        open={creationDialogVisible}
+        onRequestClose={::this.onCancelQuestionClicked}
+        autoScrollBodyContent={true}>
+        <QuestionCreationForm
+          ref="creationForm"
+          categories={categories}
+          difficulties={difficulties} />
+      </Dialog>
+    )
+  }
+
+  render() {
     const { questions, loadingError, isDataLoading } = this.props
 
     let content;
@@ -74,17 +106,6 @@ class QuestionList extends Component {
         ))
     }
 
-    const dialogActions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={::this.onCancelQuestionClicked} />,
-      <RaisedButton
-        label="Create"
-        primary={true}
-        onTouchTap={::this.onCreateQuestionClicked} />
-    ]
-
     return (
       <div className={style.main}>
         <div className={style.content}>{content}</div>
@@ -95,15 +116,7 @@ class QuestionList extends Component {
             onRefreshClicked={::this.onRefreshListClicked} />
         </div>
 
-        <Dialog
-          title="Create New Question"
-          actions={dialogActions}
-          modal={true}
-          open={creationDialogVisible}
-          onRequestClose={::this.onCancelQuestionClicked}
-          autoScrollBodyContent={true}>
-          <QuestionCreationForm />
-        </Dialog>
+        {this.renderCreationDialog()}
       </div>
     )
   }

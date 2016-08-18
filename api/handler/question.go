@@ -28,7 +28,7 @@ const (
 	questionFormFieldDifficultyID       = "difficultyId"
 	questionFormFieldAnswerPicture      = "answerPicture"
 	questionFormFieldMultipleChoice     = "multipleChoice"
-	questionFormFieldQuestionPicture    = "answerPicture"
+	questionFormFieldQuestionPicture    = "questionPicture"
 	questionFormFieldRequiresCalculator = "requiresCalculator"
 )
 
