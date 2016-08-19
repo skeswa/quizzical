@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 
 const NavItem = (props, context) => {
-  const { title, path, icon, showIcon, highlighted } = props
+  const { title, path, icon } = props
 
   return (
     <Link
@@ -24,18 +24,15 @@ const Nav = (props, context) => (
     <NavItem
       icon="question_answer"
       title="Questions"
-      path="/questions"
-      showIcon={props.showIcon} />
+      path="/questions" />
     <NavItem
       icon="mode_edit"
       title="Practice"
-      path="/practice"
-      highlighted={true} />
+      path="/practice" />
     <NavItem
       icon="chrome_reader_mode"
       title="Quizzes"
-      path="/quizzes"
-      showIcon={props.showIcon} />
+      path="/quizzes" />
   </div>
 )
 

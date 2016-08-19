@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import Header from 'components/Header'
 import style from './style.css'
+import Nav from 'components/Nav'
 
 class App extends Component {
   render() {
@@ -14,11 +14,9 @@ class App extends Component {
         <div className={style.top}>
           <Header />
         </div>
-        <div className={style.middle}>
-          {this.props.children}
-        </div>
         <div className={style.bottom}>
-          <Footer />
+          <Nav />
+          {this.props.children}
         </div>
       </div>
     )

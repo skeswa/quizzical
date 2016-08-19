@@ -1,7 +1,7 @@
 
 .main {
   box-shadow: 0 0 .1rem rgba(0,0,0,.15);
-  background: #fff;
+  background: #00796b;
   padding: 1.8rem 2rem;
 }
 
@@ -12,12 +12,12 @@
 }
 
 .logo {
-  color: #222;
+  color: #fff;
   font-size: 2rem;
 }
 
 .account {
-  color: #7f7f7f;
+  color: #fff;
 }
 
 .accountIcon {
