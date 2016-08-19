@@ -387,7 +387,7 @@ class QuestionCreationForm extends Component {
               {categoryMenuItems}
             </SelectField>
             <FlatButton
-              label="add"
+              label="new"
               style={{ marginLeft: '1.2rem' }}
               primary={true}
               onClick={::this.onOpenCategoryCreationDialogClicked} />
@@ -403,7 +403,7 @@ class QuestionCreationForm extends Component {
               {difficultyMenuItems}
             </SelectField>
             <FlatButton
-              label="add"
+              label="new"
               style={{ marginLeft: '1.2rem' }}
               primary={true}
               onClick={::this.onOpenDifficultyCreationDialogClicked} />

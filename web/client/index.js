@@ -9,6 +9,8 @@ import React from 'react'
 import configure from './store'
 
 import App from 'containers/App'
+import PracticePage from 'components/PracticePage'
+import QuizListPage from 'components/QuizListPage'
 import QuestionListPage from 'components/QuestionListPage'
 
 const store = configure()
@@ -22,6 +24,8 @@ ReactDOM.render(
     <ReduxProvider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
+          <Route path="quizzes" component={QuizListPage} />
+          <Route path="practice" component={PracticePage} />
           <Route path="questions" component={QuestionListPage} />
         </Route>
       </Router>
