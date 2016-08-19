@@ -57,10 +57,16 @@ class QuestionList extends Component {
   renderCreationDialog() {
     const { creationDialogVisible } = this.state
     const {
+      actions,
       categories,
       difficulties,
       isDataLoading,
+      questionLoading,
+      categoryLoading,
+      difficultyLoading,
       questionCreationError,
+      categoryCreationError,
+      difficultyCreationError,
     } = this.props
 
     const dialogActions = [
@@ -86,10 +92,16 @@ class QuestionList extends Component {
         autoScrollBodyContent={true}>
         <QuestionCreationForm
           ref="creationForm"
-          loading={isDataLoading}
           categories={categories}
           difficulties={difficulties}
-          questionCreationError={questionCreationError} />
+          createCategory={actions.createCategory}
+          questionLoading={questionLoading}
+          categoryLoading={categoryLoading}
+          createDifficulty={actions.createDifficulty}
+          difficultyLoading={difficultyLoading}
+          questionCreationError={questionCreationError}
+          categoryCreationError={categoryCreationError}
+          difficultyCreationError={difficultyCreationError} />
       </Dialog>
     )
   }
@@ -191,6 +203,10 @@ const reduxify = connect(
       !state.category.loaded ||
       !state.difficulty.loaded
     ),
+
+    questionLoading: state.question.pendingRequests > 0,
+    categoryLoading: state.category.pendingRequests > 0,
+    difficultyLoading: state.difficulty.pendingRequests > 0,
 
     questionCreationError: state.question.createError,
     categoryCreationError: state.category.createError,

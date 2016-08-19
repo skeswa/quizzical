@@ -1,31 +1,43 @@
 
+import Dialog from 'material-ui/Dialog'
 import ReactDOM from 'react-dom'
 import Checkbox from 'material-ui/Checkbox'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
+import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 import style from './style.css'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
+import DifficultyCreationForm from 'components/DifficultyCreationForm'
 
 const questionTypeNumericAnswer = 'numericAnswer'
 const questionTypeMultipleChoice  = 'multipleChoice'
 
 class QuestionCreationForm extends Component {
   static propTypes = {
-    categories:   React.PropTypes.array.isRequired,
-    difficulties: React.PropTypes.array.isRequired,
+    categories:               React.PropTypes.array.isRequired,
+    difficulties:             React.PropTypes.array.isRequired,
+    createCategory:           React.PropTypes.func.isRequired,
+    questionLoading:          React.PropTypes.bool.isRequired,
+    categoryLoading:          React.PropTypes.bool.isRequired,
+    createDifficulty:         React.PropTypes.func.isRequired,
+    difficultyLoading:        React.PropTypes.bool.isRequired,
+    questionCreationError:    React.PropTypes.any,
+    categoryCreationError:    React.PropTypes.any,
+    difficultyCreationError:  React.PropTypes.any,
   }
 
   state = {
-    selectedCategory:     null,
-    selectedDifficulty:   null,
-    requiresCalculator:   false,
-    selectedQuestionType: null,
+    selectedCategory:                 null,
+    selectedDifficulty:               null,
+    requiresCalculator:               false,
+    selectedQuestionType:             null,
+    difficultyCreationDialogVisible:  false,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,6 +61,19 @@ class QuestionCreationForm extends Component {
 
   onRequiresCalculatorChecked(e, checked) {
     this.setState({ requiresCalculator: checked })
+  }
+
+  onCreateDifficultyClicked() {
+    const json = this.refs.difficultyCreationForm.getJSON()
+    this.props.actions.createDifficulty(json)
+  }
+
+  onCancelDifficultyClicked() {
+    this.setState({ difficultyCreationDialogVisible: false })
+  }
+
+  onOpenDifficultyCreationDialogClicked() {
+    this.setState({ difficultyCreationDialogVisible: true })
   }
 
   getFormData = () => {
@@ -153,8 +178,49 @@ class QuestionCreationForm extends Component {
     return null
   }
 
+  renderDifficultyCreationDialog() {
+    const { difficultyCreationDialogVisible } = this.state
+    const {
+      difficultyLoading,
+      difficultyCreationError,
+    } = this.props
+
+    const dialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        disabled={difficultyLoading}
+        onTouchTap={::this.onCancelDifficultyClicked} />,
+      <RaisedButton
+        label="Create"
+        primary={true}
+        disabled={difficultyLoading}
+        onTouchTap={::this.onCreateDifficultyClicked} />
+    ]
+
+    return (
+      <Dialog
+        title="Create New Difficulty"
+        actions={dialogActions}
+        modal={true}
+        open={difficultyCreationDialogVisible}
+        onRequestClose={::this.onCancelDifficultyClicked}>
+        <DifficultyCreationForm
+          ref="difficultyCreationForm"
+          error={difficultyCreationError}
+          loading={difficultyLoading} />
+      </Dialog>
+    )
+  }
+
   render() {
-    const { loading, categories, difficulties } = this.props
+    const {
+      categories,
+      difficulties,
+      questionLoading,
+      categoryLoading,
+      difficultyLoading,
+    } = this.props
     const {
       selectedCategory,
       selectedDifficulty,
@@ -183,8 +249,9 @@ class QuestionCreationForm extends Component {
     return (
       <div className={style.main}>
         <form ref="form" encType="multipart/form-data">
-          <FormLoader visible={true} />
+          <FormLoader visible={questionLoading} />
           {this.renderError()}
+
           <div>
             <div className={style.label}>Question Requirements</div>
             <Checkbox
@@ -206,7 +273,9 @@ class QuestionCreationForm extends Component {
               value={questionTypeNumericAnswer}
               primaryText="Numeric Answer" />
           </SelectField>
+
           {this.renderAnswerField()}
+
           <div className={style.pictures}>
             <div>
               <div className={style.label}>Question Picture</div>
@@ -251,7 +320,8 @@ class QuestionCreationForm extends Component {
             <FlatButton
               label="add"
               style={{ marginLeft: '1.2rem' }}
-              primary={true} />
+              primary={true}
+              onClick={::this.onOpenDifficultyCreationDialogClicked} />
           </div>
           <TextField
             name="source"
@@ -262,7 +332,9 @@ class QuestionCreationForm extends Component {
             name="sourcePage"
             fullWidth={true}
             floatingLabelText="Question Source Page" />
+
           {this.renderHiddenFields()}
+          {this.renderDifficultyCreationDialog()}
         </form>
       </div>
     )
