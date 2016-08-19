@@ -10,9 +10,9 @@ import React from 'react'
 import configure from './store'
 
 import App from 'containers/App'
-import PracticePage from 'components/PracticePage'
-import QuizListPage from 'components/QuizListPage'
-import QuestionListPage from 'components/QuestionListPage'
+import QuizzesPage from 'containers/QuizzesPage'
+import PracticePage from 'containers/PracticePage'
+import QuestionsPage from 'containers/QuestionsPage'
 
 const store = configure()
 const history = syncHistoryWithStore(browserHistory, store)
@@ -34,9 +34,9 @@ ReactDOM.render(
     <ReduxProvider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <Route path="quizzes" component={QuizListPage} />
+          <Route path="quizzes" component={QuizzesPage} />
           <Route path="practice" component={PracticePage} />
-          <Route path="questions" component={QuestionListPage} />
+          <Route path="questions" component={QuestionsPage} />
         </Route>
       </Router>
     </ReduxProvider>

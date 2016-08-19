@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react'
 
-const QuizListPage = (props, context) => {
+const QuizzesPage = (props, context) => {
   return (
     <div>THIS IS THE QUIZ LIST PAGE</div>
   )
 }
 
-export default QuizListPage
+export default QuizzesPage
