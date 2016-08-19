@@ -15,7 +15,9 @@ func RespondWithError(w http.ResponseWriter, code int, message string) {
 	}
 
 	// Write a response.
-	http.Error(w, string(serializedErrorMessage), code)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	w.Write(serializedErrorMessage)
 }
 
 func RespondWithSuccess(w http.ResponseWriter, data []byte) {

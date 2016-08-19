@@ -1,4 +1,8 @@
 
+.main {
+  position: relative;
+}
+
 .select {
   align-items: flex-end;
   display: flex;

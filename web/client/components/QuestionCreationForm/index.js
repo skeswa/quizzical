@@ -1,13 +1,16 @@
 
-import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import Checkbox from 'material-ui/Checkbox'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
+import React, { Component } from 'react'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 import style from './style.css'
+import FormError from 'components/FormError'
+import FormLoader from 'components/FormLoader'
 
 const questionTypeNumericAnswer = 'numericAnswer'
 const questionTypeMultipleChoice  = 'multipleChoice'
@@ -23,6 +26,13 @@ class QuestionCreationForm extends Component {
     selectedDifficulty:   null,
     requiresCalculator:   false,
     selectedQuestionType: null,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.questionCreationError !== nextProps.questionCreationError) {
+      // Make sure that the error is visible.
+      this.scrollToTop()
+    }
   }
 
   onCategoryChanged(e, i, value) {
@@ -43,6 +53,12 @@ class QuestionCreationForm extends Component {
 
   getFormData = () => {
     return new FormData(this.refs.form)
+  }
+
+  scrollToTop() {
+    const node = ReactDOM.findDOMNode(this)
+    const parentNode = node.parentNode
+    parentNode.scrollTop = 0
   }
 
   renderHiddenFields() {
@@ -119,8 +135,26 @@ class QuestionCreationForm extends Component {
     return null;
   }
 
+  renderError() {
+    const { questionCreationError } = this.props
+
+    if (questionCreationError) {
+      const message = questionCreationError.error
+        ? questionCreationError.error
+        : questionCreationError
+
+      return (
+        <FormError
+          title="Failed to create question"
+          message={message} />
+      )
+    }
+
+    return null
+  }
+
   render() {
-    const { categories, difficulties } = this.props
+    const { loading, categories, difficulties } = this.props
     const {
       selectedCategory,
       selectedDifficulty,
@@ -149,6 +183,8 @@ class QuestionCreationForm extends Component {
     return (
       <div className={style.main}>
         <form ref="form" encType="multipart/form-data">
+          <FormLoader visible={true} />
+          {this.renderError()}
           <div>
             <div className={style.label}>Question Requirements</div>
             <Checkbox
@@ -187,15 +223,6 @@ class QuestionCreationForm extends Component {
                 accept="image/*;capture=camera" />
             </div>
           </div>
-          <TextField
-            name="source"
-            hintText="e.g. Barron's Book"
-            fullWidth={true}
-            floatingLabelText="Question Source" />
-          <TextField
-            name="sourcePage"
-            fullWidth={true}
-            floatingLabelText="Question Source Page" />
           <div className={style.select}>
             <SelectField
               value={selectedCategory}
@@ -226,6 +253,15 @@ class QuestionCreationForm extends Component {
               style={{ marginLeft: '1.2rem' }}
               primary={true} />
           </div>
+          <TextField
+            name="source"
+            hintText="e.g. Barron's Book"
+            fullWidth={true}
+            floatingLabelText="Question Source" />
+          <TextField
+            name="sourcePage"
+            fullWidth={true}
+            floatingLabelText="Question Source Page" />
           {this.renderHiddenFields()}
         </form>
       </div>

@@ -46,9 +46,8 @@ class QuestionList extends Component {
   }
 
   onCreateQuestionClicked() {
-    // TODO(skeswa): implement this.
     const formData = this.refs.creationForm.getFormData()
-    console.log('FORM DATA', Array.from(formData.keys()))
+    this.props.actions.createQuestion(formData)
   }
 
   onCancelQuestionClicked() {
@@ -57,16 +56,23 @@ class QuestionList extends Component {
 
   renderCreationDialog() {
     const { creationDialogVisible } = this.state
-    const { categories, difficulties } = this.props
+    const {
+      categories,
+      difficulties,
+      isDataLoading,
+      questionCreationError,
+    } = this.props
 
     const dialogActions = [
       <FlatButton
         label="Cancel"
         primary={true}
+        disabled={isDataLoading}
         onTouchTap={::this.onCancelQuestionClicked} />,
       <RaisedButton
         label="Create"
         primary={true}
+        disabled={isDataLoading}
         onTouchTap={::this.onCreateQuestionClicked} />
     ]
 
@@ -80,8 +86,10 @@ class QuestionList extends Component {
         autoScrollBodyContent={true}>
         <QuestionCreationForm
           ref="creationForm"
+          loading={isDataLoading}
           categories={categories}
-          difficulties={difficulties} />
+          difficulties={difficulties}
+          questionCreationError={questionCreationError} />
       </Dialog>
     )
   }
@@ -183,6 +191,10 @@ const reduxify = connect(
       !state.category.loaded ||
       !state.difficulty.loaded
     ),
+
+    questionCreationError: state.question.createError,
+    categoryCreationError: state.category.createError,
+    difficultyCreationError: state.difficulty.createError,
   }),
   (dispatch, props) => ({
     actions: Object.assign(

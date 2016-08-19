@@ -19,7 +19,11 @@ export function crudService(entity, extensions) {
     },
 
     create(payload) {
-      return fetch(endpoint, { method: 'POST', body: JSON.stringify(payload) })
+      const body = payload instanceof FormData
+        ? payload
+        : JSON.stringify(payload)
+
+      return fetch(endpoint, { method: 'POST', body })
         .then(handleSuccess, handleFailure)
     },
 

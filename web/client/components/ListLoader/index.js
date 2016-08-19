@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 
 import style from './style.css'
 
-const ListError = (props, context) => (
+const ListLoader = (props, context) => (
   <div className={style.main}>
     <RefreshIndicator
       top={0}
@@ -15,4 +15,4 @@ const ListError = (props, context) => (
   </div>
 )
 
-export default ListError
+export default ListLoader

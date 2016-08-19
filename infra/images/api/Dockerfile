@@ -5,8 +5,10 @@ RUN set -ex && apk add --update 'git' && apk add 'bash'
 
 # Build source and move things around.
 COPY . /go/src/github.com/skeswa/gauntlet
-RUN cd /go/src/github.com/skeswa/gauntlet/api \
-   && go get -d -v \
+RUN echo "Installing dependencies..." \
+   && cd /go/src/github.com/skeswa/gauntlet/api && go get -d -v
+RUN echo "Building the binary..." \
+   && cd /go/src/github.com/skeswa/gauntlet/api \
    && go build -o api \
    && chmod +x ./api \
    && mkdir /gauntlet \

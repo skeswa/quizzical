@@ -77,6 +77,7 @@ func CreateQuestion(db *sql.DB, c *common.Config) func(http.ResponseWriter, *htt
 		requiresCalculatorStr := r.FormValue(questionFormFieldRequiresCalculator)
 		requiresCalculator, err := strconv.ParseBool(requiresCalculatorStr)
 		if err != nil {
+			w.Header().Set("Content-Type", "application/json")
 			helpers.RespondWithError(w, http.StatusBadRequest, helpers.ErrorInvalidJSONPayloadField(questionFormFieldRequiresCalculator))
 			return
 		}
