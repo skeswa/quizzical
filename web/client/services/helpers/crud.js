@@ -1,6 +1,8 @@
 
+import debug from 'debug'
 import pluralize from 'pluralize'
 
+const logger = debug('gauntlet:crud:service')
 const genericFailureError = 'Sorry. For whatever reason, the server didn\'t like that.';
 const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.';
 
@@ -25,6 +27,10 @@ export function crudService(entity, extensions) {
 
       return fetch(endpoint, { method: 'POST', body })
         .then(handleSuccess, handleFailure)
+        .then(creationRecord => {
+          return fetch(`${endpoint}/${creationRecord.createdRecordId}`)
+            .then(handleSuccess, handleFailure)
+        })
     },
 
     del(id) {
@@ -41,6 +47,7 @@ function handleSuccess(response) {
 }
 
 function handleFailure(problem) {
+  logger('Service request failed:', problem)
   return Promise.reject(connectionFailureError)
 }
 

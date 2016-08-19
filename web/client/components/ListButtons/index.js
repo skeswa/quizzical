@@ -10,8 +10,7 @@ const ListButtons = (props, context) => (
   <div className={style.main}>
     <FloatingActionButton
       mini={true}
-      onClick={props.onRefreshClicked}
-      disabled={props.disabled}>
+      onClick={props.onRefreshClicked}>
       <FontIcon className="material-icons">refresh</FontIcon>
     </FloatingActionButton>
     <FloatingActionButton

@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
 
-class DifficultyCreationForm extends Component {
+class CategoryCreationForm extends Component {
   static propTypes = {
     error:    React.PropTypes.any,
     loading:  React.PropTypes.bool.isRequired,
@@ -14,7 +14,6 @@ class DifficultyCreationForm extends Component {
 
   state = {
     name: '',
-    color: '',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,16 +27,8 @@ class DifficultyCreationForm extends Component {
     this.setState({ name: e.target.value })
   }
 
-  onColorChanged(e) {
-    this.setState({ color: e.target.value })
-  }
-
   getJSON = () => {
-    const truncatedColor = this.state.color
-      ? this.state.color.replace('#', '')
-      : this.state.color
-
-    return { name: this.state.name, color: truncatedColor }
+    return { name: this.state.name }
   }
 
   scrollToTop() {
@@ -56,7 +47,7 @@ class DifficultyCreationForm extends Component {
 
       return (
         <FormError
-          title="Failed to create difficulty"
+          title="Failed to create category"
           message={message} />
       )
     }
@@ -74,19 +65,13 @@ class DifficultyCreationForm extends Component {
         {this.renderError()}
         <TextField
           value={name}
-          hintText="e.g. Medium"
+          hintText="e.g. Linear Equations"
           onChange={::this.onNameChanged}
           fullWidth={true}
           floatingLabelText="Name" />
-        <TextField
-          value={color}
-          hintText="e.g. #ff0000"
-          onChange={::this.onColorChanged}
-          fullWidth={true}
-          floatingLabelText="Color" />
       </div>
     )
   }
 }
 
-export default DifficultyCreationForm
+export default CategoryCreationForm

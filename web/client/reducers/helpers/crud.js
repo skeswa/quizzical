@@ -5,10 +5,6 @@ import { handleActions } from 'redux-actions'
 const baseInitialState = {
   list:             [],
   loaded:           false,
-  createError:      null,
-  deleteError:      null,
-  loadOneError:     null,
-  loadAllError:     null,
   pendingRequests:  0,
 }
 
@@ -33,7 +29,6 @@ export function createCrudReducer(entity, actionHandlerExtensions, initialStateE
 function handleLoadOneAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      loadOneError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
@@ -46,7 +41,6 @@ function handleLoadOneAction(state, action) {
 
       return item
     }),
-    loadOneError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -54,7 +48,6 @@ function handleLoadOneAction(state, action) {
 function handleLoadAllAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      loadAllError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
@@ -62,7 +55,6 @@ function handleLoadAllAction(state, action) {
   return Object.assign({}, state, {
     list: action.payload,
     loaded: true,
-    loadAllError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -70,14 +62,12 @@ function handleLoadAllAction(state, action) {
 function handleCreateAction(state, action) {
   if (action.error) {
     return Object.assign({}, state, {
-      createError: action.payload,
       pendingRequests: decrementedPendingRequests(state),
     })
   }
 
   return Object.assign({}, state, {
     list: [...state.list, action.payload],
-    createError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }
@@ -92,7 +82,6 @@ function handleDeleteAction(state, action) {
 
   return Object.assign({}, state, {
     list: state.list.filter(item => item.id !== action.payload.deletedRecordId),
-    deleteError: null,
     pendingRequests: decrementedPendingRequests(state),
   })
 }

@@ -17,28 +17,44 @@ import QuestionCreationForm from 'components/QuestionCreationForm'
 
 class QuestionList extends Component {
   state = {
-    creationDialogVisible: false,
+    loadingError:                   null,
+    isDataLoading:                  false,
+    questionCreationError:          null,
+    questionCreationInProgress:     false,
+    questionCreationDialogVisible:  false,
   }
 
   componentWillMount() {
     // Attempt to load questions.
     if (this.props.dataShouldBeLoaded) {
-      this.props.actions.loadQuestions()
-      this.props.actions.loadCategories()
-      this.props.actions.loadDifficulties()
+      this.loadData()
     }
   }
 
-  onRefreshListClicked() {
+  loadData() {
+    // Indicate loading.
+    this.setState({ isDataLoading: true, loadingError: null })
+
     // Re-load everything.
-    this.props.actions.loadQuestions()
-    this.props.actions.loadCategories()
-    this.props.actions.loadDifficulties()
+    Promise
+      .all([
+        this.props.actions.loadQuestions(),
+        this.props.actions.loadCategories(),
+        this.props.actions.loadDifficulties(),
+      ])
+      .then(() => this.setState({ isDataLoading: false }))
+      .catch(err => this.setState({ loadingError: err }))
+  }
+
+  onRefreshListClicked() {
+    this.loadData()
   }
 
   onOpenCreateClicked() {
-    // TODO(skeswa): show the create form.
-    this.setState({ creationDialogVisible: true })
+    this.setState({
+      questionCreationError: null,
+      questionCreationDialogVisible: true,
+    })
   }
 
   onItemClicked() {
@@ -46,28 +62,40 @@ class QuestionList extends Component {
   }
 
   onCreateQuestionClicked() {
+    this.setState({
+      questionCreationError:      null,
+      questionCreationInProgress: true,
+    })
+
     const formData = this.refs.creationForm.getFormData()
     this.props.actions.createQuestion(formData)
+      .then(resultingAction => {
+        if (resultingAction.error) {
+          this.setState({
+            questionCreationError:      resultingAction.payload,
+            questionCreationInProgress: false,
+          })
+        } else {
+          this.setState({
+            questionCreationInProgress:     false,
+            questionCreationDialogVisible:  false,
+          })
+        }
+      })
   }
 
   onCancelQuestionClicked() {
-    this.setState({ creationDialogVisible: false })
+    this.setState({ questionCreationDialogVisible: false })
   }
 
   renderCreationDialog() {
-    const { creationDialogVisible } = this.state
+    const { actions, categories, difficulties } = this.props
     const {
-      actions,
-      categories,
-      difficulties,
       isDataLoading,
-      questionLoading,
-      categoryLoading,
-      difficultyLoading,
       questionCreationError,
-      categoryCreationError,
-      difficultyCreationError,
-    } = this.props
+      questionCreationInProgress,
+      questionCreationDialogVisible,
+    } = this.state
 
     const dialogActions = [
       <FlatButton
@@ -87,27 +115,24 @@ class QuestionList extends Component {
         title="Create New Question"
         actions={dialogActions}
         modal={true}
-        open={creationDialogVisible}
+        open={questionCreationDialogVisible}
         onRequestClose={::this.onCancelQuestionClicked}
         autoScrollBodyContent={true}>
         <QuestionCreationForm
           ref="creationForm"
+          error={questionCreationError}
+          loading={questionCreationInProgress}
           categories={categories}
           difficulties={difficulties}
           createCategory={actions.createCategory}
-          questionLoading={questionLoading}
-          categoryLoading={categoryLoading}
-          createDifficulty={actions.createDifficulty}
-          difficultyLoading={difficultyLoading}
-          questionCreationError={questionCreationError}
-          categoryCreationError={categoryCreationError}
-          difficultyCreationError={difficultyCreationError} />
+          createDifficulty={actions.createDifficulty} />
       </Dialog>
     )
   }
 
   render() {
-    const { questions, loadingError, isDataLoading } = this.props
+    const { questions } = this.props
+    const { isDataLoading, loadingError } = this.state
 
     let content;
     if (loadingError) {
@@ -184,33 +209,14 @@ function pictureNameToBackgroundUrl(pictureName) {
 
 const reduxify = connect(
   (state, props) => ({
-    questions: state.question.list,
-    categories: state.category.list,
-    difficulties: state.difficulty.list,
-
-    loadingError: (
-      state.question.loadAllError ||
-      state.category.loadAllError ||
-      state.difficulty.loadAllError
-    ),
-    isDataLoading: (
-      state.question.pendingRequests > 0 ||
-      state.category.pendingRequests > 0 ||
-      state.difficulty.pendingRequests > 0
-    ),
+    questions:          state.question.list,
+    categories:         state.category.list,
+    difficulties:       state.difficulty.list,
     dataShouldBeLoaded: (
       !state.question.loaded ||
       !state.category.loaded ||
       !state.difficulty.loaded
     ),
-
-    questionLoading: state.question.pendingRequests > 0,
-    categoryLoading: state.category.pendingRequests > 0,
-    difficultyLoading: state.difficulty.pendingRequests > 0,
-
-    questionCreationError: state.question.createError,
-    categoryCreationError: state.category.createError,
-    difficultyCreationError: state.difficulty.createError,
   }),
   (dispatch, props) => ({
     actions: Object.assign(

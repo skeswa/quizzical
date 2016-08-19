@@ -18,7 +18,7 @@ class FormLoader extends Component {
       })
     } else if (!nextProps.visible && this.props.visible) {
       this.setState({ visible: false }, () => {
-        this.setTimeout(() => {
+        setTimeout(() => {
           this.setState({ mounted: false })
         }, 300)
       })

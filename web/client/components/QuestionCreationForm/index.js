@@ -13,6 +13,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import style from './style.css'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
+import CategoryCreationForm from 'components/CategoryCreationForm'
 import DifficultyCreationForm from 'components/DifficultyCreationForm'
 
 const questionTypeNumericAnswer = 'numericAnswer'
@@ -20,39 +21,40 @@ const questionTypeMultipleChoice  = 'multipleChoice'
 
 class QuestionCreationForm extends Component {
   static propTypes = {
+    error:                    React.PropTypes.any,
+    loading:                  React.PropTypes.bool.isRequired,
     categories:               React.PropTypes.array.isRequired,
     difficulties:             React.PropTypes.array.isRequired,
     createCategory:           React.PropTypes.func.isRequired,
-    questionLoading:          React.PropTypes.bool.isRequired,
-    categoryLoading:          React.PropTypes.bool.isRequired,
     createDifficulty:         React.PropTypes.func.isRequired,
-    difficultyLoading:        React.PropTypes.bool.isRequired,
-    questionCreationError:    React.PropTypes.any,
-    categoryCreationError:    React.PropTypes.any,
-    difficultyCreationError:  React.PropTypes.any,
   }
 
   state = {
-    selectedCategory:                 null,
-    selectedDifficulty:               null,
     requiresCalculator:               false,
+    selectedCategoryId:               null,
+    selectedDifficultyId:             null,
     selectedQuestionType:             null,
+    categoryCreationError:            null,
+    difficultyCreationError:          null,
+    categoryCreationInProgress:       false,
+    difficultyCreationInProgress:     false,
+    categoryCreationDialogVisible:    false,
     difficultyCreationDialogVisible:  false,
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.questionCreationError !== nextProps.questionCreationError) {
+    if (this.props.error !== nextProps.error) {
       // Make sure that the error is visible.
       this.scrollToTop()
     }
   }
 
   onCategoryChanged(e, i, value) {
-    this.setState({ selectedCategory: value })
+    this.setState({ selectedCategoryId: value })
   }
 
   onDifficultyChanged(e, i, value) {
-    this.setState({ selectedDifficulty: value })
+    this.setState({ selectedDifficultyId: value })
   }
 
   onQuestionTypeChanged(e, i, value) {
@@ -63,9 +65,54 @@ class QuestionCreationForm extends Component {
     this.setState({ requiresCalculator: checked })
   }
 
+  onCreateCategoryClicked() {
+    this.setState({
+      categoryCreationError:      null,
+      categoryCreationInProgress: true,
+    })
+
+    const json = this.refs.categoryCreationForm.getJSON()
+    this.props.createCategory(json)
+      .then(resultingAction => {
+        if (resultingAction.error) {
+          this.setState({
+            categoryCreationError:      resultingAction.payload,
+            categoryCreationInProgress: false,
+          })
+        } else {
+          this.setState({
+            categoryCreationInProgress:     false,
+            categoryCreationDialogVisible:  false,
+          })
+        }
+      })
+  }
+
   onCreateDifficultyClicked() {
+    this.setState({
+      difficultyCreationError:      null,
+      difficultyCreationInProgress: true,
+    })
+
     const json = this.refs.difficultyCreationForm.getJSON()
-    this.props.actions.createDifficulty(json)
+    this.props.createDifficulty(json)
+      .then(resultingAction => {
+        if (resultingAction.error) {
+          this.setState({
+            difficultyCreationError:      resultingAction.payload,
+            difficultyCreationInProgress: false,
+          })
+        } else {
+          this.setState({
+            difficultyCreationInProgress:     false,
+            difficultyCreationDialogVisible:  false,
+          })
+        }
+      })
+  }
+
+  onCancelCategoryClicked() {
+    this.setState({ categoryCreationDialogVisible: false })
   }
 
   onCancelDifficultyClicked() {
@@ -73,7 +120,17 @@ class QuestionCreationForm extends Component {
   }
 
   onOpenDifficultyCreationDialogClicked() {
-    this.setState({ difficultyCreationDialogVisible: true })
+    this.setState({
+      difficultyCreationError:          null,
+      difficultyCreationDialogVisible:  true,
+    })
+  }
+
+  onOpenCategoryCreationDialogClicked() {
+    this.setState({
+      categoryCreationError:          null,
+      categoryCreationDialogVisible:  true,
+    })
   }
 
   getFormData = () => {
@@ -88,32 +145,30 @@ class QuestionCreationForm extends Component {
 
   renderHiddenFields() {
     const {
-      selectedCategory,
-      selectedDifficulty,
       requiresCalculator,
+      selectedCategoryId,
+      selectedDifficultyId,
       selectedQuestionType,
     } = this.state
 
-    const categoryId = selectedCategory ? selectedCategory.id : null
-    const difficultyId = selectedDifficulty ? selectedDifficulty.id : null
     const multipleChoice = selectedQuestionType
       ? selectedQuestionType === questionTypeMultipleChoice
       : null
 
     return [
-      categoryId
+      selectedCategoryId
         ? <input
             key="categoryId"
             type="hidden"
             name="categoryId"
-            value={categoryId} />
+            value={selectedCategoryId} />
         : null,
-      difficultyId
+      selectedDifficultyId
         ? <input
             key="difficultyId"
             type="hidden"
             name="difficultyId"
-            value={difficultyId} />
+            value={selectedDifficultyId} />
         : null,
       multipleChoice !== null
         ? <input
@@ -161,12 +216,10 @@ class QuestionCreationForm extends Component {
   }
 
   renderError() {
-    const { questionCreationError } = this.props
+    const { error } = this.props
 
-    if (questionCreationError) {
-      const message = questionCreationError.error
-        ? questionCreationError.error
-        : questionCreationError
+    if (error) {
+      const message = error.error ? error.error : error
 
       return (
         <FormError
@@ -178,23 +231,59 @@ class QuestionCreationForm extends Component {
     return null
   }
 
-  renderDifficultyCreationDialog() {
-    const { difficultyCreationDialogVisible } = this.state
+  renderCategoryCreationDialog() {
     const {
-      difficultyLoading,
-      difficultyCreationError,
-    } = this.props
+      categoryCreationError,
+      categoryCreationInProgress,
+      categoryCreationDialogVisible,
+    } = this.state
 
     const dialogActions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        disabled={difficultyLoading}
+        disabled={categoryCreationInProgress}
+        onTouchTap={::this.onCancelCategoryClicked} />,
+      <RaisedButton
+        label="Create"
+        primary={true}
+        disabled={categoryCreationInProgress}
+        onTouchTap={::this.onCreateCategoryClicked} />
+    ]
+
+    return (
+      <Dialog
+        title="Create New Category"
+        actions={dialogActions}
+        modal={true}
+        open={categoryCreationDialogVisible}
+        onRequestClose={::this.onCancelCategoryClicked}
+        autoScrollBodyContent={true}>
+        <CategoryCreationForm
+          ref="categoryCreationForm"
+          error={categoryCreationError}
+          loading={categoryCreationInProgress} />
+      </Dialog>
+    )
+  }
+
+  renderDifficultyCreationDialog() {
+    const {
+      difficultyCreationError,
+      difficultyCreationInProgress,
+      difficultyCreationDialogVisible,
+    } = this.state
+
+    const dialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        disabled={difficultyCreationInProgress}
         onTouchTap={::this.onCancelDifficultyClicked} />,
       <RaisedButton
         label="Create"
         primary={true}
-        disabled={difficultyLoading}
+        disabled={difficultyCreationInProgress}
         onTouchTap={::this.onCreateDifficultyClicked} />
     ]
 
@@ -204,27 +293,22 @@ class QuestionCreationForm extends Component {
         actions={dialogActions}
         modal={true}
         open={difficultyCreationDialogVisible}
-        onRequestClose={::this.onCancelDifficultyClicked}>
+        onRequestClose={::this.onCancelDifficultyClicked}
+        autoScrollBodyContent={true}>
         <DifficultyCreationForm
           ref="difficultyCreationForm"
           error={difficultyCreationError}
-          loading={difficultyLoading} />
+          loading={difficultyCreationInProgress} />
       </Dialog>
     )
   }
 
   render() {
+    const { loading, categories, difficulties } = this.props
     const {
-      categories,
-      difficulties,
-      questionLoading,
-      categoryLoading,
-      difficultyLoading,
-    } = this.props
-    const {
-      selectedCategory,
-      selectedDifficulty,
       requiresCalculator,
+      selectedCategoryId,
+      selectedDifficultyId,
       selectedQuestionType,
     } = this.state
 
@@ -236,12 +320,12 @@ class QuestionCreationForm extends Component {
           primaryText={category.name} />
       )
     })
-    const difficultyMenuItems = categories.map(difficulty => {
+    const difficultyMenuItems = difficulties.map(difficulty => {
       return (
         <MenuItem
           key={difficulty.id}
           value={difficulty.id}
-          style={difficulty.color}
+          style={{ color: `#${difficulty.color}` }}
           primaryText={difficulty.name} />
       )
     })
@@ -249,7 +333,7 @@ class QuestionCreationForm extends Component {
     return (
       <div className={style.main}>
         <form ref="form" encType="multipart/form-data">
-          <FormLoader visible={questionLoading} />
+          <FormLoader visible={loading} />
           {this.renderError()}
 
           <div>
@@ -294,9 +378,9 @@ class QuestionCreationForm extends Component {
           </div>
           <div className={style.select}>
             <SelectField
-              value={selectedCategory}
+              value={selectedCategoryId}
               hintText="The category of this question"
-              disabled={difficultyMenuItems.length < 1}
+              disabled={categoryMenuItems.length < 1}
               onChange={::this.onCategoryChanged}
               fullWidth={true}
               floatingLabelText="Category">
@@ -305,11 +389,12 @@ class QuestionCreationForm extends Component {
             <FlatButton
               label="add"
               style={{ marginLeft: '1.2rem' }}
-              primary={true} />
+              primary={true}
+              onClick={::this.onOpenCategoryCreationDialogClicked} />
           </div>
           <div className={style.select}>
             <SelectField
-              value={selectedDifficulty}
+              value={selectedDifficultyId}
               hintText="The hardness of this question"
               disabled={difficultyMenuItems.length < 1}
               onChange={::this.onDifficultyChanged}
@@ -334,6 +419,7 @@ class QuestionCreationForm extends Component {
             floatingLabelText="Question Source Page" />
 
           {this.renderHiddenFields()}
+          {this.renderCategoryCreationDialog()}
           {this.renderDifficultyCreationDialog()}
         </form>
       </div>
