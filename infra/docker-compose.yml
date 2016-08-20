@@ -42,7 +42,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../web:/web
+      - ..:/go/src/github.com/skeswa/gauntlet
 volumes:
   "gauntlet-db-volume":
     external: true

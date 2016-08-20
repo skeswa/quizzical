@@ -70,7 +70,7 @@ module.exports = {
     hot: true,
     proxy: {
       '/api/*': {
-        target: 'http://gauntlet-api:3000',
+        target: 'http://api:3000',
         secure: false
       }
     }

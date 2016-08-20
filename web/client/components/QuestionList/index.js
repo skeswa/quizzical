@@ -50,8 +50,24 @@ class QuestionList extends Component {
         this.props.actions.loadCategories(),
         this.props.actions.loadDifficulties(),
       ])
-      .then(() => this.setState({ isDataLoading: false }))
-      .catch(err => this.setState({ loadingError: err }))
+      .then(resultingActions => {
+        let error = null
+        for (let i = 0; i < resultingActions.length; i++) {
+          if (resultingActions[i].error) {
+            error = resultingActions[i].payload
+            break
+          }
+        }
+
+        if (error) {
+          this.setState({
+            loadingError:   error,
+            isDataLoading:  false,
+          })
+        } else {
+          this.setState({ isDataLoading: false })
+        }
+      })
   }
 
   onRefreshListClicked() {

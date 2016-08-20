@@ -3,8 +3,8 @@ import debug from 'debug'
 import pluralize from 'pluralize'
 
 const logger = debug('gauntlet:crud:service')
-const genericFailureError = 'Sorry. For whatever reason, the server didn\'t like that.';
-const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.';
+const genericFailureError = 'Sorry. For whatever reason, the server isn\'t co-operating. Let\'s try that again.'
+const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.'
 
 export function crudService(entity, extensions) {
   const endpoint = `/api/${pluralize(entity)}`
