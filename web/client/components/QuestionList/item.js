@@ -1,4 +1,5 @@
 
+import Dialog from 'material-ui/Dialog'
 import React, { Component } from 'react'
 
 import style from './style.css'
@@ -10,11 +11,32 @@ import {
 
 class QuestionListItem extends Component {
   state = {
-    questionPictureLoaded: false,
+    lightboxVisible: false,
   }
 
-  onQuestionPictureLoaded() {
-    this.setState({ questionPictureLoaded: true })
+  onClick() {
+    this.setState({ lightboxVisible: true })
+  }
+
+  onLightboxClosed() {
+    this.setState({ lightboxVisible: false })
+  }
+
+  renderLightbox(questionPictureURL) {
+    const { lightboxVisible } = this.state
+
+    return (
+      <Dialog
+        open={lightboxVisible}
+        bodyStyle={{ padding: '0' }}
+        contentStyle={{ width: '50%', minWidth: '0', maxWidth: 'none', maxHeight: '80%' }}
+        overlayStyle={{ paddingTop: '0' }}
+        onRequestClose={::this.onLightboxClosed}>
+        <img
+          src={questionPictureURL}
+          className={style.lightboxPicture} />
+      </Dialog>
+    )
   }
 
   render() {
@@ -46,23 +68,26 @@ class QuestionListItem extends Component {
     }
 
     return (
-      <div className={style.listItem} onClick={onClick}>
-        <img
-          src={questionPictureURL}
-          onLoad={::this.onQuestionPictureLoaded}
-          className={style.listItemPicture} />
-        <div
-          style={difficultyColorStyle}
-          className={style.listItemDifficultyColorBar} />
-        <div className={style.listItemInfo}>
-          <div className={style.listItemCategory}>{questionCategoryName}</div>
-          <div />
+      <div className={style.listItemWrapper}>
+        <div className={style.listItem} onClick={::this.onClick} >
           <div
-            className={style.listItemDifficulty}
-            style={difficultyColorStyle}>{questionDifficultyName}</div>
-          <div className={style.listItemQuestionType}>{questionType}</div>
-          <div className={style.listItemDateCreated}>Created {formattedDateCreated} ago.</div>
+            style={{ backgroundImage: `url(${questionPictureURL})`}}
+            className={style.listItemPicture} />
+          <div
+            style={difficultyColorStyle}
+            className={style.listItemDifficultyColorBar} />
+          <div className={style.listItemInfo}>
+            <div className={style.listItemCategory}>{questionCategoryName}</div>
+            <div />
+            <div
+              className={style.listItemDifficulty}
+              style={difficultyColorStyle}>{questionDifficultyName}</div>
+            <div className={style.listItemQuestionType}>{questionType}</div>
+            <div className={style.listItemDateCreated}>Created {formattedDateCreated} ago.</div>
+          </div>
         </div>
+
+        {this.renderLightbox(questionPictureURL)}
       </div>
     )
   }

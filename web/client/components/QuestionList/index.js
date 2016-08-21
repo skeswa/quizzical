@@ -173,18 +173,11 @@ class QuestionList extends Component {
             onClick={::this.onItemClicked}
             question={question} />
         ))
-      const firstColumnItems = listItems.filter((_, i) => i % 2 === 0)
-      const secondColumnItems = listItems.filter((_, i) => i % 2 === 1)
 
       content = (
         <div className={style.list}>
-          <div className={style.listColumns}>
-            <div className={style.listColumn}>
-              {firstColumnItems}
-            </div>
-            <div className={style.listColumn}>
-              {secondColumnItems}
-            </div>
+          <div className={style.listItems}>
+            {listItems}
           </div>
         </div>
       )
