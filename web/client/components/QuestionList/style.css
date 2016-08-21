@@ -8,12 +8,46 @@
 .content {
   display: flex;
   flex: 1;
+  overflow: auto;
 }
 
 .buttons {
   bottom: 2.4rem;
   right: 2.4rem;
   position: absolute;
+}
+
+.filterBarWrapper {
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: -6.8rem;
+}
+
+@media (max-width: 775px) {
+  .filterBarWrapper {
+    display: none;
+  }
+}
+
+@media (max-width: 1170px) {
+  .filterBarWrapper {
+    box-sizing: border-box;
+    padding-left: 5rem;
+  }
+}
+
+.filterBar {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  height: 6.8rem;
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 100rem;
+  padding: 0 2rem;
+  width: 100%;
 }
 
 .list {
@@ -123,4 +157,9 @@
 
 .lightboxPicture {
   width: 100%;
+}
+
+.filterSelect {
+  margin-left: 1.5rem;
+  pointer-events: auto;
 }

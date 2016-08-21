@@ -1,7 +1,10 @@
 
 import Dialog from 'material-ui/Dialog'
+import FontIcon from 'material-ui/FontIcon'
+import MenuItem from 'material-ui/MenuItem'
 import classNames from 'classnames'
 import FlatButton from 'material-ui/FlatButton'
+import SelectField from 'material-ui/SelectField'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
@@ -27,6 +30,8 @@ class QuestionList extends Component {
   state = {
     loadingError:                   null,
     isDataLoading:                  false,
+    categoryFilterId:               null,
+    difficultyFilterId:             null,
     questionCreationError:          null,
     questionCreationInProgress:     false,
     questionCreationDialogVisible:  false,
@@ -112,6 +117,14 @@ class QuestionList extends Component {
     this.setState({ questionCreationDialogVisible: false })
   }
 
+  onCategoryFilterIdChanged(e, i, value) {
+    this.setState({ categoryFilterId: value })
+  }
+
+  onDifficultyFilterIdChanged(e, i, value) {
+    this.setState({ difficultyFilterId: value })
+  }
+
   renderCreationDialog() {
     const { actions, categories, difficulties } = this.props
     const {
@@ -154,10 +167,15 @@ class QuestionList extends Component {
   }
 
   render() {
-    const { questions } = this.props
-    const { isDataLoading, loadingError } = this.state
+    const { questions, categories, difficulties } = this.props
+    const {
+      isDataLoading,
+      loadingError,
+      categoryFilterId,
+      difficultyFilterId,
+    } = this.state
 
-    let content;
+    let content = null
     if (loadingError) {
       content = <ListError error={loadingError} />
     } else if (isDataLoading) {
@@ -182,8 +200,63 @@ class QuestionList extends Component {
       )
     }
 
+    const categoryMenuItems = categories
+      .map(category => (
+        <MenuItem
+          key={category.id}
+          value={category.id}
+          primaryText={category.name} />
+      ))
+    const difficultyMenuItems = difficulties
+      .map(difficulty => (
+        <MenuItem
+          key={difficulty.id}
+          value={difficulty.id}
+          primaryText={difficulty.name} />
+      ))
+    const allFilterMenuItem = (
+      <MenuItem
+        key="all"
+        value={null}
+        primaryText="All" />
+    )
+
+    categoryMenuItems.unshift(
+      <MenuItem
+        key="all"
+        value={null}
+        primaryText="All Categories" />
+    )
+    difficultyMenuItems.unshift(
+      <MenuItem
+        key="all"
+        value={null}
+        primaryText="All Difficulties" />
+    )
+
     return (
       <div className={style.main}>
+        <div className={style.filterBarWrapper}>
+          <div className={style.filterBar}>
+            <FontIcon
+              className="material-icons"
+              color="#ffffff">filter_list</FontIcon>
+            <SelectField
+              value={categoryFilterId}
+              onChange={::this.onCategoryFilterIdChanged}
+              className={style.filterSelect}
+              labelStyle={{ color: '#fff' }}>
+              {categoryMenuItems}
+            </SelectField>
+            <SelectField
+              value={difficultyFilterId}
+              onChange={::this.onDifficultyFilterIdChanged}
+              className={style.filterSelect}
+              labelStyle={{ color: '#fff' }}>
+              {difficultyMenuItems}
+            </SelectField>
+          </div>
+        </div>
         <div className={style.content}>{content}</div>
         <div className={style.buttons}>
           <ListButtons
