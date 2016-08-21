@@ -184,12 +184,6 @@ class QuestionList extends Component {
       content = <ListEmpty />
     } else {
       const listItems = questions
-        .map(question => (
-          <QuestionListItem
-            key={question.id}
-            onClick={::this.onItemClicked}
-            question={question} />
-        ))
         .filter(question => {
           if (categoryFilterId !== null) {
             return question.category.id === categoryFilterId
@@ -198,7 +192,15 @@ class QuestionList extends Component {
           if (difficultyFilterId !== null) {
             return question.difficulty.id === difficultyFilterId
           }
+
+          return true
         })
+        .map(question => (
+          <QuestionListItem
+            key={question.id}
+            onClick={::this.onItemClicked}
+            question={question} />
+        ))
 
       content = (
         <div className={style.list}>
