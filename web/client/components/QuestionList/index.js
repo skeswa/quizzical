@@ -138,7 +138,6 @@ class QuestionList extends Component {
       <Dialog
         title="Create New Question"
         actions={dialogActions}
-        modal={true}
         open={questionCreationDialogVisible}
         onRequestClose={::this.onCancelQuestionClicked}
         autoScrollBodyContent={true}>

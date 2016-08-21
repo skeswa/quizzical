@@ -255,7 +255,6 @@ class QuestionCreationForm extends Component {
       <Dialog
         title="Create New Category"
         actions={dialogActions}
-        modal={true}
         open={categoryCreationDialogVisible}
         onRequestClose={::this.onCancelCategoryClicked}
         autoScrollBodyContent={true}>
@@ -291,7 +290,6 @@ class QuestionCreationForm extends Component {
       <Dialog
         title="Create New Difficulty"
         actions={dialogActions}
-        modal={true}
         open={difficultyCreationDialogVisible}
         onRequestClose={::this.onCancelDifficultyClicked}
         autoScrollBodyContent={true}>
