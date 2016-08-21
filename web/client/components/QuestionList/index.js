@@ -190,6 +190,15 @@ class QuestionList extends Component {
             onClick={::this.onItemClicked}
             question={question} />
         ))
+        .filter(question => {
+          if (categoryFilterId !== null) {
+            return question.category.id === categoryFilterId
+          }
+
+          if (difficultyFilterId !== null) {
+            return question.difficulty.id === difficultyFilterId
+          }
+        })
 
       content = (
         <div className={style.list}>
