@@ -10,6 +10,14 @@ import {
 } from 'material-ui/Table'
 
 import style from './style.css'
+import { formatDateCreated } from './helpers'
+
+const sourceColumnStyle       = { width: '10rem' }
+const categoryColumnStyle     = { width: '22rem' }
+const difficultyColumnStyle   = { width: '10rem' }
+const sourcePageColumnStyle   = { width: '5rem' }
+const dateCreatedColumnStyle  = { width: '10rem' }
+const questionTypeColumnStyle = { width: '10rem' }
 
 const QuestionTable = (props) => (
   <div className={style.tableWrapper}>
@@ -17,12 +25,12 @@ const QuestionTable = (props) => (
       <Table height="100%" style={{ borderBottom: '1px solid #e0e0e0' }}>
         <TableHeader>
           <TableRow>
-            <TableHeaderColumn>Category</TableHeaderColumn>
-            <TableHeaderColumn>Difficulty</TableHeaderColumn>
-            <TableHeaderColumn>Question Type</TableHeaderColumn>
-            <TableHeaderColumn>Date Created</TableHeaderColumn>
-            <TableHeaderColumn>Source</TableHeaderColumn>
-            <TableHeaderColumn>Source Page</TableHeaderColumn>
+            <TableHeaderColumn style={categoryColumnStyle}>Category</TableHeaderColumn>
+            <TableHeaderColumn style={difficultyColumnStyle}>Difficulty</TableHeaderColumn>
+            <TableHeaderColumn style={dateCreatedColumnStyle}>Date Created</TableHeaderColumn>
+            <TableHeaderColumn style={questionTypeColumnStyle}>Question Type</TableHeaderColumn>
+            <TableHeaderColumn style={sourceColumnStyle}>Source</TableHeaderColumn>
+            <TableHeaderColumn style={sourcePageColumnStyle}>Page</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,14 +49,19 @@ const QuestionTable = (props) => (
               questionPicture: questionPicture,
             } = question
 
+            const questionType = isQuestionMultipleChoice
+              ? 'Multiple Choice'
+              : 'Numeric Answer'
+            const formattedQuestionDateCreated = formatDateCreated(questionDateCreated)
+
             return (
               <TableRow key={questionId}>
-                <TableRowColumn>{questionCategoryName}</TableRowColumn>
-                <TableRowColumn>{questionDifficultyName}</TableRowColumn>
-                <TableRowColumn>{questionDateCreated}</TableRowColumn>
-                <TableRowColumn>{isQuestionMultipleChoice ? 'Multiple Choice' : 'Numeric Answer'}</TableRowColumn>
-                <TableRowColumn>{questionSource}</TableRowColumn>
-                <TableRowColumn>{questionSourcePage}</TableRowColumn>
+                <TableRowColumn style={categoryColumnStyle}>{questionCategoryName}</TableRowColumn>
+                <TableRowColumn style={difficultyColumnStyle}>{questionDifficultyName}</TableRowColumn>
+                <TableRowColumn style={dateCreatedColumnStyle}>{formattedQuestionDateCreated}</TableRowColumn>
+                <TableRowColumn style={questionTypeColumnStyle}>{questionType}</TableRowColumn>
+                <TableRowColumn style={sourceColumnStyle}>{questionSource ? questionSource : '-'}</TableRowColumn>
+                <TableRowColumn style={sourcePageColumnStyle}>{questionSourcePage ? questionSourcePage : '-'}</TableRowColumn>
               </TableRow>
             )
           })}

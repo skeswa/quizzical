@@ -251,7 +251,7 @@ class QuestionList extends Component {
     return (
       <div className={style.main}>
         <div className={style.filterBarWrapper}>
-          <div className={style.filterBar}>
+          <div className={classNames(style.filterBar, { [style.filterBar__wide]: !gridVisible })}>
             <FontIcon
               className="material-icons"
               color="#ffffff">filter_list</FontIcon>

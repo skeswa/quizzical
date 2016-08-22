@@ -58,3 +58,8 @@ export function timeSince(dateString) {
 
   return Math.floor(seconds) + ' seconds'
 }
+
+export function formatDateCreated(dateString) {
+  const date = new Date(dateString)
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100} at ${date.getHours()}:${date.getMinutes()}`
+}
