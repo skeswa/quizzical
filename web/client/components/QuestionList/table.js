@@ -19,7 +19,7 @@ const sourceColumnStyle           = { width: '10rem' }
 const categoryColumnStyle         = { width: '22rem' }
 const difficultyColumnStyle       = { width: '10rem' }
 const sourcePageColumnStyle       = { width: '5rem' }
-const dateCreatedColumnStyle      = { width: '10rem' }
+const dateCreatedColumnStyle      = { width: '12rem' }
 const questionTypeColumnStyle     = { width: '10rem' }
 const questionPictureColumnStyle  = { width: '5rem' }
 

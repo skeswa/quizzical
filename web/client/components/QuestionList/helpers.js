@@ -61,5 +61,9 @@ export function timeSince(dateString) {
 
 export function formatDateCreated(dateString) {
   const date = new Date(dateString)
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100} at ${date.getHours()}:${date.getMinutes()}`
+  let time = date.getHours() > 11
+    ? `${date.getHours() > 12 ? (date.getHours() - 12) : 12}:${date.getMinutes()} PM`
+    : `${date.getHours()}:${date.getMinutes()} AM`
+
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100} at ${time}`
 }
