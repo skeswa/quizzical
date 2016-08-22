@@ -9,7 +9,7 @@ import {
   pictureNameToBackgroundUrl,
 } from './helpers'
 
-class QuestionListItem extends Component {
+class QuestionGridItem extends Component {
   state = {
     lightboxVisible: false,
   }
@@ -68,22 +68,22 @@ class QuestionListItem extends Component {
     }
 
     return (
-      <div className={style.listItemWrapper}>
-        <div className={style.listItem} onClick={::this.onClick} >
+      <div className={style.gridItemWrapper}>
+        <div className={style.gridItem} onClick={::this.onClick} >
           <div
             style={{ backgroundImage: `url(${questionPictureURL})`}}
-            className={style.listItemPicture} />
+            className={style.gridItemPicture} />
           <div
             style={difficultyColorStyle}
-            className={style.listItemDifficultyColorBar} />
-          <div className={style.listItemInfo}>
-            <div className={style.listItemCategory}>{questionCategoryName}</div>
+            className={style.gridItemDifficultyColorBar} />
+          <div className={style.gridItemInfo}>
+            <div className={style.gridItemCategory}>{questionCategoryName}</div>
             <div />
             <div
-              className={style.listItemDifficulty}
+              className={style.gridItemDifficulty}
               style={difficultyColorStyle}>{questionDifficultyName}</div>
-            <div className={style.listItemQuestionType}>{questionType}</div>
-            <div className={style.listItemDateCreated}>Created {formattedDateCreated} ago.</div>
+            <div className={style.gridItemQuestionType}>{questionType}</div>
+            <div className={style.gridItemDateCreated}>Created {formattedDateCreated} ago.</div>
           </div>
         </div>
 
@@ -93,4 +93,4 @@ class QuestionListItem extends Component {
   }
 }
 
-export default QuestionListItem
+export default QuestionGridItem

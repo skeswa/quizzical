@@ -15,7 +15,8 @@ import ListError from 'components/ListError'
 import ListEmpty from 'components/ListEmpty'
 import ListLoader from 'components/ListLoader'
 import ListButtons from 'components/ListButtons'
-import QuestionListItem from './item'
+import QuestionGrid from './grid'
+import QuestionTable from './table'
 import QuestionCreationForm from 'components/QuestionCreationForm'
 
 class QuestionList extends Component {
@@ -28,6 +29,7 @@ class QuestionList extends Component {
   }
 
   state = {
+    gridVisible:                    true,
     loadingError:                   null,
     isDataLoading:                  false,
     categoryFilterId:               null,
@@ -88,6 +90,14 @@ class QuestionList extends Component {
 
   onItemClicked() {
     // TODO(skeswa): activate any selection events that may exist.
+  }
+
+  onSwitchToGridClicked() {
+    this.setState({ gridVisible: true })
+  }
+
+  onSwitchToTableClicked() {
+    this.setState({ gridVisible: false })
   }
 
   onCreateQuestionClicked() {
@@ -169,8 +179,9 @@ class QuestionList extends Component {
   render() {
     const { questions, categories, difficulties } = this.props
     const {
-      isDataLoading,
+      gridVisible,
       loadingError,
+      isDataLoading,
       categoryFilterId,
       difficultyFilterId,
     } = this.state
@@ -183,7 +194,7 @@ class QuestionList extends Component {
     } else if (questions.length < 1) {
       content = <ListEmpty />
     } else {
-      const listItems = questions
+      const filteredQuestions = questions
         .filter(question => {
           if (categoryFilterId !== null) {
             return question.category.id === categoryFilterId
@@ -195,20 +206,12 @@ class QuestionList extends Component {
 
           return true
         })
-        .map(question => (
-          <QuestionListItem
-            key={question.id}
-            onClick={::this.onItemClicked}
-            question={question} />
-        ))
 
-      content = (
-        <div className={style.list}>
-          <div className={style.listItems}>
-            {listItems}
-          </div>
-        </div>
-      )
+      if (gridVisible) {
+        content = <QuestionGrid questions={filteredQuestions} />
+      } else {
+        content = <QuestionTable questions={filteredQuestions} />
+      }
     }
 
     const categoryMenuItems = categories
@@ -272,8 +275,11 @@ class QuestionList extends Component {
         <div className={style.buttons}>
           <ListButtons
             disabled={isDataLoading}
+            switchToGrid={!gridVisible}
             onCreateClicked={::this.onOpenCreateClicked}
-            onRefreshClicked={::this.onRefreshListClicked} />
+            onRefreshClicked={::this.onRefreshListClicked}
+            onSwitchToGridClicked={::this.onSwitchToGridClicked}
+            onSwitchToTableClicked={::this.onSwitchToTableClicked} />
         </div>
 
         {this.renderCreationDialog()}

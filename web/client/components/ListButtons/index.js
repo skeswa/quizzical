@@ -10,13 +10,20 @@ const ListButtons = (props, context) => (
   <div className={style.main}>
     <FloatingActionButton
       mini={true}
-      onClick={props.onRefreshClicked}>
+      onClick={props.switchToGrid ? props.onSwitchToGridClicked : props.onSwitchToTableClicked}
+      className={style.button}>
+      <FontIcon className="material-icons">{props.switchToGrid ? 'view_module' : 'view_list'}</FontIcon>
+    </FloatingActionButton>
+    <FloatingActionButton
+      mini={true}
+      onClick={props.onRefreshClicked}
+      className={style.button}>
       <FontIcon className="material-icons">refresh</FontIcon>
     </FloatingActionButton>
     <FloatingActionButton
-      className={style.bottomButton}
       onClick={props.onCreateClicked}
-      disabled={props.disabled}>
+      disabled={props.disabled}
+      className={style.button}>
       <FontIcon className="material-icons">add</FontIcon>
     </FloatingActionButton>
   </div>

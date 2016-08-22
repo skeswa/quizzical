@@ -54,7 +54,7 @@
   flex: 1;
 }
 
-.listItems {
+.gridItems {
   box-sizing: border-box;
   display: flex;
   flex-flow: wrap;
@@ -64,7 +64,7 @@
   width: 100%;
 }
 
-.listItemWrapper {
+.gridItemWrapper {
   box-sizing: border-box;
   flex: 0 0 100%;
   height: 20rem;
@@ -72,20 +72,20 @@
 }
 
 @media (min-width: 650px) {
-  .listItemWrapper {
+  .gridItemWrapper {
     flex-basis: 50%;
     height: 25rem;
   }
 }
 
 @media (min-width: 900px) {
-  .listItemWrapper {
+  .gridItemWrapper {
     flex-basis: 33%;
     height: 30rem;
   }
 }
 
-.listItem {
+.gridItem {
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
   box-sizing: border-box;
@@ -97,7 +97,7 @@
   width: 100%;
 }
 
-.listItemInfo {
+.gridItemInfo {
   background: linear-gradient(to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0));
   bottom: 0;
   left: 1rem;
@@ -107,7 +107,7 @@
   right: 0;
 }
 
-.listItemPicture {
+.gridItemPicture {
   background: #444 no-repeat;
   background-size: cover;
   filter: blur(10px);
@@ -115,9 +115,9 @@
   width: 100%;
 }
 
-.listItemCategory,
-.listItemDifficulty,
-.listItemQuestionType {
+.gridItemCategory,
+.gridItemDifficulty,
+.gridItemQuestionType {
   border-radius: 2px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
   color: #222;
@@ -130,24 +130,24 @@
   text-transform: uppercase;
 }
 
-.listItemCategory {
+.gridItemCategory {
   background: #eee;
   color: #222;
 }
 
-.listItemQuestionType {
+.gridItemQuestionType {
   background: #333;
   color: #eee;
 }
 
-.listItemDateCreated {
+.gridItemDateCreated {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.1rem;
   padding-bottom: 0.4rem;
   padding-top: 0.2rem;
 }
 
-.listItemDifficultyColorBar {
+.gridItemDifficultyColorBar {
   bottom: 0;
   left: 0;
   position: absolute;
@@ -162,4 +162,17 @@
 .filterSelect {
   margin-left: 1.5rem;
   pointer-events: auto;
+}
+
+.tableWrapper {
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+.table {
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  max-width: 100rem;
+  overflow: hidden;
 }
