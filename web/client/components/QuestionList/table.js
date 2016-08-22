@@ -14,7 +14,7 @@ import style from './style.css'
 const QuestionTable = (props) => (
   <div className={style.tableWrapper}>
     <div className={style.table}>
-      <Table height="100%">
+      <Table height="100%" style={{ borderBottom: '1px solid #e0e0e0' }}>
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Category</TableHeaderColumn>
