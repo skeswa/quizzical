@@ -186,32 +186,33 @@ class QuestionList extends Component {
       difficultyFilterId,
     } = this.state
 
+    const filteredQuestions = questions
+      .filter(question => {
+        if (categoryFilterId !== null) {
+          return question.category.id === categoryFilterId
+        }
+
+        return true
+      })
+      .filter(question => {
+        if (difficultyFilterId !== null) {
+          return question.difficulty.id === difficultyFilterId
+        }
+
+        return true
+      })
+
     let content = null
     if (loadingError) {
       content = <ListError error={loadingError} />
     } else if (isDataLoading) {
       content = <ListLoader />
-    } else if (questions.length < 1) {
+    } else if (filteredQuestions.length < 1) {
       content = <ListEmpty />
+    } else if (gridVisible) {
+      content = <QuestionGrid questions={filteredQuestions} />
     } else {
-      const filteredQuestions = questions
-        .filter(question => {
-          if (categoryFilterId !== null) {
-            return question.category.id === categoryFilterId
-          }
-
-          if (difficultyFilterId !== null) {
-            return question.difficulty.id === difficultyFilterId
-          }
-
-          return true
-        })
-
-      if (gridVisible) {
-        content = <QuestionGrid questions={filteredQuestions} />
-      } else {
-        content = <QuestionTable questions={filteredQuestions} />
-      }
+      content = <QuestionTable questions={filteredQuestions} />
     }
 
     const categoryMenuItems = categories
