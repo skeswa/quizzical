@@ -28,15 +28,23 @@ body {
 
 .top {
   flex: 0 1 auto;
+  max-width: 100%;
 }
 
 .bottom {
   display: flex;
   flex: 1 1 auto;
+  max-width: 100%;
 }
 
 @media (max-width: 500px) {
   .bottom {
     flex-direction: column-reverse;
   }
+}
+
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: auto;
 }
