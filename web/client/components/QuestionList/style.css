@@ -179,3 +179,7 @@
   max-width: 120rem;
   overflow: hidden;
 }
+
+.iconButtonLabel {
+  font-weight: 600;
+}

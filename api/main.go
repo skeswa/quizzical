@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/skeswa/gauntlet/api/common"
 	"github.com/skeswa/gauntlet/api/handler"
+	"github.com/urfave/negroni"
 )
 
 func main() {
@@ -68,7 +69,11 @@ func main() {
 	r.HandleFunc("/api/takes/{id:[0-9]+}", handler.GetTake(db)).Methods("GET")
 	r.HandleFunc("/api/takes/{id:[0-9]+}", handler.DeleteTake(db)).Methods("DELETE")
 
+	// Bind middleware.
+	n := negroni.Classic()
+	n.UseHandler(r)
+
 	// Start serving.
 	log.Printf("Servicing HTTP requests on port %d.\n", config.Port)
-	http.ListenAndServe(fmt.Sprintf(":%d", config.Port), r)
+	http.ListenAndServe(fmt.Sprintf(":%d", config.Port), n)
 }

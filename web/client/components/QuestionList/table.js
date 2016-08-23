@@ -21,7 +21,12 @@ const difficultyColumnStyle       = { width: '10rem' }
 const sourcePageColumnStyle       = { width: '5rem' }
 const dateCreatedColumnStyle      = { width: '12rem' }
 const questionTypeColumnStyle     = { width: '10rem' }
-const questionPictureColumnStyle  = { width: '5rem' }
+const pictureButtonsColumnStyle   = {
+  alignItems:     'center',
+  display:        'flex',
+  justifyContent: 'center',
+  width:          '10rem',
+}
 
 class QuestionTable extends Component {
   state = {
@@ -73,7 +78,7 @@ class QuestionTable extends Component {
                 <TableHeaderColumn style={questionTypeColumnStyle}>Question Type</TableHeaderColumn>
                 <TableHeaderColumn style={sourceColumnStyle}>Source</TableHeaderColumn>
                 <TableHeaderColumn style={sourcePageColumnStyle}>Page</TableHeaderColumn>
-                <TableHeaderColumn style={questionPictureColumnStyle}></TableHeaderColumn>
+                <TableHeaderColumn style={pictureButtonsColumnStyle}></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -88,6 +93,7 @@ class QuestionTable extends Component {
                   },
                   sourcePage: questionSourcePage,
                   dateCreated: questionDateCreated,
+                  answerPicture: answerPicture,
                   multipleChoice: isQuestionMultipleChoice,
                   questionPicture: questionPicture,
                 } = question
@@ -95,6 +101,8 @@ class QuestionTable extends Component {
                 const questionType = isQuestionMultipleChoice
                   ? 'Multiple Choice'
                   : 'Numeric Answer'
+
+                const answerPictureURL              = pictureNameToBackgroundUrl(answerPicture)
                 const questionPictureURL            = pictureNameToBackgroundUrl(questionPicture)
                 const formattedQuestionDateCreated  = formatDateCreated(questionDateCreated)
 
@@ -106,8 +114,13 @@ class QuestionTable extends Component {
                     <TableRowColumn style={questionTypeColumnStyle}>{questionType}</TableRowColumn>
                     <TableRowColumn style={sourceColumnStyle}>{questionSource ? questionSource : '-'}</TableRowColumn>
                     <TableRowColumn style={sourcePageColumnStyle}>{questionSourcePage ? questionSourcePage : '-'}</TableRowColumn>
-                      <TableRowColumn style={questionPictureColumnStyle}>
+                      <TableRowColumn style={pictureButtonsColumnStyle}>
+                        <div className={style.iconButtonLabel}>Q</div>
                         <IconButton onClick={this.onLightboxOpened.bind(this, questionPictureURL)}>
+                          <FontIcon className="material-icons">collections</FontIcon>
+                        </IconButton>
+                        <div className={style.iconButtonLabel}>A</div>
+                        <IconButton onClick={this.onLightboxOpened.bind(this, answerPictureURL)}>
                           <FontIcon className="material-icons">collections</FontIcon>
                         </IconButton>
                       </TableRowColumn>
