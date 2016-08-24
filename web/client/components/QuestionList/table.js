@@ -15,6 +15,7 @@ import {
 import style from './style.css'
 import { formatDateCreated, pictureNameToBackgroundUrl } from './helpers'
 
+const calcColumnStyle             = { width: '3rem' }
 const sourceColumnStyle           = { width: '10rem' }
 const categoryColumnStyle         = { width: '22rem' }
 const difficultyColumnStyle       = { width: '10rem' }
@@ -25,7 +26,6 @@ const pictureButtonsColumnStyle   = {
   alignItems:     'center',
   display:        'flex',
   justifyContent: 'center',
-  width:          '10rem',
 }
 
 class QuestionTable extends Component {
@@ -74,6 +74,7 @@ class QuestionTable extends Component {
               <TableRow>
                 <TableHeaderColumn style={categoryColumnStyle}>Category</TableHeaderColumn>
                 <TableHeaderColumn style={difficultyColumnStyle}>Difficulty</TableHeaderColumn>
+                <TableHeaderColumn style={calcColumnStyle}>Calc?</TableHeaderColumn>
                 <TableHeaderColumn style={dateCreatedColumnStyle}>Date Created</TableHeaderColumn>
                 <TableHeaderColumn style={questionTypeColumnStyle}>Question Type</TableHeaderColumn>
                 <TableHeaderColumn style={sourceColumnStyle}>Source</TableHeaderColumn>
@@ -96,20 +97,22 @@ class QuestionTable extends Component {
                   answerPicture: answerPicture,
                   multipleChoice: isQuestionMultipleChoice,
                   questionPicture: questionPicture,
+                  requiresCalculator: requiresCalculator,
                 } = question
 
                 const questionType = isQuestionMultipleChoice
                   ? 'Multiple Choice'
                   : 'Numeric Answer'
-
                 const answerPictureURL              = pictureNameToBackgroundUrl(answerPicture)
                 const questionPictureURL            = pictureNameToBackgroundUrl(questionPicture)
+                const requiresCalculatorText        = requiresCalculator ? 'Y' : 'N'
                 const formattedQuestionDateCreated  = formatDateCreated(questionDateCreated)
 
                 return (
                   <TableRow key={questionId}>
                     <TableRowColumn style={categoryColumnStyle}>{questionCategoryName}</TableRowColumn>
                     <TableRowColumn style={difficultyColumnStyle}>{questionDifficultyName}</TableRowColumn>
+                    <TableRowColumn style={calcColumnStyle}>{requiresCalculatorText}</TableRowColumn>
                     <TableRowColumn style={dateCreatedColumnStyle}>{formattedQuestionDateCreated}</TableRowColumn>
                     <TableRowColumn style={questionTypeColumnStyle}>{questionType}</TableRowColumn>
                     <TableRowColumn style={sourceColumnStyle}>{questionSource ? questionSource : '-'}</TableRowColumn>
