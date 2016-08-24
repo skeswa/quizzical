@@ -2,7 +2,14 @@
 .main {
   display: flex;
   flex: 1;
+  max-width: 100%;
   position: relative;
+}
+
+@media (min-width: 500px) {
+  .main {
+    max-width: calc(100% - 6rem);
+  }
 }
 
 .content {
