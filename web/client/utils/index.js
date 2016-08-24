@@ -27,7 +27,7 @@ export function textColorForBackground(bgHex) {
     : '#fff'
 }
 
-export function pictureNameToBackgroundUrl(pictureName) {
+export function pictureNameToBackgroundURL(pictureName) {
   return `/api/pictures/${pictureName}`
 }
 

@@ -39,6 +39,7 @@
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.11.5",
     "debug": "^2.2.0",
+    "fixed-data-table": "^0.6.3",
     "flux-standard-action": "^0.6.1",
     "material-ui": "^0.15.4",
     "pluralize": "^3.0.0",

@@ -2,10 +2,10 @@
 import React, { Component } from 'react'
 
 import style from './style.css'
-import QuestionGridItem from './item'
+import QuestionGridItem from 'components/QuestionGridItem'
 
 const QuestionGrid = (props) => (
-  <div className={style.list}>
+  <div className={style.main}>
     <div className={style.gridItems}>
       {props.questions.map(question => (
         <QuestionGridItem

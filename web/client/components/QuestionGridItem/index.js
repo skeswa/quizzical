@@ -6,8 +6,8 @@ import style from './style.css'
 import {
   timeSince,
   textColorForBackground,
-  pictureNameToBackgroundUrl,
-} from './helpers'
+  pictureNameToBackgroundURL,
+} from 'utils'
 
 class QuestionGridItem extends Component {
   state = {
@@ -59,7 +59,7 @@ class QuestionGridItem extends Component {
       ? 'multiple choice'
       : 'numeric answer'
     const difficultyBgColor       = `#${questionDifficultyColor}`
-    const questionPictureURL      = pictureNameToBackgroundUrl(questionPicture)
+    const questionPictureURL      = pictureNameToBackgroundURL(questionPicture)
     const difficultyTextColor     = textColorForBackground(difficultyBgColor)
     const formattedDateCreated    = timeSince(questionDateCreated)
     const difficultyColorStyle    = {
@@ -68,22 +68,22 @@ class QuestionGridItem extends Component {
     }
 
     return (
-      <div className={style.gridItemWrapper}>
-        <div className={style.gridItem} onClick={::this.onClick} >
+      <div className={style.wrapper}>
+        <div className={style.main} onClick={::this.onClick} >
           <div
             style={{ backgroundImage: `url(${questionPictureURL})`}}
-            className={style.gridItemPicture} />
+            className={style.picture} />
           <div
             style={difficultyColorStyle}
-            className={style.gridItemDifficultyColorBar} />
-          <div className={style.gridItemInfo}>
-            <div className={style.gridItemCategory}>{questionCategoryName}</div>
+            className={style.difficultyColorBar} />
+          <div className={style.info}>
+            <div className={style.category}>{questionCategoryName}</div>
             <div />
             <div
-              className={style.gridItemDifficulty}
+              className={style.difficulty}
               style={difficultyColorStyle}>{questionDifficultyName}</div>
-            <div className={style.gridItemQuestionType}>{questionType}</div>
-            <div className={style.gridItemDateCreated}>Created {formattedDateCreated} ago.</div>
+            <div className={style.questionType}>{questionType}</div>
+            <div className={style.dateCreated}>Created {formattedDateCreated} ago.</div>
           </div>
         </div>
 

@@ -15,11 +15,11 @@ import ListError from 'components/ListError'
 import ListEmpty from 'components/ListEmpty'
 import ListLoader from 'components/ListLoader'
 import ListButtons from 'components/ListButtons'
-import QuestionGrid from './grid'
-import QuestionTable from './table'
+import QuestionGrid from 'components/QuestionGrid'
+import QuestionTable from 'components/QuestionTable'
 import QuestionCreationForm from 'components/QuestionCreationForm'
 
-class QuestionList extends Component {
+class Questions extends Component {
   static propTypes = {
     actions:            React.PropTypes.object.isRequired,
     questions:          React.PropTypes.array.isRequired,
@@ -289,4 +289,4 @@ class QuestionList extends Component {
   }
 }
 
-export default QuestionList
+export default Questions

@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux'
 
 import style from './style.css'
 import actions from 'actions'
-import QuestionList from 'components/QuestionList'
+import Questions from 'components/Questions'
 
 const QuestionsPage = (props, context) => {
   return (
-    <QuestionList
+    <Questions
       actions={props.actions}
       questions={props.questions}
       categories={props.categories}
