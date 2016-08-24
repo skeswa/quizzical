@@ -16,9 +16,7 @@ class App extends Component {
         </div>
         <div className={style.bottom}>
           <Nav />
-          <div className={style.content}>
-            {this.props.children}
-          </div>
+          {this.props.children}
         </div>
       </div>
     )
