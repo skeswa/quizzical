@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react'
-import { Cell } from 'fixed-data-table'
 
 import style from './style.css'
+import { Cell } from 'components/Table'
 
 const SortTypes = {
   ASC:  'asc',

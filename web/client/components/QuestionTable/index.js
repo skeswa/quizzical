@@ -4,16 +4,21 @@ import ReactDOM from 'react-dom'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import React, { Component } from 'react'
-import { Table, Column, Cell } from 'fixed-data-table'
+import elementResizeDetectorMaker from 'element-resize-detector'
 
 import style from './style.css'
-import tableStyles from 'fixed-data-table/dist/fixed-data-table.min.css'
 import TableTextCell from 'components/TableTextCell'
+import { Table, Column, Cell } from 'components/Table'
+import TableQuestionPicturesCell from 'components/TableQuestionPicturesCell'
 import TableHeaderCell, { SortTypes } from 'components/TableHeaderCell'
 import { formatDateCreated, pictureNameToBackgroundURL } from 'utils'
 
+// 5 frames
+const tableResizeDelay = 16.667 * 5
+
 class QuestionTable extends Component {
   state = {
+    erd:              null,
     width:            null,
     height:           null,
     lightboxVisible:  false,
@@ -22,11 +27,44 @@ class QuestionTable extends Component {
 
   componentDidMount() {
     // Calculate the width of this div so the table might be rendered.
-    const mainDOMNode = ReactDOM.findDOMNode(this.refs.main)
-    const clientWidth = mainDOMNode.clientWidth
-    const clientHeight = mainDOMNode.clientHeight
+    this.onResizeWithCallback(el => {
+      let ref   = null
+      let erd   = elementResizeDetectorMaker({ strategy: 'scroll' })
 
-    this.setState({ width: clientWidth, height: clientHeight })
+      // Start listening for resizing.
+      erd.listenTo(el, () => {
+        if (ref) {
+          clearTimeout(ref)
+        }
+
+        ref = setTimeout(::this.onResize, tableResizeDelay)
+      })
+
+      // Keep the erd for unsubscription.
+      this.setState({ erd })
+    })
+  }
+
+  componentWillUnmount() {
+    const erd = this.state.erd
+    if (erd) {
+      erd.removeAllListeners(ReactDOM.findDOMNode(this.refs.main))
+    }
+  }
+
+  onResize() {
+    this.onResizeWithCallback(undefined)
+  }
+
+  onResizeWithCallback(callback) {
+    const mainDOMNode   = ReactDOM.findDOMNode(this.refs.main)
+    const clientWidth   = mainDOMNode.clientWidth
+    const clientHeight  = mainDOMNode.clientHeight
+
+    this.setState(
+      { width: clientWidth, height: clientHeight },
+      callback ? callback.bind(this, mainDOMNode) : undefined,
+    )
   }
 
   onLightboxOpened(lightboxImageURL) {
@@ -71,15 +109,15 @@ class QuestionTable extends Component {
 
     return (
       <Table
-        rowHeight={40}
+        rowHeight={48}
         rowsCount={questions.length}
-        headerHeight={40}
+        headerHeight={56}
         width={width}
         height={height}>
         <Column
           columnKey="category"
           header={<TableHeaderCell title="Category" />}
-          width={220}
+          width={255}
           cell={
             <TableTextCell
               data={questions}
@@ -88,7 +126,7 @@ class QuestionTable extends Component {
         <Column
           columnKey="difficulty"
           header={<TableHeaderCell title="Difficulty" />}
-          width={80}
+          width={115}
           cell={
             <TableTextCell
               data={questions}
@@ -97,7 +135,7 @@ class QuestionTable extends Component {
         <Column
           columnKey="requiresCalculator"
           header={<TableHeaderCell title="Requires Calculator" />}
-          width={120}
+          width={155}
           cell={
             <TableTextCell
               data={questions}
@@ -106,7 +144,7 @@ class QuestionTable extends Component {
         <Column
           columnKey="dateCreated"
           header={<TableHeaderCell title="Date Created" />}
-          width={120}
+          width={155}
           cell={
             <TableTextCell
               data={questions}
@@ -115,7 +153,7 @@ class QuestionTable extends Component {
         <Column
           columnKey="multipleChoice"
           header={<TableHeaderCell title="Question Type" />}
-          width={100}
+          width={135}
           cell={
             <TableTextCell
               data={questions}
@@ -124,16 +162,25 @@ class QuestionTable extends Component {
         <Column
           columnKey="source"
           header={<TableHeaderCell title="Source" />}
-          width={120}
+          width={155}
           cell={
             <TableTextCell data={questions} />
           } />
         <Column
           columnKey="sourcePage"
           header={<TableHeaderCell title="Source Page" />}
-          width={80}
+          width={115}
           cell={
             <TableTextCell data={questions} />
+          } />
+        <Column
+          columnKey="pictures"
+          header={<TableHeaderCell title="Pictures" />}
+          width={125}
+          cell={
+            <TableQuestionPicturesCell
+              data={questions}
+              handler={::this.onLightboxOpened} />
           } />
       </Table>
     )

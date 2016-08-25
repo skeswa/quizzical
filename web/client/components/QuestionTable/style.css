@@ -3,6 +3,7 @@
   box-sizing: border-box;
   flex: 1;
   padding: 1rem;
+  width: 100%;
 }
 
 .main {
@@ -12,4 +13,8 @@
   height: 100%;
   margin: 0 auto;
   overflow: hidden;
+}
+
+.lightboxPicture {
+  width: 100%;
 }
