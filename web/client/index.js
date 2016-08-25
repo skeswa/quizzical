@@ -29,6 +29,11 @@ const muiTheme = getMuiTheme({
   }
 })
 
+// Designate the root element.
+const root = document.getElementById('root')
+// How long in milliseconds to wait before fading in the UI.
+const revealDelay = 400;
+
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <ReduxProvider store={store}>
@@ -41,5 +46,6 @@ ReactDOM.render(
       </Router>
     </ReduxProvider>
   </MuiThemeProvider>,
-  document.getElementById('root')
+  root,
+  () => setTimeout(() => root.style.opacity = 1, revealDelay),
 )
