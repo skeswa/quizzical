@@ -111,6 +111,13 @@ func (mj *Question) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 			buf.WriteByte(',')
 		}
 	}
+	if mj.IndexInPage != nil {
+		if true {
+			buf.WriteString(`"indexInPage":`)
+			fflib.FormatBits2(buf, uint64(*mj.IndexInPage), 10, *mj.IndexInPage < 0)
+			buf.WriteByte(',')
+		}
+	}
 	if mj.DifficultyID != nil {
 		if true {
 			buf.WriteString(`"difficultyId":`)
@@ -156,6 +163,8 @@ const (
 
 	ffj_t_Question_DateCreated
 
+	ffj_t_Question_IndexInPage
+
 	ffj_t_Question_DifficultyID
 
 	ffj_t_Question_AnswerPicture
@@ -182,6 +191,8 @@ var ffj_key_Question_CategoryID = []byte("categoryId")
 var ffj_key_Question_Difficulty = []byte("difficulty")
 
 var ffj_key_Question_DateCreated = []byte("dateCreated")
+
+var ffj_key_Question_IndexInPage = []byte("indexInPage")
 
 var ffj_key_Question_DifficultyID = []byte("difficultyId")
 
@@ -302,6 +313,11 @@ mainparse:
 						currentKey = ffj_t_Question_ID
 						state = fflib.FFParse_want_colon
 						goto mainparse
+
+					} else if bytes.Equal(ffj_key_Question_IndexInPage, kn) {
+						currentKey = ffj_t_Question_IndexInPage
+						state = fflib.FFParse_want_colon
+						goto mainparse
 					}
 
 				case 'm':
@@ -369,6 +385,12 @@ mainparse:
 
 				if fflib.SimpleLetterEqualFold(ffj_key_Question_DifficultyID, kn) {
 					currentKey = ffj_t_Question_DifficultyID
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_Question_IndexInPage, kn) {
+					currentKey = ffj_t_Question_IndexInPage
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
@@ -461,6 +483,9 @@ mainparse:
 
 				case ffj_t_Question_DateCreated:
 					goto handle_DateCreated
+
+				case ffj_t_Question_IndexInPage:
+					goto handle_IndexInPage
 
 				case ffj_t_Question_DifficultyID:
 					goto handle_DifficultyID
@@ -727,6 +752,39 @@ handle_DateCreated:
 			return fs.WrapErr(err)
 		}
 		state = fflib.FFParse_after_value
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_IndexInPage:
+
+	/* handler: uj.IndexInPage type=int kind=int quoted=false*/
+
+	{
+		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+			uj.IndexInPage = nil
+
+		} else {
+
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			ttypval := int(tval)
+			uj.IndexInPage = &ttypval
+
+		}
 	}
 
 	state = fflib.FFParse_after_value

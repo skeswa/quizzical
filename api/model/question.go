@@ -15,6 +15,7 @@ const (
 	columnQuestionSource             = "source"
 	columnQuestionSourcePage         = "source_page"
 	columnQuestionCategoryID         = "category_id"
+	columnQuestionIndexInPage        = "index_in_page"
 	columnQuestionDateCreated        = "date_created"
 	columnQuestionDifficultyID       = "difficulty_id"
 	columnQuestionAnswerPicture      = "answer_picture"
@@ -31,6 +32,7 @@ type Question struct {
 	Category           *Category
 	SourcePage         sql.NullInt64
 	Difficulty         *Difficulty
+	IndexInPage        sql.NullInt64
 	DateCreated        time.Time
 	AnswerPicture      string
 	MultipleChoice     bool
@@ -41,10 +43,11 @@ type Question struct {
 // ToDTO turns this model into a DTO.
 func (q *Question) ToDTO() *dto.Question {
 	var (
-		source     *string
-		category   *dto.Category
-		sourcePage *int
-		difficulty *dto.Difficulty
+		source      *string
+		category    *dto.Category
+		sourcePage  *int
+		indexInPage *int
+		difficulty  *dto.Difficulty
 	)
 
 	if q.Category != nil {
@@ -60,6 +63,10 @@ func (q *Question) ToDTO() *dto.Question {
 		sourcePageValue := int(q.SourcePage.Int64)
 		sourcePage = &sourcePageValue
 	}
+	if q.IndexInPage.Valid {
+		indexInPageValue := int(q.IndexInPage.Int64)
+		indexInPage = &indexInPageValue
+	}
 
 	return &dto.Question{
 		ID:                 &q.ID,
@@ -69,6 +76,7 @@ func (q *Question) ToDTO() *dto.Question {
 		SourcePage:         sourcePage,
 		Difficulty:         difficulty,
 		DateCreated:        &q.DateCreated,
+		IndexInPage:        indexInPage,
 		AnswerPicture:      q.AnswerPicture,
 		MultipleChoice:     q.MultipleChoice,
 		QuestionPicture:    q.QuestionPicture,
@@ -98,6 +106,7 @@ func InsertQuestion(
 	source *string,
 	sourcePage *int,
 	categoryID int,
+	indexInPage int,
 	difficultyID int,
 	answerPicture string,
 	multipleChoice bool,
@@ -125,6 +134,7 @@ func InsertQuestion(
 			columnQuestionSource,
 			columnQuestionSourcePage,
 			columnQuestionCategoryID,
+			columnQuestionIndexInPage,
 			columnQuestionDateCreated,
 			columnQuestionDifficultyID,
 			columnQuestionAnswerPicture,
@@ -137,6 +147,7 @@ func InsertQuestion(
 			sourceValue,
 			sourcePageValue,
 			categoryID,
+			indexInPage,
 			sqlNow,
 			difficultyID,
 			answerPicture,
@@ -194,6 +205,7 @@ func SelectQuestion(db *sql.DB, id int) (*Question, error) {
 			column(tableQuestion, columnQuestionAnswer),
 			column(tableQuestion, columnQuestionSourcePage),
 			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionIndexInPage),
 			column(tableQuestion, columnQuestionAnswerPicture),
 			column(tableQuestion, columnQuestionMultipleChoice),
 			column(tableQuestion, columnQuestionQuestionPicture),
@@ -231,6 +243,7 @@ func SelectQuestion(db *sql.DB, id int) (*Question, error) {
 			&question.Answer,
 			&question.SourcePage,
 			&question.DateCreated,
+			&question.IndexInPage,
 			&question.AnswerPicture,
 			&question.MultipleChoice,
 			&question.QuestionPicture,
@@ -268,6 +281,7 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 			column(tableQuestion, columnQuestionAnswer),
 			column(tableQuestion, columnQuestionSourcePage),
 			column(tableQuestion, columnQuestionDateCreated),
+			column(tableQuestion, columnQuestionIndexInPage),
 			column(tableQuestion, columnQuestionAnswerPicture),
 			column(tableQuestion, columnQuestionMultipleChoice),
 			column(tableQuestion, columnQuestionQuestionPicture),
@@ -312,6 +326,7 @@ func SelectQuestions(db *sql.DB) (Questions, error) {
 			&question.Answer,
 			&question.SourcePage,
 			&question.DateCreated,
+			&question.IndexInPage,
 			&question.AnswerPicture,
 			&question.MultipleChoice,
 			&question.QuestionPicture,

@@ -415,6 +415,10 @@ class QuestionCreationForm extends Component {
             name="sourcePage"
             fullWidth={true}
             floatingLabelText="Question Source Page" />
+          <TextField
+            name="indexInPage"
+            fullWidth={true}
+            floatingLabelText="Index in Page" />
 
           {this.renderHiddenFields()}
           {this.renderCategoryCreationDialog()}

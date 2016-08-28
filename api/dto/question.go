@@ -14,6 +14,7 @@ type Question struct {
 	CategoryID         *int        `json:"categoryId,omitempty"`
 	Difficulty         *Difficulty `json:"difficulty,omitempty"`
 	DateCreated        *time.Time  `json:"dateCreated,omitempty"`
+	IndexInPage        *int        `json:"indexInPage,omitempty"`
 	DifficultyID       *int        `json:"difficultyId,omitempty"`
 	AnswerPicture      string      `json:"answerPicture"`
 	MultipleChoice     bool        `json:"multipleChoice"`

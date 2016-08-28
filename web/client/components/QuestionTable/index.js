@@ -174,6 +174,13 @@ class QuestionTable extends Component {
             <TableTextCell data={questions} />
           } />
         <Column
+          columnKey="indexInPage"
+          header={<TableHeaderCell title="Index in Page" />}
+          width={90}
+          cell={
+            <TableTextCell data={questions} />
+          } />
+        <Column
           columnKey="pictures"
           header={<TableHeaderCell title="Pictures" />}
           width={125}
