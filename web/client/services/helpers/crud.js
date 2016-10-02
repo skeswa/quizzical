@@ -31,10 +31,6 @@ export function crudService(entity, extensions) {
 
       return fetch(endpoint, { method: 'PUT', headers, body })
         .then(handleSuccess, handleFailure)
-        .then(creationRecord => {
-          return fetch(`${endpoint}/${creationRecord.createdRecordId}`)
-            .then(handleSuccess, handleFailure)
-        })
     },
 
     del(id) {
