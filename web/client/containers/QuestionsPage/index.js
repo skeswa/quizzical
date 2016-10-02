@@ -11,6 +11,7 @@ const QuestionsPage = (props, context) => {
   return (
     <Questions
       actions={props.actions}
+      sources={props.sources}
       questions={props.questions}
       categories={props.categories}
       difficulties={props.difficulties}
@@ -20,10 +21,12 @@ const QuestionsPage = (props, context) => {
 
 const reduxify = connect(
   (state, props) => ({
+    sources:            state.source.list,
     questions:          state.question.list,
     categories:         state.category.list,
     difficulties:       state.difficulty.list,
     dataShouldBeLoaded: (
+      !state.source.loaded ||
       !state.question.loaded ||
       !state.category.loaded ||
       !state.difficulty.loaded
@@ -32,6 +35,7 @@ const reduxify = connect(
   (dispatch, props) => ({
     actions: Object.assign(
       {},
+      bindActionCreators(actions.source, dispatch),
       bindActionCreators(actions.question, dispatch),
       bindActionCreators(actions.category, dispatch),
       bindActionCreators(actions.difficulty, dispatch),

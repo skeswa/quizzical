@@ -6,7 +6,7 @@ import style from './style.css'
 import {
   timeSince,
   textColorForBackground,
-  pictureNameToBackgroundURL,
+  pictureIdToBackgroundURL,
 } from 'utils'
 
 class QuestionGridItem extends Component {
@@ -51,15 +51,15 @@ class QuestionGridItem extends Component {
         },
         dateCreated: questionDateCreated,
         multipleChoice: isQuestionMultipleChoice,
-        questionPicture: questionPicture,
+        questionPicture: { id: questionPictureId },
       }
     } = this.props
 
     const questionType            = isQuestionMultipleChoice
       ? 'multiple choice'
       : 'numeric answer'
-    const difficultyBgColor       = `#${questionDifficultyColor}`
-    const questionPictureURL      = pictureNameToBackgroundURL(questionPicture)
+    const difficultyBgColor       = questionDifficultyColor
+    const questionPictureURL      = pictureIdToBackgroundURL(questionPictureId)
     const difficultyTextColor     = textColorForBackground(difficultyBgColor)
     const formattedDateCreated    = timeSince(questionDateCreated)
     const difficultyColorStyle    = {

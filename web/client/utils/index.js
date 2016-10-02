@@ -1,6 +1,10 @@
 
 const hexRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i
 
+function twoDigitify(n) {
+  return n > 9 ? '' + n: '0' + n
+}
+
 function hexToRGB(hex) {
   const result = hexRegex.exec(hex)
   return result
@@ -27,8 +31,8 @@ export function textColorForBackground(bgHex) {
     : '#fff'
 }
 
-export function pictureNameToBackgroundURL(pictureName) {
-  return `/api/pictures/${pictureName}`
+export function pictureIdToBackgroundURL(pictureId) {
+  return `/api/problems/pictures/${pictureId}`
 }
 
 export function timeSince(dateString) {
@@ -62,8 +66,8 @@ export function timeSince(dateString) {
 export function formatDateCreated(dateString) {
   const date = new Date(dateString)
   let time = date.getHours() > 11
-    ? `${date.getHours() > 12 ? (date.getHours() - 12) : 12}:${date.getMinutes()} PM`
-    : `${date.getHours()}:${date.getMinutes()} AM`
+    ? `${twoDigitify(date.getHours() > 12 ? (date.getHours() - 12) : 12)}:${twoDigitify(date.getMinutes())} PM`
+    : `${twoDigitify(date.getHours())}:${twoDigitify(date.getMinutes())} AM`
 
   return `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100} at ${time}`
 }

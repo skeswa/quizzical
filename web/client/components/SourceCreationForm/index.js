@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
 
-class CategoryCreationForm extends Component {
+class SourceCreationForm extends Component {
   static propTypes = {
     error:    React.PropTypes.any,
     loading:  React.PropTypes.bool.isRequired,
@@ -53,7 +53,7 @@ class CategoryCreationForm extends Component {
 
       return (
         <FormError
-          title="Failed to create category"
+          title="Failed to create source"
           message={message} />
       )
     }
@@ -71,13 +71,13 @@ class CategoryCreationForm extends Component {
         {this.renderError()}
         <TextField
           value={code}
-          hintText="e.g. lineq"
+          hintText="e.g. barron"
           onChange={::this.onCodeChanged}
           fullWidth={true}
           floatingLabelText="Code" />
         <TextField
           value={name}
-          hintText="e.g. Linear Equations"
+          hintText="e.g. Barron's SAT Prep"
           onChange={::this.onNameChanged}
           fullWidth={true}
           floatingLabelText="Name" />
@@ -86,4 +86,4 @@ class CategoryCreationForm extends Component {
   }
 }
 
-export default CategoryCreationForm
+export default SourceCreationForm

@@ -13,7 +13,7 @@ import TableQuestionPicturesCell from 'components/TableQuestionPicturesCell'
 import TableHeaderCell, { SortTypes } from 'components/TableHeaderCell'
 import { formatDateCreated, pictureNameToBackgroundURL } from 'utils'
 
-// 5 frames
+// 16.667 * 5 = 5 frames.
 const tableResizeDelay = 16.667 * 5
 
 class QuestionTable extends Component {
@@ -164,17 +164,19 @@ class QuestionTable extends Component {
           header={<TableHeaderCell title="Source" />}
           width={155}
           cell={
-            <TableTextCell data={questions} />
+            <TableTextCell
+              data={questions}
+              serializer={source => source.name} />
           } />
         <Column
-          columnKey="sourcePage"
+          columnKey="sourcePageNumber"
           header={<TableHeaderCell title="Source Page" />}
           width={115}
           cell={
             <TableTextCell data={questions} />
           } />
         <Column
-          columnKey="indexInPage"
+          columnKey="sourceIndexWithinPage"
           header={<TableHeaderCell title="Index in Page" />}
           width={90}
           cell={

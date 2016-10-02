@@ -13,6 +13,7 @@ class DifficultyCreationForm extends Component {
   }
 
   state = {
+    code: '',
     name: '',
     color: '',
   }
@@ -24,6 +25,10 @@ class DifficultyCreationForm extends Component {
     }
   }
 
+  onCodeChanged(e) {
+    this.setState({ code: e.target.value })
+  }
+
   onNameChanged(e) {
     this.setState({ name: e.target.value })
   }
@@ -33,11 +38,8 @@ class DifficultyCreationForm extends Component {
   }
 
   getJSON = () => {
-    const truncatedColor = this.state.color
-      ? this.state.color.replace('#', '')
-      : this.state.color
-
-    return { name: this.state.name, color: truncatedColor }
+    const { code, name, color } = this.state
+    return { code, name, color }
   }
 
   scrollToTop() {
@@ -66,12 +68,18 @@ class DifficultyCreationForm extends Component {
 
   render() {
     const { loading } = this.props
-    const { name, color } = this.state
+    const { code, name, color } = this.state
 
     return (
       <div>
         <FormLoader visible={loading} />
         {this.renderError()}
+        <TextField
+          value={code}
+          hintText="e.g. medium"
+          onChange={::this.onCodeChanged}
+          fullWidth={true}
+          floatingLabelText="Code" />
         <TextField
           value={name}
           hintText="e.g. Medium"

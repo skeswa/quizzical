@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 import style from './style.css'
 import { Cell } from 'components/Table'
-import { pictureNameToBackgroundURL } from 'utils'
+import { pictureIdToBackgroundURL } from 'utils'
 
 function bindHandler(handler, pictureURL) {
   return () => handler(pictureURL)
@@ -13,9 +13,13 @@ function bindHandler(handler, pictureURL) {
 
 const TableQuestionPicturesCell = props => {
   const { data, handler, rowIndex, ...otherProps } = props
-  const { questionPicture, answerPicture } = data[rowIndex]
-  const answerPictureURL    = pictureNameToBackgroundURL(answerPicture)
-  const questionPictureURL  = pictureNameToBackgroundURL(questionPicture)
+  const {
+    answerPicture: { id: answerPictureId },
+    questionPicture: { id: questionPictureId },
+  } = data[rowIndex]
+
+  const answerPictureURL    = pictureIdToBackgroundURL(answerPictureId)
+  const questionPictureURL  = pictureIdToBackgroundURL(questionPictureId)
 
   return (
     <Cell {...otherProps}>

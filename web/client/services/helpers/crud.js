@@ -15,17 +15,21 @@ export function crudService(entity, extensions) {
         .then(handleSuccess, handleFailure)
     },
 
-    getAll() {
-      return fetch(endpoint, { method: 'GET' })
+    getAll(offset = 0, limit = 50) {
+      return fetch(`${endpoint}?start=${offset}&end=${offset + limit}`, { method: 'GET' })
         .then(handleSuccess, handleFailure)
     },
 
     create(payload) {
-      const body = payload instanceof FormData
-        ? payload
-        : JSON.stringify(payload)
+      let body, headers = { 'Accept': 'application/json' };
+      if (payload instanceof FormData) {
+        body = payload
+      } else {
+        body = JSON.stringify(payload)
+        headers['Content-Type'] = 'application/json'
+      }
 
-      return fetch(endpoint, { method: 'POST', body })
+      return fetch(endpoint, { method: 'PUT', headers, body })
         .then(handleSuccess, handleFailure)
         .then(creationRecord => {
           return fetch(`${endpoint}/${creationRecord.createdRecordId}`)

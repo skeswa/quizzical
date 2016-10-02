@@ -13,6 +13,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import style from './style.css'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
+import SourceCreationForm from 'components/SourceCreationForm'
 import CategoryCreationForm from 'components/CategoryCreationForm'
 import DifficultyCreationForm from 'components/DifficultyCreationForm'
 
@@ -21,22 +22,28 @@ const questionTypeMultipleChoice  = 'multipleChoice'
 
 class QuestionCreationForm extends Component {
   static propTypes = {
-    error:                    React.PropTypes.any,
-    loading:                  React.PropTypes.bool.isRequired,
-    categories:               React.PropTypes.array.isRequired,
-    difficulties:             React.PropTypes.array.isRequired,
-    createCategory:           React.PropTypes.func.isRequired,
-    createDifficulty:         React.PropTypes.func.isRequired,
+    error:              React.PropTypes.any,
+    loading:            React.PropTypes.bool.isRequired,
+    sources:            React.PropTypes.array.isRequired,
+    categories:         React.PropTypes.array.isRequired,
+    difficulties:       React.PropTypes.array.isRequired,
+    createSource:       React.PropTypes.func.isRequired,
+    createCategory:     React.PropTypes.func.isRequired,
+    createDifficulty:   React.PropTypes.func.isRequired,
   }
 
   state = {
+    selectedSourceId:                 null,
     requiresCalculator:               false,
     selectedCategoryId:               null,
+    sourceCreationError:              null,
     selectedDifficultyId:             null,
     selectedQuestionType:             null,
     categoryCreationError:            null,
     difficultyCreationError:          null,
+    sourceCreationInProgress:         false,
     categoryCreationInProgress:       false,
+    sourceCreationDialogVisible:      false,
     difficultyCreationInProgress:     false,
     categoryCreationDialogVisible:    false,
     difficultyCreationDialogVisible:  false,
@@ -47,6 +54,10 @@ class QuestionCreationForm extends Component {
       // Make sure that the error is visible.
       this.scrollToTop()
     }
+  }
+
+  onSourceChanged(e, i, value) {
+    this.setState({ selectedSourceId: value })
   }
 
   onCategoryChanged(e, i, value) {
@@ -63,6 +74,29 @@ class QuestionCreationForm extends Component {
 
   onRequiresCalculatorChecked(e, checked) {
     this.setState({ requiresCalculator: checked })
+  }
+
+  onCreateSourceClicked() {
+    this.setState({
+      sourceCreationError:      null,
+      sourceCreationInProgress: true,
+    })
+
+    const json = this.refs.sourceCreationForm.getJSON()
+    this.props.createSource(json)
+      .then(resultingAction => {
+        if (resultingAction.error) {
+          this.setState({
+            sourceCreationError:      resultingAction.payload,
+            sourceCreationInProgress: false,
+          })
+        } else {
+          this.setState({
+            sourceCreationInProgress:     false,
+            sourceCreationDialogVisible:  false,
+          })
+        }
+      })
   }
 
   onCreateCategoryClicked() {
@@ -111,6 +145,10 @@ class QuestionCreationForm extends Component {
       })
   }
 
+  onCancelSourceClicked() {
+    this.setState({ sourceCreationDialogVisible: false })
+  }
+
   onCancelCategoryClicked() {
     this.setState({ categoryCreationDialogVisible: false })
   }
@@ -119,10 +157,10 @@ class QuestionCreationForm extends Component {
     this.setState({ difficultyCreationDialogVisible: false })
   }
 
-  onOpenDifficultyCreationDialogClicked() {
+  onOpenSourceCreationDialogClicked() {
     this.setState({
-      difficultyCreationError:          null,
-      difficultyCreationDialogVisible:  true,
+      sourceCreationError:          null,
+      sourceCreationDialogVisible:  true,
     })
   }
 
@@ -130,6 +168,13 @@ class QuestionCreationForm extends Component {
     this.setState({
       categoryCreationError:          null,
       categoryCreationDialogVisible:  true,
+    })
+  }
+
+  onOpenDifficultyCreationDialogClicked() {
+    this.setState({
+      difficultyCreationError:          null,
+      difficultyCreationDialogVisible:  true,
     })
   }
 
@@ -145,6 +190,7 @@ class QuestionCreationForm extends Component {
 
   renderHiddenFields() {
     const {
+      selectedSourceId,
       requiresCalculator,
       selectedCategoryId,
       selectedDifficultyId,
@@ -156,6 +202,13 @@ class QuestionCreationForm extends Component {
       : null
 
     return [
+      selectedSourceId
+        ? <input
+            key="sourceId"
+            type="hidden"
+            name="sourceId"
+            value={selectedSourceId} />
+        : null,
       selectedCategoryId
         ? <input
             key="categoryId"
@@ -231,6 +284,41 @@ class QuestionCreationForm extends Component {
     return null
   }
 
+  renderSourceCreationDialog() {
+    const {
+      sourceCreationError,
+      sourceCreationInProgress,
+      sourceCreationDialogVisible,
+    } = this.state
+
+    const dialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        disabled={sourceCreationInProgress}
+        onTouchTap={::this.onCancelSourceClicked} />,
+      <RaisedButton
+        label="Create"
+        primary={true}
+        disabled={sourceCreationInProgress}
+        onTouchTap={::this.onCreateSourceClicked} />
+    ]
+
+    return (
+      <Dialog
+        open={sourceCreationDialogVisible}
+        title="Create New Source"
+        actions={dialogActions}
+        onRequestClose={::this.onCancelSourceClicked}
+        autoScrollBodyContent={true}>
+        <SourceCreationForm
+          ref="sourceCreationForm"
+          error={sourceCreationError}
+          loading={sourceCreationInProgress} />
+      </Dialog>
+    )
+  }
+
   renderCategoryCreationDialog() {
     const {
       categoryCreationError,
@@ -302,14 +390,23 @@ class QuestionCreationForm extends Component {
   }
 
   render() {
-    const { loading, categories, difficulties } = this.props
+    const { loading, sources, categories, difficulties } = this.props
     const {
+      selectedSourceId,
       requiresCalculator,
       selectedCategoryId,
       selectedDifficultyId,
       selectedQuestionType,
     } = this.state
 
+    const sourceMenuItems = sources.map(source => {
+      return (
+        <MenuItem
+          key={source.id}
+          value={source.id}
+          primaryText={source.name} />
+      )
+    })
     const categoryMenuItems = categories.map(category => {
       return (
         <MenuItem
@@ -406,21 +503,33 @@ class QuestionCreationForm extends Component {
               primary={true}
               onClick={::this.onOpenDifficultyCreationDialogClicked} />
           </div>
+          <div className={style.select}>
+            <SelectField
+              value={selectedSourceId}
+              hintText="Where the question came from"
+              disabled={sourceMenuItems.length < 1}
+              onChange={::this.onSourceChanged}
+              fullWidth={true}
+              floatingLabelText="Source">
+              {sourceMenuItems}
+            </SelectField>
+            <FlatButton
+              label="new"
+              style={{ marginLeft: '1.2rem' }}
+              primary={true}
+              onClick={::this.onOpenSourceCreationDialogClicked} />
+          </div>
           <TextField
-            name="source"
-            hintText="e.g. Barron's Book"
-            fullWidth={true}
-            floatingLabelText="Question Source" />
-          <TextField
-            name="sourcePage"
+            name="sourcePageNumber"
             fullWidth={true}
             floatingLabelText="Question Source Page" />
           <TextField
-            name="indexInPage"
+            name="sourceIndexWithinPage"
             fullWidth={true}
             floatingLabelText="Index in Page" />
 
           {this.renderHiddenFields()}
+          {this.renderSourceCreationDialog()}
           {this.renderCategoryCreationDialog()}
           {this.renderDifficultyCreationDialog()}
         </form>

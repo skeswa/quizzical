@@ -5,10 +5,8 @@ import MenuItem from 'material-ui/MenuItem'
 import classNames from 'classnames'
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
-import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 
 import style from './style.css'
 import ListError from 'components/ListError'
@@ -22,6 +20,7 @@ import QuestionCreationForm from 'components/QuestionCreationForm'
 class Questions extends Component {
   static propTypes = {
     actions:            React.PropTypes.object.isRequired,
+    sources:            React.PropTypes.array.isRequired,
     questions:          React.PropTypes.array.isRequired,
     categories:         React.PropTypes.array.isRequired,
     difficulties:       React.PropTypes.array.isRequired,
@@ -47,15 +46,23 @@ class Questions extends Component {
   }
 
   loadData() {
+    const {
+      loadSources,
+      loadQuestions,
+      loadCategories,
+      loadDifficulties,
+    } = this.props.actions
+
     // Indicate loading.
     this.setState({ isDataLoading: true, loadingError: null })
 
     // Re-load everything.
     Promise
       .all([
-        this.props.actions.loadQuestions(),
-        this.props.actions.loadCategories(),
-        this.props.actions.loadDifficulties(),
+        loadSources(),
+        loadQuestions(),
+        loadCategories(),
+        loadDifficulties(),
       ])
       .then(resultingActions => {
         let error = null
@@ -136,7 +143,12 @@ class Questions extends Component {
   }
 
   renderCreationDialog() {
-    const { actions, categories, difficulties } = this.props
+    const {
+      actions,
+      sources,
+      categories,
+      difficulties,
+    } = this.props
     const {
       isDataLoading,
       questionCreationError,
@@ -168,8 +180,10 @@ class Questions extends Component {
           ref="creationForm"
           error={questionCreationError}
           loading={questionCreationInProgress}
+          sources={sources}
           categories={categories}
           difficulties={difficulties}
+          createSource={actions.createSource}
           createCategory={actions.createCategory}
           createDifficulty={actions.createDifficulty} />
       </Dialog>

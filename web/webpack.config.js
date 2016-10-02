@@ -70,8 +70,9 @@ module.exports = {
     hot: true,
     proxy: {
       '/api/*': {
-        target: 'http://api:3000',
-        secure: false
+        target:       'http://gauntlet.dev:8080',
+        secure:       false,
+        pathRewrite:  { '^/api/': '/' }
       }
     }
   }
