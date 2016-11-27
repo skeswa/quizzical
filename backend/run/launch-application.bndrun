@@ -87,22 +87,22 @@
 	org.amdatu.web.rest.doc.swagger;version='[1.0.4,1.0.5)',\
 	org.amdatu.web.rest.doc.swagger.ui;version='[1.0.4,1.0.5)',\
 	,\
-	org.gauntlet.core.api;version=latest,\
-	org.gauntlet.core.commons;version=latest,\
-	org.gauntlet.core.impl.dao;version=latest,\
-	org.gauntlet.core.impl.service;version=latest,\
-	org.gauntlet.core.model;version=latest,\
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.core.commons;version=latest,\
+	org.quizzical.backend.core.impl.dao;version=latest,\
+	org.quizzical.backend.core.impl.service;version=latest,\
+	org.quizzical.backend.core.model;version=latest,\
 	,\
-	org.gauntlet.problems.api;version=latest,\
-	org.gauntlet.problems.dao.impl.mt;version=latest,\
-	org.gauntlet.problems.model.persistence.openjpa.jpa2_0.mt;version=latest,\
-	org.gauntlet.problems.rest.mt;version=latest,\
-	org.gauntlet.data.defaults.mt;version=latest,\
+	org.quizzical.backend.problems.api;version=latest,\
+	org.quizzical.backend.problems.dao.impl.mt;version=latest,\
+	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0.mt;version=latest,\
+	org.quizzical.backend.problems.rest.mt;version=latest,\
+	org.quizzical.backend.data.defaults.mt;version=latest,\
 	,\
-	org.gauntlet.quizzes.api;version=latest,\
-	org.gauntlet.quizzes.dao.impl.mt;version=latest,\
-	org.gauntlet.quizzes.model.persistence.openjpa.jpa2_0.mt;version=latest,\
-	org.gauntlet.quizzes.rest.mt;version=latest
+	org.quizzical.backend.quizzes.api;version=latest,\
+	org.quizzical.backend.quizzes.dao.impl.mt;version=latest,\
+	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0.mt;version=latest,\
+	org.quizzical.backend.quizzes.rest.mt;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
