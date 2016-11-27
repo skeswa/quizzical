@@ -9,7 +9,23 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - gauntlet-db-volume:/var/lib/postgresql/data
+      - quizzical-db-volume:/var/lib/postgresql/data
+  backend:
+    build:
+      context: ./infra/docker/backend
+      dockerfile: Dockerfile
+    image: quizzical-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - QUIZZICAL_DB_USERNAME=quizzical-admin
+      - QUIZZICAL_DB_PASS=getmandisagoodatsatmath
+      - QUIZZICAL_DB_HOST=quizzical_db
+      - QUIZZICAL_DB_PORT=5432
+      - QUIZZICAL_DB_NAME=quizzical
+      - QUIZZICAL_DB_SCHEMA=quizzical
+    links:
+     - db:quizzical_db
 volumes:
-  "gauntlet-db-volume":
+  "quizzical-db-volume":
     external: true

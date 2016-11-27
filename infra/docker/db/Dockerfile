@@ -1,5 +1,5 @@
 FROM postgres:latest
 
-ENV POSTGRES_DB="gauntlet"
-ENV POSTGRES_USER="gauntlet-admin"
+ENV POSTGRES_DB="quizzical"
+ENV POSTGRES_USER="quizzical-admin"
 ENV POSTGRES_PASSWORD="getmandisagoodatsatmath"
