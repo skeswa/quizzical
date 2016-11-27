@@ -52,7 +52,21 @@ module.exports = {
   },
   resolve: {
     root: path.join(__dirname, './client'),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+ 
+    alias: {
+      // TODO(skeswa): remove this when react-hot-loader@3 comes out.
+      // (https://github.com/gaearon/react-hot-loader/issues/417).
+      'react/lib/ReactMount': 'react-dom/lib/ReactMount',
+
+      // TODO(skeswa): remove the rest of this when the new react-tap-event-plugin comes out.
+      'react/lib/EventPluginHub': 'react-dom/lib/EventPluginHub',
+      'react/lib/EventConstants': 'react-dom/lib/EventConstants',
+      'react/lib/ViewportMetrics': 'react-dom/lib/ViewportMetrics',
+      'react/lib/EventPluginUtils': 'react-dom/lib/EventPluginUtils',
+      'react/lib/EventPropagators': 'react-dom/lib/EventPropagators',
+      'react/lib/SyntheticUIEvent': 'react-dom/lib/SyntheticUIEvent'
+    }
   },
   postcss: [
     rucksack({

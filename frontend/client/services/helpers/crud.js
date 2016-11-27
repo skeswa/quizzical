@@ -7,7 +7,7 @@ const genericFailureError = 'Sorry. For whatever reason, the server isn\'t co-op
 const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.'
 
 export function crudService(entity, extensions) {
-  const endpoint = `/api/${pluralize(entity)}`
+  const endpoint = `/api/${pluralizeEntity(entity)}`
 
   return Object.assign({
     get(id) {
@@ -40,13 +40,13 @@ export function crudService(entity, extensions) {
   }, extensions)
 }
 
-function handleSuccess(response) {
+export function handleSuccess(response) {
   return response.ok
     ? deserializeResponse(response)
     : Promise.reject(deserializeError(response))
 }
 
-function handleFailure(problem) {
+export function handleFailure(problem) {
   logger('Service request failed:', problem)
   return Promise.reject(connectionFailureError)
 }
@@ -62,4 +62,16 @@ function deserializeResponse(response) {
 function deserializeError(response) {
   return deserializeResponse(response)
     .then(data => data ? data : genericFailureError)
+}
+
+function pluralizeEntity(entity) {
+  const slashIndex = entity.lastIndexOf('/')
+  if (slashIndex !== -1) {
+    const entityPath = entity.substring(0, slashIndex)
+    const entityName = entity.substring(slashIndex + 1)
+
+    return `${entityPath}/${pluralize(entityName)}`
+  }
+
+  return pluralize(entity)
 }

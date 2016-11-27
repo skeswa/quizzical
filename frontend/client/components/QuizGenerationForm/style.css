@@ -1,0 +1,33 @@
+
+.main {
+  position: relative;
+}
+
+.select {
+  align-items: flex-end;
+  display: flex;
+}
+
+.quizLengthLabel {
+  display: flex;
+  font-size: 1.6rem;
+  margin-top: 2rem;
+}
+
+.categoryFocusLabel {
+  margin-top: 2rem;
+}
+
+.quizLengthLabelTitle {
+  margin-right: 0.4rem;
+}
+
+.quizLengthLabelValue {
+  font-weight: 600;
+}
+
+.generationStrategyLabel {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  margin-top: -2rem;
+}
