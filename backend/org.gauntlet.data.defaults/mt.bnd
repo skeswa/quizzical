@@ -1,0 +1,5 @@
+Bundle-Activator: org.gauntlet.problems.defaults.osgi.Activator
+Private-Package: \
+	org.gauntlet.problems.defaults,\
+	org.gauntlet.problems.defaults.osgi,\
+	org.gauntlet.problems.defaults.gdocs

@@ -1,0 +1,9 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.problems.dao.impl,\
+	org.gauntlet.problems.dao.impl.osgi
+X-MultiTenant-Version: 1
+X-MultiTenant-Bundle-Activator: org.gauntlet.problems.dao.impl.osgi.MTActivator
+X-MultiTenant-Scope: (|(org.amdatu.tenant.pid=%TENANTPID%)(objectClass=org.osgi.service.log.LogService))
+Bundle-Activator: org.amdatu.multitenant.adapter.MultiTenantBundleActivator	
+	

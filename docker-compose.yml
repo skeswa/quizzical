@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  db:
+    build:
+      context: ./infra/docker/db
+      dockerfile: Dockerfile
+    image: quizzical-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - gauntlet-db-volume:/var/lib/postgresql/data
+volumes:
+  "gauntlet-db-volume":
+    external: true

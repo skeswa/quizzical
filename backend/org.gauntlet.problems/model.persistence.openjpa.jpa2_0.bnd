@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Gnt-Module: gnt_problem
+Meta-Persistence: META-INF/persistence.xml
+Include-Resource: META-INF/persistence.xml=resources/jpa/problems-persistence-openjpa.xml
+Private-Package: org.gauntlet.problems.model.jpa.osgi
+Bundle-Activator: org.gauntlet.problems.model.jpa.osgi.Activator
+Export-Package: org.gauntlet.problems.model.jpa

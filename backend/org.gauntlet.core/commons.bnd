@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Export-Package: \
+	org.gauntlet.core.commons.util.bean,\
+	org.gauntlet.core.commons.util,\
+	org.gauntlet.core.commons.util.jpa

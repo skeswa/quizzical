@@ -1,0 +1,5 @@
+Include-Resource: @jars/google-oauth-client-jetty-1.22.0.jar
+-exportcontents:  com	
+Export-Package: com.*;version=1.22.0
+Bundle-Version: 1.22.0.${tstamp}
+DynamicImport-Package: *

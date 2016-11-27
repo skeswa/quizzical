@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.problems.dao.impl,\
+	org.gauntlet.problems.dao.impl.osgi	
+Bundle-Activator: org.gauntlet.problems.dao.impl.osgi.Activator

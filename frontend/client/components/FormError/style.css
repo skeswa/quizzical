@@ -1,0 +1,37 @@
+
+.main {
+  align-items: center;
+  border-radius: 4px;
+  background: #c62828;
+  display: flex;
+  flex: 1;
+  margin-top: 2rem;
+}
+
+.error {
+  align-items: center;
+  display: flex;
+  padding: 1rem;
+}
+
+.icon :global(.material-icons) {
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+.text {
+  margin-left: 1.2rem;
+}
+
+.title {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.message {
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  margin-top: 0.4rem;
+}

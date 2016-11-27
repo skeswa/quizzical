@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Export-Package: \
+	org.gauntlet.core.api.dao,\
+	org.gauntlet.core.api.service,\
+	org.gauntlet.core.api

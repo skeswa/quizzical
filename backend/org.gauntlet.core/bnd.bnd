@@ -1,0 +1,13 @@
+-buildpath:  \
+	../cnf/plugins/org.apache.felix.dependencymanager.annotation-4.1.0.jar;version=file,\
+	osgi.core,\
+	org.apache.felix.log,\
+	org.apache.commons.beanutils;version=1.8,\
+	org.amdatu.persistence2_0;version=1.0,\
+	org.apache.felix.dependencymanager;version=4.1,\
+	net.sf.dozer.dozer-osgi;version=5.5,\
+	com.fasterxml.jackson.core.jackson-annotations,\
+	com.fasterxml.jackson.core.jackson-core,\
+	com.fasterxml.jackson.core.jackson-databind
+-sub:  \
+	*.bnd

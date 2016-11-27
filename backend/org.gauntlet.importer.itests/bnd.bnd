@@ -1,0 +1,56 @@
+Test-Cases: ${classes;CONCRETE;ANNOTATED;org.junit.runner.RunWith}
+# This is the version of JUnit that will be used at build time and run time
+junit: org.apache.servicemix.bundles.junit;version="[4.11,5)"
+
+-runfw: org.apache.felix.framework;version='[4.2.1,4.2.1]'
+-runee: JavaSE-1.8
+-runsystemcapabilities: ${native_capability}
+-runsystempackages: javax.xml.stream;version=1.0.0,\
+	javax.xml.stream.events;version=1.0.0,\
+	javax.xml.stream.util;version=1.0.0,\
+	sun.reflect,\
+	sun.reflect.misc
+
+-buildpath: \
+	osgi.core;version='[5,6)',\
+	osgi.cmpn;version='[4.3.1,5)',\
+	osgi.enterprise;version='[5,6)',\
+	org.apache.felix.dependencymanager;version='[4.0.0,5.0.0)',\
+	org.amdatu.testing.configurator;version=4.0,\
+	${junit},\
+	org.gauntlet.libraries.google-api-client;version=latest,\
+	org.gauntlet.libraries.google-api-services-sheets-v4-rev28;version=latest,\
+	org.gauntlet.libraries.google-oauth-client-jetty;version=latest,\
+	com.google.guava.jdk5;version=17.0,\
+	org.gauntlet.libraries.google-oauth-client;version=latest,\
+	org.gauntlet.libraries.google-http-client-jackson2;version=latest,\
+	org.apache.httpcomponents.httpclient;version=4.2,\
+	org.apache.httpcomponents.httpcore;version=4.2,\
+	org.gauntlet.libraries.google-http-client;version=latest,\
+	org.gauntlet.libraries.google-oauth-client-java6;version=latest,\
+	org.gauntlet.importer.gsheets;version=latest,\
+	org.gauntlet.libraries.google-api-services-drive-v3-rev44;version=latest
+	
+-runbundles: \
+	osgi.core;version='[5,6)',\
+	osgi.cmpn;version='[4.3.1,5)',\
+	${junit},\
+	org.apache.felix.dependencymanager;version='[4.0.0,5.0.0)',\
+	org.amdatu.testing.configurator;version=4.0,\
+	org.gauntlet.libraries.google-api-client;version=latest,\
+	org.gauntlet.libraries.google-api-services-sheets-v4-rev28;version=latest,\
+	org.gauntlet.libraries.google-oauth-client-jetty;version=latest,\
+	com.google.guava.jdk5;version=17.0,\
+	org.gauntlet.libraries.google-oauth-client;version=latest,\
+	org.gauntlet.libraries.google-http-client-jackson2;version=latest,\
+	org.apache.httpcomponents.httpclient;version=4.2,\
+	org.apache.httpcomponents.httpcore;version=4.2,\
+	org.gauntlet.libraries.google-http-client;version=latest,\
+	org.gauntlet.libraries.google-oauth-client-java6;version=latest,\
+	org.gauntlet.importer.gsheets;version=latest,\
+	com.springsource.org.apache.commons.logging;version=1.1.1,\
+	com.fasterxml.jackson.core.jackson-core;version=2.6.3,\
+	javax.servlet;version=2.5.0,\
+	com.springsource.org.mortbay.jetty;version=6.1.9,\
+	com.springsource.org.mortbay.util;version=6.1.9,\
+	org.gauntlet.libraries.google-api-services-drive-v3-rev44;version=latest

@@ -1,0 +1,4 @@
+Bundle-Activator: org.gauntlet.problems.rest.osgi.Activator
+Private-Package: \
+	org.gauntlet.problems.rest,\
+	org.gauntlet.problems.rest.osgi
