@@ -12,12 +12,12 @@
 	org.amdatu.web.rest.jaxrs,\
 	org.amdatu.security.tokenprovider.api,\
 	org.amdatu.persistence2_0;version=1.0,\
-	org.gauntlet.core.model;version=latest,\
-	org.gauntlet.core.api;version=latest,\
-	org.gauntlet.core.impl.dao;version=latest,\
+	org.quizzical.backend.core.model;version=latest,\
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.core.impl.dao;version=latest,\
 	org.amdatu.web.rest.wink;version=3.0,\
-	org.gauntlet.core.commons;version=latest,\
-	org.gauntlet.core.impl.service;version=latest,\
+	org.quizzical.backend.core.commons;version=latest,\
+	org.quizzical.backend.core.impl.service;version=latest,\
 	com.fasterxml.jackson.core.jackson-annotations;version=2.3,\
 	org.apache.commons.fileupload;version=1.2,\
 	org.apache.commons.io;version=2.4
