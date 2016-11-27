@@ -143,7 +143,7 @@ class QuizGenerationForm extends Component {
 
         <div
           style={{
-            display: generationStrategy === 'categoryFocus'
+            display: generationStrategy === 'generate_by_category'
               ? 'block'
               : 'none'
           }}>
