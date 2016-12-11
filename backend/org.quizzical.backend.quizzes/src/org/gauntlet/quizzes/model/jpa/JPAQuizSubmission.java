@@ -19,8 +19,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
-	+"quiz_take")
-public class JPAQuizTake extends JPABaseEntity implements Serializable {
+	+"quiz_submission")
+public class JPAQuizSubmission extends JPABaseEntity implements Serializable {
 	@ManyToOne(targetEntity = JPAQuiz.class)
 	@JoinColumn
 	private JPAQuiz quiz;
@@ -29,11 +29,11 @@ public class JPAQuizTake extends JPABaseEntity implements Serializable {
 	@JoinColumn
 	private List<JPAQuizProblemAnswer>	answers = new ArrayList<>();
 
-	public JPAQuizTake() {
+	public JPAQuizSubmission() {
 		super();
 	}
 
-	public JPAQuizTake(JPAQuiz quiz) {
+	public JPAQuizSubmission(JPAQuiz quiz) {
 		this();
 		String code_ = String.format("Take %d of %s",new Date().toString(),quiz.getCode());
 		setCode(code_);
