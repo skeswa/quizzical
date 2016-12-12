@@ -1,0 +1,24 @@
+
+.main {
+  background-color: #754aec;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.0) 100%);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  color: #ffffff;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 2rem;
+  padding: 1.8rem 0;
+  text-align: center;
+}
+
+.body {
+  display: flex;
+  flex-grow: 1;
+}

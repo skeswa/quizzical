@@ -9,7 +9,7 @@ export default class Header extends Component {
     return (
       <header className={style.main}>
         <div className={style.middle}>
-          <div className={style.logo}>Gauntlet</div>
+          <div className={style.logo}>Quizzical</div>
           <div className={style.account}>
             <i className={classNames(style.accountIcon, 'material-icons')}>account_circle</i>
           </div>

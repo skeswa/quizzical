@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import actions from 'actions'
 import QuizAttempts from 'components/QuizAttempts'
 
-const PracticePage = (props, context) => {
+const QuizAttemptsPage = (props, context) => {
   return (
     <QuizAttempts
       actions={props.actions}
@@ -32,4 +32,4 @@ const reduxify = connect(
   })
 )
 
-export default reduxify(PracticePage)
+export default reduxify(QuizAttemptsPage)
