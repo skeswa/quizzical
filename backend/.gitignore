@@ -1,4 +1,5 @@
 #Eclipse
 target/
 .metadata
-run/generated
+generated/
+bin/
