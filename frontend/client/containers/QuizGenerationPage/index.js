@@ -63,6 +63,7 @@ class QuizGenerationPage extends Component {
     const formData = this.refs.generationForm.getJSON()
     this.props.actions.generateQuiz(formData)
       .then(resultingAction => {
+        debugger
         if (resultingAction.error) {
           this.setState({
             quizGenerationError:      resultingAction.payload,
@@ -114,7 +115,10 @@ const reduxify = connect(
     dataShouldBeLoaded: !state.category.loaded,
   }),
   (dispatch, props) => ({
-    actions: Object.assign({}, bindActionCreators(actions.category, dispatch))
+    actions: Object.assign(
+      {},
+      bindActionCreators(actions.quiz, dispatch),
+      bindActionCreators(actions.category, dispatch))
   }))
 
 export default reduxify(QuizGenerationPage)

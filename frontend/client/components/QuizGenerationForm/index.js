@@ -136,7 +136,7 @@ class QuizGenerationForm extends Component {
     return (
       <MuiThemeProvider muiTheme={outsidePopup ? DARK_MUI_THEME : undefined}>
         <div className={mainClasses}>
-          <FormLoader visible={loading} />
+          <FormLoader visible={loading} fullScreen={outsidePopup} />
           {this.renderError()}
 
           <div className={style.quizLengthLabel}>
