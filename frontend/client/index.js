@@ -11,9 +11,9 @@ import React from 'react'
 import configure from './store'
 
 import QuizzesPage from 'containers/QuizzesPage'
+import QuizTakePage from 'containers/QuizTakePage'
 import AdminSkeleton from 'components/AdminSkeleton'
 import QuestionsPage from 'containers/QuestionsPage'
-import PracticeSkeleton from 'components/PracticeSkeleton'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import QuizGenerationPage from 'containers/QuizGenerationPage'
 
@@ -46,8 +46,9 @@ ReactDOM.render(
           <Route path="attempts" component={QuizAttemptsPage} />
           <Route path="questions" component={QuestionsPage} />
         </Route>
-        <Route path="quiz" component={PracticeSkeleton}>
+        <Route path="quiz">
           <Route path="start" component={QuizGenerationPage} />
+          <Route path=":quizId/take" component={QuizTakePage} />
         </Route>
       </Router>
     </ReduxProvider>

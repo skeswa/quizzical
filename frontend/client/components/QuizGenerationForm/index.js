@@ -105,7 +105,7 @@ class QuizGenerationForm extends Component {
 
       return (
         <FormError
-          title="Failed to create category"
+          title="Failed to generate a new quiz"
           message={message} />
       )
     }

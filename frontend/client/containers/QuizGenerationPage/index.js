@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import style from './style.css'
 import actions from 'actions'
+import PracticeSkeleton from 'components/PracticeSkeleton'
 import QuizGenerationForm from 'components/QuizGenerationForm'
 
 class QuizGenerationPage extends Component {
@@ -63,7 +64,6 @@ class QuizGenerationPage extends Component {
     const formData = this.refs.generationForm.getJSON()
     this.props.actions.generateQuiz(formData)
       .then(resultingAction => {
-        debugger
         if (resultingAction.error) {
           this.setState({
             quizGenerationError:      resultingAction.payload,
@@ -87,24 +87,26 @@ class QuizGenerationPage extends Component {
     } = this.state
 
     return (
-      <div className={style.main}>
-        <div className={style.middle}>
-          <QuizGenerationForm
-            ref="generationForm"
-            error={quizGenerationError}
-            loading={quizGenerationInProgress}
-            categories={categories}
-            outsidePopup={true} />
+      <PracticeSkeleton title="Quizzical" subtitle="Choose your quiz">
+        <div className={style.main}>
+          <div className={style.middle}>
+            <QuizGenerationForm
+              ref="generationForm"
+              error={quizGenerationError}
+              loading={quizGenerationInProgress}
+              categories={categories}
+              outsidePopup={true} />
+          </div>
+          <div className={style.bottom}>
+            <RaisedButton
+              label="Start"
+              disabled={isDataLoading}
+              labelColor="#754aec"
+              onTouchTap={::this.onStartClicked}
+              backgroundColor="#ffffff" />
+          </div>
         </div>
-        <div className={style.bottom}>
-          <RaisedButton
-            label="Start"
-            disabled={isDataLoading}
-            labelColor="#754aec"
-            onTouchTap={::this.onStartClicked}
-            backgroundColor="#ffffff" />
-        </div>
-      </div>
+      </PracticeSkeleton>
     )
   }
 }

@@ -13,9 +13,18 @@
   color: #ffffff;
   flex-grow: 0;
   flex-shrink: 0;
-  font-size: 2rem;
   padding: 1.8rem 0;
   text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  font-weight: 400;
 }
 
 .body {
