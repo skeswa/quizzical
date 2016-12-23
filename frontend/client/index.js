@@ -41,7 +41,7 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <ReduxProvider store={store}>
       <Router history={history}>
-        <Route path="admin" component={AdminSkeleton}>
+        <Route path="admin">
           <Route path="quizzes" component={QuizzesPage} />
           <Route path="attempts" component={QuizAttemptsPage} />
           <Route path="questions" component={QuestionsPage} />

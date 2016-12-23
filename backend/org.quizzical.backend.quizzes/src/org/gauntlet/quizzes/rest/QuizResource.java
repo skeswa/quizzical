@@ -20,6 +20,8 @@ import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizType;
+import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
+import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
 
 
@@ -28,6 +30,7 @@ public class QuizResource {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;
+	private volatile IQuizGeneratorManagerService quizGeneratorManagerService;	
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -78,5 +81,13 @@ public class QuizResource {
     	QuizType qt = quizService.getQuizTypeByPrimary(typeId);
     	quiz.setQuizType(qt);
     	return quizService.provide(quiz);
-    }     
+    }   
+    
+    @POST
+    @Path("generate") 
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON) 
+    public Quiz generate(QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
+    	return quizGeneratorManagerService.generate(params);
+    }  
 }

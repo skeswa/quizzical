@@ -34,6 +34,10 @@ public interface IProblemDAOService extends IBaseService {
 	public List<Problem> findByDifficulty(Long difficultyId, int start, int end) throws ApplicationException;
 	
 	public int countByDifficulty(Long difficultyId) throws ApplicationException;
+	
+	public List<Problem> findByCategory(Long categoryId, int start, int end) throws ApplicationException;
+	
+	public int countByCategory(Long categoryId) throws ApplicationException;	
 
 	//ProblemDifficulty
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException;

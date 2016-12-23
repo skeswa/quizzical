@@ -5,14 +5,17 @@ import { bindActionCreators } from 'redux'
 
 import actions from 'actions'
 import QuizAttempts from 'components/QuizAttempts'
+import AdminSkeleton from 'components/AdminSkeleton'
 
 const QuizAttemptsPage = (props, context) => {
   return (
-    <QuizAttempts
-      actions={props.actions}
-      categories={props.categories}
-      quizAttempts={props.quizAttempts}
-      dataShouldBeLoaded={props.dataShouldBeLoaded} />
+    <AdminSkeleton>
+      <QuizAttempts
+        actions={props.actions}
+        categories={props.categories}
+        quizAttempts={props.quizAttempts}
+        dataShouldBeLoaded={props.dataShouldBeLoaded} />
+    </AdminSkeleton>
   )
 }
 
