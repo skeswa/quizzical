@@ -208,6 +208,53 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		return count;		
 	}	
 	
+	@Override 
+	public List<Problem> findByCategory(Long categoryId, int start, int end) throws ApplicationException {
+		List<Problem> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, categoryId);
+			
+			final List result = findWithDynamicQueryAndParams(query,pes,start,end);
+			resultList = JPAEntityUtil.copy(result, Problem.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}
+	
+	@Override 
+	public int countByCategory(Long categoryId) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, categoryId);
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}		
+	
 	//ProblemDifficulty
 	@Override 
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException {
