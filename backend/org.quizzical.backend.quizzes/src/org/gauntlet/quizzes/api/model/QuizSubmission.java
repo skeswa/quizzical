@@ -6,16 +6,16 @@ import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
 
-public class QuizTake extends BaseEntity implements Serializable {
+public class QuizSubmission extends BaseEntity implements Serializable {
 	
 	private Quiz quiz;
 	
 	private List<QuizProblemAnswer> answers = new ArrayList<>();
 	
-	public QuizTake() {
+	public QuizSubmission() {
 	}
 	
-	public QuizTake(String name, String code, Quiz quiz) {
+	public QuizSubmission(String name, String code, Quiz quiz) {
 		this.name = name;
 		this.code = code;
 		this.quiz = quiz;

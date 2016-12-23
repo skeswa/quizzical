@@ -14,8 +14,11 @@ import javax.ws.rs.core.MediaType;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
+import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
 
@@ -24,37 +27,38 @@ import org.osgi.service.log.LogService;
 public class QuizResource {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
+	private volatile IProblemDAOService problemService;
 	
-	/**
-	 * 
-	 * ========= Quizzes
-	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Path("all/quiztype/{quizType}/{start}/{end}")
-    public List<Quiz> listProducts(@PathParam("quizType") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException {
-		return quizService.findByQuizType(quizType,start,end);
+    public List<Quiz> get(@PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException {
+		List<Quiz> res = quizService.findByQuizType(quizType,start,end);
+		for (Quiz quiz : res) {
+			List<QuizProblem> qproblems = quiz.getQuestions();
+			for (QuizProblem qproblem : qproblems) {
+				Problem problem = problemService.getByPrimary(qproblem.getProblemId());
+				qproblem.setProblem(problem);
+			}
+		}
+		return res;
     }
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> all(
-    		@QueryParam("start") final Integer start,
-    		@QueryParam("end") final Integer end,
-    		@QueryParam("quizTypeId") final Long quizTypeId) throws ApplicationException {
-		return quizService.findAll(start, end);
-    }
-	
-    @GET 
-    @Path("{quizId}") 
-    @Produces(MediaType.APPLICATION_JSON) 
-    public Quiz getQuiz(@PathParam("quizId") long quizId) throws NoSuchModelException, ApplicationException {
-		return quizService.getByPrimary(quizId);
+	@Path("{id}") 
+    public Quiz get(@PathParam("id") Long id) throws ApplicationException, NoSuchModelException {
+		Quiz quiz = quizService.getByPrimary(id);
+		List<QuizProblem> qproblems = quiz.getQuestions();
+		for (QuizProblem qproblem : qproblems) {
+			Problem problem = problemService.getByPrimary(qproblem.getProblemId());
+			qproblem.setProblem(problem);
+		}
+		return quiz;
     }
     
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateQuiz(Quiz quiz) throws ApplicationException {
+	public void post(Quiz quiz) throws ApplicationException {
 		quizService.update(quiz);
 	}
 
@@ -75,42 +79,4 @@ public class QuizResource {
     	quiz.setQuizType(qt);
     	return quizService.provide(quiz);
     }     
-
-	/**
-	 * 
-	 * ========= Quiz cats
-	 */
-	@GET
-    @Produces(MediaType.APPLICATION_JSON)
-	@Path("quiztypes/all/{start}/{end}")
-    public List<QuizType> allCategories(@QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException {
-		return quizService.findAllQuizTypes(start, end);
-    }	
-	
-	@GET
-    @Produces(MediaType.APPLICATION_JSON)
-	@Path("quiztypes/count")
-    public long countCategories() throws ApplicationException {
-		return quizService.countAllQuizTypes();
-    }	
-	
-    @GET 
-    @Path("quiztypes/{quizTypeId}") 
-    @Produces(MediaType.APPLICATION_JSON) 
-    public QuizType getQuizType(@PathParam("quizTypeId") long quizTypeId) throws NoSuchModelException, ApplicationException {
-		return quizService.getQuizTypeByPrimary(quizTypeId);
-    }
-    
-	@POST
-	@Path("quiztypes/provide")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void provideQuizType(QuizType quizType) throws ApplicationException {
-		quizService.provideQuizType(quizType);
-	}
-
-	@DELETE
-	@Path("quiztypes/{quizTypeId}")
-	public void deleteProbleCategory(@PathParam("quizTypeId") long quizTypeId) throws NoSuchModelException, ApplicationException {
-		quizService.deleteQuizType(quizTypeId);
-	}	
 }
