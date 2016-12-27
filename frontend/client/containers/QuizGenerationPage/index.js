@@ -8,12 +8,17 @@ import style from './style.css'
 import actions from 'actions'
 import PracticeSkeleton from 'components/PracticeSkeleton'
 import QuizGenerationForm from 'components/QuizGenerationForm'
+import { extractErrorFromResultingActions } from 'utils'
 
 class QuizGenerationPage extends Component {
   static propTypes = {
     actions:            React.PropTypes.object.isRequired,
     categories:         React.PropTypes.array.isRequired,
     dataShouldBeLoaded: React.PropTypes.bool.isRequired,
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
   }
 
   state = {
@@ -36,14 +41,7 @@ class QuizGenerationPage extends Component {
     // Re-load everything.
     loadCategories()
       .then(resultingActions => {
-        let error = null
-        for (let i = 0; i < resultingActions.length; i++) {
-          if (resultingActions[i].error) {
-            error = resultingActions[i].payload
-            break
-          }
-        }
-
+        const error = extractErrorFromResultingActions(resultingActions)
         if (error) {
           this.setState({
             loadingError:   error,
@@ -74,6 +72,8 @@ class QuizGenerationPage extends Component {
             quizGenerationInProgress:     false,
             quizGenerationDialogVisible:  false,
           })
+
+          this.context.router.push(`/quiz/${resultingAction.payload.id}/take`)
         }
       })
   }

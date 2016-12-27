@@ -36,6 +36,11 @@ const muiTheme = getMuiTheme({
 const root = document.getElementById('root')
 // How long in milliseconds to wait before fading in the UI.
 const revealDelay = 400
+// Reveals the UI by fading it in. Also, exposes Perf.
+const revealUI = () => {
+  root.style.opacity = 1
+  window.Perf = Perf
+}
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -54,9 +59,4 @@ ReactDOM.render(
     </ReduxProvider>
   </MuiThemeProvider>,
   root,
-  () => setTimeout(
-    () => {
-      root.style.opacity = 1
-      window.Perf = Perf
-    },
-    revealDelay))
+  () => setTimeout(revealUI, revealDelay))

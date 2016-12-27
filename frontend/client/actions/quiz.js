@@ -5,7 +5,7 @@ import { createCrudActions } from './helpers/crud'
 
 export default createCrudActions('quiz', services, preAction => ({
   generateQuiz: createAction(
-    `generate quiz`,
-    services.create,
+    `create quiz`,
+    services.generate,
     preAction),
 }))

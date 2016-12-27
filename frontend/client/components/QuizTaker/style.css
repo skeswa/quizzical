@@ -1,0 +1,66 @@
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.questionPictureWrapper {
+  background-color: #222222;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.questionPicture {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex: 1;
+}
+
+.questionPrompt {
+  background: #222222;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0 2px 8px #000000;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  left: 0;
+  padding: 1rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+}
+
+.withCalculator {
+  color: #946dff;
+  margin-left: 0.4rem;
+}
+
+.buttons {
+  display: flex;
+  padding: 2rem;
+}
+
+.bigButton {
+  box-sizing: border-box;
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.lightbox {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity 250ms;
+}
+.lightbox__visible {
+  opacity: 1;
+}

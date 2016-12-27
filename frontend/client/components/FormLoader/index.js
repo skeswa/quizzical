@@ -15,18 +15,31 @@ class FormLoader extends Component {
     mounted: false,
     visible: false,
   }
+  componentMounted = false
+
+  componentDidMount() {
+    this.componentMounted = true
+  }
+
+  componentWillUnmount() {
+    this.componentMounted = false
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.visible && !this.props.visible) {
       this.setState({ mounted: true }, () => {
         setTimeout(() => {
-          this.setState({ visible: true })
+          if (this.componentMounted) {
+            this.setState({ visible: true })
+          }
         }, 300)
       })
     } else if (!nextProps.visible && this.props.visible) {
       this.setState({ visible: false }, () => {
         setTimeout(() => {
-          this.setState({ mounted: false })
+          if (this.componentMounted) {
+            this.setState({ mounted: false })
+          }
         }, 300)
       })
     }

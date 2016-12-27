@@ -71,3 +71,23 @@ export function formatDateCreated(dateString) {
 
   return `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100} at ${time}`
 }
+
+export function extractErrorFromResultingActions(resultingActions) {
+  let error = null
+
+  if (resultingActions.constructor === Array) {
+    for (let i = 0; i < resultingActions.length; i++) {
+      if (resultingActions[i].error) {
+        error = resultingActions[i].payload
+        break
+      }
+    }
+  } else {
+    const resultingAction = resultingActions
+    if (resultingAction.error) {
+      error = resultingAction.payload
+    }
+  }
+
+  return error
+}

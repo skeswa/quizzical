@@ -6,7 +6,7 @@ const logger = debug('gauntlet:crud:service')
 const genericFailureError = 'Sorry. For whatever reason, the server isn\'t co-operating. Let\'s try that again.'
 const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.'
 
-export function crudService(entity, extensions) {
+export function crudService(entity, extender) {
   const endpoint = `/api/${pluralizeEntity(entity)}`
 
   return Object.assign({
@@ -37,7 +37,7 @@ export function crudService(entity, extensions) {
       return fetch(`${endpoint}/${id}`, { method: 'POST' })
         .then(handleSuccess, handleFailure)
     },
-  }, extensions)
+  }, extender ? extender(endpoint, handleSuccess, handleFailure) : null)
 }
 
 export function handleSuccess(response) {

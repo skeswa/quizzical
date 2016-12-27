@@ -27,6 +27,14 @@ public class QuizProblem extends BaseEntity implements Serializable {
 		this.code = code;
 		this.problem = problem;
 	}
+	
+	public QuizProblem(String name, String code, Long problemId, Problem problem) {
+		this();
+		this.name = name;
+		this.code = code;
+		this.problem = problem;
+		this.problemId = problemId;
+	}
 
 
 	public Long getProblemId() {

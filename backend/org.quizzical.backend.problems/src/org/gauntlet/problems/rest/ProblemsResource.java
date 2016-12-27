@@ -209,14 +209,25 @@ public class ProblemsResource {
 	}
 
 	@GET
-	@Path("pictures/{pictureId}")
-	public Response getImage(@PathParam("pictureId") String pictureId) throws ApplicationException {
-		ProblemPicture pp;
+	@Path("pictures/{pictureIdWithExtension}")
+	public Response getImage(@PathParam("pictureIdWithExtension") String pictureIdWithExtension) throws ApplicationException {
 		try {
-			pp = problemService.getProblemPictureByPrimary(Long.valueOf(pictureId));
-			InputStream pictureStream = new ByteArrayInputStream(pp.getPicture());
-			MediaType mediaType = new MediaType("image", "png");
-
+			// Parse out the picture id.
+			pictureIdWithExtension = pictureIdWithExtension.trim();
+			final int extensionIndex = pictureIdWithExtension.indexOf('.');
+			if (extensionIndex == -1) {
+				// TODO(skeswa): devise an error picture to return instead of an exception.
+				throw new IllegalArgumentException("Expected a file extension.");
+			}
+			
+			// Fetch the picture from the database.
+			final String pictureIdText = pictureIdWithExtension.substring(0, extensionIndex);
+			final Long pictureId = Long.valueOf(pictureIdText);
+			final ProblemPicture picture = problemService.getProblemPictureByPrimary(pictureId);
+			
+			// Stream it back to the client.
+			final InputStream pictureStream = new ByteArrayInputStream(picture.getPicture());
+			final MediaType mediaType = new MediaType("image", "png");
 			return Response.ok().type(mediaType).entity(pictureStream).build();
 		} catch (NumberFormatException | ApplicationException | NoSuchModelException e) {
 			throw new ApplicationException(e);

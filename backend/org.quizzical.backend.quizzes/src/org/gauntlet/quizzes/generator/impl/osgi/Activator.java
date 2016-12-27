@@ -6,6 +6,7 @@ import org.apache.felix.dm.Component;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
@@ -36,6 +37,7 @@ public class Activator extends DependencyActivatorBase {
 		Component component = dm.createComponent()
 				.setInterface(IQuizGeneratorService.class.getName(), properties)
 				.setImplementation(ByProblemCategoryGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;

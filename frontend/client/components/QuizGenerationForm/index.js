@@ -79,8 +79,8 @@ class QuizGenerationForm extends Component {
 
     // Turn quiz length into a number of questions.
     const questionCount =
-      ((MAX_QUESTIONS_COUNT - MIN_QUESTIONS_COUNT) *
-      (quizLength / (QUIZ_LENGTH_NAMES.length - 1))) + MIN_QUESTIONS_COUNT
+      Math.round(((MAX_QUESTIONS_COUNT - MIN_QUESTIONS_COUNT) *
+      (quizLength / (QUIZ_LENGTH_NAMES.length - 1))) + MIN_QUESTIONS_COUNT)
 
     return {
       quizSize: questionCount,
@@ -96,7 +96,7 @@ class QuizGenerationForm extends Component {
   }
 
   renderError() {
-    const { error } = this.props
+    const { error, outsidePopup } = this.props
 
     if (error) {
       const message = error.error
@@ -105,8 +105,9 @@ class QuizGenerationForm extends Component {
 
       return (
         <FormError
-          title="Failed to generate a new quiz"
-          message={message} />
+          title="Failed to create category"
+          message={message}
+          limitHeight={outsidePopup} />
       )
     }
 

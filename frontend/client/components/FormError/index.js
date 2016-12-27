@@ -10,7 +10,12 @@ const FormError = (props, context) => (
       </div>
       <div className={style.text}>
         <div className={style.title}>{props.title}</div>
-        <div className={style.message}>{props.message}</div>
+        <div className={
+          style.message + (
+            props.limitHeight
+            ? style.message__limitedHeight
+            : '')
+        }>{props.message}</div>
       </div>
     </div>
   </div>
