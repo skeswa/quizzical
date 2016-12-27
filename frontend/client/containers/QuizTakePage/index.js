@@ -13,9 +13,11 @@ import { extractErrorFromResultingActions } from 'utils'
 
 class QuizTakePage extends Component {
   state = {
-    loadingError: null,
-    isDataLoading: false,
-    currentQuestionIndex: 0,
+    quizFinished:           false,
+    loadingError:           null,
+    isDataLoading:          false,
+    currentQuestionIndex:   0,
+    quizQuestionResponses:  {},
   }
 
   componentDidMount() {
@@ -60,6 +62,10 @@ class QuizTakePage extends Component {
     return this.props.params
       ? this.props.params.quizId
       : null
+  }
+
+  onQuizFinished(quizQuestionResponses) {
+    this.setState({ quizFinished: true, quizQuestionResponses })
   }
 
   onQuestionIndexChanged(currentQuestionIndex) {
@@ -123,14 +129,31 @@ class QuizTakePage extends Component {
         <QuizTaker
           quiz={this.getQuiz()}
           questionIndex={currentQuestionIndex}
+          onQuizFinished={::this.onQuizFinished}
           onQuestionIndexChanged={::this.onQuestionIndexChanged} />
+      </PracticeSkeleton>
+    )
+  }
+
+  renderFinishSplash() {
+    const questionsTotal = this.getQuiz().questions.length
+    const { quizQuestionResponses } = this.state
+    const answeredQuestionTotal = Object.keys(quizQuestionResponses).length
+    const subtitle = `${answeredQuestionTotal} of ${questionsTotal} ` +
+      `questions answered`
+
+    return (
+      <PracticeSkeleton
+        title="Quiz Finished"
+        subtitle={subtitle}>
+        doneneenenenenenne
       </PracticeSkeleton>
     )
   }
 
   render() {
     const quiz = this.getQuiz()
-    const { loadingError, isDataLoading } = this.state
+    const { loadingError, quizFinished, isDataLoading } = this.state
 
     if (loadingError) {
       return this.renderError()
@@ -138,6 +161,10 @@ class QuizTakePage extends Component {
 
     if (isDataLoading || !quiz) {
       return this.renderLoading()
+    }
+
+    if (quizFinished) {
+      return this.renderFinishSplash()
     }
 
     return this.renderQuizTaker()

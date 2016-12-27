@@ -1,11 +1,16 @@
 
+import Dialog from 'material-ui/Dialog'
 import FontIcon from 'material-ui/FontIcon'
 import classNames from 'classnames'
+import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
 
 import style from './style.css'
+import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
+import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
+const DIALOG_BODY_STYLE = { padding: '0' }
 const SKIP_BUTTON_STYLE = { width: '3.6rem', minWidth: '1.5rem' }
 const BASE_QUESTION_PICTURE_URL = '/api/problems/pictures'
 
@@ -13,12 +18,16 @@ class QuizTaker extends Component {
   static propTypes = {
     quiz:                   React.PropTypes.object.isRequired,
     questionIndex:          React.PropTypes.number.isRequired,
+    onQuizFinished:         React.PropTypes.func.isRequired,
     onQuestionIndexChanged: React.PropTypes.func.isRequired,
   }
 
   state = {
-    lightboxMounted: false,
-    lightboxVisible: false,
+    responses:            {},
+    currentAnswer:        null,
+    lightboxMounted:      false,
+    lightboxVisible:      false,
+    answerPopupVisible:   false,
   }
   mounted   = false
   animating = false
@@ -35,8 +44,26 @@ class QuizTaker extends Component {
     return `url(${BASE_QUESTION_PICTURE_URL}/${pictureId}.png)`
   }
 
-  onAnswerClicked() {
+  onSkipClicked() {
+    const {
+      quiz: { questions: { length: questionTotal } },
 
+      questionIndex,
+      onQuizFinished,
+      onQuestionIndexChanged,
+    } = this.props
+
+    questionIndex >= (questionTotal - 1)
+      ? onQuizFinished(this.state.responses)
+      : onQuestionIndexChanged(questionIndex + 1)
+  }
+
+  onAnswerChanged(answer) {
+    this.setState({ currentAnswer: answer })
+  }
+
+  onAnswerClicked() {
+    this.setState({ answerPopupVisible: true })
   }
 
   onQuestionClicked() {
@@ -63,6 +90,32 @@ class QuizTaker extends Component {
     }, 300))
   }
 
+  onAnswerPopupSubmitted() {
+    const { responses, currentAnswer } = this.state
+    const {
+      quiz: { questions: { length: questionTotal } },
+
+      questionIndex,
+      onQuizFinished,
+      onQuestionIndexChanged,
+    } = this.props
+
+    this.setState({
+      responses: Object.assign({}, responses, {
+        [questionIndex]: { answer: currentAnswer },
+      }),
+      currentAnswer: null,
+      answerPopupVisible: false,
+    }, () =>
+      questionIndex >= (questionTotal - 1)
+        ? onQuizFinished()
+        : onQuestionIndexChanged(questionIndex + 1))
+  }
+
+  onAnswerPopupDismissed() {
+    this.setState({ currentAnswer: null, answerPopupVisible: false })
+  }
+
   renderLightbox(questionPictureURL) {
     const { lightboxMounted, lightboxVisible } = this.state
     if (!lightboxMounted) {
@@ -79,6 +132,41 @@ class QuizTaker extends Component {
           style={{ backgroundImage: questionPictureURL }}
           className={style.questionPicture} />
       </div>
+    )
+  }
+
+  renderAnswerPopup(questionIsMutipleChoice) {
+    const { currentAnswer, answerPopupVisible } = this.state
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        onClick={::this.onAnswerPopupDismissed} />,
+      <FlatButton
+        label="Answer"
+        primary={true}
+        onClick={::this.onAnswerPopupSubmitted}
+        disabled={currentAnswer === null || currentAnswer === undefined} />,
+    ]
+
+    return (
+      <Dialog
+        open={answerPopupVisible}
+        modal={true}
+        title={
+          questionIsMutipleChoice
+          ? 'Multiple Choice Answer'
+          : 'Free Response Answer'
+        }
+        actions={actions}
+        bodyStyle={DIALOG_BODY_STYLE}
+        onRequestClose={::this.onAnswerPopupDismissed}>
+        {
+          questionIsMutipleChoice
+          ? <MultipleChoiceAnswerer onAnswerChanged={::this.onAnswerChanged} />
+          : <FreeResponseAnswerer onAnswerChanged={::this.onAnswerChanged} />
+        }
+      </Dialog>
     )
   }
 
@@ -118,21 +206,23 @@ class QuizTaker extends Component {
           <div className={style.bigButton}>
             <RaisedButton
               label="Answer"
-              labelColor="#754aec"
+              onClick={::this.onAnswerClicked}
               fullWidth={true}
-              onTouchTap={::this.onAnswerClicked}
+              labelColor="#754aec"
               backgroundColor="#ffffff" />
           </div>
           <div className={style.smallButton}>
             <RaisedButton
               icon={skipIcon}
               style={SKIP_BUTTON_STYLE}
+              onClick={::this.onSkipClicked}
               labelColor="#ffffff"
               backgroundColor="#222222" />
           </div>
         </div>
 
         {this.renderLightbox(questionPictureURL)}
+        {this.renderAnswerPopup(questionIsMutipleChoice)}
       </div>
     )
   }

@@ -1,0 +1,18 @@
+
+.main {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem 2rem;
+}
+
+.button {
+  margin: 1rem 0;
+}
+
+.dismissalButton {
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+}
