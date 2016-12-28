@@ -54,7 +54,6 @@ class QuizTaker extends Component {
     const { questionIndex: currentQuestionIndex } = this.props
 
     if (currentQuestionIndex !== nextQuestionIndex) {
-      console.log(`${currentQuestionIndex} -> ${nextQuestionIndex}`)
       if (this.state.undoRequested
           && (nextQuestionIndex < currentQuestionIndex)) {
         this.setState({
@@ -64,11 +63,16 @@ class QuizTaker extends Component {
           notificationToastReversable:  false,
         })
       } else if (nextQuestionIndex > currentQuestionIndex) {
+        const pastParticiple = this.state.responses
+            .hasOwnProperty(currentQuestionIndex)
+          ? 'answered'
+          : 'skipped'
+
         this.setState({
           undoRequested:                false,
           notificationToastVisible:     true,
           notificationToastMessage:     `Question #${currentQuestionIndex + 1} `
-              + `answered successfully.`,
+              + `${pastParticiple} successfully.`,
           notificationToastReversable:  true,
         })
       }
