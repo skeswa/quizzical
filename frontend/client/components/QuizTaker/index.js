@@ -1,6 +1,7 @@
 
 import Dialog from 'material-ui/Dialog'
 import FontIcon from 'material-ui/FontIcon'
+import Snackbar from 'material-ui/Snackbar'
 import classNames from 'classnames'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -12,22 +13,30 @@ import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
 const DIALOG_BODY_STYLE = { padding: '0' }
 const SKIP_BUTTON_STYLE = { width: '3.6rem', minWidth: '1.5rem' }
+const TOAST_AUTOHIDE_DURATION = 1200
 const BASE_QUESTION_PICTURE_URL = '/api/problems/pictures'
+const RESPONSE_REVERSAL_MESSAGE = 'Last question response reversed ' +
+  'successfully.'
 
 class QuizTaker extends Component {
   static propTypes = {
     quiz:                   React.PropTypes.object.isRequired,
     questionIndex:          React.PropTypes.number.isRequired,
     onQuizFinished:         React.PropTypes.func.isRequired,
+    onQuizCancelled:        React.PropTypes.func.isRequired,
     onQuestionIndexChanged: React.PropTypes.func.isRequired,
   }
 
   state = {
-    responses:            {},
-    currentAnswer:        null,
-    lightboxMounted:      false,
-    lightboxVisible:      false,
-    answerPopupVisible:   false,
+    responses:                    {},
+    undoRequested:                false,
+    currentAnswer:                null,
+    lightboxMounted:              false,
+    lightboxVisible:              false,
+    answerPopupVisible:           false,
+    notificationToastVisible:     false,
+    notificationToastMessage:     '',
+    notificationToastReversable:  true,
   }
   mounted   = false
   animating = false
@@ -40,8 +49,44 @@ class QuizTaker extends Component {
     this.mounted = false
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { questionIndex: nextQuestionIndex } = nextProps
+    const { questionIndex: currentQuestionIndex } = this.props
+
+    if (currentQuestionIndex !== nextQuestionIndex) {
+      console.log(`${currentQuestionIndex} -> ${nextQuestionIndex}`)
+      if (this.state.undoRequested
+          && (nextQuestionIndex < currentQuestionIndex)) {
+        this.setState({
+          undoRequested:                false,
+          notificationToastVisible:     true,
+          notificationToastMessage:     RESPONSE_REVERSAL_MESSAGE,
+          notificationToastReversable:  false,
+        })
+      } else if (nextQuestionIndex > currentQuestionIndex) {
+        this.setState({
+          undoRequested:                false,
+          notificationToastVisible:     true,
+          notificationToastMessage:     `Question #${currentQuestionIndex + 1} `
+              + `answered successfully.`,
+          notificationToastReversable:  true,
+        })
+      }
+    }
+  }
+
   toPictureURL(pictureId) {
     return `url(${BASE_QUESTION_PICTURE_URL}/${pictureId}.png)`
+  }
+
+  requestUndo() {
+    const { questionIndex, onQuestionIndexChanged } = this.props
+
+    if (questionIndex > 0) {
+      this.setState(
+          { undoRequested: true },
+          () => onQuestionIndexChanged(questionIndex - 1))
+    }
   }
 
   onSkipClicked() {
@@ -56,6 +101,11 @@ class QuizTaker extends Component {
     questionIndex >= (questionTotal - 1)
       ? onQuizFinished(this.state.responses)
       : onQuestionIndexChanged(questionIndex + 1)
+  }
+
+  onNotificationToastActionClicked(e) {
+    e.preventDefault()
+    this.requestUndo()
   }
 
   onAnswerChanged(answer) {
@@ -116,6 +166,10 @@ class QuizTaker extends Component {
     this.setState({ currentAnswer: null, answerPopupVisible: false })
   }
 
+  onNotificationToastDismissed() {
+    this.setState({ notificationToastVisible: false })
+  }
+
   renderLightbox(questionPictureURL) {
     const { lightboxMounted, lightboxVisible } = this.state
     if (!lightboxMounted) {
@@ -167,6 +221,28 @@ class QuizTaker extends Component {
           : <FreeResponseAnswerer onAnswerChanged={::this.onAnswerChanged} />
         }
       </Dialog>
+    )
+  }
+
+  renderNotificationToast() {
+    const {
+      notificationToastVisible,
+      notificationToastMessage,
+      notificationToastReversable,
+    } = this.state
+
+    return (
+      <Snackbar
+        open={notificationToastVisible}
+        action={
+          notificationToastReversable
+            ? 'Undo'
+            : null
+        }
+        message={notificationToastMessage}
+        onRequestClose={::this.onNotificationToastDismissed}
+        autoHideDuration={TOAST_AUTOHIDE_DURATION}
+        onActionTouchTap={::this.onNotificationToastActionClicked} />
     )
   }
 
@@ -223,6 +299,7 @@ class QuizTaker extends Component {
 
         {this.renderLightbox(questionPictureURL)}
         {this.renderAnswerPopup(questionIsMutipleChoice)}
+        {this.renderNotificationToast()}
       </div>
     )
   }

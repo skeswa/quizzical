@@ -12,6 +12,10 @@ import PracticeSkeleton from 'components/PracticeSkeleton'
 import { extractErrorFromResultingActions } from 'utils'
 
 class QuizTakePage extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  }
+
   state = {
     quizFinished:           false,
     loadingError:           null,
@@ -66,6 +70,11 @@ class QuizTakePage extends Component {
 
   onQuizFinished(quizQuestionResponses) {
     this.setState({ quizFinished: true, quizQuestionResponses })
+  }
+
+  onQuizCancelled() {
+    // TODO(skeswa): tell the backend to delete the cancelled quiz.
+    this.context.router.push(`/quiz/start`)
   }
 
   onQuestionIndexChanged(currentQuestionIndex) {
@@ -130,6 +139,7 @@ class QuizTakePage extends Component {
           quiz={this.getQuiz()}
           questionIndex={currentQuestionIndex}
           onQuizFinished={::this.onQuizFinished}
+          onQuizCancelled={::this.onQuizCancelled}
           onQuestionIndexChanged={::this.onQuestionIndexChanged} />
       </PracticeSkeleton>
     )
