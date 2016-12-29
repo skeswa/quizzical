@@ -14,6 +14,7 @@ import QuizzesPage from 'containers/QuizzesPage'
 import QuizTakePage from 'containers/QuizTakePage'
 import AdminSkeleton from 'components/AdminSkeleton'
 import QuestionsPage from 'containers/QuestionsPage'
+import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import QuizGenerationPage from 'containers/QuizGenerationPage'
 
@@ -55,6 +56,7 @@ ReactDOM.render(
           <Route path="start" component={QuizGenerationPage} />
           <Route path=":quizId/take" component={QuizTakePage} />
         </Route>
+        <Route path="workbench" component={WorkbenchPage} />
       </Router>
     </ReduxProvider>
   </MuiThemeProvider>,

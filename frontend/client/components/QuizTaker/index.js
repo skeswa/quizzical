@@ -162,7 +162,7 @@ class QuizTaker extends Component {
       answerPopupVisible: false,
     }, () =>
       questionIndex >= (questionTotal - 1)
-        ? onQuizFinished()
+        ? onQuizFinished(this.state.responses)
         : onQuestionIndexChanged(questionIndex + 1))
   }
 

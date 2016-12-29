@@ -4,6 +4,13 @@ import React, { Component } from 'react'
 
 import style from './style.css'
 
+const CELL_TYPE_ANSWER = 'answer'
+const CELL_TYPE_SYMBOL = 'symbol'
+const CELL_TYPE_NUMBER = 'number'
+
+const SYMBOL_CELL_VALUES = [ '', '/', '.' ]
+const NUMBER_CELL_VALUES = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+
 class FreeResponseAnswerer extends Component {
   static propTypes = {
     onAnswerChanged: React.PropTypes.func.isRequired
@@ -13,61 +20,43 @@ class FreeResponseAnswerer extends Component {
     answer: [ '', '', '', '' ],
   }
 
-  onAnswerChanged() {
-    const { answer } = this.state
-    this.props.onAnswerChanged(answer.join(''))
+  onCellSelection(columnIndex, value) {
+    const newAnswer = this.state.answer.slice(0)
+    newAnswer[columnIndex] = value
+
+    this.setState({ answer: newAnswer })
+    this.props.onAnswerChanged(newAnswer.join(''))
   }
 
   renderColumn(index) {
     const { answer } = this.state
+    const symbolCells = SYMBOL_CELL_VALUES
+      .map(value =>
+        <Cell
+          key={value}
+          type={CELL_TYPE_SYMBOL}
+          value={value}
+          column={index}
+          selected={value === answer[index]}
+          onSelection={::this.onCellSelection} />)
+    const numberCells = NUMBER_CELL_VALUES
+      .map(value =>
+        <Cell
+          key={value}
+          type={CELL_TYPE_NUMBER}
+          value={value}
+          column={index}
+          selected={value === answer[index]}
+          onSelection={::this.onCellSelection} />)
 
     return (
       <div className={style.column}>
-        <div className={style.answerCell}>{answer[index]}</div>
-        <div className={style.punctuationCells}>
-          <div className={classNames(style.punctuationCell, {
-            [style.punctuationCell__visible]: index % 3 > 0
-          })}>
-            <Button value="/" columnIndex={index} />
-          </div>
-          <div className={style.punctuationCell}>
-            <Button value="." columnIndex={index} />
-          </div>
-        </div>
-        <div className={style.numberCells}>
-          <div className={classNames(style.numberCell, {
-            [style.numberCell__visible]: index > 0
-          })}>
-            <Button value="0" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="1" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="2" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="3" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="4" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="5" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="6" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="7" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="8" columnIndex={index} />
-          </div>
-          <div className={style.numberCell}>
-            <Button value="9" columnIndex={index} />
-          </div>
-        </div>
+        <Cell
+          type={CELL_TYPE_ANSWER}
+          value={answer[index]}
+          column={index} />
+        <div className={style.symbolCells}>{symbolCells}</div>
+        <div className={style.numberCells}>{numberCells}</div>
       </div>
     )
   }
@@ -86,12 +75,50 @@ class FreeResponseAnswerer extends Component {
   }
 }
 
-const Button = props => (
-  <div
-    className={style.button}
-    onClick={() => props.onClick(props.columnIndex, props.value)}>
-    <div className={style.buttonLabel}>{props.value}</div>
-  </div>
-)
+class Cell extends Component {
+  static propTypes = {
+    type:         React.PropTypes.string.isRequired,
+    value:        React.PropTypes.string.isRequired,
+    column:       React.PropTypes.number.isRequired,
+    selected:     React.PropTypes.bool,
+    onSelection:  React.PropTypes.func,
+  }
+
+  isDisabled(column, value) {
+    return (
+      (((column % 3) === 0) && (value === '/')) ||
+      ((column === 0) && (value === '0')))
+  }
+
+  onClick(e) {
+    const { type, column, value, selected, onSelection } = this.props
+
+    if (type !== CELL_TYPE_ANSWER && !this.isDisabled(column, value)) {
+      onSelection(column, value)
+    } else {
+      e.preventDefault()
+    }
+  }
+
+  render() {
+    const { type, value, column, selected } = this.props
+    const className = classNames(
+      style.cell,
+      style[`${type}Cell`],
+      {
+        [style.cell__blank]:    !value,
+        [style.cell__disabled]: this.isDisabled(column, value),
+        [style.cell__selected]: selected,
+      })
+
+    return (
+      <div className={className} onClick={::this.onClick}>
+        <div className={style.cellLabel}>
+          { (value || type === CELL_TYPE_ANSWER)  ? value : 'Blank' }
+        </div>
+      </div>
+    )
+  }
+}
 
 export default FreeResponseAnswerer
