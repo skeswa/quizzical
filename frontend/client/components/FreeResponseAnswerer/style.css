@@ -1,12 +1,14 @@
 
 .main {
   background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
   color: #444444;
   display: flex;
   flex: 1;
   font-weight: 500;
-  max-height: 100%;
+  margin-bottom: 1rem;
+  max-height: inherit;
 }
 
 .columns {
@@ -57,7 +59,6 @@
 }
 
 .numberCells {
-  border-bottom: 1px solid #e0e0e0;
   display: flex;
   flex: 1;
   flex-direction: column;

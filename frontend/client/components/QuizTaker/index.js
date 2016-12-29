@@ -204,7 +204,7 @@ class QuizTaker extends Component {
         label="Answer"
         primary={true}
         onClick={::this.onAnswerPopupSubmitted}
-        disabled={currentAnswer === null || currentAnswer === undefined} />,
+        disabled={!currentAnswer} />,
     ]
 
     return (
