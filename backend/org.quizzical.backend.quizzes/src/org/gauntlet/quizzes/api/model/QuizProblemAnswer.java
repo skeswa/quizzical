@@ -5,12 +5,11 @@ import java.io.Serializable;
 import org.gauntlet.core.model.BaseEntity;
 
 public class QuizProblemAnswer extends BaseEntity implements Serializable {
-	
+	private static final long serialVersionUID = -1145554261745216229L;
+
 	private String answer;
 	
-	private Boolean correct;
-	
-	private Integer timesSkipped = 0;
+	private Boolean skipped;
 	
 	private Integer secondsElapsed = 0;
 	
@@ -20,11 +19,13 @@ public class QuizProblemAnswer extends BaseEntity implements Serializable {
 	}
 	
 	public QuizProblemAnswer(String answer,
-							 Boolean correct,
+							 Boolean skipped,
+							 Integer secondsElapsed,
 							 QuizProblem quizProblem) {
 		this();
 		this.answer = answer;
-		this.correct = correct;
+		this.skipped = skipped;
+		this.secondsElapsed = secondsElapsed;
 		this.quizProblem = quizProblem;
 	}
 
@@ -35,21 +36,14 @@ public class QuizProblemAnswer extends BaseEntity implements Serializable {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+	
 
-	public Boolean getCorrect() {
-		return correct;
+	public Boolean getSkipped() {
+		return skipped;
 	}
 
-	public void setCorrect(Boolean correct) {
-		this.correct = correct;
-	}
-
-	public Integer getTimesSkipped() {
-		return timesSkipped;
-	}
-
-	public void setTimesSkipped(Integer timesSkipped) {
-		this.timesSkipped = timesSkipped;
+	public void setSkipped(Boolean skipped) {
+		this.skipped = skipped;
 	}
 
 	public Integer getSecondsElapsed() {
