@@ -13,16 +13,14 @@ import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
-import org.gauntlet.quizzes.api.model.QuizProblemAnswer;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
-import org.gauntlet.quizzes.model.jpa.JPAQuizProblemAnswer;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
 
 
-@SuppressWarnings("restriction")
 @Transactional
 public class QuizTakeDAOImpl extends BaseServiceImpl implements IQuizTakeDAOService {
 	
+	@SuppressWarnings("unused")
 	private volatile IQuizDAOService quizService;
 	
 	private volatile LogService logger;
@@ -77,14 +75,16 @@ public class QuizTakeDAOImpl extends BaseServiceImpl implements IQuizTakeDAOServ
 	@Override
 	public QuizSubmission add(QuizSubmission record)
 			  throws ApplicationException {
-		QuizSubmission existingCountry = getByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
-		{
-			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAQuizSubmission.class));
-			existingCountry = JPAEntityUtil.copy(res, QuizSubmission.class);
+		final QuizSubmission existingDTO = getByCode(record.getCode());
+		
+		if (Validator.isNull(existingDTO)) {
+			final JPAQuizSubmission newEntity = JPAEntityUtil.copy(record, JPAQuizSubmission.class);
+			super.add(newEntity);
+			final QuizSubmission newDTO = JPAEntityUtil.copy(newEntity, QuizSubmission.class);
+			return newDTO;
 		}
 
-		return existingCountry;
+		return existingDTO;
 	}
 	
 	@Override
@@ -117,26 +117,5 @@ public class QuizTakeDAOImpl extends BaseServiceImpl implements IQuizTakeDAOServ
 	@Override
 	public void createDefaults() throws ApplicationException {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public QuizSubmission addAnswer(Long quizTakeId, QuizProblemAnswer answer) throws NoSuchModelException, ApplicationException {
-		JPAQuizSubmission jpaEntity = (JPAQuizSubmission) super.findByPrimaryKey(JPAQuizSubmission.class, quizTakeId);
-		JPAQuizProblemAnswer jpaProblemAnswer = JPAEntityUtil.copy(answer, JPAQuizProblemAnswer.class);
-		jpaEntity.getAnswers().add(jpaProblemAnswer);
-		
-		jpaEntity = (JPAQuizSubmission) update(jpaEntity);
-		
-		return JPAEntityUtil.copy(jpaEntity, QuizSubmission.class);
-	}
-	
-	public QuizSubmission addAnswers(Long quizTakeId, List<QuizProblemAnswer> answers) throws NoSuchModelException, ApplicationException {
-		JPAQuizSubmission jpaEntity = (JPAQuizSubmission) super.findByPrimaryKey(JPAQuizSubmission.class, quizTakeId);
-		List<JPAQuizProblemAnswer> jpaProblemAnswers = JPAEntityUtil.copy(answers, JPAQuizProblemAnswer.class);
-		jpaEntity.getAnswers().addAll(jpaProblemAnswers);
-		
-		jpaEntity = (JPAQuizSubmission) update(jpaEntity);
-		
-		return JPAEntityUtil.copy(jpaEntity, QuizSubmission.class);
 	}
 }

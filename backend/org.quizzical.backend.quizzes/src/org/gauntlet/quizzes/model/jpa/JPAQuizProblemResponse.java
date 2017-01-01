@@ -13,74 +13,84 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
-	+"quiz_problem_answer")
-public class JPAQuizProblemAnswer extends JPABaseEntity implements Serializable {
-	private String answer;
+	+"quiz_problem_response")
+public class JPAQuizProblemResponse extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = -8302783166411366183L;
+
+	private String response;
 	
 	private Boolean correct;
 	
-	private Integer timesSkipped = 0;
+	private Boolean skipped;
 	
 	private Integer secondsElapsed = 0;
 	
 	@OneToOne(targetEntity=JPAQuizProblem.class)
 	private JPAQuizProblem quizProblem;	
-	
 
-	public JPAQuizProblemAnswer() {
-		super();
-	}
+	public JPAQuizProblemResponse() {}
 
-	public JPAQuizProblemAnswer(String answer, 
-			Boolean correct, 
-			Integer timesSkipped, 
-			Integer secondsElapsed,
-			JPAQuizProblem quizProblem) {
-		this();
-		this.answer = answer;
+	public JPAQuizProblemResponse(
+			final String response,
+			final Boolean correct,
+			final Boolean skipped,
+			final Integer secondsElapsed,
+			final JPAQuizProblem quizProblem) {
+		this.response = response;
 		this.correct = correct;
-		this.timesSkipped = timesSkipped;
+		this.skipped = skipped;
 		this.secondsElapsed = secondsElapsed;
+		this.quizProblem = quizProblem;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public String getResponse() {
+		return response;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+
+	public void setResponse(String response) {
+		this.response = response;
 	}
+
 
 	public Boolean getCorrect() {
 		return correct;
 	}
 
+
 	public void setCorrect(Boolean correct) {
 		this.correct = correct;
 	}
 
-	public Integer getTimesSkipped() {
-		return timesSkipped;
+
+	public Boolean getSkipped() {
+		return skipped;
 	}
 
-	public void setTimesSkipped(Integer timesSkipped) {
-		this.timesSkipped = timesSkipped;
+
+	public void setSkipped(Boolean skipped) {
+		this.skipped = skipped;
 	}
+
 
 	public Integer getSecondsElapsed() {
 		return secondsElapsed;
 	}
 
+
 	public void setSecondsElapsed(Integer secondsElapsed) {
 		this.secondsElapsed = secondsElapsed;
 	}
+
 
 	public JPAQuizProblem getQuizProblem() {
 		return quizProblem;
 	}
 
+
 	public void setQuizProblem(JPAQuizProblem quizProblem) {
 		this.quizProblem = quizProblem;
 	}
+
 }
 

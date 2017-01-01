@@ -7,19 +7,15 @@ import java.util.List;
 import org.gauntlet.core.model.BaseEntity;
 
 public class QuizSubmission extends BaseEntity implements Serializable {
-	
+	private static final long serialVersionUID = 2568785319357287025L;
+
 	private Quiz quiz;
+
+	private Long quizId;
 	
-	private List<QuizProblemAnswer> answers = new ArrayList<>();
+	private List<QuizProblemResponse> responses = new ArrayList<>();
 	
-	public QuizSubmission() {
-	}
-	
-	public QuizSubmission(String name, String code, Quiz quiz) {
-		this.name = name;
-		this.code = code;
-		this.quiz = quiz;
-	}
+	public QuizSubmission() {}
 
 	public Quiz getQuiz() {
 		return quiz;
@@ -29,15 +25,19 @@ public class QuizSubmission extends BaseEntity implements Serializable {
 		this.quiz = quiz;
 	}
 
-	public List<QuizProblemAnswer> getAnswers() {
-		return answers;
+	public Long getQuizId() {
+		return quizId;
 	}
 
-	public void setAnswers(List<QuizProblemAnswer> answers) {
-		this.answers = answers;
+	public void setQuizId(Long quizId) {
+		this.quizId = quizId;
 	}
-	
-	public void addAnswer(QuizProblemAnswer answer) {
-		getAnswers().add(answer);
+
+	public List<QuizProblemResponse> getResponses() {
+		return responses;
+	}
+
+	public void setResponses(List<QuizProblemResponse> responses) {
+		this.responses = responses;
 	}
 }
