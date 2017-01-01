@@ -4,7 +4,19 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 
 import actions from 'actions'
-import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
+import QuizResults from 'components/QuizResults'
+
+const RESULTS = [
+  {
+    skipped:  false,
+    correct:  false,
+    question: {
+      problem: {
+
+      }
+    }
+  }
+]
 
 const WorkbenchPage = (props, context) => {
   return (
@@ -23,8 +35,7 @@ const WorkbenchPage = (props, context) => {
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
         borderRadius: '4px',
       }}>
-        <FreeResponseAnswerer
-          onAnswerChanged={answer => console.log('answer', answer)} />
+        <QuizResults results={RESULTS} />
       </div>
     </div>
   )
