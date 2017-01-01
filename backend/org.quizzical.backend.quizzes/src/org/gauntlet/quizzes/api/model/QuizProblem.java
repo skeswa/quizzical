@@ -9,33 +9,45 @@ public class QuizProblem extends BaseEntity implements Serializable {
 	
 	private Long problemId;
 	
+	private Integer ordinal;
+	
 	private Problem problem;
 	
 	public QuizProblem() {
 	}
 	
-	public QuizProblem(String name, String code, Long problemId) {
-		this();
+	public QuizProblem(final String name, final String code, final Integer ordinal) {
 		this.name = name;
 		this.code = code;
+		this.ordinal = ordinal;
+	}
+	
+	public QuizProblem(
+			final String name,
+			final String code,
+			final Integer ordinal,
+			final Long problemId) {
+		this(name, code, ordinal);
 		this.problemId = problemId;
 	}
 	
-	public QuizProblem(String name, String code, Problem problem) {
-		this();
-		this.name = name;
-		this.code = code;
+	public QuizProblem(
+			final String name,
+			final String code,
+			final Integer ordinal,
+			final Long problemId,
+			final Problem problem) {
+		this(name, code, ordinal, problemId);
 		this.problem = problem;
-	}
-	
-	public QuizProblem(String name, String code, Long problemId, Problem problem) {
-		this();
-		this.name = name;
-		this.code = code;
-		this.problem = problem;
-		this.problemId = problemId;
 	}
 
+	public Integer getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(Integer ordinal) {
+		this.ordinal = ordinal;
+	}
 
 	public Long getProblemId() {
 		return problemId;

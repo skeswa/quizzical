@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
@@ -26,7 +27,6 @@ import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 
 
-@SuppressWarnings("restriction")
 public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService { 
 	private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -77,24 +77,33 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 				params.getProblemCategoryId(),
 				0,
 				params.getQuizSize())
-		.stream()
-		.collect(Collectors.toMap(
-				problem -> problem.getId(),
-				Function.identity()));
+				.stream()
+				.collect(Collectors.toMap(
+						problem -> problem.getId(),
+						Function.identity()));
+		final List<Problem> orderedProblems = problems
+				.entrySet()
+				.stream()
+				.map(problemEntry -> problemEntry.getValue())
+				.collect(Collectors.toList());
+		final List<QuizProblem> orderedQuizProblems = IntStream
+				.range(0, orderedProblems.size())
+				.mapToObj(ordinal -> {
+					final Problem problem = orderedProblems.get(ordinal);
+					return new QuizProblem(
+							"",
+							String.format("%s-%s", quizCode, problem.getCode()),
+							ordinal,
+							problem.getId(),
+							problem);
+				})
+				.collect(Collectors.toList());
 
 		final Quiz quiz = new Quiz();
 		quiz.setCode(quizCode);
 		quiz.setName(quizName);
 		quiz.setQuizType(quizType);
-		quiz.setQuestions(problems
-				.values()
-				.stream()
-				.map(problem -> new QuizProblem(
-					"",
-					String.format("%s-%s", quizCode, problem.getCode()),
-					problem.getId(),
-					problem))
-				.collect(Collectors.toList()));
+		quiz.setQuestions(orderedQuizProblems);
 		
 		final Quiz persistedQuiz = quizDAOService.provide(quiz);
 		persistedQuiz.getQuestions()
