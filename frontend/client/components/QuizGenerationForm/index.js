@@ -36,10 +36,11 @@ const QUIZ_LENGTH_NAMES = [
   'Short',
   'Medium',
   'Long',
-  'Very Long'
+  'Very Long',
+  'Epic'
 ]
 const MIN_QUESTIONS_COUNT = 3
-const MAX_QUESTIONS_COUNT = 25
+const MAX_QUESTIONS_COUNT = 20
 
 class QuizGenerationForm extends Component {
   static propTypes = {

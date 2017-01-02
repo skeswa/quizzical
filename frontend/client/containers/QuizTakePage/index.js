@@ -1,5 +1,6 @@
 
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
@@ -17,11 +18,11 @@ class QuizTakePage extends Component {
   }
 
   state = {
+    quizResults:            null,
     quizFinished:           false,
     loadingError:           null,
     isDataLoading:          false,
     currentQuestionIndex:   0,
-    quizQuestionResponses:  {},
   }
 
   componentDidMount() {
@@ -68,8 +69,26 @@ class QuizTakePage extends Component {
       : null
   }
 
-  onQuizFinished(quizQuestionResponses) {
-    this.setState({ quizFinished: true, quizQuestionResponses })
+  onQuizFinished(quizSubmission) {
+    this.setState({
+      quizFinished: true,
+      isDataLoading: true,
+      loadingError: null,
+    })
+
+    // Submit the quiz.
+    this.props.actions.createQuizSubmission(quizSubmission)
+      .then(resultingActions => {
+        const error = extractErrorFromResultingActions(resultingActions)
+        if (error) {
+          this.setState({
+            loadingError:   error,
+            isDataLoading:  false,
+          })
+        } else {
+          this.setState({ isDataLoading: false })
+        }
+      })
   }
 
   onQuizCancelled() {
@@ -81,9 +100,14 @@ class QuizTakePage extends Component {
     this.setState({ currentQuestionIndex })
   }
 
-  renderLoading() {
+  renderLoading(quizFinished) {
+    const participle = quizFinished ? 'being submitted' : 'loading'
+    const subtitle = `Your quiz is ${participle}`
+
     return (
-      <PracticeSkeleton title="Quizzical" subtitle="Your quiz is loading">
+      <PracticeSkeleton
+        title="Quizzical"
+        subtitle={subtitle}>
         <div className={style.centerer}>
           <div className={style.loader}>
             <RefreshIndicator
@@ -98,23 +122,36 @@ class QuizTakePage extends Component {
     )
   }
 
-  renderError() {
-    const { loadingError } = this.state
-
+  renderError(loadingError, quizFinished) {
     if (loadingError) {
       const message = loadingError.error
         ? loadingError.error
         : loadingError
+      const verb = quizFinished
+        ? 'submit'
+        : 'load'
+      const subtitle = `Failed to ${verb} the quiz`
+
+      console.log('FormError', subtitle, message)
 
       return (
-        <PracticeSkeleton
-            title="Quizzical"
-            subtitle="Failed to load the quiz">
-          <div className={style.centerer}>
-            <FormError
-              title="Failed to load the quiz"
-              message={message}
-              limitHeight={false} />
+        <PracticeSkeleton title="Quizzical" subtitle={subtitle}>
+          <div className={style.errorPage}>
+            <div className={style.centerer}>
+              <div className={style.errorWrapper}>
+                <FormError
+                  title={subtitle}
+                  message={message}
+                  limitHeight={false} />
+              </div>
+            </div>
+            <div className={style.errorPageButtons}>
+              <RaisedButton
+                label="Start Over"
+                labelColor="#ffffff"
+                onTouchTap={::this.onQuizCancelled}
+                backgroundColor="#222222" />
+            </div>
           </div>
         </PracticeSkeleton>
       )
@@ -145,10 +182,12 @@ class QuizTakePage extends Component {
     )
   }
 
-  renderFinishSplash() {
-    const questionsTotal = this.getQuiz().questions.length
-    const { quizQuestionResponses } = this.state
-    const answeredQuestionTotal = Object.keys(quizQuestionResponses).length
+  renderFinishSplash(quizResults) {
+    const { responses } = quizResults
+    const questionsTotal = responses.length
+    const answeredQuestionTotal = responses
+      .filter(({ skipped }) => !skipped)
+      .length
     const subtitle = `${answeredQuestionTotal} of ${questionsTotal} ` +
       `questions answered`
 
@@ -163,19 +202,16 @@ class QuizTakePage extends Component {
 
   render() {
     const quiz = this.getQuiz()
-    const { loadingError, quizFinished, isDataLoading } = this.state
+    const {
+      quizResults,
+      loadingError,
+      quizFinished,
+      isDataLoading,
+    } = this.state
 
-    if (loadingError) {
-      return this.renderError()
-    }
-
-    if (isDataLoading || !quiz) {
-      return this.renderLoading()
-    }
-
-    if (quizFinished) {
-      return this.renderFinishSplash()
-    }
+    if (loadingError) return this.renderError(loadingError, quizFinished)
+    if (isDataLoading || !quiz) return this.renderLoading(quizFinished)
+    if (quizResults) return this.renderFinishSplash(quizResults)
 
     return this.renderQuizTaker()
   }
@@ -188,7 +224,8 @@ const reduxify = connect(
   (dispatch, props) => ({
     actions: Object.assign(
       {},
-      bindActionCreators(actions.quiz, dispatch))
+      bindActionCreators(actions.quiz, dispatch),
+      bindActionCreators(actions.quizSubmission, dispatch))
   }))
 
 export default reduxify(QuizTakePage)

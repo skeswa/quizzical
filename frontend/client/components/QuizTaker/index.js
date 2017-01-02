@@ -5,6 +5,7 @@ import Snackbar from 'material-ui/Snackbar'
 import classNames from 'classnames'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 
 import style from './style.css'
@@ -34,8 +35,10 @@ class QuizTaker extends Component {
     lightboxMounted:              false,
     lightboxVisible:              false,
     answerPopupVisible:           false,
+    questionPictureLoaded:        false,
     notificationToastVisible:     false,
     notificationToastMessage:     '',
+    timeCurrentQuestionStarted:   null,
     notificationToastReversable:  true,
   }
   mounted   = false
@@ -58,8 +61,10 @@ class QuizTaker extends Component {
           && (nextQuestionIndex < currentQuestionIndex)) {
         this.setState({
           undoRequested:                false,
+          questionPictureLoaded:        false,
           notificationToastVisible:     true,
           notificationToastMessage:     RESPONSE_REVERSAL_MESSAGE,
+          timeCurrentQuestionStarted:   null,
           notificationToastReversable:  false,
         })
       } else if (nextQuestionIndex > currentQuestionIndex) {
@@ -70,17 +75,53 @@ class QuizTaker extends Component {
 
         this.setState({
           undoRequested:                false,
+          questionPictureLoaded:        false,
           notificationToastVisible:     true,
           notificationToastMessage:     `Question #${currentQuestionIndex + 1} `
               + `${pastParticiple} successfully.`,
+          timeCurrentQuestionStarted:   null,
           notificationToastReversable:  true,
+        })
+      } else {
+        this.setState({
+          questionPictureLoaded:      false,
+          timeCurrentQuestionStarted: null,
         })
       }
     }
   }
 
   toPictureURL(pictureId) {
-    return `url(${BASE_QUESTION_PICTURE_URL}/${pictureId}.png)`
+    return `${BASE_QUESTION_PICTURE_URL}/${pictureId}.png`
+  }
+
+  composeSubmission() {
+    const { quiz: { id: quizId, questions } } = this.props
+    const { responses } = this.state
+
+    if (!questions || !responses) {
+      return []
+    }
+
+    return {
+      quizId,
+      responses: questions.map((question, i) => {
+        const {
+          answer = null,
+          skipped = true,
+          secondsElapsed = 0,
+        } = responses[i] || {}
+        const { id: quizProblemId } = question
+
+        return {
+          skipped,
+          quizProblemId,
+
+          response: answer,
+          secondsElapsed: Math.round(secondsElapsed),
+        }
+      }),
+    }
   }
 
   requestUndo() {
@@ -101,9 +142,22 @@ class QuizTaker extends Component {
       onQuizFinished,
       onQuestionIndexChanged,
     } = this.props
+    const { responses, timeCurrentQuestionStarted } = this.state
+
+    this.setState({
+      responses: Object.assign({}, responses, {
+        [questionIndex]: {
+          answer: null,
+          skipped: true,
+          secondsElapsed: timeCurrentQuestionStarted !== null
+            ? (Date.now() - timeCurrentQuestionStarted) / 1000
+            : 0,
+        },
+      }),
+    })
 
     questionIndex >= (questionTotal - 1)
-      ? onQuizFinished(this.state.responses)
+      ? onQuizFinished(this.composeSubmission())
       : onQuestionIndexChanged(questionIndex + 1)
   }
 
@@ -145,7 +199,7 @@ class QuizTaker extends Component {
   }
 
   onAnswerPopupSubmitted() {
-    const { responses, currentAnswer } = this.state
+    const { responses, currentAnswer, timeCurrentQuestionStarted } = this.state
     const {
       quiz: { questions: { length: questionTotal } },
 
@@ -156,18 +210,31 @@ class QuizTaker extends Component {
 
     this.setState({
       responses: Object.assign({}, responses, {
-        [questionIndex]: { answer: currentAnswer },
+        [questionIndex]: {
+          answer: currentAnswer,
+          skipped: false,
+          secondsElapsed: timeCurrentQuestionStarted !== null
+            ? (Date.now() - timeCurrentQuestionStarted) / 1000
+            : 0,
+        },
       }),
       currentAnswer: null,
       answerPopupVisible: false,
     }, () =>
       questionIndex >= (questionTotal - 1)
-        ? onQuizFinished(this.state.responses)
+        ? onQuizFinished(this.composeSubmission())
         : onQuestionIndexChanged(questionIndex + 1))
   }
 
   onAnswerPopupDismissed() {
     this.setState({ currentAnswer: null, answerPopupVisible: false })
+  }
+
+  onQuestionPictureLoaded() {
+    this.setState({
+      questionPictureLoaded: true,
+      timeCurrentQuestionStarted: Date.now(),
+    })
   }
 
   onNotificationToastDismissed() {
@@ -187,7 +254,7 @@ class QuizTaker extends Component {
           [style.lightbox__visible]: lightboxVisible
         })}>
         <div
-          style={{ backgroundImage: questionPictureURL }}
+          style={{ backgroundImage: `url(${questionPictureURL})` }}
           className={style.questionPicture} />
       </div>
     )
@@ -251,6 +318,7 @@ class QuizTaker extends Component {
   }
 
   render() {
+    const { questionPictureLoaded } = this.state
     const { questionIndex, quiz: { questions } } = this.props
     const {
       problem: {
@@ -260,10 +328,15 @@ class QuizTaker extends Component {
         sourceIndexWithinPage:  questionNumber,
       },
     } = questions[questionIndex]
-    const questionPictureURL = this.toPictureURL(questionPictureId)
-    const questionPictureStyle = { backgroundImage: questionPictureURL }
-    const questionPrompt = `Please answer question #${questionNumber}`
     const skipIcon = <FontIcon className="material-icons">skip_next</FontIcon>
+    const questionPrompt = `Please answer question #${questionNumber}`
+    const questionPictureURL = this.toPictureURL(questionPictureId)
+    const questionPictureStyle = {
+      backgroundImage: `url(${questionPictureURL})`,
+    }
+    const questionPictureClassName = classNames(style.questionPicture, {
+      [style.questionPicture__loaded]: questionPictureLoaded,
+    })
 
     return (
       <div className={style.main}>
@@ -280,7 +353,23 @@ class QuizTaker extends Component {
               : null
             }
           </div>
-          <div style={questionPictureStyle} className={style.questionPicture} />
+          <img
+            src={questionPictureURL}
+            onLoad={::this.onQuestionPictureLoaded}
+            className={style.questionPictureLoadingHelper} />
+          <div className={style.questionPictureLoaderWrapper}>
+            <div className={style.questionPictureLoader}>
+              <RefreshIndicator
+                top={0}
+                left={0}
+                size={50}
+                status="loading"
+                loadingColor="#754aec" />
+            </div>
+          </div>
+          <div
+            style={questionPictureStyle}
+            className={questionPictureClassName} />
         </div>
         <div className={style.buttons}>
           <div className={style.bigButton}>

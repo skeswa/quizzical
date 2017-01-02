@@ -1,4 +1,4 @@
 
 import { crudService } from './helpers/crud'
 
-export default crudService('quizzes/attempt')
+export default crudService('quiz-submission')

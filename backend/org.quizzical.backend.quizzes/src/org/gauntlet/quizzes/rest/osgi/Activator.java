@@ -5,6 +5,7 @@ import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.rest.QuizResource;
@@ -48,6 +49,8 @@ public class Activator extends DependencyActivatorBase {
 						.setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemDAOService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizSubmissionDAOService.class)
+						.setRequired(true))	
 				.add(createServiceDependency().setService(IQuizTakeDAOService.class)
 						.setRequired(true))			
 				.add(createServiceDependency().setService(LogService.class)

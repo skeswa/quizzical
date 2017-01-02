@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 
 const FormError = (props, context) => (
-  <div className={style.main}>
+  <div style={props.style} className={style.main}>
     <div className={style.error}>
       <div className={style.icon}>
         <i className="material-icons">error</i>

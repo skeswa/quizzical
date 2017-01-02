@@ -1,4 +1,4 @@
 
 import { createCrudReducer } from './helpers/crud'
 
-export default createCrudReducer('quiz attempt')
+export default createCrudReducer('quiz-submission')
