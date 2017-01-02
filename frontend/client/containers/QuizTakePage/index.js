@@ -86,7 +86,11 @@ class QuizTakePage extends Component {
             isDataLoading:  false,
           })
         } else {
-          this.setState({ isDataLoading: false })
+          debugger
+          this.setState({
+            quizResults:   resultingActions.payload,
+            isDataLoading: false,
+          })
         }
       })
   }

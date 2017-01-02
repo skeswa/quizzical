@@ -35,8 +35,7 @@ export default function promiseMiddleware({ dispatch }) {
     return isPromise(action.payload)
       ? action.payload.then(
           result => dispatch(nextAction(action, result)),
-          error => dispatch(nextAction(action, error, true)),
-        )
+          error => dispatch(nextAction(action, error, true)))
       : next(action);
   };
 }
