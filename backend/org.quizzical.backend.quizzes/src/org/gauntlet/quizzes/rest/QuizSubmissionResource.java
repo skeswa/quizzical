@@ -44,7 +44,7 @@ public class QuizSubmissionResource {
     @Produces(MediaType.APPLICATION_JSON) 
     public QuizSubmission put(final QuizSubmission quizSubmission)
     		throws IOException, ApplicationException, NoSuchModelException { 
-    	return quizSubmissionDAOService.add(quizSubmission);
+    	return quizSubmissionDAOService.submit(quizSubmission);
     }     
 
 	@DELETE

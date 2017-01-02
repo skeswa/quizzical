@@ -143,7 +143,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
     	quizSubmission.setCode(String.format("%s-%d", quizId, System.currentTimeMillis()));
     	
     	// Evaluate the which quiz problem responses are correct.
-    	quizSubmission.getResponses()
+    	final List<QuizProblemResponse> augmentedResponses = quizSubmission.getResponses()
     		.parallelStream()
     		.map(problemResponse -> {
 	    		final Long quizProblemId = problemResponse.getQuizProblemId();
@@ -163,7 +163,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 							quizProblemId);
 					newQuizProblemResponse.setCorrect(correct);
 
-					newQuizProblemResponse = quizProblemResponseService.add(newQuizProblemResponse);
+					//newQuizProblemResponse = quizProblemResponseService.add(newQuizProblemResponse);
 					
 					return newQuizProblemResponse;
 				} catch (final NoSuchModelException e) {
@@ -173,6 +173,8 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 				}
 	    	})
     		.collect(Collectors.toList());
+    	
+    	quizSubmission.setResponses(augmentedResponses);
     	
     	return add(quizSubmission);
 	}
