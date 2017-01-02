@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -26,7 +27,7 @@ public class JPAQuizSubmission extends JPABaseEntity implements Serializable {
 	@JoinColumn
 	private JPAQuiz quiz;
 	
-	@OneToMany(targetEntity = JPAQuizProblemResponse.class)
+	@OneToMany(targetEntity = JPAQuizProblemResponse.class, cascade=CascadeType.ALL)
 	@JoinColumn
 	private List<JPAQuizProblemResponse> responses = new ArrayList<>();
 
