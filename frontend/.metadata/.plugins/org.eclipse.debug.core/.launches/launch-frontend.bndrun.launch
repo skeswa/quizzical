@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<launchConfiguration type="bndtools.launch">
-<booleanAttribute key="clean" value="true"/>
-<booleanAttribute key="dynamicBundles" value="true"/>
-<stringAttribute key="launchTarget" value="org.quizzical.frontend.web/launch-frontend.bndrun"/>
-</launchConfiguration>

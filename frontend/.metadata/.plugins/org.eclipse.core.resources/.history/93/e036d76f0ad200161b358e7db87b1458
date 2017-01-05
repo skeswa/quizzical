@@ -1,5 +1,0 @@
-Bundle-Version: 1.0.0.${tstamp}
-Include-Resource: /=static
-X-Web-Resource-Version: 1.1
-X-Web-Resource: /app;/
-X-Web-Resource-Default-Page: index.html
