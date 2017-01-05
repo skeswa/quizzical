@@ -19,15 +19,15 @@ VOLUME ["/root/backups"]
 #EXPOSE 9999
 
 # Add the Apache Ace start script (executed on a `docker run`).
-ADD init-container-script.sh /root/init_gauntlet_frontend.sh
-RUN chmod +x /root/init_gauntlet_frontend.sh
+ADD init-container-script.sh /root/init_quizzical_frontend.sh
+RUN chmod +x /root/init_quizzical_frontend.sh
 
 # Add the Apache Ace start script (executed on a `docker run`).
-ADD start-container-script.sh /root/start_gauntlet_frontend.sh
-RUN chmod +x /root/start_gauntlet_frontend.sh
+ADD start-container-script.sh /root/start_quizzical_frontend.sh
+RUN chmod +x /root/start_quizzical_frontend.sh
 
 WORKDIR /root
 
 # Use baseimage-docker's init system.
-CMD ["sh","init_gauntlet_frontend.sh"]
+CMD ["sh","init_quizzical_frontend.sh"]
 

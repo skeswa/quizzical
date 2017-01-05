@@ -132,6 +132,7 @@ public class Importer {
 				}
 	    	}
 	    }
+	    System.exit(0);
 	}
 	
 	private ProblemPicture convertByteArraytoProblemPicture(ByteArrayOutputStream out, String fileName, String ct, long cs) throws Exception {
