@@ -1,0 +1,60 @@
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.messageWrapper {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.message {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+@media (max-width: 400px) {
+  .message {
+    max-width: 75%;
+  }
+}
+
+.icon {
+  color: #ffffff;
+  font-size: 20rem;
+}
+@media (max-width: 400px) {
+  .icon {
+    font-size: 15rem;
+  }
+}
+
+.text {
+  color: #ffffff;
+  font-size: 3rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+@media (max-width: 400px) {
+  .text {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-basis: 7rem;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
+}
