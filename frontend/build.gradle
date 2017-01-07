@@ -1,0 +1,5 @@
+apply from: rootProject.file("${bnd_cnf}/gradle/master.gradle")
+allprojects {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}

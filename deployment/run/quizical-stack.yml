@@ -1,0 +1,32 @@
+backend:
+  environment:
+    - OSGI_SERVICE_HTTP_PORT=8080
+    - OSGI_SHELL_TELNET_IP=localhost
+    - OSGI_SHELL_TELNET_MAXCONN=-1
+    - OSGI_SHELL_TELNET_PORT=6666
+    - QUIZZICAL_DB_HOST=db
+    - QUIZZICAL_DB_NAME=quizzical
+    - QUIZZICAL_DB_PASS=getmandisagoodatsatmath
+    - QUIZZICAL_DB_PORT=5432
+    - QUIZZICAL_DB_SCHEMA=quizzical
+    - QUIZZICAL_DB_USERNAME=quizzical-admin
+    - 'VIRTUAL_HOST=www.quizical.org,web.quizical.org'
+    - VIRTUAL_PORT=8080
+    - VIRTUAL_URL=/api/
+  image: 'mazagroup/quizzical-backend:latest'
+  links:
+    - db
+  ports:
+    - '8080:8080'
+db:
+  image: 'mazagroup/quizzical-db:latest'
+  ports:
+    - '5432:5432'
+  volumes:
+    - '/quizzical-db-volume:/var/lib/postgresql/data'
+nginx-proxy:
+  image: 'tozd/nginx-proxy:latest'
+  ports:
+    - '80:80'
+  volumes:
+    - '/var/run/docker.sock:/var/run/docker.sock'
