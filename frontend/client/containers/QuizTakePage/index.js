@@ -9,6 +9,7 @@ import style from './style.css'
 import actions from 'actions'
 import QuizTaker from 'components/QuizTaker'
 import FormError from 'components/FormError'
+import QuizResults from 'components/QuizResults'
 import PracticeSkeleton from 'components/PracticeSkeleton'
 import { extractErrorFromResultingActions } from 'utils'
 
@@ -86,7 +87,6 @@ class QuizTakePage extends Component {
             isDataLoading:  false,
           })
         } else {
-          debugger
           this.setState({
             quizResults:   resultingActions.payload,
             isDataLoading: false,
@@ -199,7 +199,20 @@ class QuizTakePage extends Component {
       <PracticeSkeleton
         title="Quiz Finished"
         subtitle={subtitle}>
-        doneneenenenenenne
+        <div className={style.resultsPage}>
+          <div className={style.resultsCardWrapper}>
+            <div className={style.resultsCard}>
+              <QuizResults results={quizResults} />
+            </div>
+          </div>
+          <div className={style.resultsPageButtons}>
+            <RaisedButton
+              label="Start Over"
+              labelColor="#ffffff"
+              onTouchTap={::this.onQuizCancelled}
+              backgroundColor="#222222" />
+          </div>
+        </div>
       </PracticeSkeleton>
     )
   }
