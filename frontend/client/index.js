@@ -1,5 +1,5 @@
 
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { Provider as ReduxProvider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -48,14 +48,17 @@ ReactDOM.render(
     <ReduxProvider store={store}>
       <Router history={history}>
         <Route path="admin">
+          <IndexRedirect to="/quizzes" />
           <Route path="quizzes" component={QuizzesPage} />
           <Route path="attempts" component={QuizAttemptsPage} />
           <Route path="questions" component={QuestionsPage} />
         </Route>
         <Route path="quiz">
+          <IndexRedirect to="/start" />
           <Route path="start" component={QuizGenerationPage} />
           <Route path=":quizId/take" component={QuizTakePage} />
         </Route>
+        <IndexRedirect to="/quiz/start" />
         <Route path="workbench" component={WorkbenchPage} />
       </Router>
     </ReduxProvider>
