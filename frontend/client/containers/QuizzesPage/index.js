@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react'
 
+import AdminSkeleton from 'components/AdminSkeleton'
+
 const QuizzesPage = (props, context) => {
   return (
     <AdminSkeleton>

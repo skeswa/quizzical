@@ -8,6 +8,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import ReactDOM from 'react-dom'
 import Perf from 'react-addons-perf'
 import React from 'react'
+
+import style from './index.css'
 import configure from './store'
 
 import LoginPage from 'containers/LoginPage'
@@ -49,13 +51,13 @@ ReactDOM.render(
     <ReduxProvider store={store}>
       <Router history={history}>
         <Route path="admin">
-          <IndexRedirect to="/quizzes" />
+          <IndexRedirect to="/admin/questions" />
           <Route path="quizzes" component={QuizzesPage} />
           <Route path="attempts" component={QuizAttemptsPage} />
           <Route path="questions" component={QuestionsPage} />
         </Route>
         <Route path="quiz">
-          <IndexRedirect to="/start" />
+          <IndexRedirect to="/quiz/start" />
           <Route path="start" component={QuizGenerationPage} />
           <Route path=":quizId/take" component={QuizTakePage} />
         </Route>

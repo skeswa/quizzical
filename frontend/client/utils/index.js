@@ -32,7 +32,7 @@ export function textColorForBackground(bgHex) {
 }
 
 export function pictureIdToBackgroundURL(pictureId) {
-  return `/api/problems/pictures/${pictureId}`
+  return `/api/problems/pictures/${pictureId}.png`
 }
 
 export function timeSince(dateString) {
