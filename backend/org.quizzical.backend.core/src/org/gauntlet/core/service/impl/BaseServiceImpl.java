@@ -341,4 +341,9 @@ public abstract class BaseServiceImpl implements IBaseService {
 		
 		return model;
 	}
+	
+	public JPABaseEntity merge(JPABaseEntity model) throws ApplicationException {
+		model = getEm().merge(model);
+		return model;
+	}
 }

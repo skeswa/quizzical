@@ -42,12 +42,16 @@ public class Importer {
 	    final List<List<Object>> values = response.getValues();
 	    
 	    final Drive service = gServices.getDriveService();
-	    
+	    int count = 1;
 	    for (List<Object> row : values) {
+	    	count++;
+	    	String sourceName = null;
+			Integer iPageNum = null;
+			Integer iIndexInPageNum = null;
 	    	if (row.size() > 1) {
 	    		java.io.File tempFile = null;
 				try {
-					String sourceName = (String)row.get(1);
+					sourceName = (String)row.get(1);
 					String pageNum = (String)row.get(3);
 					String typeName = (String)row.get(4);
 					String categoryName = (String)row.get(5);
@@ -71,13 +75,17 @@ public class Importer {
 					String answerKey = (String)row.get(10);
 					String explainImgUrl = (String)row.get(11);
 					
+					iPageNum = pageNum != null && pageNum.trim().length() > 1 ?Integer.valueOf(pageNum):-1;
+					iIndexInPageNum = questionIndex != null?Integer.valueOf(questionIndex):-1;
+					
 					if (questionImgURL != null && questionImgURL.trim().length() > 1
 						&& explainImgUrl != null && explainImgUrl.trim().length() > 1) {
 						final ProblemSource pSource = problemService.provideProblemSource(sourceName);
 						
-						Integer iPageNum = pageNum != null && pageNum.trim().length() > 1 ?Integer.valueOf(pageNum):-1;
-						Integer iIndexInPageNum = questionIndex != null?Integer.valueOf(questionIndex):-1;
-						final Problem problem = problemService.getBySourceAndPageNumberAndIndex(pSource.getId(),iPageNum,iIndexInPageNum);
+						boolean multipleChoice =  "MC".equals(typeName) ? true : false;
+						Boolean requiresCalculator =  (useCalculator == null)?null:("Y".equals(useCalculator) ? true : false);
+						
+						final Problem problem = problemService.getBySourceAndPageNumberAndIndexAndCalcType(pSource.getId(),iPageNum,iIndexInPageNum,requiresCalculator);
 						
 						if (problem == null) {
 							//-- Lookup category
@@ -106,10 +114,6 @@ public class Importer {
 							aFileRequest.executeMediaAndDownloadTo(aOut);
 							final ProblemPicture answerPicture = convertByteArraytoProblemPicture(aOut,fileMd.getName(),fileMd.getMimeType(),-1);
 							
-							boolean multipleChoice =  "MC".equals(typeName) ? true : false;
-							boolean requiresCalculator =  "true".equals(useCalculator) ? true : false;
-							
-							
 							Problem newProblem = new Problem(answerKey, 
 									pSource, // source,
 									cat, // category,
@@ -119,12 +123,14 @@ public class Importer {
 									questionPicture, // byte[] questionPicture,
 									multipleChoice, requiresCalculator);
 							problemService.provide(newProblem);
-							System.out.println(String.format("%s", newProblem.toString()));
+							System.out.println(String.format("Processed %s", newProblem.toString()));
 						}
 					}
+					else { //Skipped
+						System.out.println(String.format("Skipped problem %s_%d_%d on row %d (questionImgURL,explainImgUrl)=(%s,%s)",sourceName,iPageNum,iIndexInPageNum,count,questionImgURL,explainImgUrl));
+					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(String.format("Error Skipped problem %s_%d_%d on row %d",sourceName,iPageNum,iIndexInPageNum,count));
 				}
 				finally {
 					if (tempFile != null)

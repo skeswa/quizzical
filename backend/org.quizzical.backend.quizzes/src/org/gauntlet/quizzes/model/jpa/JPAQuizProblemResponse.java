@@ -1,6 +1,8 @@
 package org.gauntlet.quizzes.model.jpa;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -25,7 +27,7 @@ public class JPAQuizProblemResponse extends JPABaseEntity implements Serializabl
 	
 	private Integer secondsElapsed = 0;
 	
-	@OneToOne(targetEntity=JPAQuizProblem.class)
+	@OneToOne(targetEntity=JPAQuizProblem.class, cascade = CascadeType.ALL)
 	private JPAQuizProblem quizProblem;	
 
 	public JPAQuizProblemResponse() {}

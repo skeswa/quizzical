@@ -23,6 +23,8 @@ import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
+import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
+import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
 
 
@@ -93,8 +95,8 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		final QuizSubmission existingDTO = getByCode(record.getCode());
 		
 		if (Validator.isNull(existingDTO)) {
-			final JPAQuizSubmission newEntity = JPAEntityUtil.copy(record, JPAQuizSubmission.class);
-			super.add(newEntity);
+			JPAQuizSubmission newEntity = copy(record);
+			newEntity = (JPAQuizSubmission) super.merge(newEntity);
 			final QuizSubmission newDTO = JPAEntityUtil.copy(newEntity, QuizSubmission.class);
 			return newDTO;
 		}
@@ -102,6 +104,36 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		return existingDTO;
 	}
 	
+	private JPAQuizSubmission copy(QuizSubmission quizSubmission) {
+		final JPAQuizSubmission jpaQuizSubmission = JPAEntityUtil.copy(quizSubmission, JPAQuizSubmission.class);
+    	final List<JPAQuizProblemResponse> responses = quizSubmission.getResponses()
+    		.parallelStream()
+    		.map(problemResponse -> {
+	    		JPAQuizProblemResponse jpaEntity = null;
+				try {
+					final JPAQuizProblem jpaQuizProblem = (JPAQuizProblem) super.findByPrimaryKey(JPAQuizProblem.class, problemResponse.getQuizProblemId());
+					jpaEntity = new JPAQuizProblemResponse(
+							problemResponse.getResponse(),
+							problemResponse.getCorrect(),
+							problemResponse.getSkipped(),
+							problemResponse.getSecondsElapsed(),
+							jpaQuizProblem);
+					return jpaEntity;
+				} 
+				catch (NoSuchModelException e) {
+					throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);					
+				}
+				catch (final ApplicationException e) {
+					throw new RuntimeException(e);
+				}
+	    	})
+    		.collect(Collectors.toList());
+    	
+    	jpaQuizSubmission.setResponses(responses);
+		
+		return jpaQuizSubmission;
+	}
+
 	@Override
 	public QuizSubmission update(QuizSubmission record) throws ApplicationException {
 		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAQuizSubmission.class));

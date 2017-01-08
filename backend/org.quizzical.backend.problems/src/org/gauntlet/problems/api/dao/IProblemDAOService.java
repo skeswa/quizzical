@@ -29,7 +29,7 @@ public interface IProblemDAOService extends IBaseService {
 
 	public Problem getByName(String name) throws ApplicationException;
 	
-	public Problem getBySourceAndPageNumberAndIndex(Long srcId, Integer pageNumber, Integer indexInPage) throws ApplicationException;
+	public Problem getBySourceAndPageNumberAndIndexAndCalcType(Long srcId, Integer pageNumber, Integer indexInPage, Boolean requiresCalculator) throws ApplicationException;
 	
 	public List<Problem> findByDifficulty(Long difficultyId, int start, int end) throws ApplicationException;
 	

@@ -91,8 +91,13 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		Problem existingProblem = getByCode(record.getCode());
 		if (Validator.isNull(existingProblem))
 		{
+			System.out.println(String.format("New problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblem.class));
 			existingProblem = JPAEntityUtil.copy(res, Problem.class);
+		}
+		else {
+			System.out.println(String.format("Updating problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
+			return update(record);
 		}
 
 		return existingProblem;
@@ -126,7 +131,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override
-	public Problem getBySourceAndPageNumberAndIndex(Long srcId, Integer pageNumber, Integer indexInPage) throws ApplicationException {
+	public Problem getBySourceAndPageNumberAndIndexAndCalcType(Long srcId, Integer pageNumber, Integer indexInPage, Boolean requiresCalculator) throws ApplicationException {
 		Problem result = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -147,7 +152,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			query.select(rootEntity).where(builder.and(
 					builder.equal(rootEntity.get("source").get("id"),pSrc),
 					builder.equal(rootEntity.get("sourcePageNumber"),pageNumber),
-					builder.equal(rootEntity.get("sourceIndexWithinPage"),indexInPage)
+					builder.equal(rootEntity.get("sourceIndexWithinPage"),indexInPage),
+					builder.equal(rootEntity.get("requiresCalculator"),requiresCalculator)
 					));
 			query.select(rootEntity);
 			
