@@ -62,6 +62,14 @@ class QuizGenerationForm extends Component {
     categorySelectHeight: 72,
   }
 
+  componentDidMount() {
+    const { categories } = this.props
+
+    if (categories && categories.length > 0) {
+      this.setState({ selectedCategoryId: categories[0].id })
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     const { error: nextError, categories: nextCategories } = nextProps
     const { error: currentError, categories: currentCategories } = this.props

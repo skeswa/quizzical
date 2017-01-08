@@ -1,5 +1,5 @@
 
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Route, Router, IndexRedirect, browserHistory } from 'react-router'
 import { Provider as ReduxProvider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -10,6 +10,7 @@ import Perf from 'react-addons-perf'
 import React from 'react'
 import configure from './store'
 
+import LoginPage from 'containers/LoginPage'
 import QuizzesPage from 'containers/QuizzesPage'
 import NotFoundPage from 'containers/NotFoundPage'
 import QuizTakePage from 'containers/QuizTakePage'
@@ -59,6 +60,7 @@ ReactDOM.render(
           <Route path=":quizId/take" component={QuizTakePage} />
         </Route>
         <Route path="workbench" component={WorkbenchPage} />
+        <Route path="/" component={LoginPage} />
         <Route path="*" component={NotFoundPage} />
       </Router>
     </ReduxProvider>
