@@ -41,6 +41,11 @@ const QUIZ_LENGTH_NAMES = [
 ]
 const MIN_QUESTIONS_COUNT = 3
 const MAX_QUESTIONS_COUNT = 20
+const CATEGORY_SELECT_STYLE = { maxWidth: '100%' }
+
+const GENERATION_STRATEGY_REALISTIC   = 'realistic'
+const GENERATION_STRATEGY_BY_CATEGORY = 'generate_by_category'
+const GENERATION_STRATEGY_BY_WEAKNESS = 'generate_by_weakness'
 
 class QuizGenerationForm extends Component {
   static propTypes = {
@@ -51,28 +56,35 @@ class QuizGenerationForm extends Component {
   }
 
   state = {
-    quizLength:         1,
-    selectedCategoryId: null,
-    generationStrategy: 'generate_by_weakness',
+    quizLength:           1,
+    selectedCategoryId:   null,
+    generationStrategy:   GENERATION_STRATEGY_BY_WEAKNESS,
+    categorySelectHeight: 72,
   }
 
-  onCategoryChanged(e, i, selectedCategoryId) {
-    this.setState({ selectedCategoryId })
-  }
+  componentDidMount() {
+    const { categories } = this.props
 
-  onQuizLengthChanged(e, quizLength) {
-    this.setState({ quizLength })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.error !== nextProps.error) {
-      // Make sure that the error is visible.
-      this.scrollToTop()
+    if (categories && categories.length > 0) {
+      this.setState({ selectedCategoryId: categories[0].id })
     }
   }
 
-  onGenerationStrategyChanged(e, generationStrategy) {
-    this.setState({ generationStrategy })
+  componentWillReceiveProps(nextProps) {
+    const { error: nextError, categories: nextCategories } = nextProps
+    const { error: currentError, categories: currentCategories } = this.props
+
+    if (currentError !== nextError) {
+      // Make sure that the error is visible.
+      this.scrollToTop()
+    }
+
+    if ((currentCategories ? currentCategories.length < 1 : true)
+      && nextCategories
+      && nextCategories.length > 0) {
+      // Set the default category.
+      this.setState({ selectedCategoryId: nextCategories[0].id })
+    }
   }
 
   getJSON = () => {
@@ -96,6 +108,23 @@ class QuizGenerationForm extends Component {
     parentNode.scrollTop = 0
   }
 
+  onCategoryChanged(e, i, selectedCategoryId) {
+    this.setState({ selectedCategoryId })
+  }
+
+  onQuizLengthChanged(e, quizLength) {
+    this.setState({ quizLength })
+  }
+
+  onCategorySelectMounted(categorySelect) {
+    debugger
+    this.setState({ categorySelectHeight: categorySelect.offsetHeight })
+  }
+
+  onGenerationStrategyChanged(e, generationStrategy) {
+    this.setState({ generationStrategy })
+  }
+
   renderError() {
     const { error, outsidePopup } = this.props
 
@@ -117,7 +146,12 @@ class QuizGenerationForm extends Component {
 
   render() {
     const { loading, categories, outsidePopup } = this.props
-    const { quizLength, generationStrategy, selectedCategoryId } = this.state
+    const {
+      quizLength,
+      generationStrategy,
+      selectedCategoryId,
+      categorySelectHeight,
+    } = this.state
 
     const mainClasses = classNames(style.main, { [style.dark]: outsidePopup })
     const radioButtonStyle = outsidePopup
@@ -134,6 +168,11 @@ class QuizGenerationForm extends Component {
           primaryText={category.name} />
       )
     })
+    const categorySelectWrapperStyle = {
+      height: generationStrategy === GENERATION_STRATEGY_BY_CATEGORY
+        ? `${categorySelectHeight}px`
+        : '0px'
+    }
 
     return (
       <MuiThemeProvider muiTheme={outsidePopup ? DARK_MUI_THEME : undefined}>
@@ -164,25 +203,24 @@ class QuizGenerationForm extends Component {
             valueSelected={generationStrategy}>
             <RadioButton
               style={radioButtonStyle}
-              value="generate_by_category"
+              value={GENERATION_STRATEGY_BY_CATEGORY}
               label="Category Focus" />
             <RadioButton
               style={radioButtonStyle}
-              value="realistic"
+              value={GENERATION_STRATEGY_REALISTIC}
               label="Realistic Practice" />
             <RadioButton
               style={radioButtonStyle}
-              value="generate_by_weakness"
+              value={GENERATION_STRATEGY_BY_WEAKNESS}
               label="Weakness Training" />
           </RadioButtonGroup>
 
           <div
-            style={{
-              display: generationStrategy === 'generate_by_category'
-                ? 'block'
-                : 'none'
-            }}>
+            style={categorySelectWrapperStyle}
+            className={style.categorySelectWrapper}>
             <SelectField
+              ref="categorySelect"
+              style={CATEGORY_SELECT_STYLE}
               value={selectedCategoryId}
               hintText="The category to focus"
               disabled={categoryMenuItems.length < 1}

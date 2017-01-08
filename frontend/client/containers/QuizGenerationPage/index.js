@@ -100,9 +100,9 @@ class QuizGenerationPage extends Component {
           <div className={style.bottom}>
             <RaisedButton
               label="Start"
+              onClick={::this.onStartClicked}
               disabled={isDataLoading}
               labelColor="#754aec"
-              onTouchTap={::this.onStartClicked}
               backgroundColor="#ffffff" />
           </div>
         </div>

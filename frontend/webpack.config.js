@@ -31,6 +31,10 @@ module.exports = {
         loader: 'file?name=[name].[ext]'
       },
       {
+        test: /\.png$/,
+        loader: 'url-loader?limit=20000&name=[name].[ext]'
+      },
+      {
         test: /\.css$/,
         include: /client/,
         loaders: [
@@ -80,7 +84,9 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      },
     }),
     new HtmlWebpackPlugin({
       title: 'Quizzical - Conquer SAT Math',
