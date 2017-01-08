@@ -41,4 +41,11 @@
   font-size: 1.6rem;
   margin-bottom: 2rem;
   margin-top: -2rem;
+  max-width: 100%;
+}
+
+.categorySelectWrapper {
+  overflow-y: hidden;
+  transition: height 250ms;
+  width: 100%;
 }
