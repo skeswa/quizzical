@@ -1,12 +1,15 @@
-var rucksack = require('rucksack-css')
-var webpack = require('webpack')
-var path = require('path')
+
+const path                  = require('path')
+const webpack               = require('webpack')
+const rucksack              = require('rucksack-css')
+const CopyWebpackPlugin     = require('copy-webpack-plugin')
+const HtmlWebpackPlugin     = require('html-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {
   context: path.join(__dirname, './client'),
   entry: {
     jsx: './index.js',
-    html: './index.html',
     vendor: [
       'react',
       'react-dom',
@@ -19,6 +22,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     loaders: [
@@ -53,7 +57,7 @@ module.exports = {
   resolve: {
     root: path.join(__dirname, './client'),
     extensions: ['', '.js', '.jsx'],
- 
+
     alias: {
       // TODO(skeswa): remove this when react-hot-loader@3 comes out.
       // (https://github.com/gaearon/react-hot-loader/issues/417).
@@ -77,7 +81,28 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
-    })
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Quizzical - Conquer SAT Math',
+      minify: { collapseWhitespace: true },
+      template: path.join(__dirname, 'client', 'index.ejs'),
+      description: 'Quizzical helps you prepare for the Math section of the ' +
+        'SAT by facilitating quick quizzes to get you the practice you need.'
+    }),
+    new FaviconsWebpackPlugin(path.join(
+      __dirname,
+      'client',
+      'resources',
+      'images',
+      'favicon.png')),
+    new CopyWebpackPlugin([{
+      from: path.join(
+        __dirname,
+        'client',
+        'resources',
+        'images',
+        'og-splash.png'),
+    }])
   ],
   devServer: {
     contentBase: './client',

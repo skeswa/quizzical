@@ -1,5 +1,6 @@
 
 .main {
+  background-color: #444444;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
   box-sizing: border-box;
@@ -39,8 +40,8 @@
 .picture {
   background: #444 no-repeat;
   background-size: cover;
-  filter: blur(10px);
   height: 100%;
+  opacity: 0.75;
   width: 100%;
 }
 

@@ -1,6 +1,7 @@
 
-import pluralize from 'pluralize'
 import { handleActions } from 'redux-actions'
+
+import { normalizeEntity, pluralizeNormalizedEntity } from 'utils/crud'
 
 const baseInitialState = {
   map:              [],
@@ -15,12 +16,15 @@ export function createCrudReducer(entity, actionHandlerExtensions, initialStateE
     baseInitialState,
     initialStateExtensions)
 
+  const normalizedEntity = normalizeEntity(entity)
+  const pluralNormalizedEntity = pluralizeNormalizedEntity(normalizedEntity)
+
   const actionHandlers = Object.assign({
-    [`load ${entity}`]: handleLoadOneAction,
-    [`load ${pluralize(entity)}`]: handleLoadAllAction,
-    [`create ${entity}`]: handleCreateAction,
-    [`delete ${entity}`]: handleDeleteAction,
-    [`bump pending ${entity} requests`]: handleBumpPendingRequestsAction,
+    [`load ${normalizedEntity}`]: handleLoadOneAction,
+    [`load ${pluralNormalizedEntity}`]: handleLoadAllAction,
+    [`create ${normalizedEntity}`]: handleCreateAction,
+    [`delete ${normalizedEntity}`]: handleDeleteAction,
+    [`bump pending ${normalizedEntity} requests`]: handleBumpPendingRequestsAction,
   }, actionHandlerExtensions)
 
   return handleActions(actionHandlers, initialState)

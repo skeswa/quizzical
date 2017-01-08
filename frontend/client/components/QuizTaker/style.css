@@ -18,6 +18,39 @@
   background-repeat: no-repeat;
   background-size: contain;
   flex: 1;
+  opacity: 0;
+  position: relative;
+  transition: opacity 250ms;
+  z-index: 2;
+}
+.questionPicture__loaded {
+  opacity: 1;
+}
+
+.questionPictureLoadingHelper {
+  left: 0;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+}
+
+.questionPictureLoader {
+  height: 5rem;
+  position: relative;
+  width: 5rem;
+}
+
+.questionPictureLoaderWrapper {
+  align-items: center;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 
 .questionPrompt {
@@ -32,6 +65,7 @@
   position: absolute;
   text-transform: uppercase;
   top: 0;
+  z-index: 3;
 }
 
 .withCalculator {
@@ -60,7 +94,13 @@
   right: 0;
   top: 0;
   transition: opacity 250ms;
+  z-index: 5;
 }
 .lightbox__visible {
   opacity: 1;
+}
+
+.lightbox .questionPicture {
+  opacity: 1;
+  z-index: 5;
 }

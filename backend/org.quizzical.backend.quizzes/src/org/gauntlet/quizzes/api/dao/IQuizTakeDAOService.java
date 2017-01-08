@@ -5,8 +5,6 @@ import java.util.List;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
-import org.gauntlet.quizzes.api.model.QuizProblem;
-import org.gauntlet.quizzes.api.model.QuizProblemAnswer;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 
 public interface IQuizTakeDAOService extends IBaseService {
@@ -25,11 +23,5 @@ public interface IQuizTakeDAOService extends IBaseService {
 
 	public QuizSubmission getByCode(String code) throws ApplicationException;
 
-	public QuizSubmission getByName(String name) throws ApplicationException;
-
-	
-	//
-	public QuizSubmission addAnswer(Long quizTakeId, QuizProblemAnswer answer) throws ApplicationException, NoSuchModelException;
-
-	public QuizSubmission addAnswers(Long quizTakeId, List<QuizProblemAnswer> answer) throws ApplicationException, NoSuchModelException;	
+	public QuizSubmission getByName(String name) throws ApplicationException;	
 }

@@ -1,0 +1,164 @@
+
+.main {
+  background: #ffffff;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.top {
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex;
+  justify-content: center;
+}
+
+.bottom {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.left {
+  background: #f0f0f0;
+  border-right: 1px solid #cccccc;
+  flex: 0 0 auto;
+  overflow: auto;
+  position: relative;
+}
+
+.right {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+}
+
+.summarySegment {
+  align-items: center;
+  display: flex;
+  margin-right: 1rem;
+}
+.summarySegment:last-child {
+  margin-right: 0;
+}
+.summarySegment__correct {
+  color: #2E7D32;
+}
+.summarySegment__skipped {
+  color: #757575;
+}
+.summarySegment__incorrect {
+  color: #B71C1C;
+}
+
+.summarySegmentIcon {
+  font-size: 1.8rem;
+}
+
+.summarySegmentCount {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: 0.4rem;
+}
+
+.questionButton {
+  align-items: center;
+  border-bottom: 1px solid #cccccc;
+  color: #555555;
+  display: flex;
+  padding: 1rem 1.4rem;
+}
+.questionButton__selected {
+  color: #ffffff;
+}
+.questionButton__correct.questionButton__selected {
+  background: #2E7D32;
+  border-color: #2E7D32;
+}
+.questionButton__skipped.questionButton__selected {
+  background: #757575;
+  border-color: #757575;
+}
+.questionButton__incorrect.questionButton__selected {
+  background: #B71C1C;
+  border-color: #B71C1C;
+}
+
+.questionButtonIcon {
+  font-size: 1.6rem;
+}
+
+.questionButtonNumber {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.responseDetails {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.responseDetails__correct .responseDetailsHeading {
+  color: #2E7D32;
+}
+.responseDetails__skipped .responseDetailsHeading {
+  color: #757575;
+}
+.responseDetails__incorrect .responseDetailsHeading {
+  color: #B71C1C;
+}
+
+.responseDetailsInfo {
+  padding: 1.4rem;
+}
+
+.responseDetailsHeading {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.responseDetailsSubHeading {
+  color: #444444;
+  font-size: 1.4rem;
+}
+
+.responseDetailsStat {
+  align-items: flex-start;
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+.responseDetailsStat:last-child {
+  margin-bottom: 0;
+}
+
+.responseDetailsStats {
+  margin-top: 1.4rem;
+}
+
+.responseDetailsStatIcon {
+  color: #444444;
+  font-size: 1.8rem;
+  margin-top: 0.1rem;
+}
+
+.responseDetailsStatText {
+  color: #444444;
+  font-size: 1.4rem;
+  padding-left: 0.8rem;
+}
+
+.responseDetailsStatHighlight {
+  font-weight: 500;
+}
+
+.responseDetailsPictures {
+  display: flex;
+  flex: 1;
+}

@@ -14,7 +14,7 @@ const AdminSkeleton = props => (
     </div>
     <div className={style.bottom}>
       <Nav />
-      {this.props.children}
+      {props.children}
     </div>
   </div>
 )

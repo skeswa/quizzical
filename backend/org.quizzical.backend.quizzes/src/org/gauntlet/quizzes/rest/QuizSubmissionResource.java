@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,47 +15,41 @@ import javax.ws.rs.core.MediaType;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
-import org.gauntlet.quizzes.api.dao.IQuizDAOService;
-import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
-import org.gauntlet.quizzes.api.model.Quiz;
-import org.gauntlet.quizzes.api.model.QuizProblemAnswer;
+import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
-import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
 
 
 @Path("quiz/submissions")
 public class QuizSubmissionResource {
+	@SuppressWarnings("unused")
 	private volatile LogService logger;
-	private volatile IQuizTakeDAOService quizTakeService;
-	private volatile IQuizDAOService quizService;
+	private volatile IQuizSubmissionDAOService quizSubmissionDAOService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<QuizSubmission> get(@QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException {
-		return quizTakeService.findAll(start, end);
+		return quizSubmissionDAOService.findAll(start, end);
     }	
 	
     @GET 
     @Path("{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     public QuizSubmission get(@PathParam("id") long id) throws NoSuchModelException, ApplicationException {
-		return quizTakeService.getByPrimary(id);
+		return quizSubmissionDAOService.getByPrimary(id);
     }
     
-    @POST 
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON) 
     @Produces(MediaType.APPLICATION_JSON) 
-    public QuizSubmission post(QuizSubmission quizTake) throws IOException, ApplicationException, NoSuchModelException { 
-    	Long typeId = quizTake.getQuiz().getId();
-    	Quiz q = quizService.getByPrimary(typeId);
-    	quizTake.setQuiz(q);
-    	return quizTakeService.add(quizTake);
+    public QuizSubmission put(final QuizSubmission quizSubmission)
+    		throws IOException, ApplicationException, NoSuchModelException { 
+    	return quizSubmissionDAOService.submit(quizSubmission);
     }     
 
 	@DELETE
 	@Path("{id}")
 	public void delete(@PathParam("id") long id) throws NoSuchModelException, ApplicationException {
-		quizTakeService.delete(id);
+		quizSubmissionDAOService.delete(id);
 	}
 }
