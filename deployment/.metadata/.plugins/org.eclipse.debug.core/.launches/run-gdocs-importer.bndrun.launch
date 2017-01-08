@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="bndtools.launch">
+<booleanAttribute key="clean" value="true"/>
+<booleanAttribute key="dynamicBundles" value="true"/>
+<stringAttribute key="launchTarget" value="run/run-gdocs-importer.bndrun"/>
+</launchConfiguration>

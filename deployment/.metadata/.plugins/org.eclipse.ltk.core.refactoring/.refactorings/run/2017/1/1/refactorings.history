@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;run&apos;&#x0A;- Original project: &apos;run&apos;&#x0A;- Original elements:&#x0A;     fw&#x0A;     launch2198869513869747881.properties&#x0A;     launch438803457710967189.properties" description="Delete elements" element1="generated/launch2198869513869747881.properties" element2="generated/launch438803457710967189.properties" element3="generated/fw" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1483484175291" subPackages="false" version="1.0"/>
+</session>
