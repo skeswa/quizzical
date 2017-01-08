@@ -102,7 +102,8 @@
 	org.quizzical.backend.quizzes.api;version=latest,\
 	org.quizzical.backend.quizzes.dao.impl.mt;version=latest,\
 	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0.mt;version=latest,\
-	org.quizzical.backend.quizzes.rest.mt;version=latest
+	org.quizzical.backend.quizzes.rest.mt;version=latest,\
+	org.quizzical.backend.quizzes.generator.impl.mt;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \

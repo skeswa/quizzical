@@ -1,0 +1,43 @@
+buildscript {
+    repositories { 
+        jcenter()
+        ivy { url agp_uri } 
+    }
+    dependencies {
+        classpath "org.amdatu:amdatu-gradle-plugins:${agp_version}", files(bnd_jar, repo_jar),'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+    }
+}
+
+/* Load the BndPlugin class */
+apply from: rootProject.file('cnf/gradle/BndPlugin.gradle')
+/* Load the Amdatu Baseline & Release plugins. */
+allprojects {
+    apply plugin: org.amdatu.gradle.plugins.baseline.AmdatuBaselinePlugin
+    
+    apply plugin: nl.javadude.gradle.plugins.license.LicensePlugin
+    
+    /* Configure the license plugin options */
+    license {
+	    header rootProject.file('etc/classheader_plain.txt')
+	    skipExistingHeaders false
+	}
+}
+apply plugin: org.amdatu.gradle.plugins.release.AmdatuReleasePlugin
+/* Configure the release options; only when needed
+amdatuRelease {
+    baseName = "amdatu-jpa"
+    repoDir = "/path/to/amdatu-repository"
+    excludes = "*.itest, *.demo, *.test"
+}
+*/    
+
+
+/* Configure the subprojects */
+subprojects {
+    def bndProject = bndWorkspace.getProject(name)
+    if (bndProject != null) {
+        plugins.apply BndPlugin
+    }
+}
+
+

@@ -2,6 +2,7 @@
   box-shadow: 0 0 .1rem rgba(0,0,0,.15);
   background: #fff;
   display: flex;
+  flex-shrink: 0;
   justify-content: space-around;
   padding: 1rem 2rem;
   position: relative;
@@ -31,7 +32,7 @@
 }
 
 .item__highlighted {
-  color: #00796b;
+  color: #754aec;
 }
 
 .itemIcon {

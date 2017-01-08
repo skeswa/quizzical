@@ -91,8 +91,13 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		Problem existingProblem = getByCode(record.getCode());
 		if (Validator.isNull(existingProblem))
 		{
+			System.out.println(String.format("New problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblem.class));
 			existingProblem = JPAEntityUtil.copy(res, Problem.class);
+		}
+		else {
+			System.out.println(String.format("Updating problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
+			return update(record);
 		}
 
 		return existingProblem;
@@ -126,7 +131,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override
-	public Problem getBySourceAndPageNumberAndIndex(Long srcId, Integer pageNumber, Integer indexInPage) throws ApplicationException {
+	public Problem getBySourceAndPageNumberAndIndexAndCalcType(Long srcId, Integer pageNumber, Integer indexInPage, Boolean requiresCalculator) throws ApplicationException {
 		Problem result = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -147,7 +152,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			query.select(rootEntity).where(builder.and(
 					builder.equal(rootEntity.get("source").get("id"),pSrc),
 					builder.equal(rootEntity.get("sourcePageNumber"),pageNumber),
-					builder.equal(rootEntity.get("sourceIndexWithinPage"),indexInPage)
+					builder.equal(rootEntity.get("sourceIndexWithinPage"),indexInPage),
+					builder.equal(rootEntity.get("requiresCalculator"),requiresCalculator)
 					));
 			query.select(rootEntity);
 			
@@ -207,6 +213,53 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		}
 		return count;		
 	}	
+	
+	@Override 
+	public List<Problem> findByCategory(Long categoryId, int start, int end) throws ApplicationException {
+		List<Problem> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, categoryId);
+			
+			final List result = findWithDynamicQueryAndParams(query,pes,start,end);
+			resultList = JPAEntityUtil.copy(result, Problem.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}
+	
+	@Override 
+	public int countByCategory(Long categoryId) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, categoryId);
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}		
 	
 	//ProblemDifficulty
 	@Override 

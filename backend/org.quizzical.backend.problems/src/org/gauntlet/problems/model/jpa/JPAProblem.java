@@ -48,7 +48,7 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 
 	private boolean multipleChoice = true;
 	
-	private boolean requiresCalculator = false;
+	private Boolean requiresCalculator;
 
 	public String getAnswer() {
 		return answer;
@@ -122,11 +122,11 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 		this.multipleChoice = multipleChoice;
 	}
 
-	public boolean isRequiresCalculator() {
+	public Boolean isRequiresCalculator() {
 		return requiresCalculator;
 	}
 
-	public void setRequiresCalculator(boolean requiresCalculator) {
+	public void setRequiresCalculator(Boolean requiresCalculator) {
 		this.requiresCalculator = requiresCalculator;
 	} 
 	

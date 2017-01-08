@@ -5,31 +5,23 @@ import java.util.List;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
-import org.gauntlet.quizzes.api.model.QuizProblem;
-import org.gauntlet.quizzes.api.model.QuizProblemAnswer;
-import org.gauntlet.quizzes.api.model.QuizTake;
+import org.gauntlet.quizzes.api.model.QuizSubmission;
 
 public interface IQuizTakeDAOService extends IBaseService {
 	// QuizTakes
-	public List<QuizTake> findAll(int start, int end) throws ApplicationException;
+	public List<QuizSubmission> findAll(int start, int end) throws ApplicationException;
 	
 	public long countAll() throws ApplicationException;
 	
-	public QuizTake add(QuizTake record) throws ApplicationException;
+	public QuizSubmission add(QuizSubmission record) throws ApplicationException;
 	
-	public QuizTake update(QuizTake record) throws ApplicationException;
+	public QuizSubmission update(QuizSubmission record) throws ApplicationException;
 	
-	public QuizTake delete(Long id) throws ApplicationException, NoSuchModelException;
+	public QuizSubmission delete(Long id) throws ApplicationException, NoSuchModelException;
 	
-	public QuizTake getByPrimary(Long pk) throws ApplicationException, NoSuchModelException;
+	public QuizSubmission getByPrimary(Long pk) throws ApplicationException, NoSuchModelException;
 
-	public QuizTake getByCode(String code) throws ApplicationException;
+	public QuizSubmission getByCode(String code) throws ApplicationException;
 
-	public QuizTake getByName(String name) throws ApplicationException;
-
-	
-	//
-	public QuizTake addAnswer(Long quizTakeId, QuizProblemAnswer answer) throws ApplicationException, NoSuchModelException;
-
-	public QuizTake addAnswers(Long quizTakeId, List<QuizProblemAnswer> answer) throws ApplicationException, NoSuchModelException;	
+	public QuizSubmission getByName(String name) throws ApplicationException;	
 }

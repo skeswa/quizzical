@@ -1,0 +1,88 @@
+
+.main {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+  color: #444444;
+  display: flex;
+  flex: 1;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  max-height: inherit;
+}
+
+.columns {
+  display: flex;
+  flex: 1;
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.column:first-child {
+  border-left: none;
+}
+
+.cell {
+  align-items: center;
+  color: #444444;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.4rem;
+  height: 4rem;
+  justify-content: center;
+  min-height: 4rem;
+  transition: background-color 250ms;
+}
+
+.answerCell {
+  border-right: 1px solid #e0e0e0;
+  cursor: default;
+  font-size: 2rem;
+  height: 6rem;
+}
+.answerCell:last-child {
+  border-right: none;
+}
+
+.symbolCell {
+  color: #888888;
+  background-color: #f0f0f0;
+}
+.symbolCells {
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.numberCells {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 10rem;
+  overflow-y: auto;
+}
+
+.cell__blank {
+  font-size: 1rem;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.cell__selected {
+  background: #754aec;
+  color: #ffffff;
+}
+.cell__disabled {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #dddddd 0,
+    #dddddd 2px,
+    #ffffff 2px,
+    #ffffff 4px);
+  color: #888888;
+  cursor: default;
+  opacity: 0.75;
+}

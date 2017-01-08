@@ -6,16 +6,19 @@ import { bindActionCreators } from 'redux'
 import style from './style.css'
 import actions from 'actions'
 import Questions from 'components/Questions'
+import AdminSkeleton from 'components/AdminSkeleton'
 
 const QuestionsPage = (props, context) => {
   return (
-    <Questions
-      actions={props.actions}
-      sources={props.sources}
-      questions={props.questions}
-      categories={props.categories}
-      difficulties={props.difficulties}
-      dataShouldBeLoaded={props.dataShouldBeLoaded} />
+    <AdminSkeleton>
+      <Questions
+        actions={props.actions}
+        sources={props.sources}
+        questions={props.questions}
+        categories={props.categories}
+        difficulties={props.difficulties}
+        dataShouldBeLoaded={props.dataShouldBeLoaded} />
+    </AdminSkeleton>
   )
 }
 

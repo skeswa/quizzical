@@ -25,7 +25,7 @@ public class Problem extends BaseEntity implements Serializable {
 	
 	private boolean multipleChoice = true;
 	
-	private boolean requiresCalculator = false;
+	private Boolean requiresCalculator = null;
 	
 	public Problem() {
 		super.setCode(Long.toString(System.currentTimeMillis()));
@@ -103,17 +103,17 @@ public class Problem extends BaseEntity implements Serializable {
 		this.multipleChoice = multipleChoice;
 	}
 
-	public boolean isRequiresCalculator() {
+	public Boolean isRequiresCalculator() {
 		return requiresCalculator;
 	}
 
-	public void setRequiresCalculator(boolean requiresCalculator) {
+	public void setRequiresCalculator(Boolean requiresCalculator) {
 		this.requiresCalculator = requiresCalculator;
 	}
 
 	public Problem(String answer, ProblemSource source, ProblemCategory category, Integer sourcePageNumber,
 			Integer sourceIndexWithinPage, ProblemDifficulty difficulty, ProblemPicture answerPicture, ProblemPicture questionPicture,
-			boolean multipleChoice, boolean requiresCalculator) {
+			boolean multipleChoice, Boolean requiresCalculator) {
 		this();
 		this.answer = answer;
 		this.source = source;
@@ -126,7 +126,7 @@ public class Problem extends BaseEntity implements Serializable {
 		this.multipleChoice = multipleChoice;
 		this.requiresCalculator = requiresCalculator;
 		
-		this.code = source.getCode()+"_"+sourcePageNumber+"_"+sourceIndexWithinPage;
+		this.code = source.getCode()+"_"+sourcePageNumber+"_"+sourceIndexWithinPage+"_"+(this.requiresCalculator == null?"N/A":this.requiresCalculator);
 	} 
 	
 	@Override

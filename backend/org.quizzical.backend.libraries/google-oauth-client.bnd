@@ -1,5 +1,5 @@
 Include-Resource: @jars/google-oauth-client-1.22.0.jar
 -exportcontents:  com	
 Export-Package: com.*;version=1.22.0
-Bundle-Version: 1.22.0.${tstamp}
+Bundle-Version: 1.22.1.${tstamp}
 DynamicImport-Package: *

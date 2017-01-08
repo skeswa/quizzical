@@ -1,6 +1,6 @@
 
 .main {
-  background: #fff;
+  background-color: #fff;
   bottom: 0;
   display: none;
   left: -2.4rem;
@@ -18,4 +18,12 @@
 
 .main__visible {
   opacity: 0.8;
+}
+
+.main__fullscreen {
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
 }

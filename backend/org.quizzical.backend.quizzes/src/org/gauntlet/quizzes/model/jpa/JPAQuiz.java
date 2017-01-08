@@ -21,7 +21,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"quiz")
 public class JPAQuiz extends JPABaseEntity implements Serializable {
-	@ManyToOne(targetEntity = JPAQuizType.class)
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = JPAQuizType.class)
 	@JoinColumn
 	private JPAQuizType quizType;
 	

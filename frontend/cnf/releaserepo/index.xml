@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<repository increment='1483485309156' name='Release' xmlns='http://www.osgi.org/xmlns/repository/v1.0.0'>
+  <resource>
+    <capability namespace='osgi.identity'>
+      <attribute name='osgi.identity' value='org.quizzical.frontend.web'/>
+      <attribute name='type' value='osgi.bundle'/>
+      <attribute name='version' type='Version' value='1.0.0.201701032314'/>
+    </capability>
+    <capability namespace='osgi.content'>
+      <attribute name='osgi.content' value='414a860ce8e16d62174778fb442f97140e6bb3f4e7f70ef3a3416a0b45954890'/>
+      <attribute name='url' value='org.quizzical.frontend.web/org.quizzical.frontend.web-1.0.0.jar'/>
+      <attribute name='size' type='Long' value='478435'/>
+      <attribute name='mime' value='application/vnd.osgi.bundle'/>
+    </capability>
+    <capability namespace='osgi.wiring.bundle'>
+      <attribute name='osgi.wiring.bundle' value='org.quizzical.frontend.web'/>
+      <attribute name='bundle-version' type='Version' value='1.0.0.201701032314'/>
+    </capability>
+    <capability namespace='osgi.wiring.host'>
+      <attribute name='osgi.wiring.host' value='org.quizzical.frontend.web'/>
+      <attribute name='bundle-version' type='Version' value='1.0.0.201701032314'/>
+    </capability>
+  </resource>
+</repository>

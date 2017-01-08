@@ -16,6 +16,7 @@ import ListButtons from 'components/ListButtons'
 import QuestionGrid from 'components/QuestionGrid'
 import QuestionTable from 'components/QuestionTable'
 import QuestionCreationForm from 'components/QuestionCreationForm'
+import { extractErrorFromResultingActions } from 'utils'
 
 class Questions extends Component {
   static propTypes = {
@@ -65,14 +66,7 @@ class Questions extends Component {
         loadDifficulties(),
       ])
       .then(resultingActions => {
-        let error = null
-        for (let i = 0; i < resultingActions.length; i++) {
-          if (resultingActions[i].error) {
-            error = resultingActions[i].payload
-            break
-          }
-        }
-
+        const error = extractErrorFromResultingActions(resultingActions)
         if (error) {
           this.setState({
             loadingError:   error,

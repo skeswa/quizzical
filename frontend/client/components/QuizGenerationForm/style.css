@@ -1,6 +1,16 @@
 
 .main {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  padding: 0 4rem;
   position: relative;
+  width: 100%;
+}
+
+.main.dark .quizLengthLabel,
+.main.dark .categoryFocusLabel,
+.main.dark .generationStrategyLabel {
+  color: #fff;
 }
 
 .select {
@@ -9,6 +19,7 @@
 }
 
 .quizLengthLabel {
+  align-items: center;
   display: flex;
   font-size: 1.6rem;
   margin-top: 2rem;

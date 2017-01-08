@@ -1,4 +1,6 @@
 Export-Package: \
 	org.gauntlet.quizzes.api.model,\
-	org.gauntlet.quizzes.api.dao
+	org.gauntlet.quizzes.api.dao,\
+	org.gauntlet.quizzes.generator.api,\
+	org.gauntlet.quizzes.generator.api.model
 Bundle-Version: 1.0.0.${tstamp}

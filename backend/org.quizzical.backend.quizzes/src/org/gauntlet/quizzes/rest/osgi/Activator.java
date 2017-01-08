@@ -2,10 +2,15 @@ package org.gauntlet.quizzes.rest.osgi;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
+import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.rest.QuizResource;
-import org.gauntlet.quizzes.rest.QuizTakeResource;
+import org.gauntlet.quizzes.rest.QuizSubmissionResource;
+import org.gauntlet.quizzes.rest.QuizTypeResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 
@@ -18,16 +23,36 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(QuizResource.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizGeneratorManagerService.class)
+						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));
 		
 		manager.add(createComponent()
 				.setInterface(Object.class.getName(), null)
-				.setImplementation(QuizTakeResource.class)
+				.setImplementation(QuizTypeResource.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(LogService.class)
+						.setRequired(false)));
+		
+		manager.add(createComponent()
+				.setInterface(Object.class.getName(), null)
+				.setImplementation(QuizSubmissionResource.class)
+				.add(createServiceDependency().setService(IProblemDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizGeneratorManagerService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizSubmissionDAOService.class)
+						.setRequired(true))	
 				.add(createServiceDependency().setService(IQuizTakeDAOService.class)
-						.setRequired(true))				
+						.setRequired(true))			
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));		
 	}

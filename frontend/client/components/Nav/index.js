@@ -24,15 +24,15 @@ const Nav = (props, context) => (
     <NavItem
       icon="question_answer"
       title="Questions"
-      path="/questions" />
+      path="admin/questions" />
     <NavItem
       icon="mode_edit"
       title="Practice"
-      path="/practice" />
+      path="admin/practice" />
     <NavItem
       icon="chrome_reader_mode"
       title="Quizzes"
-      path="/quizzes" />
+      path="admin/quizzes" />
   </div>
 )
 

@@ -1,13 +1,14 @@
 
 import debug from 'debug'
-import pluralize from 'pluralize'
+
+import { endpointSuffixFor } from 'utils/crud'
 
 const logger = debug('gauntlet:crud:service')
 const genericFailureError = 'Sorry. For whatever reason, the server isn\'t co-operating. Let\'s try that again.'
 const connectionFailureError = 'Could not reach the server. Make sure you have a good connection.'
 
-export function crudService(entity, extensions) {
-  const endpoint = `/api/${pluralizeEntity(entity)}`
+export function crudService(entity, extender) {
+  const endpoint = `/api/${endpointSuffixFor(entity)}`
 
   return Object.assign({
     get(id) {
@@ -37,16 +38,16 @@ export function crudService(entity, extensions) {
       return fetch(`${endpoint}/${id}`, { method: 'POST' })
         .then(handleSuccess, handleFailure)
     },
-  }, extensions)
+  }, extender ? extender(endpoint, handleSuccess, handleFailure) : null)
 }
 
-export function handleSuccess(response) {
+function handleSuccess(response) {
   return response.ok
     ? deserializeResponse(response)
     : Promise.reject(deserializeError(response))
 }
 
-export function handleFailure(problem) {
+function handleFailure(problem) {
   logger('Service request failed:', problem)
   return Promise.reject(connectionFailureError)
 }
@@ -62,16 +63,4 @@ function deserializeResponse(response) {
 function deserializeError(response) {
   return deserializeResponse(response)
     .then(data => data ? data : genericFailureError)
-}
-
-function pluralizeEntity(entity) {
-  const slashIndex = entity.lastIndexOf('/')
-  if (slashIndex !== -1) {
-    const entityPath = entity.substring(0, slashIndex)
-    const entityName = entity.substring(slashIndex + 1)
-
-    return `${entityPath}/${pluralize(entityName)}`
-  }
-
-  return pluralize(entity)
 }

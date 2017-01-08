@@ -7,10 +7,17 @@ import javax.persistence.EntityManager;
 import org.amdatu.jta.ManagedTransactional;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.dao.impl.QuizDAOImpl;
+import org.gauntlet.quizzes.dao.impl.QuizProblemDAOImpl;
+import org.gauntlet.quizzes.dao.impl.QuizProblemResponseDAOImpl;
+import org.gauntlet.quizzes.dao.impl.QuizSubmissionDAOImpl;
 import org.gauntlet.quizzes.dao.impl.QuizTakeDAOImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
@@ -42,6 +49,32 @@ public class MTActivator extends DependencyActivatorBase {
 				.setImplementation(QuizTakeDAOImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
-				.add(createServiceDependency().setService(LogService.class).setRequired(false)));		
+				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
+		
+		props = new Properties();
+		props.put(ManagedTransactional.SERVICE_PROPERTY, IQuizProblemDAOService.class.getName());
+		dm.add(createComponent().setInterface(Object.class.getName(), props)
+				.setImplementation(QuizProblemDAOImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
+		
+		props = new Properties();
+		props.put(ManagedTransactional.SERVICE_PROPERTY, IQuizProblemResponseDAOService.class.getName());
+		dm.add(createComponent().setInterface(Object.class.getName(), props)
+				.setImplementation(QuizProblemResponseDAOImpl.class)
+				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
+		
+		props = new Properties();
+		props.put(ManagedTransactional.SERVICE_PROPERTY, IQuizSubmissionDAOService.class.getName());
+		dm.add(createComponent().setInterface(Object.class.getName(), props)
+				.setImplementation(QuizSubmissionDAOImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
+		
 	}
 }
