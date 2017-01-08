@@ -30,3 +30,9 @@ static
 *.log*
 .sparkplug-bin
 api/api
+
+#Eclipse
+target/
+.metadata
+generated/
+bin/

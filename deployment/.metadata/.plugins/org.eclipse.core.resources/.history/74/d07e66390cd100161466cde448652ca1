@@ -1,0 +1,5 @@
+felix.fileinstall.filename="file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/load/org.amdatu.tenant.factory-platform.cfg"
+org.amdatu.tenant.name="Platform"
+org.amdatu.tenant.pid="platform"
+service.factoryPid="org.amdatu.tenant.factory"
+service.pid="org.amdatu.tenant.factory.2a98f504-b25c-472b-992d-242788b28a68"

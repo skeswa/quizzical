@@ -181,7 +181,7 @@ class QuizResults extends Component {
       duration,
       usedCalculator)
     const descriptionIndex = (DURATION_DESCRIPTIONS.length - 1)
-      - Math.round(performanceIndex * DURATION_DESCRIPTIONS.length)
+      - Math.round(performanceIndex * (DURATION_DESCRIPTIONS.length - 1))
 
     return DURATION_DESCRIPTIONS[descriptionIndex]
   }
@@ -227,6 +227,7 @@ class QuizResults extends Component {
         ordinal:  questionOrdinal,
         problem:  {
           answer:                 questionAnswer,
+          difficulty:             { name: difficulty, color: difficultyColor },
           answerPicture:          { id: answerPictureId },
           questionPicture:        { id: questionPictureId },
           requiresCalculator:     usedCalculator,
@@ -308,6 +309,18 @@ class QuizResults extends Component {
                         <span>.</span>
                       </span>
                 }
+              </div>
+            </div>
+            <div className={style.responseDetailsStat}>
+              <i className={RESPONSE_DETAILS_STAT_ICON_CLASSNAME}>equalizer</i>
+              <div className={style.responseDetailsStatText}>
+                <span>This question is considered&nbsp;</span>
+                <span
+                  style={{ color: difficultyColor }}
+                  className={style.responseDetailsStatHighlight}>
+                  {difficulty}
+                </span>
+                <span>.</span>
               </div>
             </div>
             <div className={style.responseDetailsStat}>

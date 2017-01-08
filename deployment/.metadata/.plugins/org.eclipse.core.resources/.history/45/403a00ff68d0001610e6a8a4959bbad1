@@ -1,0 +1,62 @@
+package org.gauntlet.quizzes.api.model;
+
+import java.io.Serializable;
+
+import org.gauntlet.core.model.BaseEntity;
+
+public class QuizProblemAnswer extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -1145554261745216229L;
+
+	private String answer;
+	
+	private Boolean skipped;
+	
+	private Integer secondsElapsed = 0;
+	
+	private QuizProblem quizProblem;
+	
+	public QuizProblemAnswer() {
+	}
+	
+	public QuizProblemAnswer(String answer,
+							 Boolean skipped,
+							 QuizProblem quizProblem) {
+		this();
+		this.answer = answer;
+		this.skipped = skipped;
+		this.quizProblem = quizProblem;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
+
+	public Boolean getSkipped() {
+		return skipped;
+	}
+
+	public void setSkipped(Boolean skipped) {
+		this.skipped = skipped;
+	}
+
+	public Integer getSecondsElapsed() {
+		return secondsElapsed;
+	}
+
+	public void setSecondsElapsed(Integer secondsElapsed) {
+		this.secondsElapsed = secondsElapsed;
+	}
+
+	public QuizProblem getQuizProblem() {
+		return quizProblem;
+	}
+
+	public void setQuizProblem(QuizProblem quizProblem) {
+		this.quizProblem = quizProblem;
+	}
+}
