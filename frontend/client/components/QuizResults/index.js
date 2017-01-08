@@ -181,7 +181,7 @@ class QuizResults extends Component {
       duration,
       usedCalculator)
     const descriptionIndex = (DURATION_DESCRIPTIONS.length - 1)
-      - Math.round(performanceIndex * DURATION_DESCRIPTIONS.length)
+      - Math.round(performanceIndex * (DURATION_DESCRIPTIONS.length - 1))
 
     return DURATION_DESCRIPTIONS[descriptionIndex]
   }
