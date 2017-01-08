@@ -226,10 +226,11 @@ class QuizResults extends Component {
         id:       quizProblemId,
         ordinal:  questionOrdinal,
         problem:  {
-          answer:             questionAnswer,
-          answerPicture:      { id: answerPictureId },
-          questionPicture:    { id: questionPictureId },
-          requiresCalculator: usedCalculator,
+          answer:                 questionAnswer,
+          answerPicture:          { id: answerPictureId },
+          questionPicture:        { id: questionPictureId },
+          requiresCalculator:     usedCalculator,
+          sourceIndexWithinPage:  questionNumber,
         },
       },
       secondsElapsed: duration,
@@ -316,7 +317,7 @@ class QuizResults extends Component {
               <div className={style.responseDetailsStatText}>
                 <span>You were asked to answer question&nbsp;</span>
                 <span className={style.responseDetailsStatHighlight}>
-                  {`#${questionOrdinal + 1}`}
+                  {`#${questionNumber}`}
                 </span>
                 {
                   usedCalculator

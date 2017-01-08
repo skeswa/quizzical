@@ -58,8 +58,8 @@ class TabTemplate extends Component {
       {},
       TABS_TEMPLATE_STYLE,
       selected
-        ? { display: 'none' }
-        : null)
+        ? null
+        : { display: 'none' })
 
     return <div style={templateStyle}>{children}</div>
   }
