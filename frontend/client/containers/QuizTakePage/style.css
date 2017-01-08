@@ -50,6 +50,13 @@
   padding-left: 4rem;
   padding-right: 4rem;
 }
+@media (max-width: 400px) {
+  .resultsCardWrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+  }
+}
 
 .resultsCard {
   background: #ffffff;
@@ -69,4 +76,11 @@
   padding-left: 4rem;
   padding-right: 4rem;
   padding-bottom: 4rem;
+}
+@media (max-width: 400px) {
+  .resultsPageButtons {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+  }
 }
