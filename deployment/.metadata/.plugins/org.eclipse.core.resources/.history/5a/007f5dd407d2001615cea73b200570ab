@@ -1,0 +1,3 @@
+org.amdatu.jpa.datasourcefactory.368703cb-0c75-424f-8e9e-3d73faf134fe="reference:file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/deployment/cnf/localrepo/org.amdatu.jpa.datasourcefactory/org.amdatu.jpa.datasourcefactory-1.1.1.jar"
+org.amdatu.jpa.datasourcefactory.3ed7147f-13b4-4ec7-91fd-a97aff2d526e="reference:file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/deployment/cnf/localrepo/org.amdatu.jpa.datasourcefactory/org.amdatu.jpa.datasourcefactory-1.1.1.jar"
+org.amdatu.tenant.factory.bf47dd26-75f7-422d-a42f-aaef21d9ea44="reference:file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/deployment/cnf/localrepo/org.amdatu.multitenant.conf/org.amdatu.multitenant.conf-1.0.0.jar"

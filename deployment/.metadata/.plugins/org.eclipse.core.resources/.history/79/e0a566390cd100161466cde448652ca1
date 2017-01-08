@@ -1,0 +1,4 @@
+factory.pid="org.amdatu.tenant.factory"
+factory.pidList=[ \
+  "org.amdatu.tenant.factory.2a98f504-b25c-472b-992d-242788b28a68", \
+  ]
