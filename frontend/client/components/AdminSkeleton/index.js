@@ -7,14 +7,14 @@ import Header from 'components/Header'
 import style from './style.css'
 import Nav from 'components/Nav'
 
-const AdminSkeleton = props => (
+const AdminSkeleton = ({ children }) => (
   <div className={style.main}>
     <div className={style.top}>
       <Header />
     </div>
     <div className={style.bottom}>
       <Nav />
-      {props.children}
+      {children}
     </div>
   </div>
 )
