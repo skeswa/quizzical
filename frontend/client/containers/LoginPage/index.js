@@ -3,6 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
 
 import style from './style.css'
+import logoURL from 'resources/images/splash-logo.png'
 
 const LABEL_STYLE       = { fontSize: '1.8rem' }
 const BUTTON_STYLE      = { height: '5rem' }
@@ -20,7 +21,7 @@ class LoginPage extends Component {
   render() {
     return (
       <div className={style.main}>
-        <img className={style.logo} src="resources/images/splash-logo.png" />
+        <img className={style.logo} src={logoURL} />
         <div className={style.buttons}>
           <RaisedButton
             style={TOP_BUTTON_STYLE}
