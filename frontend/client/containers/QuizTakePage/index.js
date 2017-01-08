@@ -152,8 +152,8 @@ class QuizTakePage extends Component {
             <div className={style.errorPageButtons}>
               <RaisedButton
                 label="Start Over"
+                onClick={::this.onQuizCancelled}
                 labelColor="#ffffff"
-                onTouchTap={::this.onQuizCancelled}
                 backgroundColor="#222222" />
             </div>
           </div>
@@ -208,8 +208,8 @@ class QuizTakePage extends Component {
           <div className={style.resultsPageButtons}>
             <RaisedButton
               label="Start Over"
+              onClick={::this.onQuizCancelled}
               labelColor="#ffffff"
-              onTouchTap={::this.onQuizCancelled}
               backgroundColor="#222222" />
           </div>
         </div>
