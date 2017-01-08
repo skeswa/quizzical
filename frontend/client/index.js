@@ -1,5 +1,5 @@
 
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { Provider as ReduxProvider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -11,8 +11,8 @@ import React from 'react'
 import configure from './store'
 
 import QuizzesPage from 'containers/QuizzesPage'
+import NotFoundPage from 'containers/NotFoundPage'
 import QuizTakePage from 'containers/QuizTakePage'
-import AdminSkeleton from 'components/AdminSkeleton'
 import QuestionsPage from 'containers/QuestionsPage'
 import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
@@ -48,15 +48,18 @@ ReactDOM.render(
     <ReduxProvider store={store}>
       <Router history={history}>
         <Route path="admin">
+          <IndexRedirect to="/quizzes" />
           <Route path="quizzes" component={QuizzesPage} />
           <Route path="attempts" component={QuizAttemptsPage} />
           <Route path="questions" component={QuestionsPage} />
         </Route>
         <Route path="quiz">
+          <IndexRedirect to="/start" />
           <Route path="start" component={QuizGenerationPage} />
           <Route path=":quizId/take" component={QuizTakePage} />
         </Route>
         <Route path="workbench" component={WorkbenchPage} />
+        <Route path="*" component={NotFoundPage} />
       </Router>
     </ReduxProvider>
   </MuiThemeProvider>,

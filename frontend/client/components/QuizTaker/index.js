@@ -9,13 +9,13 @@ import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 
 import style from './style.css'
+import QuestionPicture from 'components/QuestionPicture'
 import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
 import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
 const DIALOG_BODY_STYLE = { padding: '0' }
 const SKIP_BUTTON_STYLE = { width: '3.6rem', minWidth: '1.5rem' }
 const TOAST_AUTOHIDE_DURATION = 1200
-const BASE_QUESTION_PICTURE_URL = '/api/problems/pictures'
 const RESPONSE_REVERSAL_MESSAGE = 'Last question response reversed ' +
   'successfully.'
 
@@ -35,7 +35,6 @@ class QuizTaker extends Component {
     lightboxMounted:              false,
     lightboxVisible:              false,
     answerPopupVisible:           false,
-    questionPictureLoaded:        false,
     notificationToastVisible:     false,
     notificationToastMessage:     '',
     timeCurrentQuestionStarted:   null,
@@ -61,7 +60,6 @@ class QuizTaker extends Component {
           && (nextQuestionIndex < currentQuestionIndex)) {
         this.setState({
           undoRequested:                false,
-          questionPictureLoaded:        false,
           notificationToastVisible:     true,
           notificationToastMessage:     RESPONSE_REVERSAL_MESSAGE,
           timeCurrentQuestionStarted:   null,
@@ -75,7 +73,6 @@ class QuizTaker extends Component {
 
         this.setState({
           undoRequested:                false,
-          questionPictureLoaded:        false,
           notificationToastVisible:     true,
           notificationToastMessage:     `Question #${currentQuestionIndex + 1} `
               + `${pastParticiple} successfully.`,
@@ -84,15 +81,10 @@ class QuizTaker extends Component {
         })
       } else {
         this.setState({
-          questionPictureLoaded:      false,
           timeCurrentQuestionStarted: null,
         })
       }
     }
-  }
-
-  toPictureURL(pictureId) {
-    return `${BASE_QUESTION_PICTURE_URL}/${pictureId}.png`
   }
 
   composeSubmission() {
@@ -186,18 +178,6 @@ class QuizTaker extends Component {
     }, 300))
   }
 
-  onLightboxClicked() {
-    if (this.animating) return;
-
-    this.animating = true
-    this.setState({ lightboxVisible: false }, () => setTimeout(() => {
-      if (this.mounted) {
-        this.animating = false
-        this.setState({ lightboxMounted: false })
-      }
-    }, 300))
-  }
-
   onAnswerPopupSubmitted() {
     const { responses, currentAnswer, timeCurrentQuestionStarted } = this.state
     const {
@@ -232,32 +212,12 @@ class QuizTaker extends Component {
 
   onQuestionPictureLoaded() {
     this.setState({
-      questionPictureLoaded: true,
       timeCurrentQuestionStarted: Date.now(),
     })
   }
 
   onNotificationToastDismissed() {
     this.setState({ notificationToastVisible: false })
-  }
-
-  renderLightbox(questionPictureURL) {
-    const { lightboxMounted, lightboxVisible } = this.state
-    if (!lightboxMounted) {
-      return null
-    }
-
-    return (
-      <div
-        onClick={::this.onLightboxClicked}
-        className={classNames(style.lightbox, {
-          [style.lightbox__visible]: lightboxVisible
-        })}>
-        <div
-          style={{ backgroundImage: `url(${questionPictureURL})` }}
-          className={style.questionPicture} />
-      </div>
-    )
   }
 
   renderAnswerPopup(questionIsMutipleChoice) {
@@ -318,7 +278,6 @@ class QuizTaker extends Component {
   }
 
   render() {
-    const { questionPictureLoaded } = this.state
     const { questionIndex, quiz: { questions } } = this.props
     const {
       problem: {
@@ -329,48 +288,14 @@ class QuizTaker extends Component {
       },
     } = questions[questionIndex]
     const skipIcon = <FontIcon className="material-icons">skip_next</FontIcon>
-    const questionPrompt = `Please answer question #${questionNumber}`
-    const questionPictureURL = this.toPictureURL(questionPictureId)
-    const questionPictureStyle = {
-      backgroundImage: `url(${questionPictureURL})`,
-    }
-    const questionPictureClassName = classNames(style.questionPicture, {
-      [style.questionPicture__loaded]: questionPictureLoaded,
-    })
 
     return (
       <div className={style.main}>
-        <div
-          onClick={::this.onQuestionClicked}
-          className={style.questionPictureWrapper}>
-          <div className={style.questionPrompt}>
-            <span>{questionPrompt}</span>
-            {
-              questionRequiresCalculator
-              ? <span className={style.withCalculator}>
-                  with your calculator
-                </span>
-              : null
-            }
-          </div>
-          <img
-            src={questionPictureURL}
-            onLoad={::this.onQuestionPictureLoaded}
-            className={style.questionPictureLoadingHelper} />
-          <div className={style.questionPictureLoaderWrapper}>
-            <div className={style.questionPictureLoader}>
-              <RefreshIndicator
-                top={0}
-                left={0}
-                size={50}
-                status="loading"
-                loadingColor="#754aec" />
-            </div>
-          </div>
-          <div
-            style={questionPictureStyle}
-            className={questionPictureClassName} />
-        </div>
+        <QuestionPicture
+          pictureId={questionPictureId}
+          questionNumber={questionNumber}
+          onPictureLoaded={::this.onQuestionPictureLoaded}
+          requiresCalculator={questionRequiresCalculator} />
         <div className={style.buttons}>
           <div className={style.bigButton}>
             <RaisedButton
@@ -390,7 +315,6 @@ class QuizTaker extends Component {
           </div>
         </div>
 
-        {this.renderLightbox(questionPictureURL)}
         {this.renderAnswerPopup(questionIsMutipleChoice)}
         {this.renderNotificationToast()}
       </div>

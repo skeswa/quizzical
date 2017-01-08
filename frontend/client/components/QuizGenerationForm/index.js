@@ -37,7 +37,7 @@ const QUIZ_LENGTH_NAMES = [
   'Medium',
   'Long',
   'Very Long',
-  'Epic'
+  'Full Size'
 ]
 const MIN_QUESTIONS_COUNT = 3
 const MAX_QUESTIONS_COUNT = 20
