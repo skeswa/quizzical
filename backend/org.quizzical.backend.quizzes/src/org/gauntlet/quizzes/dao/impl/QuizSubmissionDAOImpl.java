@@ -95,16 +95,39 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		final QuizSubmission existingDTO = getByCode(record.getCode());
 		
 		if (Validator.isNull(existingDTO)) {
-			JPAQuizSubmission newEntity = copy(record);
+			JPAQuizSubmission newEntity = toJPAEntity(record);
 			newEntity = (JPAQuizSubmission) super.merge(newEntity);
-			final QuizSubmission newDTO = JPAEntityUtil.copy(newEntity, QuizSubmission.class);
+			
+			QuizSubmission newDTO = toDTO(newEntity);
 			return newDTO;
 		}
 
 		return existingDTO;
 	}
 	
-	private JPAQuizSubmission copy(QuizSubmission quizSubmission) {
+	private QuizSubmission toDTO(JPAQuizSubmission newEntity) {
+		QuizSubmission dto = JPAEntityUtil.copy(newEntity, QuizSubmission.class);
+	   	final List<QuizProblemResponse> augmentedResponses = dto.getResponses()
+	    		.parallelStream()
+	    		.map(problemResponse -> {
+					try {
+						QuizProblem qp = problemResponse.getQuizProblem();
+						final Problem problem = problemService.getByPrimary(qp.getProblemId());
+						problemResponse.getQuizProblem().setProblem(problem);
+						
+						return problemResponse;
+					} catch (final NoSuchModelException e) {
+						throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);
+					} catch (final ApplicationException e) {
+						throw new RuntimeException(e);
+					}
+		    	})
+	    		.collect(Collectors.toList());
+	   	dto.setResponses(augmentedResponses);
+		return dto;
+	}
+
+	private JPAQuizSubmission toJPAEntity(QuizSubmission quizSubmission) {
 		final JPAQuizSubmission jpaQuizSubmission = JPAEntityUtil.copy(quizSubmission, JPAQuizSubmission.class);
     	final List<JPAQuizProblemResponse> responses = quizSubmission.getResponses()
     		.parallelStream()
