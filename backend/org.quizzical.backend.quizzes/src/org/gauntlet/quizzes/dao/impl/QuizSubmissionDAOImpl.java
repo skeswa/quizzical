@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+
 import org.amdatu.jta.Transactional;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
@@ -14,7 +15,6 @@ import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
-import org.osgi.service.log.LogService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
@@ -26,18 +26,19 @@ import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
+import org.osgi.service.log.LogService;
 
 
 @Transactional
 public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmissionDAOService {
 	
-	@SuppressWarnings("unused")
 	private volatile IQuizDAOService quizService;
 	
 	private volatile IQuizProblemDAOService quizProblemService;
 	
 	private volatile IProblemDAOService problemService;
 	
+	@SuppressWarnings("unused")
 	private volatile IQuizProblemResponseDAOService quizProblemResponseService;
 	
 	private volatile LogService logger;
@@ -204,22 +205,18 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	    		final Long quizProblemId = problemResponse.getQuizProblemId();
 				try {
 					final QuizProblem quizProblem = quizProblemService.getByPrimary(quizProblemId);
-					@SuppressWarnings("unused")
 					final Problem problem = problemService.getByPrimary(quizProblem.getProblemId());
-					
-					final Boolean correct = problemResponse.getResponse().equalsIgnoreCase(problem.getAnswer());
-					
-					QuizProblemResponse newQuizProblemResponse = new QuizProblemResponse(
+					final Boolean correct = problemResponse.getResponse() == null
+							? false
+							: problemResponse.getResponse().equalsIgnoreCase(problem.getAnswer());
+					final QuizProblemResponse newQuizProblemResponse = new QuizProblemResponse(
 							QuizProblemResponse.code(quizProblemId, problemResponse.getResponse()),
 							problemResponse.getResponse(),
 							problemResponse.getSkipped(),
 							correct,
 							problemResponse.getSecondsElapsed(),
 							quizProblemId);
-					newQuizProblemResponse.setCorrect(correct);
 
-					//newQuizProblemResponse = quizProblemResponseService.add(newQuizProblemResponse);
-					
 					return newQuizProblemResponse;
 				} catch (final NoSuchModelException e) {
 					throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);
