@@ -4,3 +4,5 @@ target/
 generated/
 bin/
 .recommenders
+.gradle*
+cnf/cache/
