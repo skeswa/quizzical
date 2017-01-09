@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1483908855621" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1483984532395" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.quizzical.frontend.web"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="1.0.0.201701082054"/>
+      <attribute name="version" type="Version" value="1.0.0.201701091755"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="f304a43903ad6765dc950978ad6a41af1bc69e65564f86203c2c9490d5dc244a"/>
+      <attribute name="osgi.content" value="d2085f6ba9f09a63975b6ff2e028b9d974943ec010c3104e87e35390fe36a21e"/>
       <attribute name="url" value="generated/org.quizzical.frontend.web.jar"/>
-      <attribute name="size" type="Long" value="2033930"/>
+      <attribute name="size" type="Long" value="2033964"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
       <attribute name="osgi.wiring.bundle" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701082054"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701091755"/>
     </capability>
     <capability namespace="osgi.wiring.host">
       <attribute name="osgi.wiring.host" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701082054"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701091755"/>
     </capability>
     <capability namespace="bndtools.workspace">
       <attribute name="bndtools.workspace" value="file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/frontend"/>
@@ -40,7 +40,7 @@
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.log)(version&gt;=1.3.0)(!(version&gt;=2.0.0)))"/>
     </requirement>
     <requirement namespace="osgi.ee">
-      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.7))"/>
     </requirement>
   </resource>
 </repository>

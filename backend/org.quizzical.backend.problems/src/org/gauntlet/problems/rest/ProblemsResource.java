@@ -115,7 +115,7 @@ public class ProblemsResource {
 			answer = map.get("answer").getString();
 			sourcePageNumber = Integer.valueOf(map.get("sourcePageNumber").getString());
 			sourceIndexWithinPage = Integer.valueOf(map.get("sourceIndexWithinPage").getString());
-			multipleChoice = Boolean.valueOf(map.get("sourceIndexWithinPage").getString());
+			multipleChoice = Boolean.valueOf(map.get("multipleChoice").getString());
 			requiresCalculator = Boolean.valueOf(map.get("requiresCalculator").getString());
 			sourceId = Long.valueOf(map.get("sourceId").getString());
 			categoryId = Long.valueOf(map.get("categoryId").getString());
