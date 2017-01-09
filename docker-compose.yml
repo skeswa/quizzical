@@ -10,6 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - quizzical-db-volume:/var/lib/postgresql/data
+      - /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/db_backups:/db_backups
   backend:
     build:
       context: ./infra/docker/backend

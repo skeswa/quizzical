@@ -34,6 +34,7 @@ class Questions extends Component {
     isDataLoading:                  false,
     categoryFilterId:               null,
     difficultyFilterId:             null,
+    sourceFilterId:                 null,
     questionCreationError:          null,
     questionCreationInProgress:     false,
     questionCreationDialogVisible:  false,
@@ -136,6 +137,10 @@ class Questions extends Component {
     this.setState({ difficultyFilterId: value })
   }
 
+  onSourceFilterIdChanged(e, i, value) {
+    this.setState({ sourceFilterId: value })
+  }
+
   renderCreationDialog() {
     const {
       actions,
@@ -185,13 +190,14 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions, categories, difficulties } = this.props
+    const { sources, questions, categories, difficulties } = this.props
     const {
       gridVisible,
       loadingError,
       isDataLoading,
       categoryFilterId,
       difficultyFilterId,
+      sourceFilterId
     } = this.state
 
     const filteredQuestions = questions
@@ -205,6 +211,13 @@ class Questions extends Component {
       .filter(question => {
         if (difficultyFilterId !== null) {
           return question.difficulty.id === difficultyFilterId
+        }
+
+        return true
+      })
+      .filter(question => {
+        if (sourceFilterId !== null) {
+          return question.source.id === sourceFilterId
         }
 
         return true
@@ -237,6 +250,13 @@ class Questions extends Component {
           value={difficulty.id}
           primaryText={difficulty.name} />
       ))
+    const sourceMenuItems = sources
+      .map(source => (
+        <MenuItem
+          key={source.id}
+          value={source.id}
+          primaryText={source.name} />
+      ))
     const allFilterMenuItem = (
       <MenuItem
         key="all"
@@ -256,7 +276,12 @@ class Questions extends Component {
         value={null}
         primaryText="All Difficulties" />
     )
-
+    sourceMenuItems.unshift(
+      <MenuItem
+        key="all"
+        value={null}
+        primaryText="All Sources" />
+    )
     return (
       <div className={style.main}>
         <div className={style.filterBarWrapper}>
@@ -277,6 +302,13 @@ class Questions extends Component {
               className={style.filterSelect}
               labelStyle={{ color: '#fff' }}>
               {difficultyMenuItems}
+            </SelectField>
+            <SelectField
+              value={sourceFilterId}
+              onChange={::this.onSourceFilterIdChanged}
+              className={style.filterSelect}
+              labelStyle={{ color: '#fff' }}>
+              {sourceMenuItems}
             </SelectField>
           </div>
         </div>

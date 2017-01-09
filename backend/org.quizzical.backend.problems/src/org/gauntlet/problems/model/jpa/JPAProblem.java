@@ -114,7 +114,7 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 		this.sourceIndexWithinPage = sourceIndexWithinPage;
 	}
 
-	public boolean isMultipleChoice() {
+	public boolean getMultipleChoice() {
 		return multipleChoice;
 	}
 
@@ -122,7 +122,7 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 		this.multipleChoice = multipleChoice;
 	}
 
-	public Boolean isRequiresCalculator() {
+	public Boolean getRequiresCalculator() {
 		return requiresCalculator;
 	}
 
