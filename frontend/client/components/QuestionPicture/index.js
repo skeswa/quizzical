@@ -73,6 +73,7 @@ class QuestionPicture extends Component {
     const pictureClassName = classNames(style.picture, {
       [style.picture__loaded]: pictureLoaded,
     })
+    const pictureLoaderStyle = { opacity: pictureLoaded ? 0 : 1 }
 
     return (
       <div className={style.main}>
@@ -82,7 +83,7 @@ class QuestionPicture extends Component {
           onLoad={::this.onPictureLoaded}
           className={style.pictureLoadingHelper} />
         <div className={style.pictureLoaderWrapper}>
-          <div className={style.pictureLoader}>
+          <div style={pictureLoaderStyle} className={style.pictureLoader}>
             <RefreshIndicator
               top={0}
               left={0}
