@@ -45,8 +45,8 @@ public class CategoriesResource {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void provideProblemCategory(ProblemCategory problemCategory) throws ApplicationException {
-		problemService.provideProblemCategory(problemCategory);
+	public ProblemCategory provideProblemCategory(ProblemCategory problemCategory) throws ApplicationException {
+		return problemService.provideProblemCategory(problemCategory);
 	}
 
 	@DELETE

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1483815182332" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1483908855621" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.quizzical.frontend.web"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="1.0.0.201701071853"/>
+      <attribute name="version" type="Version" value="1.0.0.201701082054"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="89c4348a1d8ce6e5b83342e809d0ad228a7be7845db2882da571091bdb942a69"/>
+      <attribute name="osgi.content" value="f304a43903ad6765dc950978ad6a41af1bc69e65564f86203c2c9490d5dc244a"/>
       <attribute name="url" value="generated/org.quizzical.frontend.web.jar"/>
-      <attribute name="size" type="Long" value="483862"/>
+      <attribute name="size" type="Long" value="2033930"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
       <attribute name="osgi.wiring.bundle" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701071853"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701082054"/>
     </capability>
     <capability namespace="osgi.wiring.host">
       <attribute name="osgi.wiring.host" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701071853"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701082054"/>
     </capability>
     <capability namespace="bndtools.workspace">
       <attribute name="bndtools.workspace" value="file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/frontend"/>

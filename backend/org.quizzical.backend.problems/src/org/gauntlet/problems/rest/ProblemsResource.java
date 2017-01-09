@@ -215,14 +215,16 @@ public class ProblemsResource {
 			// Parse out the picture id.
 			pictureIdWithExtension = pictureIdWithExtension.trim();
 			final int extensionIndex = pictureIdWithExtension.indexOf('.');
-			if (extensionIndex == -1) {
-				// TODO(skeswa): devise an error picture to return instead of an exception.
-				throw new IllegalArgumentException("Expected a file extension.");
+			Long pictureId = null;
+			if (extensionIndex >= 0) {
+				final String pictureIdText = pictureIdWithExtension.substring(0, extensionIndex);
+				pictureId = Long.valueOf(pictureIdText);
+			}
+			else {// assume .PNG
+				pictureId = Long.valueOf(pictureIdWithExtension);
 			}
 			
 			// Fetch the picture from the database.
-			final String pictureIdText = pictureIdWithExtension.substring(0, extensionIndex);
-			final Long pictureId = Long.valueOf(pictureIdText);
 			final ProblemPicture picture = problemService.getProblemPictureByPrimary(pictureId);
 			
 			// Stream it back to the client.

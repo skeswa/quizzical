@@ -25,7 +25,7 @@ public class Problem extends BaseEntity implements Serializable {
 	
 	private boolean multipleChoice = true;
 	
-	private Boolean requiresCalculator = null;
+	private Boolean requiresCalculator;
 	
 	public Problem() {
 		super.setCode(Long.toString(System.currentTimeMillis()));
@@ -103,7 +103,7 @@ public class Problem extends BaseEntity implements Serializable {
 		this.multipleChoice = multipleChoice;
 	}
 
-	public Boolean isRequiresCalculator() {
+	public Boolean getRequiresCalculator() {
 		return requiresCalculator;
 	}
 

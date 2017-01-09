@@ -16,7 +16,7 @@ export function crudService(entity, extender) {
         .then(handleSuccess, handleFailure)
     },
 
-    getAll(offset = 0, limit = 50) {
+    getAll(offset = 0, limit = 500) {
       return fetch(`${endpoint}?start=${offset}&end=${offset + limit}`, { method: 'GET' })
         .then(handleSuccess, handleFailure)
     },
