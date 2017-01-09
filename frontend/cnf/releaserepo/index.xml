@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
-<repository increment='1483890399235' name='Release' xmlns='http://www.osgi.org/xmlns/repository/v1.0.0'>
+<repository increment='1483984256368' name='Release' xmlns='http://www.osgi.org/xmlns/repository/v1.0.0'>
   <resource>
     <capability namespace='osgi.identity'>
       <attribute name='osgi.identity' value='org.quizzical.frontend.web'/>
       <attribute name='type' value='osgi.bundle'/>
-      <attribute name='version' type='Version' value='1.0.0.201701081546'/>
+      <attribute name='version' type='Version' value='1.0.0.201701091750'/>
     </capability>
     <capability namespace='osgi.content'>
-      <attribute name='osgi.content' value='d29745112961e3f57994c3f50d41f1d5ef3b229e3801fdca660e5a3f9dbc724b'/>
+      <attribute name='osgi.content' value='d2ffb38f584fa2f15f614a6d2eb7f452ea82c0c999986014775be53cec8ce1be'/>
       <attribute name='url' value='org.quizzical.frontend.web/org.quizzical.frontend.web-1.0.0.jar'/>
-      <attribute name='size' type='Long' value='2034054'/>
+      <attribute name='size' type='Long' value='2033926'/>
       <attribute name='mime' value='application/vnd.osgi.bundle'/>
     </capability>
     <capability namespace='osgi.wiring.bundle'>
       <attribute name='osgi.wiring.bundle' value='org.quizzical.frontend.web'/>
-      <attribute name='bundle-version' type='Version' value='1.0.0.201701081546'/>
+      <attribute name='bundle-version' type='Version' value='1.0.0.201701091750'/>
     </capability>
     <capability namespace='osgi.wiring.host'>
       <attribute name='osgi.wiring.host' value='org.quizzical.frontend.web'/>
-      <attribute name='bundle-version' type='Version' value='1.0.0.201701081546'/>
+      <attribute name='bundle-version' type='Version' value='1.0.0.201701091750'/>
     </capability>
     <requirement namespace='osgi.wiring.package'>
       <directive name='filter' value='(&amp;(osgi.wiring.package=javax.servlet)(version&gt;=2.5.0)(!(version&gt;=3.0.0)))'/>
