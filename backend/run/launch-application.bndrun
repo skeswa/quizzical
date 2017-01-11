@@ -93,6 +93,14 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.core.model;version=latest,\
 	,\
+	org.apache.commons.codec;version=1.7.0,\
+	org.amdatu.security.tokenprovider.api;version=1.0.0,\
+	org.quizzical.backend.security.api;version=latest,\
+	org.quizzical.backend.security.filter;version=latest,\
+	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
+	org.quizzical.backend.security.rest;version=latest,\
+	org.quizzical.backend.security.dao.impl;version=latest,\
+	,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.problems.dao.impl.mt;version=latest,\
 	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0.mt;version=latest,\
