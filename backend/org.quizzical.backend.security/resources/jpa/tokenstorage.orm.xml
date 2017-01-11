@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+            http://java.sun.com/xml/ns/persistence/orm/orm_2_0.xsd"
+            version="2.0">
+	<entity class="org.quizzical.backend.security.api.tokenstorage.StoredToken">
+		<table name="gnt_sec_storedtoken" />
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value />
+			</id>		
+			<basic name="m_token" />
+			<basic name="m_tokenSecret" />
+			<basic name="m_timestamp" />
+			<element-collection name="m_properties" target-class="java.lang.String" fetch="LAZY">
+			       <map-key-class class="java.lang.String" />
+			       <map-key-column name="name" />
+			       <column name="value" />
+			       <collection-table name="gnt_sec_storedtoken_preference">
+			           <join-column name="ownerid" />
+			       </collection-table>
+			</element-collection>
+		</attributes>
+	</entity>
+</entity-mappings>
