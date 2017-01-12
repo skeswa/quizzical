@@ -1,17 +1,32 @@
-package org.quizzical.backend.security.api.tokenstorage;
+package org.quizzical.backend.security.model.jpa.tokenstorage;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This class represents a generic token. A token is a unique and randomly generated String,
- * associated with a secret (which is also a unique and randomly generated String). A timestamp
- * is assigned to a token to facilitate token expiration.
- * Arbitrary String properties can be assigned to a token.
- */
-public class StoredToken {
-	protected Long id;
-	
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.gauntlet.core.model.Constants;
+import org.quizzical.backend.security.api.tokenstorage.StoredToken;
+
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
++"sec_token")
+public class JPAStoredToken {
+    @Id
+    @Column(name = "id", scale = 0)
+    @GeneratedValue(strategy = GenerationType.AUTO)	
+    protected Long id;
+    
     // The token
     private String m_token;
 
@@ -20,10 +35,19 @@ public class StoredToken {
 
     // Timestamp of when the token was generated, used for tokens that a limited lifetime
     private long m_timestamp;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Map<String, String> m_properties = new HashMap<String, String>();
 
-    // Generic map of token proeprties.
-    private Map<String, String> m_properties;
-
+	public JPAStoredToken() {
+		this(null, null, 0);
+	}
+	
+	public JPAStoredToken(StoredToken token) {
+		this(token.getToken(), token.getTokenSecret(), token.getTimestamp());
+		this.setProperties(token.getProperties());
+	}
+	
     /**
      * Constructor. Creates a new token
      * 
@@ -33,7 +57,7 @@ public class StoredToken {
      *        the secret is only known by the owner.
      * @param timestamp The time at which the token was generated
      */
-    public StoredToken(final String token, final String tokenSecret, final long timestamp) {
+    public JPAStoredToken(final String token, final String tokenSecret, final long timestamp) {
         m_token = token;
         m_tokenSecret = tokenSecret;
         m_timestamp = timestamp;
@@ -143,7 +167,7 @@ public class StoredToken {
     }
 
     public StoredToken clone() {
-    	StoredToken clone = new StoredToken(m_token, m_tokenSecret, m_timestamp);
+    	StoredToken clone = new  StoredToken(m_token, m_tokenSecret, m_timestamp);
         if (getProperties() != null) {
             clone.setProperties(clone(getProperties()));
         }
@@ -156,9 +180,10 @@ public class StoredToken {
             newMap.put(key, map.get(key));
         }
         return newMap;
-    }
-    
+    }	
+
 	public Long getId() {
 		return id;
 	}
 }
+

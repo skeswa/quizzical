@@ -3,6 +3,6 @@ Meta-Persistence: META-INF/persistence.xml
 Include-Resource: META-INF/persistence.xml=resources/jpa/persistence-openjpa.xml,\
 	META-INF/orm.xml=resources/jpa/tokenstorage.orm.xml
 Private-Package: \
-	org.quizzical.backend.security.dao.impl.user,\
-	org.quizzical.backend.security.dao.impl.user.osgi
-Bundle-Activator: org.quizzical.backend.security.dao.impl.user.osgi.Activator
+	org.quizzical.backend.security.service.impl.tokenstorage,\
+	org.quizzical.backend.security.service.impl.tokenstorage.osgi
+Bundle-Activator: org.quizzical.backend.security.service.impl.tokenstorage.osgi.Activator

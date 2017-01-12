@@ -1,2 +1,5 @@
 Bundle-Version: 1.0.0.${tstamp}
-Private-Package: org.quizzical.backend.security.login.rest
+Private-Package: \
+	org.quizzical.backend.security.login.rest,\
+	org.quizzical.backend.security.login.rest.osgi
+Bundle-Activator: org.quizzical.backend.security.login.rest.osgi.Activator

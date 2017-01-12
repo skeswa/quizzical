@@ -1,0 +1,7 @@
+# Junit
+#
+junit=${repo;junit.osgi}
+mockito=${repo;org.mockito.mockito-all;[1.9,2);HIGHEST}
+junit-buildpath: ${junit};version=file;HIGHEST},\
+  ${mockito};version=file
+junit-runpath:

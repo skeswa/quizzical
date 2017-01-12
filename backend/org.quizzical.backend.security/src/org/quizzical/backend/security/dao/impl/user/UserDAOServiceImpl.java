@@ -2,7 +2,9 @@ package org.quizzical.backend.security.dao.impl.user;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -14,30 +16,25 @@ import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.felix.dm.annotation.api.Component;
-import org.apache.felix.dm.annotation.api.Init;
-import org.apache.felix.dm.annotation.api.ServiceDependency;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
+import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
+import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
-import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.dao.user.UserExistsByEmailException;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.model.jpa.user.JPAUser;
 
 
+@SuppressWarnings("restriction")
 @Transactional
-@Component(provides = {IUserDAOService.class})
 public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOService {
-	
-	@ServiceDependency(required = false)
 	private volatile LogService logger;
 	
-	@ServiceDependency(required = true, filter="("+org.osgi.service.jpa.EntityManagerFactoryBuilder.JPA_UNIT_NAME+"=idm)")
 	private volatile EntityManager em;
-	
 	
 	@Override
 	public LogService getLogger() {
@@ -52,7 +49,6 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	public EntityManager getEm() {
 		return em;
 	}	
-	
 
 	@Override
 	public List<User> getAllActiveUsers() {
@@ -79,7 +75,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 	
 	@Override
-	public void delete(String recordId) {
+	public void delete(String recordId) throws ApplicationException {
 		User evt = getByCode(recordId);
 		delete(evt);
 	}	
@@ -93,14 +89,17 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	@Override
 	public User provide(User record)
 			throws Exception {
-		User existingUser = getByEmail(record.getEmailAddress());
-		if (Validator.isNull(existingUser))
+		User existingProblem = getByCode(record.getCode());
+		if (Validator.isNull(existingProblem))
 		{
-			existingUser = add(record);
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAUser.class));
+			existingProblem = JPAEntityUtil.copy(res, User.class);
 		}
-		else
-			throw new UserExistsByEmailException(record.getEmailAddress());
-		return existingUser;
+		else {
+			return update(record);
+		}
+
+		return existingProblem;
 	}
 	
 	
@@ -116,101 +115,30 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 
 	@Override
-	public User getByCode(String code) {
-		User rec = null;
-
-		try {
-			CriteriaBuilder builder = em.getCriteriaBuilder();
-			CriteriaQuery<User> query = builder.createQuery(User.class);
-			Root<User> rootEntity = query.from(User.class);
-			ParameterExpression<String> p = builder.parameter(String.class);
-			query.select(rootEntity).where(builder.equal(rootEntity.get("code"), p));
-
-			TypedQuery<User> typedQuery = em.createQuery(query);
-			typedQuery.setParameter(p, code);
-
-			rec = typedQuery.getSingleResult();
-		} catch (NoResultException e) {
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		} catch (Error e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		}
-
-		return rec;
+	public User getByCode(String code) throws ApplicationException {
+		JPAUser jpaEntity = (JPAUser) super.findWithAttribute(JPAUser.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, User.class);
 	}
 	
-	public User getByEmailAndPassword(String email, String encryptedPassword) {
-		User rec = null;
-		try {
-			CriteriaBuilder builder = em.getCriteriaBuilder();
-			CriteriaQuery<User> query = builder.createQuery(User.class);
-			Root<User> rootEntity = query.from(User.class);
-			ParameterExpression<String> p1 = builder.parameter(String.class);
-			ParameterExpression<String> p2 = builder.parameter(String.class);
-			query.select(rootEntity).where(builder.and(builder.equal(rootEntity.get("emailAddress"),p1),builder.equal(rootEntity.get("password"), p2)));
-
-			TypedQuery<User> typedQuery = em.createQuery(query);
-			typedQuery.setParameter(p1, email);
-			typedQuery.setParameter(p2, encryptedPassword);
-			
-			rec = typedQuery.getSingleResult();
-		} catch (NoResultException e) {
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		} catch (Error e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		}
-
-		return rec;
+	public User getByEmailAndPassword(String email, String encryptedPassword) throws ApplicationException {
+		Set<AttrPair> attrs = new HashSet<AttrPair>();
+		attrs.add(new AttrPair(String.class, "emailAddress", email));
+		attrs.add(new AttrPair(String.class, "encryptedPassword", encryptedPassword));
+		
+		JPAUser jpaEntity = (JPAUser) super.findWithAttributes(JPAUser.class, attrs);
+		return JPAEntityUtil.copy(jpaEntity, User.class);
 	}
 	
 	
 	@Override
-	public User getByEmail(String email) {
-		User rec = null;
-		try {
-			CriteriaBuilder builder = em.getCriteriaBuilder();
-			CriteriaQuery<User> query = builder.createQuery(User.class);
-			Root<User> rootEntity = query.from(User.class);
-			ParameterExpression<String> p = builder.parameter(String.class);
-			query.select(rootEntity).where(builder.equal(rootEntity.get("emailAddress"),p));
-
-			TypedQuery<User> typedQuery = em.createQuery(query);
-			typedQuery.setParameter(p, email);
-			
-			rec = typedQuery.getSingleResult();
-		} catch (NoResultException e) {
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		} catch (Error e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logger.log(LogService.LOG_ERROR,stacktrace);
-		}
-
-		return rec;
+	public User getByEmail(String email) throws ApplicationException {
+		JPAUser jpaEntity = (JPAUser) super.findWithAttribute(JPAUser.class, String.class,"emailAddress", email);
+		return JPAEntityUtil.copy(jpaEntity, User.class);
 	}
 	
 	
 	@Override
-	public User getUserByEmail(String emailAddress) throws UserNotFoundException {
+	public User getUserByEmail(String emailAddress) throws UserNotFoundException, ApplicationException {
         User findOne = getByEmail(emailAddress);
         if(findOne == null) {
         	throw new UserNotFoundException(emailAddress);
@@ -220,7 +148,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 
 	
 	@Override
-	public User getUserByEmailAndPassword(String email, String password) throws UserNotFoundException {
+	public User getUserByEmailAndPassword(String email, String password) throws UserNotFoundException, ApplicationException {
 		String hash = DigestUtils.sha256Hex(password);
 		User findOne = getByEmailAndPassword(email, hash);
         if(findOne == null) {
@@ -230,7 +158,6 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 
 	@Override
-	@Init
 	public void createDefaults() throws ApplicationException {
 		User user = new User();
 		user.setCode("mk");

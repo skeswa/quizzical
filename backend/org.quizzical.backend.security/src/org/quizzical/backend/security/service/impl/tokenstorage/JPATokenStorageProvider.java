@@ -1,4 +1,4 @@
-package org.quizzical.backend.security.tokenstorage.jpa;
+package org.quizzical.backend.security.service.impl.tokenstorage;
 
 
 import java.io.PrintWriter;
@@ -16,14 +16,13 @@ import javax.persistence.criteria.Root;
 import org.amdatu.jta.Transactional;
 import org.amdatu.security.tokenprovider.Token;
 import org.amdatu.security.tokenprovider.TokenStorageProvider;
-import org.apache.felix.dm.annotation.api.Component;
 import org.apache.felix.dm.annotation.api.ServiceDependency;
+import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.tokenstorage.IExpiredTokenPurger;
-import org.quizzical.backend.security.api.tokenstorage.StoredToken;
+import org.quizzical.backend.security.model.jpa.tokenstorage.JPAStoredToken;
 
 @Transactional
-@Component(provides = {TokenStorageProvider.class,IExpiredTokenPurger.class})
 public class JPATokenStorageProvider implements TokenStorageProvider, IExpiredTokenPurger {
 	
 	@ServiceDependency(required = false)
@@ -46,14 +45,7 @@ public class JPATokenStorageProvider implements TokenStorageProvider, IExpiredTo
 	
 	@Override
 	public void addToken(Token token) {
-		final StoredToken tokenToStore;
-		if (token instanceof StoredToken) {
-			tokenToStore = (StoredToken) token;
-		} else {
-			System.out.println("Converting Token object in StoredToken");
-			tokenToStore = new StoredToken(token);
-		}
-		
+		final JPAStoredToken tokenToStore = JPAEntityUtil.copy(token, JPAStoredToken.class);
 		getEm().persist(tokenToStore);
 	}
 
@@ -63,12 +55,42 @@ public class JPATokenStorageProvider implements TokenStorageProvider, IExpiredTo
 
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
-			CriteriaQuery<StoredToken> query = builder.createQuery(StoredToken.class);
-			Root<StoredToken> rootEntity = query.from(StoredToken.class);
+			CriteriaQuery<JPAStoredToken> query = builder.createQuery(JPAStoredToken.class);
+			Root<JPAStoredToken> rootEntity = query.from(JPAStoredToken.class);
 			ParameterExpression<String> p = builder.parameter(String.class);
 			query.select(rootEntity).where(builder.equal(rootEntity.get("m_token"), p));
 
-			TypedQuery<StoredToken> typedQuery = getEm().createQuery(query);
+			TypedQuery<JPAStoredToken> typedQuery = getEm().createQuery(query);
+			typedQuery.setParameter(p,token);
+
+			rec = JPAEntityUtil.copy(typedQuery.getSingleResult(),Token.class);
+		} catch (NoResultException e) {
+		} catch (Exception e) {
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String stacktrace = sw.toString();
+			logger.log(LogService.LOG_ERROR,stacktrace);
+		} catch (Error e) {
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String stacktrace = sw.toString();
+			logger.log(LogService.LOG_ERROR,stacktrace);
+		}
+
+		return rec;
+	}
+	
+	public JPAStoredToken getStoredToken(String token) {
+		JPAStoredToken rec = null;
+
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAStoredToken> query = builder.createQuery(JPAStoredToken.class);
+			Root<JPAStoredToken> rootEntity = query.from(JPAStoredToken.class);
+			ParameterExpression<String> p = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("m_token"), p));
+
+			TypedQuery<JPAStoredToken> typedQuery = getEm().createQuery(query);
 			typedQuery.setParameter(p,token);
 
 			rec = typedQuery.getSingleResult();
@@ -95,7 +117,7 @@ public class JPATokenStorageProvider implements TokenStorageProvider, IExpiredTo
 
 	@Override
 	public void removeToken(Token token) {
-		StoredToken storedToken = (StoredToken)getToken(token.getToken());
+		JPAStoredToken storedToken = (JPAStoredToken)getStoredToken(token.getToken());
 		getEm().remove(storedToken);
 	}
 
@@ -106,7 +128,7 @@ public class JPATokenStorageProvider implements TokenStorageProvider, IExpiredTo
 
 	@Override
 	public int purgeTokensIssuedBefore(long timestamp) {
-		TypedQuery<Token> q = getEm().createQuery("select o from StoredToken o WHERE o.m_timestamp < :timestamp",Token.class);
+		TypedQuery<Token> q = getEm().createQuery("select o from JPAStoredToken o WHERE o.m_timestamp < :timestamp",Token.class);
 		q.setParameter("timestamp", timestamp);
 		
 		

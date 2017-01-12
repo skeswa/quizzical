@@ -68,6 +68,16 @@ public class User extends BaseEntity{
 	public User() {
 		super();
 	}
+	
+
+	public User(String emailAddress, String firstName, String lastName) {
+		super();
+		this.emailAddress = emailAddress;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+
 
 	public String getUuid() {
 		return uuid;

@@ -18,27 +18,23 @@ import javax.ws.rs.core.Response;
 import org.amdatu.security.tokenprovider.InvalidTokenException;
 import org.amdatu.security.tokenprovider.TokenProvider;
 import org.amdatu.security.tokenprovider.TokenProviderException;
-import org.apache.felix.dm.annotation.api.Component;
-import org.apache.felix.dm.annotation.api.ServiceDependency;
+import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
 
 @Path("idm/security")
-@Component(provides=Object.class)
 public class LoginResource {
 	
-	@ServiceDependency
 	private volatile IUserDAOService userService;
 	
-	@ServiceDependency
 	private volatile TokenProvider tokenProvider;
 
 	@Path("login")
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response login(@FormParam("email") String email, @FormParam("password") String password) {
+	public Response login(@FormParam("email") String email, @FormParam("password") String password) throws ApplicationException {
 		try {
 			if (Validator.isNull(password))
 				return Response.status(401).build();	
@@ -59,7 +55,7 @@ public class LoginResource {
 	@Path("me")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public User me(@Context HttpServletRequest request) throws TokenProviderException, InvalidTokenException, UserNotFoundException {
+	public User me(@Context HttpServletRequest request) throws TokenProviderException, InvalidTokenException, UserNotFoundException, ApplicationException {
 		String token = tokenProvider.getTokenFromRequest(request);
 		SortedMap<String, String> userMap = tokenProvider.verifyToken(token);
 		return userService.getUserByEmail(userMap.get(TokenProvider.USERNAME));
