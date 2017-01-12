@@ -47,6 +47,7 @@
         
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>  
+			<property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
 			<property name="org.amdatu.jpa.allowNonTransactionalEntityManagerAccess" value="true"/>
 			<property name="openjpa.ManagedRuntime" value="org.apache.openjpa.ee.OSGiManagedRuntime"/>
 			<property name="openjpa.Log" value="slf4j"/>

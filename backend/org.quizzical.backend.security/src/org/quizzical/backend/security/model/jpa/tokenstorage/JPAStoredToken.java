@@ -3,28 +3,8 @@ package org.quizzical.backend.security.model.jpa.tokenstorage;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
-import org.gauntlet.core.model.Constants;
-import org.quizzical.backend.security.api.tokenstorage.StoredToken;
-
-@Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
-+"sec_token")
 public class JPAStoredToken {
-    @Id
-    @Column(name = "id", scale = 0)
-    @GeneratedValue(strategy = GenerationType.AUTO)	
     protected Long id;
     
     // The token
@@ -36,16 +16,10 @@ public class JPAStoredToken {
     // Timestamp of when the token was generated, used for tokens that a limited lifetime
     private long m_timestamp;
     
-    @ManyToMany(cascade = CascadeType.ALL)
     private Map<String, String> m_properties = new HashMap<String, String>();
 
 	public JPAStoredToken() {
 		this(null, null, 0);
-	}
-	
-	public JPAStoredToken(StoredToken token) {
-		this(token.getToken(), token.getTokenSecret(), token.getTimestamp());
-		this.setProperties(token.getProperties());
 	}
 	
     /**
@@ -166,8 +140,8 @@ public class JPAStoredToken {
         return System.currentTimeMillis() >= expiryDate;
     }
 
-    public StoredToken clone() {
-    	StoredToken clone = new  StoredToken(m_token, m_tokenSecret, m_timestamp);
+    public JPAStoredToken clone() {
+    	JPAStoredToken clone = new  JPAStoredToken(m_token, m_tokenSecret, m_timestamp);
         if (getProperties() != null) {
             clone.setProperties(clone(getProperties()));
         }

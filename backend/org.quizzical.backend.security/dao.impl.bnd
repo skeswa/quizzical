@@ -1,7 +1,4 @@
 Bundle-Version: 1.0.0.${tstamp}
-Meta-Persistence: META-INF/persistence.xml
-Include-Resource: META-INF/persistence.xml=resources/jpa/persistence-openjpa.xml,\
-	META-INF/orm.xml=resources/jpa/tokenstorage.orm.xml
 Private-Package: \
 	org.quizzical.backend.security.dao.impl.user,\
 	org.quizzical.backend.security.dao.impl.user.osgi

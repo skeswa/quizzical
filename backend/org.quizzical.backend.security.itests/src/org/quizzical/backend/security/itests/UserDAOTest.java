@@ -62,7 +62,7 @@ public class UserDAOTest extends BaseOSGiServiceTest<LogService> {
         }
         serviceTracker.open();
         try {
-            serviceInstance = (T) serviceTracker.waitForService(6 * 1000);
+            serviceInstance = (T) serviceTracker.waitForService(30 * 1000);
 
             if (serviceInstance == null) {
                 fail(serviceClass + " service not found.");

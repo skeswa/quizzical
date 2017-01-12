@@ -4,7 +4,7 @@
             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
             http://java.sun.com/xml/ns/persistence/orm/orm_2_0.xsd"
             version="2.0">
-	<entity class="org.quizzical.backend.security.api.tokenstorage.StoredToken">
+	<entity class="org.quizzical.backend.security.model.jpa.tokenstorage.JPAStoredToken">
 		<table name="gnt_sec_storedtoken" />
 		<attributes>
 			<id name="id">
