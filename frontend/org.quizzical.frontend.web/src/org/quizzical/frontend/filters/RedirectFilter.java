@@ -1,4 +1,4 @@
-package org.quizzical.frontend.web;
+package org.quizzical.frontend.filters;
 
 import java.io.IOException;
 

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1484004231053" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1484284625559" name="org.quizzical.frontend.web" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.quizzical.frontend.web"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="1.0.0.201701092323"/>
+      <attribute name="version" type="Version" value="1.0.0.201701130517"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="f900210bb7fcb3d3af66ff4f8129ba7e8b8abdbea842e7899d74a1389cc29b94"/>
+      <attribute name="osgi.content" value="e819fd74aaa75aa429b51b3d182d3e19a25bba20dd91d6369c5c77e7f268931b"/>
       <attribute name="url" value="generated/org.quizzical.frontend.web.jar"/>
-      <attribute name="size" type="Long" value="2038892"/>
+      <attribute name="size" type="Long" value="2041222"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
       <attribute name="osgi.wiring.bundle" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701092323"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701130517"/>
     </capability>
     <capability namespace="osgi.wiring.host">
       <attribute name="osgi.wiring.host" value="org.quizzical.frontend.web"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701092323"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201701130517"/>
     </capability>
     <capability namespace="bndtools.workspace">
       <attribute name="bndtools.workspace" value="file:/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/frontend"/>
@@ -29,6 +29,9 @@
     </requirement>
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.http)(version&gt;=2.5.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.amdatu.security.tokenprovider)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
     </requirement>
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.dm)(version&gt;=4.1.0)(!(version&gt;=5.0.0)))"/>

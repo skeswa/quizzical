@@ -1,7 +1,9 @@
 package org.gauntlet.quizzes.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -12,6 +14,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
@@ -27,6 +30,7 @@ import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
 
 
 @Transactional
@@ -60,9 +64,12 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	}	
 	
 	@Override
-	public List<QuizSubmission> findAll(int start, int end) throws ApplicationException {
+	public List<QuizSubmission> findAll(User user, int start, int end) throws ApplicationException {
 		List<QuizSubmission> result = new ArrayList<>();
 		try {
+			Set<AttrPair> attrs = new HashSet<>();
+			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
+			
 			List<JPABaseEntity> resultList = super.findAll(JPAQuizSubmission.class,start,end);
 			result = JPAEntityUtil.copy(resultList, QuizSubmission.class);
 		}

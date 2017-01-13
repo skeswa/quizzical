@@ -6,9 +6,10 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
+import org.quizzical.backend.security.api.model.user.User;
 
 public interface IQuizSubmissionDAOService extends IBaseService {
-	public List<QuizSubmission> findAll(int start, int end) throws ApplicationException;
+	public List<QuizSubmission> findAll(User user, int start, int end) throws ApplicationException;
 	
 	public long countAll() throws ApplicationException;
 	

@@ -1,6 +1,8 @@
 package org.gauntlet.quizzes.rest;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -9,25 +11,31 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.amdatu.security.tokenprovider.InvalidTokenException;
+import org.amdatu.security.tokenprovider.TokenProviderException;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.login.rest.SecuredResource;
 
 
 @Path("quiz/types")
-public class QuizTypeResource {
+public class QuizTypeResource extends SecuredResource {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> get(@QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException {
-		return quizService.findByQuizType(quizType,start,end);
+    public List<Quiz> get(@Context HttpServletRequest request, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, TokenProviderException, InvalidTokenException {
+		final User user = getUserFromToken(request);
+		return quizService.findByQuizType(user,quizType,start,end);
     }
 	
 	@GET

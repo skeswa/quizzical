@@ -1,9 +1,13 @@
 package org.gauntlet.quizzes.model.jpa;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.gauntlet.core.model.Constants;
@@ -17,6 +21,10 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 	private Integer ordinal;
 	
 	private Long problemId;
+	
+	@ManyToOne(targetEntity = JPAQuiz.class)
+	@JoinColumn
+	private JPAQuiz quiz;
 
 	public JPAQuizProblem() {
 		super();

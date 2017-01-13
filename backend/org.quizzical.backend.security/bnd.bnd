@@ -1,6 +1,6 @@
 Bundle-Version: 1.0.0.${tstamp}
 -sub: *.bnd
--buildpath:  \
+-buildpath: \
 	osgi.core,\
 	osgi.cmpn,\
 	osgi.enterprise;version=5.0,\
@@ -19,8 +19,9 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.amdatu.multitenant.adapter;version=1.0.0,\
 	org.amdatu.jta;version=2.0,\
 	org.apache.commons.codec;version=1.7,\
-	org.amdatu.security.tokenprovider.api,\
 	org.amdatu.persistence2_0;version=1.0,\
-	org.amdatu.jta;version=2.0,\
 	org.quizzical.backend.core.model;version=latest,\
-	org.quizzical.backend.core.api;version=latest
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.core.commons;version=latest,\
+	org.quizzical.backend.core.impl.service;version=latest,\
+	org.quizzical.backend.core.impl.dao;version=latest

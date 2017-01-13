@@ -24,7 +24,7 @@ import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
 
-@Path("idm/security")
+@Path("security")
 public class LoginResource {
 	
 	private volatile IUserDAOService userService;

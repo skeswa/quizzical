@@ -1,4 +1,4 @@
-package org.quizzical.frontend.web.osgi;
+package org.quizzical.frontend.filters.osgi;
 
 import java.util.Properties;
 
@@ -8,7 +8,7 @@ import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.quizzical.frontend.web.RedirectFilter;
+import org.quizzical.frontend.filters.RedirectFilter;
 
 
 public class Activator extends DependencyActivatorBase {

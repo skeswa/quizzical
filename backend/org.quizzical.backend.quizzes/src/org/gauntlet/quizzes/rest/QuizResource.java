@@ -2,6 +2,8 @@ package org.gauntlet.quizzes.rest;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,8 +12,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.amdatu.security.tokenprovider.InvalidTokenException;
+import org.amdatu.security.tokenprovider.TokenProviderException;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -23,10 +28,12 @@ import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.login.rest.SecuredResource;
 
 
 @Path("quizzes")
-public class QuizResource {
+public class QuizResource extends SecuredResource {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;
@@ -34,8 +41,9 @@ public class QuizResource {
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> get(@PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException {
-		List<Quiz> res = quizService.findByQuizType(quizType,start,end);
+    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, TokenProviderException, InvalidTokenException {
+		final User user = getUserFromToken(request);
+		List<Quiz> res  = quizService.findByQuizType(user,quizType,start,end);
 		for (Quiz quiz : res) {
 			List<QuizProblem> qproblems = quiz.getQuestions();
 			for (QuizProblem qproblem : qproblems) {
