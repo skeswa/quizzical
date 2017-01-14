@@ -24,8 +24,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 	+"quiz")
 public class JPAQuiz extends JPABaseEntity implements Serializable {
     @Basic
-    @Column(name = "userId", unique=true)
-    protected Long userId;
+    @Column(name = "accountId", unique=true)
+    protected Long accountId;
     
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = JPAQuizType.class)
 	@JoinColumn
@@ -33,7 +33,6 @@ public class JPAQuiz extends JPABaseEntity implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="quiz")
 	private Set<JPAQuizProblem> questions = new java.util.HashSet<JPAQuizProblem>();
-	
 	
 	public JPAQuiz() {
 		setCode(String.format("Quiz %d", System.currentTimeMillis()));
@@ -61,11 +60,11 @@ public class JPAQuiz extends JPABaseEntity implements Serializable {
 		this.questions = questions;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 }
