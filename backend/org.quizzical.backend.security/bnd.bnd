@@ -8,7 +8,8 @@ Bundle-Version: 1.0.0.${tstamp}
 	javax.servlet,\
 	org.apache.felix.dependencymanager,\
 	org.amdatu.web.rest.jaxrs,\
-	org.amdatu.security.tokenprovider.api,\
+	org.amdatu.security.tokenprovider.api;version=2.0.0,\
+	org.amdatu.security.tokenprovider.http;version=latest,\
 	org.amdatu.web.rest.wink;version=3.0,\
 	org.amdatu.multitenant;version=1.0.0,\
 	org.amdatu.multitenant.conf;version=1.0.0,\

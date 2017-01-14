@@ -94,10 +94,12 @@
 	org.quizzical.backend.core.model;version=latest,\
 	,\
 	org.apache.commons.codec;version=1.7.0,\
-	org.amdatu.security.tokenprovider.api;version=1.0.0,\
+	org.amdatu.security.tokenprovider.api;version=2.0.0,\
+	org.amdatu.security.tokenprovider.http;version=latest,\
+	org.amdatu.security.tokenprovider.jwt;version=latest,\
 	org.quizzical.backend.security.api;version=latest,\
 	org.quizzical.backend.security.dao.impl;version=latest,\
-	org.quizzical.backend.security.service.impl;version=latest,\
+	org.quizzical.backend.security.tokenstorage.jpa;version=latest,\
 	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest
 -runee: JavaSE-1.6
 -runsystempackages: javax.xml.stream;version=1.0.0,\

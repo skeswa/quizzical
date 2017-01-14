@@ -1,5 +1,6 @@
 package org.quizzical.backend.security.login.rest;
 
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -16,8 +17,10 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import org.amdatu.security.tokenprovider.InvalidTokenException;
+import org.amdatu.security.tokenprovider.TokenConstants;
 import org.amdatu.security.tokenprovider.TokenProvider;
 import org.amdatu.security.tokenprovider.TokenProviderException;
+import org.amdatu.security.tokenprovider.http.TokenUtil;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
@@ -30,6 +33,7 @@ public class LoginResource {
 	private volatile IUserDAOService userService;
 	
 	private volatile TokenProvider tokenProvider;
+	
 
 	@Path("login")
 	@POST
@@ -41,9 +45,9 @@ public class LoginResource {
 
 			userService.getUserByEmailAndPassword(email, password);
 			SortedMap<String, String> userMap = new TreeMap<>();
-			userMap.put(TokenProvider.USERNAME, email);
+			userMap.put(TokenConstants.SUBJECT, email);
 
-			NewCookie cookie = new NewCookie(TokenProvider.TOKEN_COOKIE_NAME, tokenProvider.generateToken(userMap), "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
+			NewCookie cookie = new NewCookie(TokenUtil.AMDATU_TOKEN_COOKIE_NAME, tokenProvider.generateToken(userMap), "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
 			return Response.ok().cookie(cookie).build();
 		} catch(UserNotFoundException ex) {
 			return Response.status(401).build();
@@ -56,15 +60,16 @@ public class LoginResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public User me(@Context HttpServletRequest request) throws TokenProviderException, InvalidTokenException, UserNotFoundException, ApplicationException {
-		String token = tokenProvider.getTokenFromRequest(request);
-		SortedMap<String, String> userMap = tokenProvider.verifyToken(token);
-		return userService.getUserByEmail(userMap.get(TokenProvider.USERNAME));
+/*		String token = tokenProvider.getTokenFromRequest(request);
+		Map<String, String> userMap = tokenProvider.verifyToken(token);
+		return userService.getUserByEmail(userMap.get(TokenConstants.SUBJECT));*/
+		return null;
 	}
 
 	@Path("logout")
 	@POST
 	public void logout(@Context HttpServletRequest request) {
-		String token = tokenProvider.getTokenFromRequest(request);
-		tokenProvider.invalidateToken(token);
+/*		String token = tokenProvider.getTokenFromRequest(request);
+		tokenProvider.invalidateToken(token);*/
 	}
 }

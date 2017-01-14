@@ -1,6 +1,7 @@
 package org.quizzical.backend.security.filter;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.SortedMap;
 
 import javax.servlet.Filter;
@@ -31,15 +32,15 @@ public class SecurityFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		} else if(servletRequest.getPathInfo().startsWith("/admin")) {
-			String token = tokenProvider.getTokenFromRequest(servletRequest);
+			//String token = tokenProvider.getTokenFromRequest(servletRequest);
 			boolean isAdmin = false;
 			try {
-				SortedMap<String, String> userDetails = tokenProvider.verifyToken(token);
+				//Map<String, String> userDetails = tokenProvider.verifyToken(token);
 /*				if(adminLoginService.getUsername().equals(userDetails.get(TokenProvider.USERNAME))) {
 					isAdmin = true;
 				}*/
 				
-			} catch (TokenProviderException | InvalidTokenException e) {
+			} catch (TokenProviderException e) {
 				//The user will be redirect to login below
 			}
 			

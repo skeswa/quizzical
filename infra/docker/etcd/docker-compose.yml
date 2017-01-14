@@ -1,0 +1,7 @@
+conx-etcd-dev:
+  ports:
+   - "4001:4001"
+   - "7001:7001"
+  volumes:
+   - /var/etcd/:/data    
+  image: conxadmin/etcd 

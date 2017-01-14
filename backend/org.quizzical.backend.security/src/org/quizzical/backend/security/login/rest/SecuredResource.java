@@ -18,11 +18,12 @@ public class SecuredResource {
 	
 	protected String getEmailFromToken(HttpServletRequest request)
 			throws TokenProviderException, InvalidTokenException {
-		String token = tokenProvider.getTokenFromRequest(request);
+/*		String token = tokenProvider.getTokenFromRequest(request);
 		SortedMap<String, String> userDetails = tokenProvider.verifyToken(token);
 		
 		String customerEmail = userDetails.get(TokenProvider.USERNAME);
-		return customerEmail;
+		return customerEmail;*/
+		return null;
 	}
 	
 	protected User getUserFromToken(HttpServletRequest request)
