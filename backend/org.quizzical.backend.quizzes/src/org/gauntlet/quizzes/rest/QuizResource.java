@@ -29,11 +29,10 @@ import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
-import org.quizzical.backend.security.login.rest.SecuredResource;
 
 
 @Path("quizzes")
-public class QuizResource extends SecuredResource {
+public class QuizResource  {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;
@@ -42,8 +41,8 @@ public class QuizResource extends SecuredResource {
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, TokenProviderException, InvalidTokenException {
-		final User user = getUserFromToken(request);
-		List<Quiz> res  = quizService.findByQuizType(user,quizType,start,end);
+		//final User user = getUserFromToken(request);
+		List<Quiz> res  = quizService.findByQuizType(null,quizType,start,end);
 		for (Quiz quiz : res) {
 			List<QuizProblem> qproblems = quiz.getQuestions();
 			for (QuizProblem qproblem : qproblems) {

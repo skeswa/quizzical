@@ -1,12 +1,12 @@
 Bundle-Version: 1.0.0.${tstamp}
 -sub: *.bnd
 -buildpath: \
-	osgi.core,\
-	osgi.cmpn,\
-	osgi.enterprise;version=5.0,\
+	osgi.core;version=6.0,\
+	osgi.cmpn;version=6.0,\
 	../cnf/plugins/org.apache.felix.dependencymanager.annotation-4.1.0.jar;version=file,\
 	javax.servlet,\
-	org.apache.felix.dependencymanager,\
+	org.apache.felix.dependencymanager;version="[4,5)",\
+	org.apache.felix.eventadmin,\
 	org.amdatu.web.rest.jaxrs,\
 	org.amdatu.security.tokenprovider.api;version=2.0.0,\
 	org.amdatu.security.tokenprovider.http;version=latest,\
@@ -19,6 +19,13 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.amdatu.multitenant.org.apache.felix.configadmin;version=1.0.1,\
 	org.amdatu.multitenant.adapter;version=1.0.0,\
 	org.amdatu.jta;version=2.0,\
+	,\
+	org.amdatu.security.account.admin.api;version=latest,\
+	org.amdatu.security.authentication.authservice.api;version=latest,\
+	org.amdatu.security.authentication.idprovider.api;version=latest,\
+	org.amdatu.security.tokenprovider.api;version=latest,\
+	org.amdatu.security.tokenprovider.http;version=latest,\
+	,\
 	org.apache.commons.codec;version=1.7,\
 	org.amdatu.persistence2_0;version=1.0,\
 	org.quizzical.backend.core.model;version=latest,\

@@ -24,11 +24,10 @@ import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
-import org.quizzical.backend.security.login.rest.SecuredResource;
 
 
 @Path("quiz/submissions")
-public class QuizSubmissionResource extends SecuredResource{
+public class QuizSubmissionResource {
 	@SuppressWarnings("unused")
 	private volatile LogService logger;
 	private volatile IQuizSubmissionDAOService quizSubmissionDAOService;
@@ -36,8 +35,8 @@ public class QuizSubmissionResource extends SecuredResource{
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<QuizSubmission> get(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException, TokenProviderException, InvalidTokenException {
-		final User user = getUserFromToken(request);
-		return quizSubmissionDAOService.findAll(user,start, end);
+		//final User user = getUserFromToken(request);
+		return quizSubmissionDAOService.findAll(null,start, end);
     }	
 	
     @GET 

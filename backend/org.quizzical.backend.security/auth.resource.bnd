@@ -1,0 +1,5 @@
+Include-Resource: \
+	/res=resource/login
+
+Fragment-Host: \
+	org.amdatu.security.authentication.authservice.rest

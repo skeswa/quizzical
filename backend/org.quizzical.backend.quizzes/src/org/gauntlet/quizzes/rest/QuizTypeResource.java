@@ -23,19 +23,18 @@ import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
-import org.quizzical.backend.security.login.rest.SecuredResource;
 
 
 @Path("quiz/types")
-public class QuizTypeResource extends SecuredResource {
+public class QuizTypeResource  {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Quiz> get(@Context HttpServletRequest request, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, TokenProviderException, InvalidTokenException {
-		final User user = getUserFromToken(request);
-		return quizService.findByQuizType(user,quizType,start,end);
+		//final User user = getUserFromToken(request);
+		return quizService.findByQuizType(null,quizType,start,end);
     }
 	
 	@GET
