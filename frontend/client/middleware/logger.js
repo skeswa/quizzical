@@ -1,7 +1,7 @@
 
 import debug from 'debug'
 
-const logger = debug('gauntlet:redux')
+const logger = debug('quizzical:redux')
 
 export default store => next => action  => {
   if (action.error) {

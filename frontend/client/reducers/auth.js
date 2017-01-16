@@ -15,6 +15,12 @@ const initialState = {
 const AuthReducer = handleActions(
   {
     'load authed user': function(state, action) {
+      if (action.error) {
+        return Object.assign({}, state, {
+          pendingRequests: decrementedPendingRequests(state),
+        })
+      }
+
       return Object.assign({}, state, {
         user: action.payload,
         authed: true,
