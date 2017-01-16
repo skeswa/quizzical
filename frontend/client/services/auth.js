@@ -3,12 +3,12 @@ import { handleSuccess, handleFailure } from './helpers/crud'
 
 const AuthService = {
   login(email, password) {
-    return fetch('/api/login', { method: 'POST' })
+    return fetch('/api/auth/login', { method: 'POST' })
       .then(handleSuccess, handleFailure)
   },
 
   whoami() {
-    return fetch('/api/whoami', { method: 'GET' })
+    return fetch('/api/auth/whoami', { method: 'GET' })
       .then(handleSuccess, handleFailure)
   },
 }

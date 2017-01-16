@@ -82,7 +82,7 @@ const reduxify = connect(
   (dispatch, props) => ({
     actions: Object.assign(
       {},
-      bindActionCreators(actions.auth, dispatch),
+      bindActionCreators(actions.auth, dispatch)),
   }))
 
 export default reduxify(LoginPage)
