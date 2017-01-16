@@ -62,8 +62,7 @@ public class LoginResource {
 			final String userJson = tokenService.extractSessionUserAsJson(request);
 			if (userJson == null || "null".equalsIgnoreCase(userJson))
 				return Response.status(403).build();
-			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, userJson, "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
-			return Response.ok().cookie(cookie).build();
+			return Response.ok().entity(userJson).build();
 		} catch (JsonProcessingException e) {
 			return Response.status(401).build();
 		} catch (IOException e) {
