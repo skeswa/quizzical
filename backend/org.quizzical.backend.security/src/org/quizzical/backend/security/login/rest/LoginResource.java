@@ -35,7 +35,7 @@ public class LoginResource {
 	@Path("login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response login(final Login login) throws ApplicationException {
+	public Response login(final @Context HttpServletRequest request, final Login login) throws ApplicationException {
 		try {
 			
 			if (Validator.isNull(login))
@@ -45,7 +45,8 @@ public class LoginResource {
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 
-			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, token, "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
+			final String domain = "."+request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, token, "/", domain, "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
 			return Response.ok().cookie(cookie).build();
 		} catch(final UserNotFoundException ex) {
 			return Response.status(401).build();
@@ -72,8 +73,9 @@ public class LoginResource {
 
 	@Path("logout")
 	@POST
-	public Response logout() {
-		NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, null, "/", "", "Authentication cookie", 0, false);
+	public Response logout(@Context HttpServletRequest request) {
+		final String domain = "."+request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+		NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, null, "/", domain, "Authentication cookie", 0, false);
 		return Response.ok().cookie(cookie).build();
 	}
 }
