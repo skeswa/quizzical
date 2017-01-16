@@ -42,11 +42,11 @@
 	org.apache.felix.http.servlet-api;version='[1.1,1.2)',\
 	,\
 	stax2-api;version=3.1,\
-	com.fasterxml.jackson.core.jackson-annotations;version=2.6,\
-	com.fasterxml.jackson.core.jackson-core;version=2.6,\
-	com.fasterxml.jackson.core.jackson-databind;version=2.6,\
-	com.fasterxml.jackson.jaxrs.jackson-jaxrs-base;version=2.6,\
-	com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider;version=2.6,\
+	com.fasterxml.jackson.core.jackson-annotations;version="[2.6,2.7)",\
+	com.fasterxml.jackson.core.jackson-core;version="[2.6,2.7)",\
+	com.fasterxml.jackson.core.jackson-databind;version="[2.6,2.7)",\
+	com.fasterxml.jackson.jaxrs.jackson-jaxrs-base;version="[2.6,2.7)",\
+	com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider;version="[2.6,2.7)",\
 	javax.ws.rs.jsr311-api;version=1.1.1,\
 	,\
 	com.google.guava;version='[18.0.0,20.0)',\
@@ -57,13 +57,14 @@
 	org.apache.openjpa;version='[2.4.0,2.5.0)',\
 	org.apache.xbean.asm5-shaded;version=3.17.0,\
 	org.apache.servicemix.bundles.serp;version=1.14.1.1,\
+	org.apache.commons.codec;version=1.7.0,\
 	org.apache.commons.lang;version=2.6.0,\
 	org.apache.commons.dbcp;version=1.4.0,\
 	org.apache.commons.pool;version=1.5.4,\
 	org.conxworks.library.postgresql-datasourcefactory.osgi;version=1.0.0,\
 	,\
 	org.amdatu.jpa.datasourcefactory;version='[1.1.1,1.2)',\
-	org.amdatu.jpa.extender.mt;version='[1.0.3,1.1)',\
+	org.amdatu.jpa.extender;version=latest,\
 	org.amdatu.jta.api;version='[1.0.0,1.1)',\
 	org.amdatu.database.schemamigration;version='[2.0.1,2.1)',\
 	org.amdatu.jta.manager;version='[1.1.2,1.2)',\
@@ -74,31 +75,12 @@
 	,\
 	org.amdatu.web.resourcehandler;version=1.0.3,\
 	org.amdatu.template;version=1.0.1,\
-	org.amdatu.web.rest.jaxrs;version=latest,\
-	org.amdatu.web.rest.wink;version="[2.0,3.0)",\
-	,\
-	org.amdatu.multitenant;version='[1.0,1.1)',\
-	org.amdatu.multitenant.conf;version='[1.0,1.1)',\
-	org.amdatu.multitenant.factory;version='[1.0,1.1)',\
-	org.amdatu.multitenant.adapter;version='[1.0,1.1)',\
+	org.amdatu.web.rest.jaxrs;version=1.1.0,\
+	org.amdatu.web.rest.wink;version=3.0.0,\
 	,\
 	org.amdatu.web.rest.doc;version=1.2.3,\
 	org.amdatu.web.rest.doc.swagger;version='[1.0.4,1.0.5)',\
 	org.amdatu.web.rest.doc.swagger.ui;version='[1.0.4,1.0.5)',\
-	,\
-	org.apache.commons.codec;version=1.7.0,\
-	org.amdatu.security.tokenprovider.api;version=2.0.0,\
-	org.amdatu.security.account.admin.rest;version=latest,\
-	org.amdatu.security.account.admin;version=latest,\
-	org.amdatu.security.account.backend.file;version=latest,\
-	org.amdatu.security.authentication.authservice.impl;version=latest,\
-	org.amdatu.security.authentication.authservice.rest;version=latest,\
-	org.amdatu.security.authentication.authservice.session.file;version=latest,\
-	org.amdatu.security.authentication.idprovider.local;version=latest,\
-	org.amdatu.security.authentication.idprovider.openidconnect;version=latest,\
-	org.amdatu.security.password.hash.pbkdf2;version=latest,\
-	org.amdatu.security.tokenprovider.http;version=latest,\
-	org.amdatu.security.tokenprovider.jwt;version=latest,\
 	,\
 	org.quizzical.backend.core.api;version=latest,\
 	org.quizzical.backend.core.commons;version=latest,\
@@ -106,28 +88,29 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.core.model;version=latest,\
 	,\
+	org.quizzical.backend.libraries.io.jsonwebtoken.jjwt,\
+	,\
+	org.quizzical.backend.security.jwt;version=latest,\
 	org.quizzical.backend.security.api;version=latest,\
+	org.quizzical.backend.security.rest;version=latest,\
 	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
 	org.quizzical.backend.security.dao.impl;version=latest,\
-	org.quizzical.backend.security.auth.resource;version=latest,\
-	org.quizzical.backend.security.account.resource;version=latest,\
-	org.quizzical.backend.security.rest;version=latest,\
 	,\
 	org.quizzical.backend.problems.api;version=latest,\
-	org.quizzical.backend.problems.dao.impl.mt;version=latest,\
-	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0.mt;version=latest,\
-	org.quizzical.backend.problems.rest.mt;version=latest,\
+	org.quizzical.backend.problems.dao.impl;version=latest,\
+	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0;version=latest,\
+	org.quizzical.backend.problems.rest;version=latest,\
 	org.quizzical.backend.data.defaults.mt;version=latest,\
 	,\
 	org.quizzical.backend.quizzes.api;version=latest,\
-	org.quizzical.backend.quizzes.dao.impl.mt;version=latest,\
-	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0.mt;version=latest,\
-	org.quizzical.backend.quizzes.rest.mt;version=latest,\
-	org.quizzical.backend.quizzes.generator.impl.mt;version=latest
+	org.quizzical.backend.quizzes.dao.impl;version=latest,\
+	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\
+	org.quizzical.backend.quizzes.rest;version=latest,\
+	org.quizzical.backend.quizzes.generator.impl;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
-  felix.log.level=3,\
+  felix.log.level=4,\
   org.ops4j.pax.logging.DefaultServiceLog.level=WARN,\
   org.osgi.service.http.port=8080,\
   org.apache.felix.http.jetty.maxFormSize=1000000000

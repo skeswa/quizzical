@@ -15,8 +15,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.amdatu.security.tokenprovider.InvalidTokenException;
-import org.amdatu.security.tokenprovider.TokenProviderException;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -40,7 +38,7 @@ public class QuizResource  {
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, TokenProviderException, InvalidTokenException {
+    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException {
 		//final User user = getUserFromToken(request);
 		List<Quiz> res  = quizService.findByQuizType(null,quizType,start,end);
 		for (Quiz quiz : res) {

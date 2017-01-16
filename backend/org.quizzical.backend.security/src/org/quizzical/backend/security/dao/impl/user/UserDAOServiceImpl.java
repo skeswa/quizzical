@@ -159,10 +159,28 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 
 	@Override
 	public void createDefaults() throws ApplicationException {
+		//MK
 		User user = new User();
 		user.setCode("mk");
 		user.setName("Mandi");
 		user.setEmailAddress("mandisakeswa999@gmail.com");
+		
+		String hash = DigestUtils.sha256Hex("aceit");
+		user.setPasswordEncrypted(true);
+		user.setPassword(hash);
+		
+		add(user);
+		
+		//Test
+		user = new User();
+		user.setCode("tester");
+		user.setName("Tester");
+		user.setEmailAddress("test@me.io");
+		
+		hash = DigestUtils.sha256Hex("test");
+		user.setPasswordEncrypted(true);
+		user.setPassword(hash);
+		
 		add(user);
 	}
 	

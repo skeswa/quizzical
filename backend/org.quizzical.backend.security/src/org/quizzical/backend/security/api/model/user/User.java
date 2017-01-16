@@ -64,6 +64,7 @@ public class User extends BaseEntity{
 	private int originalStatus;
 	private boolean setOriginalStatus;
 	private long columnBitmask;
+	private String prictureUrl;
 	
 	public User() {
 		super();
@@ -433,7 +434,14 @@ public class User extends BaseEntity{
 	public void setColumnBitmask(long columnBitmask) {
 		this.columnBitmask = columnBitmask;
 	}
-	
+	public String getPrictureUrl() {
+		return prictureUrl;
+	}
+	public void setPrictureUrl(String prictureUrl) {
+		this.prictureUrl = prictureUrl;
+	}
+
+
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)
 			return getFirstName()+" "+getLastName();
@@ -443,5 +451,9 @@ public class User extends BaseEntity{
 			return getLastName();
 		else
 			return null;
+	}
+
+	public String getPictureUrl() {
+		return prictureUrl;
 	}
 }

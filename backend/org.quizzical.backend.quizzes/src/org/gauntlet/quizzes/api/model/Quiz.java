@@ -3,11 +3,11 @@ package org.gauntlet.quizzes.api.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.amdatu.security.account.Account;
 import org.gauntlet.core.model.BaseEntity;
+import org.quizzical.backend.security.api.model.user.User;
 
 public class Quiz extends BaseEntity implements Serializable {
-	private Account account;
+	private User user;
 	
 	private QuizType quizType;
 
@@ -29,21 +29,21 @@ public class Quiz extends BaseEntity implements Serializable {
 		this.questions = questions;
 	}
 	
-	public Account getUser() {
-		return account;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUser(Account account) {
-		this.account = account;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Quiz() {
 	}
 	
-	public Quiz(Account account, String name, String code, List<QuizProblem> questions) {
+	public Quiz(User user, String name, String code, List<QuizProblem> questions) {
 		this.name = name;
 		this.code = code;
 		this.questions = questions;
-		this.account = account;
+		this.user = user;
 	}
 }
