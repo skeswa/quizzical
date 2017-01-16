@@ -7,6 +7,7 @@ import org.gauntlet.problems.defaults.Controller;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 
 public class Activator extends DependencyActivatorBase {
 	@Override
@@ -18,6 +19,8 @@ public class Activator extends DependencyActivatorBase {
 				.setCallbacks(null, "start", null, null)
 				.add(createServiceDependency().setService(IProblemDAOService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(IUserDAOService.class)
+						.setRequired(true))				
 				.add(createServiceDependency().setService(IQuizDAOService.class)
 						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)

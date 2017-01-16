@@ -1,0 +1,47 @@
+body {
+	font-family: helvetica, sans-serif;
+	font-size: 12pt;
+}
+
+#auth_providers {
+	width: 20rem;
+	display: block;
+}
+
+fieldset {
+	border: solid 1px #eee;
+	margin: 8px 0px;
+	padding: 16px 8px;
+	width: 16rem;
+}
+
+fieldset label {
+	display: inline-block;
+	font-size: 0.8em;
+	width: 5rem;
+	text-align: right;
+}
+
+fieldset input {
+	margin: 2px 0px;
+}
+
+fieldset input[type="submit"] {
+	margin: 4px 0px;
+	margin-left: 5.2rem;
+}
+
+form#auth_provider_ext,
+form#auth_provider_local {
+	display: none;
+}
+
+input[type="image"] {
+	margin-left: 2rem;
+}
+
+.error {
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: orange;
+}

@@ -1,0 +1,14 @@
+Include-Resource: @jars/io.jsonwebtoken.jjwt-0.7.0.jar
+-exportcontents:  io	
+Bundle-Version: 0.7.1.${tstamp}
+Import-Package: android.util;resolution:=optional,\
+	org.bouncycastle.jce;resolution:=optional;version="[1.55,2)",\
+	org.bouncycastle.jce.spec;resolution:=optional;version="[1.55,2)",\
+	com.fasterxml.jackson.core;version="[2.6,2.7)",\
+	com.fasterxml.jackson.databind;version="[2.6,2.7)",\
+	io.jsonwebtoken.lang,\
+	javax.crypto,\
+	javax.crypto.spec,\
+	javax.xml.bind
+Export-Package: io.jsonwebtoken;version="0.7.0",\
+	io.jsonwebtoken.lang;version="0.7.0"

@@ -1,5 +1,8 @@
 package org.gauntlet.quizzes.rest.osgi;
 
+import java.util.Properties;
+
+import org.amdatu.web.rest.jaxrs.AmdatuWebRestConstants;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -13,13 +16,16 @@ import org.gauntlet.quizzes.rest.QuizSubmissionResource;
 import org.gauntlet.quizzes.rest.QuizTypeResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.jwt.api.IJWTTokenService;
 
 public class Activator extends DependencyActivatorBase {
 	@Override
 	public synchronized void init(BundleContext context,
 			DependencyManager manager) throws Exception {
+		Properties serviceProperties = new Properties();
+	      serviceProperties.put(AmdatuWebRestConstants.JAX_RS_RESOURCE_BASE, "/");
 		manager.add(createComponent()
-				.setInterface(Object.class.getName(), null)
+				.setInterface(Object.class.getName(), serviceProperties)
 				.setImplementation(QuizResource.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class)
 						.setRequired(true))
@@ -27,19 +33,23 @@ public class Activator extends DependencyActivatorBase {
 						.setRequired(true))
 				.add(createServiceDependency().setService(IQuizGeneratorManagerService.class)
 						.setRequired(true))
-				.add(createServiceDependency().setService(LogService.class)
-						.setRequired(false)));
-		
-		manager.add(createComponent()
-				.setInterface(Object.class.getName(), null)
-				.setImplementation(QuizTypeResource.class)
-				.add(createServiceDependency().setService(IQuizDAOService.class)
+				.add(createServiceDependency().setService(IJWTTokenService.class)
 						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));
 		
 		manager.add(createComponent()
-				.setInterface(Object.class.getName(), null)
+				.setInterface(Object.class.getName(), serviceProperties)
+				.setImplementation(QuizTypeResource.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IJWTTokenService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(LogService.class)
+						.setRequired(false)));
+		
+		manager.add(createComponent()
+				.setInterface(Object.class.getName(), serviceProperties)
 				.setImplementation(QuizSubmissionResource.class)
 				.add(createServiceDependency().setService(IProblemDAOService.class)
 						.setRequired(true))
@@ -52,7 +62,9 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizSubmissionDAOService.class)
 						.setRequired(true))	
 				.add(createServiceDependency().setService(IQuizTakeDAOService.class)
-						.setRequired(true))			
+						.setRequired(true))		
+				.add(createServiceDependency().setService(IJWTTokenService.class)
+						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));		
 	}

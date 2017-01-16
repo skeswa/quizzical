@@ -1,0 +1,92 @@
+-resolve.effective: active;skip:="osgi.service"
+
+-runbundles: \
+	com.fasterxml.jackson.core.jackson-annotations;version=2.6,\
+	com.fasterxml.jackson.core.jackson-core;version=2.6,\
+	com.fasterxml.jackson.core.jackson-databind;version=2.6,\
+	com.fasterxml.jackson.jaxrs.jackson-jaxrs-base;version=2.6,\
+	com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider;version=2.6,\
+	org.amdatu.configurator.properties;version='[1.0, 1.1)',\
+	org.amdatu.configurator.shell;version='[1.0, 1.1)',\
+	org.amdatu.security.account.admin.rest;version=latest,\
+	org.amdatu.security.account.admin;version=latest,\
+	org.amdatu.security.account.backend.file;version=latest,\
+	org.amdatu.security.authentication.authservice.impl;version=latest,\
+	org.amdatu.security.authentication.authservice.rest;version=latest,\
+	org.amdatu.security.authentication.authservice.session.file;version=latest,\
+	org.amdatu.security.authentication.idprovider.local;version=latest,\
+	org.amdatu.security.authentication.idprovider.openidconnect;version=latest,\
+	org.amdatu.security.password.hash.pbkdf2;version=latest,\
+	org.amdatu.security.tokenprovider.http;version=latest,\
+	org.amdatu.security.tokenprovider.jwt;version=latest,\
+	org.amdatu.web.rest.doc;version='[1.2, 1.3)',\
+	org.amdatu.web.rest.jaxrs;version='[1.1, 1.2)',\
+	org.amdatu.web.rest.wink;version='[3.0, 3.1)',\
+	org.apache.felix.configadmin;version='[1.8, 1.9)',\
+	org.apache.felix.dependencymanager;version='[3,4)',\
+	org.apache.felix.dependencymanager.runtime;version='[3,4)',\
+	org.apache.felix.dependencymanager.shell,\
+	org.apache.felix.dependencymanager;version='[4.3, 4.4)',\
+	org.apache.felix.eventadmin;version='[1.4, 1.5)',\
+	org.apache.felix.gogo.command,\
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.gogo.shell,\
+	org.apache.felix.http.jetty;version='[3.2, 3.3)',\
+	org.apache.felix.http.servlet-api;version='[1.1, 1.2)',\
+	org.apache.felix.log;version='[1.0, 1.1)',\
+	org.apache.felix.metatype;version='[1.1, 1.2)',\
+	slf4j.api;version=1.7.0,\
+	slf4j.simple;version=1.7.0,\
+	,\
+	org.apache.commons.codec;version=1.7.0,\
+	org.apache.commons.io;version=2.4.0,\
+	org.apache.commons.collections;version=3.2.1,\
+	org.apache.commons.lang3;version=3.1.0,\
+	com.springsource.org.apache.commons.logging;version=1.1.1,\
+	org.apache.commons.beanutils;version=1.8.3,\
+	net.sf.dozer.dozer-osgi;version=5.5.1,\
+	org.postgresql.jdbc41;version=9.4.0,\
+	org.apache.openjpa;version='[2.4.0,2.5.0)',\
+	org.apache.xbean.asm5-shaded;version=3.17.0,\
+	org.apache.servicemix.bundles.serp;version=1.14.1.1,\
+	org.apache.commons.lang;version=2.6.0,\
+	org.apache.commons.dbcp;version=1.4.0,\
+	org.apache.commons.pool;version=1.5.4,\
+	,\
+	org.amdatu.multitenant;version='[1.0,1.1)',\
+	org.amdatu.multitenant.conf;version='[1.0,1.1)',\
+	org.amdatu.multitenant.factory;version='[1.0,1.1)',\
+	org.amdatu.multitenant.adapter;version='[1.0,1.1)',\
+	,\
+	org.amdatu.persistence2_0;version='[1.0.1,1.1)',\
+	org.conxworks.library.postgresql-datasourcefactory.osgi;version=1.0.0,\
+	org.amdatu.jpa.datasourcefactory;version='[1.1.1,1.2)',\
+	org.amdatu.jpa.extender.mt;version='[1.0.3,1.1)',\
+	org.amdatu.jta.api;version='[1.0.0,1.1)',\
+	org.amdatu.database.schemamigration;version='[2.0.1,2.1)',\
+	org.amdatu.jta.manager;version='[1.1.2,1.2)',\
+	org.amdatu.jta.transactionmanager;version='[1.0.2,1.1)',\
+	,\
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.core.commons;version=latest,\
+	org.quizzical.backend.core.impl.dao;version=latest,\
+	org.quizzical.backend.core.impl.service;version=latest,\
+	org.quizzical.backend.core.model;version=latest,\
+	,\
+	org.quizzical.backend.security.api;version=latest,\
+	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
+	org.quizzical.backend.security.dao.impl;version=latest,\
+	org.quizzical.backend.security.auth.resource;version=latest,\
+	org.quizzical.backend.security.account.resource;version=latest,\
+	org.quizzical.backend.security.rest;version=latest,\
+	,\
+	org.quizzical.backend.security.auth.resource;version=latest,\
+	org.quizzical.backend.security.account.resource;version=latest,\
+	org.quizzical.backend.security.rest;version=latest
+
+-runfw: org.apache.felix.framework;version='[5, 6)'
+-runvm: -ea
+-runee: JavaSE-1.8
+-runsystemcapabilities: ${native_capability}
+-runproperties: \
+	org.osgi.service.http.port=8080

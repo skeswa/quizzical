@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Amdatu Account Admin</title>
+  <meta name="description" content="Default Amdatu Account Self-Service Page">
+  <meta name="author" content="Amdatu Project Team">
+
+  <link rel="stylesheet" href="account.css">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <h1>Change Your Amdatu Account</h1>
+
+  <div class="error">
+    <span id="error_msg"></span>
+  </div>
+
+  <form method="post" action="/account/rest/updateCredentials">
+    <p>Please update your account information...</p>
+    <fieldset>
+       <label for="change_email">E-mail</label>
+       <input id="change_email" type="text" name="email" placeholder="email"><br>
+       <label for="change_pwd">Password</label>
+       <input id="change_pwd" type="password" name="password" placeholder="password" required><br>
+
+       <input type="hidden" id="change_accessToken" name="accessToken" value="" required>
+
+       <input type="submit" value="change account">
+    </fieldset>
+  </form>
+
+  <script src="account.js"></script>
+</body>
+</html>

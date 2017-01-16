@@ -3,7 +3,9 @@ package org.gauntlet.quizzes.model.jpa;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -21,19 +23,22 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"quiz")
 public class JPAQuiz extends JPABaseEntity implements Serializable {
+    @Basic
+    @Column(name = "accountId", unique=true)
+    protected Long accountId;
+    
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = JPAQuizType.class)
 	@JoinColumn
 	private JPAQuizType quizType;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="quiz")
 	private Set<JPAQuizProblem> questions = new java.util.HashSet<JPAQuizProblem>();
-	
 	
 	public JPAQuiz() {
 		setCode(String.format("Quiz %d", System.currentTimeMillis()));
 	}
 	
-	public JPAQuiz(JPAQuizType type, Set<JPAQuizProblem> questions) {
+	public JPAQuiz(Long userId, JPAQuizType quizType, Set<JPAQuizProblem> questions) {
 		this();
 		this.quizType = quizType;
 		this.questions = questions;
@@ -53,5 +58,13 @@ public class JPAQuiz extends JPABaseEntity implements Serializable {
 
 	public void setQuestions(Set<JPAQuizProblem> questions) {
 		this.questions = questions;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 }

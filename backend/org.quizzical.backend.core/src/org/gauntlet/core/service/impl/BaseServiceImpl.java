@@ -207,8 +207,9 @@ public abstract class BaseServiceImpl implements IBaseService {
 			throw processException(e);
 		}
 		return res;
-	}		
+	}
 	
+
 	@SuppressWarnings("rawtypes")
 	public List<JPABaseEntity> findAll(Class<? extends JPABaseEntity> entityType)
 		throws ApplicationException {
@@ -241,12 +242,11 @@ public abstract class BaseServiceImpl implements IBaseService {
 			assert query != null : "query obj must not be null";
 			
 			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityClass);
+			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
+			
 			ParameterExpression p = builder.parameter(attrClass);
 			query.select(rootEntity).where(builder.equal(rootEntity.get(attrName), p));
-			
-			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
 			assert typedQuery != null : "typedQuery obj must not be null";
-			
 			typedQuery.setParameter(p, attrValue);
 
 			res = typedQuery.getSingleResult();
@@ -259,6 +259,105 @@ public abstract class BaseServiceImpl implements IBaseService {
 		}
 		return res;
 	}	
+	
+	@SuppressWarnings("rawtypes")
+	public JPABaseEntity findWithAttributes(Class<? extends JPABaseEntity> entityClass, Set<AttrPair> attrs)
+		throws ApplicationException {
+		JPABaseEntity res = null;
+		try {
+			CriteriaQuery<JPABaseEntity> query = null;
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			assert builder != null : "query builder obj must not be null";
+			
+			query = (CriteriaQuery<JPABaseEntity>) builder.createQuery(entityClass);
+			assert query != null : "query obj must not be null";
+			
+			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityClass);
+			
+			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
+			assert typedQuery != null : "typedQuery obj must not be null";
+			
+			for (AttrPair ap : attrs) {
+				final ParameterExpression p = builder.parameter(ap.getAttrClass());
+				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
+				
+				typedQuery.setParameter(p, ap.getAttrValue());
+			}
+
+			res = typedQuery.getSingleResult();
+				
+		}
+		catch (NoResultException e) {
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}		
+	
+	@SuppressWarnings("rawtypes")
+	public List<JPABaseEntity> findAllWithAttributes(Class<? extends JPABaseEntity> entityClass, Set<AttrPair> attrs)
+		throws ApplicationException {
+		List<JPABaseEntity> res = null;
+		try {
+			CriteriaQuery<JPABaseEntity> query = null;
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			assert builder != null : "query builder obj must not be null";
+			
+			query = (CriteriaQuery<JPABaseEntity>) builder.createQuery(entityClass);
+			assert query != null : "query obj must not be null";
+			
+			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityClass);
+			
+			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
+			assert typedQuery != null : "typedQuery obj must not be null";
+			
+			for (AttrPair ap : attrs) {
+				final ParameterExpression p = builder.parameter(ap.getAttrClass());
+				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
+				
+				typedQuery.setParameter(p, ap.getAttrName());
+			}
+
+			res = typedQuery.getResultList();
+				
+		}
+		catch (NoResultException e) {
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}			
+	
+	@SuppressWarnings("rawtypes")
+	public int countWithAttributes(Set<AttrPair> attrs, Class<? extends JPABaseEntity> entityClass)
+		throws ApplicationException {
+		int res = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPABaseEntity> query = (CriteriaQuery<JPABaseEntity>) builder.createQuery(entityClass);
+			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityClass);
+			
+			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
+
+			for (AttrPair ap : attrs) {
+				final ParameterExpression p = builder.parameter(ap.getAttrClass());
+				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
+				
+				typedQuery.setParameter(p, ap.getAttrName());
+			}
+			
+			res = typedQuery.getResultList().size();
+				
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}
 	
 	@SuppressWarnings("rawtypes")
 	public int countWithAttribute(Class<? extends JPABaseEntity> entityClass, Class attrClass, String attrName, Object attrValue)

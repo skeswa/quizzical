@@ -8,14 +8,17 @@ import org.gauntlet.problems.api.model.ProblemSource;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.api.model.user.User;
 
 
 public class Controller {
 	private volatile LogService logger;
 	private volatile IProblemDAOService problemService;
 	private volatile IQuizDAOService quizService;
+	private volatile IUserDAOService userService;
 	
-	private void start() throws ApplicationException {
+	private void start() throws Exception {
 		//-- Problems
 		ProblemSource ps = new ProblemSource("MW4NSAT","MW4NSAT");
 		problemService.provideProblemSource(ps);
@@ -30,5 +33,28 @@ public class Controller {
 		//-- Quiz related
 		final QuizType qt = new QuizType("Pop Quiz","Pop Quiz");
 		quizService.provideQuizType(qt);
+		
+		//-- Users
+		//MK
+		User user = new User();
+		user.setCode("mk");
+		user.setName("Mandi");
+		user.setEmailAddress("mandisakeswa999@gmail.com");
+		
+		user.setPasswordEncrypted(true);
+		user.setPassword("aceit");
+		
+		userService.provide(user);
+		
+		//Test
+		user = new User();
+		user.setCode("tester");
+		user.setName("Tester");
+		user.setEmailAddress("test@me.io");
+		
+		user.setPasswordEncrypted(true);
+		user.setPassword("test");
+		
+		userService.provide(user);
 	}
 }
