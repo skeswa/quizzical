@@ -41,13 +41,13 @@ export function crudService(entity, extender) {
   }, extender ? extender(endpoint, handleSuccess, handleFailure) : null)
 }
 
-function handleSuccess(response) {
+export function handleSuccess(response) {
   return response.ok
     ? deserializeResponse(response)
     : Promise.reject(deserializeError(response))
 }
 
-function handleFailure(problem) {
+export function handleFailure(problem) {
   logger('Service request failed:', problem)
   return Promise.reject(connectionFailureError)
 }
