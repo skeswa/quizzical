@@ -19,7 +19,7 @@ public interface IQuizDAOService extends IBaseService {
 	
 	public long countAll(User user) throws ApplicationException;
 	
-	public Quiz provide(Quiz record) throws ApplicationException;
+	public Quiz provide(User user, Quiz record) throws ApplicationException;
 	
 	public Quiz update(Quiz record) throws ApplicationException;
 	

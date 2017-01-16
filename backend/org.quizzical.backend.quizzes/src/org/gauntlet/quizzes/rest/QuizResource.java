@@ -82,17 +82,6 @@ public class QuizResource  {
 	}
 	
     
-    @POST 
-    @Path("provide") 
-    @Consumes(MediaType.APPLICATION_JSON) 
-    @Produces(MediaType.APPLICATION_JSON) 
-    public Quiz provide(Quiz quiz) throws IOException, ApplicationException, NoSuchModelException { 
-    	Long typeId = quiz.getQuizType().getId();
-    	QuizType qt = quizService.getQuizTypeByPrimary(typeId);
-    	quiz.setQuizType(qt);
-    	return quizService.provide(quiz);
-    }   
-    
     @POST
     @Path("generate") 
     @Consumes(MediaType.APPLICATION_JSON) 

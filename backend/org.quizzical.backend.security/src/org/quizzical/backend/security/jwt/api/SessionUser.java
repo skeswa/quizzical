@@ -7,6 +7,10 @@ public class SessionUser {
 	private String email;
 	private String name;
 	private String pictureUrl;
+	
+	public SessionUser() {
+	}
+	
 	public SessionUser(final Long id, final String email, final String name, final String pictureUrl) {
 		super();
 		this.id = id;

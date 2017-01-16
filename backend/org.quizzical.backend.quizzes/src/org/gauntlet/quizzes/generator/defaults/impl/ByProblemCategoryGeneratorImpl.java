@@ -101,13 +101,13 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 				.collect(Collectors.toList());
 
 		final Quiz quiz = new Quiz();
-		quiz.setUser(user);
+		quiz.setUserId(user.getId());
 		quiz.setCode(quizCode);
 		quiz.setName(quizName);
 		quiz.setQuizType(quizType);
 		quiz.setQuestions(orderedQuizProblems);
 		
-		final Quiz persistedQuiz = quizDAOService.provide(quiz);
+		final Quiz persistedQuiz = quizDAOService.provide(user, quiz);
 		persistedQuiz.getQuestions()
 			.stream()
 			.forEach(question -> {
