@@ -1,6 +1,7 @@
 package org.quizzical.backend.security.login.rest;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +28,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Path("auth")
 public class LoginResource {
+    private static final String IPADDRESS_PATTERN =
+		"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    private Pattern pattern;
+
+	
 	private volatile IUserDAOService userService;
 	private volatile IJWTTokenService tokenService;
 	private volatile LogService logger;
 	
+	private void init() {
+		pattern = Pattern.compile(IPADDRESS_PATTERN);
+	}
 
 	@Path("login")
 	@POST
@@ -45,7 +57,7 @@ public class LoginResource {
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 
-			final String domain = "."+request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+			final String domain = createCookieDomain(request);
 			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, token, "/", domain, "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
 			return Response.ok().cookie(cookie).build();
 		} catch(final UserNotFoundException ex) {
@@ -74,8 +86,19 @@ public class LoginResource {
 	@Path("logout")
 	@POST
 	public Response logout(@Context HttpServletRequest request) {
-		final String domain = "."+request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+		final String domain = createCookieDomain(request);
 		NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, null, "/", domain, "Authentication cookie", 0, false);
 		return Response.ok().cookie(cookie).build();
+	}
+
+	private String createCookieDomain(HttpServletRequest request) {
+		String domain = null;
+		if (pattern.matcher(request.getServerName()).matches()) {
+			domain = request.getServerName();
+		}
+		else {
+			domain = "."+request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+		}
+		return domain;
 	}
 }

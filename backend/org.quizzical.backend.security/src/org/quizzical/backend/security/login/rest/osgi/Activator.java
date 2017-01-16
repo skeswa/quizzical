@@ -20,6 +20,7 @@ public class Activator extends DependencyActivatorBase {
 		manager.add(createComponent()
 				.setInterface(Object.class.getName(), serviceProperties)
 				.setImplementation(LoginResource.class)
+				.setCallbacks("init", null, null, null)//init, start, stop and destroy.
 				.add(createServiceDependency().setService(IUserDAOService.class)
 						.setRequired(true))
 				.add(createServiceDependency().setService(IJWTTokenService.class)
