@@ -3,12 +3,14 @@ package org.quizzical.backend.security.login.rest;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -58,6 +60,8 @@ public class LoginResource {
 	public Response me(@Context HttpServletRequest request) throws UnauthorizedAccessException {
 		try {
 			final String userJson = tokenService.extractSessionUserAsJson(request);
+			if (userJson == null || "null".equalsIgnoreCase(userJson))
+				return Response.status(403).build();
 			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, userJson, "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
 			return Response.ok().cookie(cookie).build();
 		} catch (JsonProcessingException e) {
@@ -69,6 +73,8 @@ public class LoginResource {
 
 	@Path("logout")
 	@POST
-	public void logout(@Context HttpServletRequest request) {
+	public Response logout() {
+		NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, null, "/", "", "Authentication cookie", 0, false);
+		return Response.ok().cookie(cookie).build();
 	}
 }
