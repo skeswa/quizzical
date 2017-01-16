@@ -1,3 +1,0 @@
-INDEX VERSION 1.127
-platform:/plugin/bndtools.builder/org/bndtools/builder/classpath/empty.index
-/org.quizzical.backend.core/generated/org.quizzical.backend.core.impl.dao.jar

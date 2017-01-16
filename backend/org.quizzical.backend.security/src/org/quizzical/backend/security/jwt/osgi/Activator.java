@@ -9,6 +9,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.jwt.JWTTokenServiceImpl;
 import org.quizzical.backend.security.jwt.api.IJWTTokenService;
 
@@ -21,6 +22,7 @@ public class Activator extends DependencyActivatorBase {
         dm.add(createComponent()
             .setInterface(new String[] { ManagedService.class.getName(), IJWTTokenService.class.getName() }, props)
             .setImplementation(JWTTokenServiceImpl.class)
+            .add(createServiceDependency().setService(IUserDAOService.class).setRequired(true))
             .add(createServiceDependency().setService(LogService.class).setRequired(false)));
     }
 }

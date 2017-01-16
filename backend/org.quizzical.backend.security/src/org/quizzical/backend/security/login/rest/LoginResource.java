@@ -57,7 +57,7 @@ public class LoginResource {
 	@GET
 	public Response me(@Context HttpServletRequest request) throws UnauthorizedAccessException {
 		try {
-			final String userJson = tokenService.extractUserAsJson(request);
+			final String userJson = tokenService.extractSessionUserAsJson(request);
 			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, userJson, "/", "", "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
 			return Response.ok().cookie(cookie).build();
 		} catch (JsonProcessingException e) {

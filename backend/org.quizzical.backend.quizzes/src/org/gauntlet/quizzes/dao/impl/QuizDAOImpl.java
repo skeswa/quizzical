@@ -114,7 +114,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}
 
 	@Override
-	public Quiz provide(Quiz record)
+	public Quiz provide(User user, Quiz record)
 			  throws ApplicationException {
 		Quiz existingCountry = getByCode(record.getCode());
 		if (Validator.isNull(existingCountry))

@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.gauntlet.core.api.ApplicationException;
+import org.quizzical.backend.security.api.model.user.User;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +15,9 @@ public interface IJWTTokenService {
 	public final static String COOKIE_NAME = "auth_token"; 
 	
 	String generateToken(final SessionUser user) throws JsonProcessingException;
-	String extractUserAsJson(HttpServletRequest request) throws JsonProcessingException, IOException;
-	SessionUser extractUser(HttpServletRequest request)
+	String extractSessionUserAsJson(HttpServletRequest request) throws JsonProcessingException, IOException;
+	SessionUser extractSessionUser(HttpServletRequest request)
 			throws JsonParseException, JsonMappingException, IOException;
+	User extractUser(HttpServletRequest request)
+			throws JsonParseException, JsonMappingException, IOException, ApplicationException;	
 }
