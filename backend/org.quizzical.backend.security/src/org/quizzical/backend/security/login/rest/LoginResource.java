@@ -39,7 +39,7 @@ public class LoginResource {
 			if (Validator.isNull(login))
 				return Response.status(401).build();	
 
-			final User user = userService.getUserByEmailAndPassword(login.getPassword(), login.getPassword());
+			final User user = userService.getUserByEmailAndPassword(login.getUsername(), login.getPassword());
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 

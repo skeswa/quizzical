@@ -58,14 +58,13 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 
 	
 	@Override
-	public User add(User record) {
+	public User add(User record) throws ApplicationException {
 		if (record.isPasswordEncrypted())
 			record.setPassword(DigestUtils.sha256Hex(record.getPassword()));
 		
-		em.persist(record);
-		em.flush();
-		em.refresh(record);
-		return record;
+		JPAUser entity = JPAEntityUtil.copy(record, JPAUser.class);
+		super.add(entity);
+		return JPAEntityUtil.copy(entity, User.class);
 	}
 
 	@Override
@@ -81,9 +80,13 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}	
 
 	@Override
-	public User update(User record) {
-		//record.setDateLastUpdated(new Date());
-		return em.merge(record);
+	public User update(User record) throws ApplicationException {
+		if (record.isPasswordEncrypted())
+			record.setPassword(DigestUtils.sha256Hex(record.getPassword()));
+		
+		JPAUser entity = JPAEntityUtil.copy(record, JPAUser.class);
+		super.merge(entity);
+		return JPAEntityUtil.copy(entity, User.class);
 	}
 
 	@Override
@@ -92,13 +95,8 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 		User existingProblem = getByCode(record.getCode());
 		if (Validator.isNull(existingProblem))
 		{
-			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAUser.class));
-			existingProblem = JPAEntityUtil.copy(res, User.class);
+			existingProblem = add(record);
 		}
-		else {
-			return update(record);
-		}
-
 		return existingProblem;
 	}
 	
@@ -123,7 +121,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	public User getByEmailAndPassword(String email, String encryptedPassword) throws ApplicationException {
 		Set<AttrPair> attrs = new HashSet<AttrPair>();
 		attrs.add(new AttrPair(String.class, "emailAddress", email));
-		attrs.add(new AttrPair(String.class, "encryptedPassword", encryptedPassword));
+		attrs.add(new AttrPair(String.class, "password", encryptedPassword));
 		
 		JPAUser jpaEntity = (JPAUser) super.findWithAttributes(JPAUser.class, attrs);
 		return JPAEntityUtil.copy(jpaEntity, User.class);
@@ -158,30 +156,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 
 	@Override
-	public void createDefaults() throws ApplicationException {
-		//MK
-		User user = new User();
-		user.setCode("mk");
-		user.setName("Mandi");
-		user.setEmailAddress("mandisakeswa999@gmail.com");
-		
-		String hash = DigestUtils.sha256Hex("aceit");
-		user.setPasswordEncrypted(true);
-		user.setPassword(hash);
-		
-		add(user);
-		
-		//Test
-		user = new User();
-		user.setCode("tester");
-		user.setName("Tester");
-		user.setEmailAddress("test@me.io");
-		
-		hash = DigestUtils.sha256Hex("test");
-		user.setPasswordEncrypted(true);
-		user.setPassword(hash);
-		
-		add(user);
+	public void createDefaults() throws Exception {
 	}
 	
 }

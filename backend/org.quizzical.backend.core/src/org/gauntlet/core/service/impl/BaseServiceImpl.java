@@ -282,7 +282,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 				final ParameterExpression p = builder.parameter(ap.getAttrClass());
 				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
 				
-				typedQuery.setParameter(p, ap.getAttrName());
+				typedQuery.setParameter(p, ap.getAttrValue());
 			}
 
 			res = typedQuery.getSingleResult();

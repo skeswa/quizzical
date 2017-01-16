@@ -15,13 +15,13 @@ public interface IUserDAOService {
 	
 	public User getByCode(String code) throws ApplicationException;	
 
-	public User add(User record);
+	public User add(User record) throws ApplicationException;
 
 	public void delete(User record);
 	
 	public void delete(String recordId) throws ApplicationException;
 
-	public User update(User record);
+	public User update(User record) throws ApplicationException;
 	
 	public User provide(User record) throws Exception;
 

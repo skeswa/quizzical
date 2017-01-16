@@ -30,6 +30,7 @@ public class Activator extends DependencyActivatorBase {
 		props.put(ManagedTransactional.SERVICE_PROPERTY, IUserDAOService.class.getName());
 		dm.add(createComponent().setInterface(Object.class.getName(), props)
 				.setImplementation(UserDAOServiceImpl.class)
+				.setCallbacks(null, "createDefaults", null, null)//init, start, stop and destroy.
 				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
 		
