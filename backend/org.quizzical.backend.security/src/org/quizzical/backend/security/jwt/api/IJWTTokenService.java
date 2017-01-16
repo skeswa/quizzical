@@ -13,11 +13,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public interface IJWTTokenService {
 	public final static String COOKIE_NAME = "auth_token"; 
-	
 	String generateToken(final SessionUser user) throws JsonProcessingException;
-	String extractSessionUserAsJson(HttpServletRequest request) throws JsonProcessingException, IOException;
+	String extractSessionUserAsJson(HttpServletRequest request) throws JsonProcessingException, IOException, NotAuthorizedException;
 	SessionUser extractSessionUser(HttpServletRequest request)
-			throws JsonParseException, JsonMappingException, IOException;
+			throws JsonParseException, JsonMappingException, IOException, NotAuthorizedException;
 	User extractUser(HttpServletRequest request)
 			throws JsonParseException, JsonMappingException, IOException, ApplicationException;	
 }
