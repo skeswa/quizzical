@@ -80,7 +80,7 @@ function renderUI() {
 
 // Protects <Route>s from unauthenticated users.
 function requireAuth(nextState, replace) {
-  if (state.getState().auth.authed) {
+  if (!store.getState().auth.authed) {
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }

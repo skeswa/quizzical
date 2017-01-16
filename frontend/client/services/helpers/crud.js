@@ -22,7 +22,7 @@ export function crudService(entity, extender) {
     },
 
     create(payload) {
-      let body, headers = { 'Accept': 'application/json' };
+      let body, headers = { 'Accept': 'application/json' }
       if (payload instanceof FormData) {
         body = payload
       } else {
