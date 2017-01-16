@@ -27,6 +27,10 @@ import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.jwt.api.IJWTTokenService;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @Path("quizzes")
@@ -35,12 +39,13 @@ public class QuizResource  {
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;
 	private volatile IQuizGeneratorManagerService quizGeneratorManagerService;	
+	private volatile IJWTTokenService tokenService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException {
-		//final User user = getUserFromToken(request);
-		List<Quiz> res  = quizService.findByQuizType(null,quizType,start,end);
+    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		List<Quiz> res  = quizService.findByQuizType(user,quizType,start,end);
 		for (Quiz quiz : res) {
 			List<QuizProblem> qproblems = quiz.getQuestions();
 			for (QuizProblem qproblem : qproblems) {
@@ -92,7 +97,8 @@ public class QuizResource  {
     @Path("generate") 
     @Consumes(MediaType.APPLICATION_JSON) 
     @Produces(MediaType.APPLICATION_JSON) 
-    public Quiz generate(QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
-    	return quizGeneratorManagerService.generate(params);
+    public Quiz generate(@Context HttpServletRequest request, QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
+		final User user = tokenService.extractUser(request);
+    	return quizGeneratorManagerService.generate(user,params);
     }  
 }

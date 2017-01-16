@@ -13,6 +13,8 @@ public class QuizProblem extends BaseEntity implements Serializable {
 	
 	private Problem problem;
 	
+	private Quiz quiz;
+	
 	public QuizProblem() {
 	}
 	
@@ -63,5 +65,13 @@ public class QuizProblem extends BaseEntity implements Serializable {
 
 	public void setProblem(Problem problem) {
 		this.problem = problem;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
 	}
 }

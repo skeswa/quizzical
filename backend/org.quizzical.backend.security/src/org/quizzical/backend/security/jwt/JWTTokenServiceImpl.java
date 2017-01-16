@@ -16,9 +16,14 @@ import java.util.Dictionary;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
+
+import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.security.jwt.api.IJWTTokenService;
 import org.quizzical.backend.security.jwt.api.SessionUser;
 
@@ -32,8 +37,16 @@ public class JWTTokenServiceImpl implements ManagedService, IJWTTokenService {
 	
 	private volatile LogService logger;
 	
+	private volatile IUserDAOService userService;
+	
 	@Override
-	public SessionUser extractUser(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+	public User extractUser(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, ApplicationException {
+		final SessionUser sessionUser = extractSessionUser(request);
+		return userService.getByEmail(sessionUser.getEmail());
+	}	
+	
+	@Override
+	public SessionUser extractSessionUser(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
 		String token = extractCookieToken(request);
 		if (token != null) {
 			final String userJson = Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getSubject();
@@ -44,8 +57,8 @@ public class JWTTokenServiceImpl implements ManagedService, IJWTTokenService {
 	}
 	
 	@Override
-	public String extractUserAsJson(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
-		final SessionUser user = extractUser(request);
+	public String extractSessionUserAsJson(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+		final SessionUser user = extractSessionUser(request);
 		return mapper.writeValueAsString(user);
 	}	
 
