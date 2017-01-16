@@ -38,7 +38,7 @@ public class Controller {
 		//MK
 		User user = new User();
 		user.setCode("mk");
-		user.setName("Mandi");
+		user.setFirstName("Mandi");
 		user.setEmailAddress("mandisakeswa999@gmail.com");
 		
 		user.setPasswordEncrypted(true);
@@ -49,7 +49,7 @@ public class Controller {
 		//Test
 		user = new User();
 		user.setCode("tester");
-		user.setName("Tester");
+		user.setFirstName("Tester");
 		user.setEmailAddress("test@me.io");
 		
 		user.setPasswordEncrypted(true);
