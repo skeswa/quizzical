@@ -66,7 +66,7 @@ function renderUI() {
             <Route path=":quizId/take" component={QuizTakePage} />
           </Route>
           <Route path="workbench" component={WorkbenchPage} />
-          <Route path="login" component={LoginPage} />
+          <Route path="login" component={LoginPage} onEnter={requireNoAuth} />
           <Route path="/" component={SplashPage} />
           <Route path="*" component={NotFoundPage} />
         </Router>
@@ -85,6 +85,13 @@ function requireAuth(nextState, replace) {
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }
     })
+  }
+}
+
+// Prevents authed users from entering the <Route>.
+function requireNoAuth(nextState, replace) {
+  if (store.getState().auth.authed) {
+    replace({ pathname: '/quiz/start' })
   }
 }
 

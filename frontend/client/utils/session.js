@@ -21,7 +21,6 @@ const Session = {
   retrieve() {
     if (cachedSession) return cachedSession
 
-    console.log('store', store)
     const session = store.get(SESSION_STORE_KEY)
     if (!session) {
       return null

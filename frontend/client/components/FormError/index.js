@@ -16,7 +16,7 @@ const FormError = (props, context) => (
           classNames(style.message, {
             [style.message__limitedHeight]: props.limitHeight,
           })
-        }>{props.message}</div>
+        }>{(() => { console.log('FormError', props.message); return props.message; })()}</div>
       </div>
     </div>
   </div>

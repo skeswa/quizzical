@@ -19,24 +19,30 @@ function getToken() {
   return session.token
 }
 
-function request(method, url, body, extraHeaders) {
+function request(method, url, body, returnResponse, headers) {
   const token = getToken()
-  const headers = Object.assign(
+  const modifiedHeaders = Object.assign(
     { 'Accept': CONTENT_TYPE_JSON },
     token ? { 'Authorization': `Bearer ${token}` } : null,
     body ? {
       'Content-Type': (body instanceof FormData) ? null : CONTENT_TYPE_JSON,
     } : null,
-    extraHeaders)
+    headers)
   const serializedBody = (body instanceof FormData)
       ? body
       : JSON.stringify(body)
 
-  return fetch(url, { method, headers, body })
+  const response = fetch(
+    url,
+    { method, headers: modifiedHeaders, body: serializedBody })
+
+  return returnResponse
+    ? response
+    : response.then(handleSuccess, handleFailure)
 }
 
 function handleSuccess(response) {
-  return response.ok
+  return (response.ok && response.status < 400)
     ? deserializeResponse(response)
     : Promise.reject(deserializeError(response))
 }
