@@ -2,7 +2,7 @@
 import store from '../../node_modules/store'
 
 const SESSION_STORE_KEY = 'q7lSession'
-const SESSION_LIFESPAN = 7 /* days */ *
+const SESSION_LIFESPAN = 1 /* days */ *
   24 /* hours */ *
   60 /* minutes */ *
   60 /* seconds */ *
