@@ -59,7 +59,7 @@ public class LoginResource {
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 
-			return Response.ok().header("Authorization","Basic " + token).build();
+			return Response.ok().entity(sessionUser).header("Authorization","Basic " + token).build();
 		} catch(final UserNotFoundException ex) {
 			return Response.status(401).build();
 		} catch (JsonProcessingException e) {
