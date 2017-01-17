@@ -9,8 +9,7 @@
 	jackson-mapper-asl,\
 	javax.servlet,\
 	org.amdatu.web.rest.doc,\
-	org.amdatu.web.rest.jaxrs,\
-	org.amdatu.security.tokenprovider.api,\
+	org.amdatu.web.rest.jaxrs;version=1.1.0,\
 	org.amdatu.persistence2_0;version=1.0,\
 	org.quizzical.backend.core.model;version=latest,\
 	org.quizzical.backend.core.api;version=latest,\

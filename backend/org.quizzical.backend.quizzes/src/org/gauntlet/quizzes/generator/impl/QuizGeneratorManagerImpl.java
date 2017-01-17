@@ -7,6 +7,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
@@ -34,9 +35,9 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	
 	@Override
-	public Quiz generate(QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
 		final ServiceReference generatorRef = references.get(params.getGeneratorType());
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
-		return generator.generate(params);
+		return generator.generate(user,params);
 	}
 }

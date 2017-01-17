@@ -30,5 +30,6 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.quizzes.api;version=latest,\
+	org.quizzical.backend.security.api;version=latest,\
 	org.apache.commons.io;version=2.4
 -sub: *.bnd

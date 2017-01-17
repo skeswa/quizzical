@@ -1,32 +1,29 @@
 
 .main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.middle {
   align-items: center;
-  background-color: #754aec;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 20%,
-    rgba(255, 255, 255, 0.0) 100%);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex-grow: 1;
+  font-size: 1.6rem;
   justify-content: center;
-  width: 100%;
+  padding: 0 4rem;
 }
 
-.logo {
-  margin-bottom: 6rem;
-  width: 20rem;
-}
-
-.slogan {
-  color: #ffffff;
-  font-size: 2.2rem;
-  margin-bottom: 4rem;
-  max-width: 75%;
-  text-align: center;
-}
-
-.buttons {
+.bottom {
   display: flex;
+  flex-basis: 7rem;
   flex-direction: column;
-  max-width: 32rem;
-  width: 75%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
 }

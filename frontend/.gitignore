@@ -6,3 +6,4 @@ bin/
 .recommenders
 .gradle*
 cnf/cache/
+mock-auth/

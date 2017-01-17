@@ -2,6 +2,8 @@ package org.gauntlet.quizzes.rest;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.gauntlet.core.api.ApplicationException;
@@ -23,19 +26,26 @@ import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.jwt.api.IJWTTokenService;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @Path("quizzes")
-public class QuizResource {
+public class QuizResource  {
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;
 	private volatile IQuizGeneratorManagerService quizGeneratorManagerService;	
+	private volatile IJWTTokenService tokenService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> get(@PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException {
-		List<Quiz> res = quizService.findByQuizType(quizType,start,end);
+    public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		List<Quiz> res  = quizService.findByQuizType(user,quizType,start,end);
 		for (Quiz quiz : res) {
 			List<QuizProblem> qproblems = quiz.getQuestions();
 			for (QuizProblem qproblem : qproblems) {
@@ -72,22 +82,12 @@ public class QuizResource {
 	}
 	
     
-    @POST 
-    @Path("provide") 
-    @Consumes(MediaType.APPLICATION_JSON) 
-    @Produces(MediaType.APPLICATION_JSON) 
-    public Quiz provide(Quiz quiz) throws IOException, ApplicationException, NoSuchModelException { 
-    	Long typeId = quiz.getQuizType().getId();
-    	QuizType qt = quizService.getQuizTypeByPrimary(typeId);
-    	quiz.setQuizType(qt);
-    	return quizService.provide(quiz);
-    }   
-    
     @POST
     @Path("generate") 
     @Consumes(MediaType.APPLICATION_JSON) 
     @Produces(MediaType.APPLICATION_JSON) 
-    public Quiz generate(QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
-    	return quizGeneratorManagerService.generate(params);
+    public Quiz generate(@Context HttpServletRequest request, QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
+		final User user = tokenService.extractUser(request);
+    	return quizGeneratorManagerService.generate(user,params);
     }  
 }

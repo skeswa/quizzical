@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
+import org.quizzical.backend.security.api.model.user.User;
 
 public class Quiz extends BaseEntity implements Serializable {
+	private Long userId;
 	
 	private QuizType quizType;
 
@@ -27,12 +29,21 @@ public class Quiz extends BaseEntity implements Serializable {
 		this.questions = questions;
 	}
 	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public Quiz() {
 	}
 	
-	public Quiz(String name, String code, List<QuizProblem> questions) {
+	public Quiz(Long userId, String name, String code, List<QuizProblem> questions) {
 		this.name = name;
 		this.code = code;
 		this.questions = questions;
+		this.userId = userId;
 	}
 }

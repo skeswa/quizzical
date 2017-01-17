@@ -54,10 +54,6 @@
 	org.amdatu.template;version=1.0.1,\
 	org.amdatu.web.rest.jaxrs;version=latest,\
 	org.amdatu.web.rest.wink;version='[2.0,3.0)',\
-	org.amdatu.multitenant;version='[1.0,1.1)',\
-	org.amdatu.multitenant.conf;version='[1.0,1.1)',\
-	org.amdatu.multitenant.factory;version='[1.0,1.1)',\
-	org.amdatu.multitenant.adapter;version='[1.0,1.1)',\
 	net.sf.dozer.dozer-osgi;version=5.5.1,\
 	org.amdatu.persistence2_0;version='[1.0.1,1.1)',\
 	org.postgresql.jdbc41;version=9.4.0,\
@@ -69,7 +65,7 @@
 	org.apache.commons.pool;version=1.5.4,\
 	org.conxworks.library.postgresql-datasourcefactory.osgi;version=1.0.0,\
 	org.amdatu.jpa.datasourcefactory;version='[1.1.1,1.2)',\
-	org.amdatu.jpa.extender.mt;version='[1.0.3,1.1)',\
+	org.amdatu.jpa.extender;version=latest,\
 	org.amdatu.jta.api;version='[1.0.0,1.1)',\
 	org.amdatu.database.schemamigration;version='[2.0.1,2.1)',\
 	org.amdatu.jta.manager;version='[1.1.2,1.2)',\
@@ -102,17 +98,18 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.core.model;version=latest,\
 	org.quizzical.backend.problems.api;version=latest,\
-	org.quizzical.backend.problems.dao.impl.mt;version=latest,\
-	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0.mt;version=latest,\
+	org.quizzical.backend.problems.dao.impl;version=latest,\
+	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0;version=latest,\
 	org.quizzical.backend.data.defaults.mt;version=latest,\
 	org.quizzical.backend.quizzes.api;version=latest,\
-	org.quizzical.backend.quizzes.dao.impl.mt;version=latest,\
-	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0.mt;version=latest,\
+	org.quizzical.backend.quizzes.dao.impl;version=latest,\
+	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\
+	org.quizzical.backend.security.api;version=latest,\
 	org.quizzical.backend.importer.gsheets;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
   org.ops4j.pax.logging.DefaultServiceLog.level=WARN,\
   org.osgi.service.http.port=8080,\
-  felix.fileinstall.dir=load_deployed,\
+  felix.fileinstall.dir=load,\
   org.apache.felix.http.jetty.maxFormSize=1000000000

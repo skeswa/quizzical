@@ -1,5 +1,6 @@
 
 import debug from 'debug'
+import Network from 'utils/network'
 
 import { endpointSuffixFor } from 'utils/crud'
 
@@ -12,42 +13,30 @@ export function crudService(entity, extender) {
 
   return Object.assign({
     get(id) {
-      return fetch(`${endpoint}/${id}`, { method: 'GET' })
-        .then(handleSuccess, handleFailure)
+      return Network.get(`${endpoint}/${id}`)
     },
 
     getAll(offset = 0, limit = 500) {
-      return fetch(`${endpoint}?start=${offset}&end=${offset + limit}`, { method: 'GET' })
-        .then(handleSuccess, handleFailure)
+      return Network.get(`${endpoint}?start=${offset}&end=${offset + limit}`)
     },
 
     create(payload) {
-      let body, headers = { 'Accept': 'application/json' };
-      if (payload instanceof FormData) {
-        body = payload
-      } else {
-        body = JSON.stringify(payload)
-        headers['Content-Type'] = 'application/json'
-      }
-
-      return fetch(endpoint, { method: 'PUT', headers, body })
-        .then(handleSuccess, handleFailure)
+      return Network.put(endpoint, body)
     },
 
     del(id) {
-      return fetch(`${endpoint}/${id}`, { method: 'POST' })
-        .then(handleSuccess, handleFailure)
+      return Network.delete(`${endpoint}/${id}`)
     },
-  }, extender ? extender(endpoint, handleSuccess, handleFailure) : null)
+  }, extender ? extender(endpoint) : null)
 }
 
-function handleSuccess(response) {
+export function handleSuccess(response) {
   return response.ok
     ? deserializeResponse(response)
     : Promise.reject(deserializeError(response))
 }
 
-function handleFailure(problem) {
+export function handleFailure(problem) {
   logger('Service request failed:', problem)
   return Promise.reject(connectionFailureError)
 }

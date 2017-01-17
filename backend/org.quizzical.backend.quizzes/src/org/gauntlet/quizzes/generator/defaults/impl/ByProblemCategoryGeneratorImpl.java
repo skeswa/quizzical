@@ -18,6 +18,7 @@ import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -40,7 +41,7 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 	private volatile IProblemDAOService problemDAOService;
 	
 	@Override
-	public Quiz generate(QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
 		ProblemCategory category;
 		try {
 			category = problemDAOService.getProblemCategoryByPrimary(
@@ -100,16 +101,19 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 				.collect(Collectors.toList());
 
 		final Quiz quiz = new Quiz();
+		quiz.setUserId(user.getId());
 		quiz.setCode(quizCode);
 		quiz.setName(quizName);
 		quiz.setQuizType(quizType);
 		quiz.setQuestions(orderedQuizProblems);
 		
-		final Quiz persistedQuiz = quizDAOService.provide(quiz);
+		final Quiz persistedQuiz = quizDAOService.provide(user, quiz);
 		persistedQuiz.getQuestions()
 			.stream()
-			.forEach(question ->
-				question.setProblem(problems.get(question.getProblemId())));
+			.forEach(question -> {
+				question.setProblem(problems.get(question.getProblemId()));
+				question.setQuiz(quiz);
+			});
 		
 		return persistedQuiz;
 	}

@@ -2,8 +2,10 @@ package org.gauntlet.quizzes.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,8 +19,10 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizType;
@@ -62,6 +66,22 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}
 	
 	@Override
+	public List<Quiz> findAll(User user, int start, int end) throws ApplicationException {
+		List<Quiz> result = new ArrayList<>();
+		try {
+			Set<AttrPair> attrs = new HashSet<AttrPair>();
+			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
+			
+			List<JPABaseEntity> resultList = findAllWithAttributes(JPAQuiz.class,attrs);
+			result = JPAEntityUtil.copy(resultList, Quiz.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
 	public long countAll() throws ApplicationException {
 		long res = 0;
 		try {
@@ -74,13 +94,27 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}	
 	
 	@Override
+	public long countAll(User user) throws ApplicationException {
+		long res = 0;
+		try {
+			Set<AttrPair> attrs = new HashSet<>();
+			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
+			res = super.countWithAttributes(attrs,JPAQuiz.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}
+	
+	@Override
 	public Quiz getByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
 		JPAQuiz jpaEntity = (JPAQuiz) super.findByPrimaryKey(JPAQuiz.class, pk);
 		return JPAEntityUtil.copy(jpaEntity, Quiz.class);
 	}
 
 	@Override
-	public Quiz provide(Quiz record)
+	public Quiz provide(User user, Quiz record)
 			  throws ApplicationException {
 		Quiz existingCountry = getByCode(record.getCode());
 		if (Validator.isNull(existingCountry))
@@ -120,19 +154,25 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}
 	
 	@Override 
-	public List<Quiz> findByQuizType(Long difficultyId, int start, int end) throws ApplicationException {
+	public List<Quiz> findByQuizType(User user, 
+			Long difficultyId, int start, int end) throws ApplicationException {
 		List<Quiz> resultList = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
 			CriteriaQuery<JPAQuiz> query = builder.createQuery(JPAQuiz.class);
 			Root<JPAQuiz> rootEntity = query.from(JPAQuiz.class);
 			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//quizType
 			ParameterExpression<Long> p = builder.parameter(Long.class);
 			query.select(rootEntity).where(builder.gt(rootEntity.get("quizType").get("id"),p));
-			query.select(rootEntity);
-			
-			Map<ParameterExpression,Object> pes = new HashMap<>();
 			pes.put(p, difficultyId);
+			
+			//userId
+			p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("userId"),p));
+			pes.put(p, user.getId());
 			
 			resultList = findWithDynamicQueryAndParams(query,pes,start,end);
 		}

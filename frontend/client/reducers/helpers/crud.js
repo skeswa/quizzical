@@ -103,11 +103,11 @@ function handleBumpPendingRequestsAction(state, action) {
   })
 }
 
-function decrementedPendingRequests(state) {
+export function decrementedPendingRequests(state) {
   return state.pendingRequests > 0 ? (state.pendingRequests - 1) : 0
 }
 
-function incrementedPendingRequests(state) {
+export function incrementedPendingRequests(state) {
   return state.pendingRequests < 0 ? 1 : (state.pendingRequests + 1)
 }
 

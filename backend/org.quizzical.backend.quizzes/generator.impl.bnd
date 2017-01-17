@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.quizzes.generator.impl,\
+	org.gauntlet.quizzes.generator.impl.osgi,\
+	org.gauntlet.quizzes.generator.defaults.impl
+Bundle-Activator: org.gauntlet.quizzes.generator.impl.osgi.Activator
+	

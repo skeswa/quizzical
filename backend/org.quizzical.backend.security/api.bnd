@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Export-Package: \
+	org.quizzical.backend.security.api.model.user,\
+	org.quizzical.backend.security.api.dao.user,\
+	org.quizzical.backend.security.api.tokenstorage

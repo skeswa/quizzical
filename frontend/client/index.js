@@ -11,8 +11,10 @@ import React from 'react'
 
 import style from './index.css'
 import configure from './store'
+import AuthActions from 'actions/auth'
 
 import LoginPage from 'containers/LoginPage'
+import SplashPage from 'containers/SplashPage'
 import QuizzesPage from 'containers/QuizzesPage'
 import NotFoundPage from 'containers/NotFoundPage'
 import QuizTakePage from 'containers/QuizTakePage'
@@ -36,36 +38,62 @@ const muiTheme = getMuiTheme({
   }
 })
 
-// Designate the root element.
-const root = document.getElementById('root')
-// How long in milliseconds to wait before fading in the UI.
-const revealDelay = 400
 // Reveals the UI by fading it in. Also, exposes Perf.
-const revealUI = () => {
+function revealUI() {
   root.style.opacity = 1
   window.Perf = Perf
 }
 
-ReactDOM.render(
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <ReduxProvider store={store}>
-      <Router history={history}>
-        <Route path="admin">
-          <IndexRedirect to="/admin/questions" />
-          <Route path="quizzes" component={QuizzesPage} />
-          <Route path="attempts" component={QuizAttemptsPage} />
-          <Route path="questions" component={QuestionsPage} />
-        </Route>
-        <Route path="quiz">
-          <IndexRedirect to="/quiz/start" />
-          <Route path="start" component={QuizGenerationPage} />
-          <Route path=":quizId/take" component={QuizTakePage} />
-        </Route>
-        <Route path="workbench" component={WorkbenchPage} />
-        <Route path="/" component={LoginPage} />
-        <Route path="*" component={NotFoundPage} />
-      </Router>
-    </ReduxProvider>
-  </MuiThemeProvider>,
-  root,
-  () => setTimeout(revealUI, revealDelay))
+// Renders the UI in the #root div.
+function renderUI() {
+  // Find the root element.
+  const root = document.getElementById('root')
+
+  // Render the UI in the root element.
+  ReactDOM.render(
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <ReduxProvider store={store}>
+        <Router history={history}>
+          <Route path="admin" onEnter={requireAuth}>
+            <IndexRedirect to="/admin/questions" />
+            <Route path="quizzes" component={QuizzesPage} />
+            <Route path="attempts" component={QuizAttemptsPage} />
+            <Route path="questions" component={QuestionsPage} />
+          </Route>
+          <Route path="quiz" onEnter={requireAuth}>
+            <IndexRedirect to="/quiz/start" />
+            <Route path="start" component={QuizGenerationPage} />
+            <Route path=":quizId/take" component={QuizTakePage} />
+          </Route>
+          <Route path="workbench" component={WorkbenchPage} />
+          <Route path="login" component={LoginPage} onEnter={requireNoAuth} />
+          <Route path="/" component={SplashPage} />
+          <Route path="*" component={NotFoundPage} />
+        </Router>
+      </ReduxProvider>
+    </MuiThemeProvider>,
+    root,
+    () => setTimeout(
+      () => root.style.opacity = 1,
+      400 /* Reveal delay. */))
+}
+
+// Protects <Route>s from unauthenticated users.
+function requireAuth(nextState, replace) {
+  if (!store.getState().auth.authed) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
+
+// Prevents authed users from entering the <Route>.
+function requireNoAuth(nextState, replace) {
+  if (store.getState().auth.authed) {
+    replace({ pathname: '/quiz/start' })
+  }
+}
+
+// Render the application once everything is ready.
+renderUI()

@@ -1,2 +1,0 @@
-INDEX VERSION 1.127+/Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/frontend/.metadata/.plugins/org.eclipse.jdt.core
-600255298.index

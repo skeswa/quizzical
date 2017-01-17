@@ -7,14 +7,19 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizType;
+import org.quizzical.backend.security.api.model.user.User;
 
 public interface IQuizDAOService extends IBaseService {
 	// Quizzes
 	public List<Quiz> findAll(int start, int end) throws ApplicationException;
 	
+	public List<Quiz> findAll(User user, int start, int end) throws ApplicationException;	
+	
 	public long countAll() throws ApplicationException;
 	
-	public Quiz provide(Quiz record) throws ApplicationException;
+	public long countAll(User user) throws ApplicationException;
+	
+	public Quiz provide(User user, Quiz record) throws ApplicationException;
 	
 	public Quiz update(Quiz record) throws ApplicationException;
 	
@@ -26,7 +31,7 @@ public interface IQuizDAOService extends IBaseService {
 
 	public Quiz getByName(String name) throws ApplicationException;
 	
-	public List<Quiz> findByQuizType(Long difficultyId, int start, int end) throws ApplicationException;
+	public List<Quiz> findByQuizType(User user, Long difficultyId, int start, int end) throws ApplicationException;
 	
 	public int countByQuizType(Long difficultyId) throws ApplicationException;
 
@@ -43,5 +48,5 @@ public interface IQuizDAOService extends IBaseService {
 	
 	public QuizType getQuizTypeByName(String name) throws ApplicationException;
 	
-	public QuizType deleteQuizType(Long id) throws ApplicationException, NoSuchModelException;	
+	public QuizType deleteQuizType(Long id) throws ApplicationException, NoSuchModelException;
 }

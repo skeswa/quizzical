@@ -1,4 +1,0 @@
-Bundle-Activator: org.gauntlet.quizzes.rest.osgi.Activator
-Private-Package: \
-	org.gauntlet.quizzes.rest,\
-	org.gauntlet.quizzes.rest.osgi
