@@ -16,6 +16,7 @@ import java.util.Dictionary;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.HttpHeaders;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
@@ -25,6 +26,7 @@ import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.security.jwt.api.IJWTTokenService;
+import org.quizzical.backend.security.jwt.api.NotAuthorizedException;
 import org.quizzical.backend.security.jwt.api.SessionUser;
 
 @Path("/")
@@ -46,8 +48,8 @@ public class JWTTokenServiceImpl implements ManagedService, IJWTTokenService {
 	}	
 	
 	@Override
-	public SessionUser extractSessionUser(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
-		String token = extractCookieToken(request);
+	public SessionUser extractSessionUser(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, NotAuthorizedException {
+		String token = extractTokenFromHeaderBearer(request);
 		if (token != null) {
 			final String userJson = Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getSubject();
 			final SessionUser user = mapper.readValue(userJson, SessionUser.class);
@@ -57,10 +59,23 @@ public class JWTTokenServiceImpl implements ManagedService, IJWTTokenService {
 	}
 	
 	@Override
-	public String extractSessionUserAsJson(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+	public String extractSessionUserAsJson(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, NotAuthorizedException {
 		final SessionUser user = extractSessionUser(request);
 		return mapper.writeValueAsString(user);
 	}	
+	
+	private String extractTokenFromHeaderBearer(final HttpServletRequest request) throws NotAuthorizedException {
+		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+		
+
+        // Check if the HTTP Authorization header is present and formatted correctly 
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            throw new NotAuthorizedException("Authorization header must be provided");
+        }
+
+        // Extract the token from the HTTP Authorization header
+        return authorizationHeader.substring("Bearer".length()).trim();
+	}
 
 	private String extractCookieToken(final HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();

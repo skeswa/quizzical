@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -23,6 +24,7 @@ import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.security.jwt.api.IJWTTokenService;
+import org.quizzical.backend.security.jwt.api.NotAuthorizedException;
 import org.quizzical.backend.security.jwt.api.SessionUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -57,9 +59,7 @@ public class LoginResource {
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 
-			final String domain = createCookieDomain(request);
-			NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, token, "/", domain, "Authentication cookie", NewCookie.DEFAULT_MAX_AGE, false);
-			return Response.ok().cookie(cookie).build();
+			return Response.ok().header("Authorization","Basic " + token).build();
 		} catch(final UserNotFoundException ex) {
 			return Response.status(401).build();
 		} catch (JsonProcessingException e) {
@@ -70,7 +70,7 @@ public class LoginResource {
 	@Path("whoami")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public Response me(@Context HttpServletRequest request) throws UnauthorizedAccessException {
+	public Response me(@Context HttpServletRequest request) throws NotAuthorizedException {
 		try {
 			final String userJson = tokenService.extractSessionUserAsJson(request);
 			if (userJson == null || "null".equalsIgnoreCase(userJson))
@@ -90,6 +90,7 @@ public class LoginResource {
 		NewCookie cookie = new NewCookie(IJWTTokenService.COOKIE_NAME, null, "/", domain, "Authentication cookie", 0, false);
 		return Response.ok().cookie(cookie).build();
 	}
+	
 
 	private String createCookieDomain(HttpServletRequest request) {
 		String domain = null;
