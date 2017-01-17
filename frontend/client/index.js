@@ -88,5 +88,5 @@ function requireAuth(nextState, replace) {
   }
 }
 
-// Get session information before rendering the UI.
-store.dispatch(AuthActions.whoami()).then(renderUI)
+// Render the application once everything is ready.
+renderUI()

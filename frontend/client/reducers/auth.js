@@ -1,14 +1,18 @@
 
 import { handleActions } from 'redux-actions'
 
+import Session from 'utils/session'
+
 import {
   incrementedPendingRequests,
   decrementedPendingRequests,
 } from './helpers/crud'
 
+const session = Session.retrieve()
 const initialState = {
-  user:             null,
-  authed:           false,
+  user:             session ? session.user : null,
+  token:            session ? session.token : null,
+  authed:           !!session,
   pendingRequests:  0,
 }
 
