@@ -136,8 +136,6 @@ class QuizTakePage extends Component {
         : 'load'
       const subtitle = `Failed to ${verb} the quiz`
 
-      console.log('FormError', subtitle, message)
-
       return (
         <PracticeSkeleton title="Quizzical" subtitle={subtitle}>
           <div className={style.errorPage}>
@@ -229,8 +227,12 @@ class QuizTakePage extends Component {
     if (loadingError) return this.renderError(loadingError, quizFinished)
     if (isDataLoading || !quiz) return this.renderLoading(quizFinished)
     if (quizResults) return this.renderFinishSplash(quizResults)
+    if (quiz && quiz.questions.length > 1) return this.renderQuizTaker()
 
-    return this.renderQuizTaker()
+    return this.renderError(
+      'The generated quiz had no questions due to an unforeseen error. ' +
+        'Please try again later.',
+      quizFinished)
   }
 }
 
