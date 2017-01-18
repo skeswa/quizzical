@@ -223,7 +223,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
 			
 			ParameterExpression<Long> p = builder.parameter(Long.class);
-			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity).where(builder.equal(rootEntity.get("category").get("id"),p));
 			query.select(rootEntity);
 			
 			Map<ParameterExpression,Object> pes = new HashMap<>();

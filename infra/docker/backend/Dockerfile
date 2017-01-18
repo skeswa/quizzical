@@ -6,7 +6,7 @@ MAINTAINER jeanblanchard
 ENV JCR_CLIENT_JAVA_OPTS "-Xms512m -Xmx1024m -XX:MaxMetaspaceSize=512m"
 # install ace target files
 COPY distributions/quizzical-backend.jar /root/quizzical-backend.jar
-COPY configuration /root/load
+COPY configuration /root/conf
 
 ##################################################################################################
 ## START CUSTOMIZATION
@@ -30,4 +30,3 @@ WORKDIR /root
 
 # Use baseimage-docker's init system.
 CMD ["sh","init_gauntlet_backend.sh"]
-

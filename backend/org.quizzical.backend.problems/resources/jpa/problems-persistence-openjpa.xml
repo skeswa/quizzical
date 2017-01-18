@@ -60,7 +60,7 @@
 			<property name="openjpa.ConnectionFactoryProperties" value="PrintParameters=true" />
 			
             <property name="openjpa.Log" 
-                      value="DefaultLevel=ERROR, Runtime=WARN, Tool=ERROR, SQL=WARN"/>	<!-- TRACE,INFO,WARN,ERROR,FATAL -->		
+                      value="DefaultLevel=WARN, Runtime=WARN, Tool=WARN, SQL=WARN"/>	<!-- TRACE,INFO,WARN,ERROR,FATAL -->		
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
 			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)"/>
 			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict"/>
