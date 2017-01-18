@@ -21,7 +21,7 @@ export function crudService(entity, extender) {
     },
 
     create(payload) {
-      return Network.put(endpoint, body)
+      return Network.put(endpoint, payload)
     },
 
     del(id) {

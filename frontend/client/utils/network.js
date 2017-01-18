@@ -24,8 +24,8 @@ function request(method, url, body, returnResponse, headers) {
   const modifiedHeaders = Object.assign(
     { 'Accept': CONTENT_TYPE_JSON },
     token ? { 'Authorization': `Bearer ${token}` } : null,
-    body ? {
-      'Content-Type': (body instanceof FormData) ? null : CONTENT_TYPE_JSON,
+    body && !(body instanceof FormData) ? {
+      'Content-Type': CONTENT_TYPE_JSON,
     } : null,
     headers)
   const serializedBody = (body instanceof FormData)
