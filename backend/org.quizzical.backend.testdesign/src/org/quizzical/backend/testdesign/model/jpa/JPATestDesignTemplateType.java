@@ -14,8 +14,9 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+org.quizzical.backend.testdesign.api.model.Constants.Q7L_MODULE
 	+Constants.GNT_TABLE_NAME_SEPARATOR
-	+"template_type")
+	+"template_tp")
 public class JPATestDesignTemplateType extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = 1658897443125951772L;
 
 	public JPATestDesignTemplateType() {
 		super();

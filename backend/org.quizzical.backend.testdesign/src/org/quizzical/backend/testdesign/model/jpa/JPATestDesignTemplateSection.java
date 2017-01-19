@@ -23,6 +23,8 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 	+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"template_section")
 public class JPATestDesignTemplateSection extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = 4518315461849076887L;
+
 	private Integer ordinal;
 	
 	private TestDesignTemplateSectionType type;
@@ -30,8 +32,42 @@ public class JPATestDesignTemplateSection extends JPABaseEntity implements Seria
 	@ManyToOne
 	private JPATestDesignTemplate template;
 	
-	@OneToMany(targetEntity = JPATestDesignTemplate.class, cascade=CascadeType.ALL, mappedBy="section")
-	@JoinColumn
+	@OneToMany(targetEntity = JPATestDesignTemplateItem.class, cascade=CascadeType.ALL, mappedBy="section")
 	private List<JPATestDesignTemplateItem>  items;
+
+	public Integer getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(Integer ordinal) {
+		this.ordinal = ordinal;
+	}
+
+	public TestDesignTemplateSectionType getType() {
+		return type;
+	}
+
+	public void setType(TestDesignTemplateSectionType type) {
+		this.type = type;
+	}
+
+	public JPATestDesignTemplate getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(JPATestDesignTemplate template) {
+		this.template = template;
+	}
+
+	public List<JPATestDesignTemplateItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<JPATestDesignTemplateItem> items) {
+		this.items = items;
+	}
+	
+	public JPATestDesignTemplateSection() {
+	}
 }
 

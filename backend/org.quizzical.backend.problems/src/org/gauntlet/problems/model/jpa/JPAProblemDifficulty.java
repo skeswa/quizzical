@@ -14,6 +14,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"problem_difficulty")
 public class JPAProblemDifficulty extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = 8010881153800368246L;
 	
 	private String color;
 

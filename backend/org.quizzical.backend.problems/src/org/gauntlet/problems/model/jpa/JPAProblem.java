@@ -20,6 +20,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"problem")
 public class JPAProblem extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = -8154233623279419488L;
+
 	private String answer;
 	
 	@ManyToOne(targetEntity = JPAProblemSource.class)

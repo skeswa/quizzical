@@ -18,6 +18,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"quiz_prob")
 public class JPAQuizProblem extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = 8538105534304495532L;
+
 	private Integer ordinal;
 	
 	private Long problemId;

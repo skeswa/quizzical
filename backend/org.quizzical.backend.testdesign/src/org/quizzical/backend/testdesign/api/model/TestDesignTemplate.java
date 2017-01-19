@@ -31,9 +31,29 @@ public class TestDesignTemplate extends BaseEntity implements Serializable {
 	public TestDesignTemplate() {
 	}
 	
-	public TestDesignTemplate(final String name, final String code, final List<TestDesignTemplateSection> sections) {
+	public TestDesignTemplate(final String name, final String code) {
 		this.name = name;
 		this.code = code;
+	}	
+	
+	public TestDesignTemplate(final String name, final String code, final List<TestDesignTemplateSection> sections) {
+		this(name, code);
+		this.sections = sections;
+	}
+
+	public TestDesignTemplateType getTemplateType() {
+		return templateType;
+	}
+
+	public void setTemplateType(TestDesignTemplateType templateType) {
+		this.templateType = templateType;
+	}
+
+	public List<TestDesignTemplateSection> getSections() {
+		return sections;
+	}
+
+	public void setSections(List<TestDesignTemplateSection> sections) {
 		this.sections = sections;
 	}
 }

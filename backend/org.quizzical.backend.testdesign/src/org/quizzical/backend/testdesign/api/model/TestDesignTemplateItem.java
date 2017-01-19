@@ -12,16 +12,16 @@ public class TestDesignTemplateItem extends BaseEntity implements Serializable {
 	
 	private TestDesignTemplateItemDifficultyType difficultyType;
 	
-	private Long categoryId;
+	private TestDesignTemplateContentSubType contentSubType;
 	
 	public TestDesignTemplateItem() {
 	}
 	
-	public TestDesignTemplateItem(final Long categoryId, final TestDesignTemplateSection section, final TestDesignTemplateItemDifficultyType difficultyType, final Integer ordinal) {
+	public TestDesignTemplateItem(final TestDesignTemplateContentSubType contentSubType, final TestDesignTemplateSection section, final TestDesignTemplateItemDifficultyType difficultyType, final Integer ordinal) {
 		setOrdinal(ordinal);
 		setDifficultyType(difficultyType);
-		setCategoryId(categoryId);
-		final String code = String.format("%s-%d",section.getCode(),getOrdinal());
+		setContentSubType(contentSubType);
+		final String code = String.format("%s-%s-%d",section.getCode(),contentSubType.getCode(),getOrdinal());
 		setName(code);
 		setCode(code);
 	}
@@ -50,11 +50,11 @@ public class TestDesignTemplateItem extends BaseEntity implements Serializable {
 		this.difficultyType = difficultyType;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public TestDesignTemplateContentSubType getContentSubType() {
+		return contentSubType;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setContentSubType(TestDesignTemplateContentSubType contentSubType) {
+		this.contentSubType = contentSubType;
 	}
 }

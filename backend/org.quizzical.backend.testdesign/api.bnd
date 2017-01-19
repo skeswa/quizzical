@@ -1,6 +1,4 @@
 Export-Package: \
 	org.quizzical.backend.testdesign.api.model,\
-	org.quizzical.backend.testdesign.api.dao,\
-	org.gauntlet.quizzes.generator.api,\
-	org.gauntlet.quizzes.generator.api.model
+	org.quizzical.backend.testdesign.api.dao
 Bundle-Version: 1.0.0.${tstamp}

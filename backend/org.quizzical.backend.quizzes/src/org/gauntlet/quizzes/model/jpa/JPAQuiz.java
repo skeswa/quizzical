@@ -23,7 +23,9 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"quiz")
 public class JPAQuiz extends JPABaseEntity implements Serializable {
-    @Basic
+	private static final long serialVersionUID = -9161578622846589427L;
+
+	@Basic
     @Column(name = "userId", unique=true)
     protected Long userId;
     

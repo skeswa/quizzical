@@ -17,7 +17,7 @@
 	<!-- JTA -->
 	<!-- ******************************************************************* -->
 
-	<persistence-unit name="gnt_quiz" transaction-type="JTA">
+	<persistence-unit name="q7l_td" transaction-type="JTA">
 		<jta-data-source>
 			<![CDATA[
 			osgi:javax.sql.DataSource/(name=jta-gnt)
@@ -33,11 +33,14 @@
 		<class>org.gauntlet.core.model.JPABaseEntity</class>
 
 
-		<!-- Quiz -->
+		<!-- TD -->
 		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplate</class>
 		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateItem</class>
 		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateSection</class>
 		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateType</class>
+		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentType</class>
+		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentSubType</class>
+		
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
@@ -48,7 +51,7 @@
 			<property name="openjpa.ConnectionFactoryProperties" value="PrintParameters=true" />
 
 			<property name="openjpa.Log"
-				value="DefaultLevel=WARN, Runtime=WARN, Tool=WARN, SQL=WARN" />	<!-- TRACE,INFO,WARN,ERROR,FATAL -->
+				value="DefaultLevel=TRACE, Runtime=TRACE, Tool=TRACE, SQL=TRACE" />	<!-- TRACE,INFO,WARN,ERROR,FATAL -->
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
 			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)" />
 			<property name="openjpa.jdbc.MappingDefaults"

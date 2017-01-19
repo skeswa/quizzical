@@ -2,14 +2,13 @@ package org.gauntlet.problems.defaults;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
-import org.gauntlet.problems.api.model.ProblemCategory;
-import org.gauntlet.problems.api.model.ProblemDifficulty;
-import org.gauntlet.problems.api.model.ProblemSource;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 
 
 public class Controller {
@@ -18,17 +17,24 @@ public class Controller {
 	private volatile IQuizDAOService quizService;
 	private volatile IUserDAOService userService;
 	
+	private volatile ITestDesignTemplateDAOService testDesignService;
+	private volatile ITestDesignTemplateContentTypeDAOService contentTypeService;
+	
+	
 	private void start() throws Exception {
-		//-- Problems
-		ProblemSource ps = new ProblemSource("MW4NSAT","MW4NSAT");
-		problemService.provideProblemSource(ps);
+		/**
+		 * 
+		 * Types
+		 * 
+		 */
+		new TestDesignTemplateGenerator(testDesignService, contentTypeService).generate();
 		
-		ProblemCategory pc = new ProblemCategory("Heart of Algebra/Linear Equations","Heart of Algebra/Linear Equations");
-		problemService.provideProblemCategory(pc);
 		
-		ProblemDifficulty pd = new ProblemDifficulty("Easy","Easy", "#00ff00");
-		problemService.provideProblemDifficulty(pd);		
-		
+		/**
+		 * 
+		 * Misc
+		 * 
+		 */
 		
 		//-- Quiz related
 		final QuizType qt = new QuizType("Pop Quiz","Pop Quiz");

@@ -14,6 +14,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 	+"problem_category")
 public class JPAProblemCategory extends JPABaseEntity implements Serializable {
+	private static final long serialVersionUID = 3359224600241497581L;
 
 	public JPAProblemCategory() {
 		super();
