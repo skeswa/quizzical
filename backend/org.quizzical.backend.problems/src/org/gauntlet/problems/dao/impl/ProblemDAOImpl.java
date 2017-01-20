@@ -1,6 +1,7 @@
 package org.gauntlet.problems.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -260,6 +261,80 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		}
 		return count;		
 	}		
+	
+	@Override
+	public List<Problem> findByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
+			pes.put(pDiff, difficultyId);
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			pes.put(pCat, categoryId);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			pes.put(pIn, ids);
+			
+			query.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("category").get("id"),pCat),
+					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			query.select(rootEntity);
+			
+			
+			List<JPAProblem> resultList = findWithDynamicQueryAndParams(query,pes,offset,limit);
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
+	@Override 
+	public int countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids)  
+			throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
+			pes.put(pDiff, difficultyId);
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			pes.put(pCat, categoryId);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			pes.put(pIn, ids);
+			
+			query.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("category").get("id"),pCat),
+					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			query.select(rootEntity);
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
 	
 	//ProblemDifficulty
 	@Override 

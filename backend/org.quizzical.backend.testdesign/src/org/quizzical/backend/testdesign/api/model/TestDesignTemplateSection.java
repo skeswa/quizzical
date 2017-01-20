@@ -2,6 +2,8 @@ package org.quizzical.backend.testdesign.api.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
@@ -16,6 +18,11 @@ public class TestDesignTemplateSection extends BaseEntity implements Serializabl
 	private List<TestDesignTemplateItem>  items;
 	
 	public TestDesignTemplateSection() {
+	}
+	
+	public TestDesignTemplateSection(final String name, final String code) {
+		this.name = name;
+		this.code = code;		
 	}
 	
 	public TestDesignTemplateSection(final TestDesignTemplateSectionType type, final TestDesignTemplate template, final Integer ordinal) {
@@ -64,5 +71,21 @@ public class TestDesignTemplateSection extends BaseEntity implements Serializabl
 
 	public void setType(TestDesignTemplateSectionType type) {
 		this.type = type;
+	}
+	
+	public List<TestDesignTemplateItem> getOrderedItems() {
+		List<TestDesignTemplateItem> orderedItems = getItems();
+		Collections.sort(orderedItems, new Comparator<TestDesignTemplateItem>() {
+			@Override
+			public int compare(TestDesignTemplateItem o1, TestDesignTemplateItem o2) {
+				if  (o1.getOrdinal() < o2.getOrdinal())
+					return -1;
+				else if (o1.getOrdinal() > o2.getOrdinal())
+					return  1;
+				else 
+					return 0;//they must be the same
+			}
+		});
+		return orderedItems;
 	}
 }

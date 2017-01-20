@@ -75,4 +75,7 @@ public interface ITestDesignTemplateDAOService {
 	TestDesignTemplateSection provideTestDesignTemplateSection(TestDesignTemplateSection record)
 			throws ApplicationException;
 
+	List<TestDesignTemplateItem> getOrderedTestItems(Long pk)
+			throws ApplicationException, NoSuchModelException;
+
 }

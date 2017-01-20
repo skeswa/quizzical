@@ -1,5 +1,6 @@
 package org.gauntlet.problems.api.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.gauntlet.core.api.ApplicationException;
@@ -38,7 +39,12 @@ public interface IProblemDAOService extends IBaseService {
 	public List<Problem> findByCategory(Long categoryId, int start, int end) throws ApplicationException;
 	
 	public int countByCategory(Long categoryId) throws ApplicationException;	
+	
+	public List<Problem> findByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids, final Integer randomOffset, final Integer limit)  throws ApplicationException;
 
+	public int countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids)  throws ApplicationException;
+
+	
 	//ProblemDifficulty
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException;
 	

@@ -1,9 +1,13 @@
 package org.quizzical.backend.testdesign.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,9 +26,12 @@ import org.osgi.service.log.LogService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItemDifficultyType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateType;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplate;
+import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentSubType;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateItem;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateSection;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateType;
@@ -89,16 +96,50 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 		TestDesignTemplate existingTestDesignTemplate = getByCode(record.getCode());
 		if (Validator.isNull(existingTestDesignTemplate))
 		{
-			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPATestDesignTemplate.class));
+			JPATestDesignTemplate td = fromDTO(record);
+			JPABaseEntity res = super.add(td);
 			existingTestDesignTemplate = JPAEntityUtil.copy(res, TestDesignTemplate.class);
-		}
-		else {
-			return update(record);
 		}
 
 		return existingTestDesignTemplate;
 	}
 	
+
+	private JPATestDesignTemplate fromDTO(TestDesignTemplate record) {
+		final JPATestDesignTemplate jpaEntity = JPAEntityUtil.copy(new TestDesignTemplate(record.getName(), record.getCode()), JPATestDesignTemplate.class);
+    	final List<JPATestDesignTemplateSection> sections = record.getSections()
+    		.parallelStream()
+    		.map(section -> {
+    			JPATestDesignTemplateSection jpaEntitySection = 
+    					JPAEntityUtil.copy(new TestDesignTemplateSection(section.getType(),record,section.getOrdinal()), JPATestDesignTemplateSection.class);
+    	    	final List<JPATestDesignTemplateItem> items = section.getItems()
+    	        		.parallelStream()
+    	        		.map(item -> {
+    	        			JPATestDesignTemplateItem jpaEntityItem = null;
+    	        			JPATestDesignTemplateContentSubType subType = null;
+    	        			try {
+								jpaEntityItem = 
+										JPAEntityUtil.copy(new TestDesignTemplateItem(item.getName(), item.getCode(), item.getOrdinal(), item.getDifficultyType()), JPATestDesignTemplateItem.class);
+								subType = (JPATestDesignTemplateContentSubType) super.findByPrimaryKey(JPATestDesignTemplateContentSubType.class, item.getContentSubType().getId());
+								jpaEntityItem.setContentSubType(subType);
+							} catch (NoSuchModelException | ApplicationException e) {
+								throw new RuntimeException(String.format("JPATestDesignTemplateContentSubType(%s) not found",item.getContentSubType().getId()));
+							}
+    	    				return jpaEntityItem;
+    	    	    	})
+    	        		.collect(Collectors.toList());
+    			
+    	    	jpaEntitySection.setItems(items);
+    	    	
+				return jpaEntitySection;
+	    	})
+    		.collect(Collectors.toList());
+    	
+    	jpaEntity.setSections(new HashSet<JPATestDesignTemplateSection>(sections));
+		
+		return jpaEntity;
+	}	
+
 	@Override
 	public TestDesignTemplate update(TestDesignTemplate record) throws ApplicationException {
 		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPATestDesignTemplate.class));
@@ -388,4 +429,28 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 		return null;
 	}
 	
+	@Override
+	public List<TestDesignTemplateItem> getOrderedTestItems(final Long pk) throws ApplicationException, NoSuchModelException {
+		final TestDesignTemplate td = getByPrimary(pk);
+		final List<TestDesignTemplateItem> unorderedItems = new ArrayList<>();
+		for (TestDesignTemplateSection sec : td.getSections()) {
+			unorderedItems.addAll(sec.getItems());
+		}
+
+		Collections.sort(unorderedItems, new Comparator<TestDesignTemplateItem>() {
+			@Override
+			public int compare(TestDesignTemplateItem o1, TestDesignTemplateItem o2) {
+				if  (((o1.getSection().getOrdinal() < o2.getSection().getOrdinal())
+						|| o1.getSection().getOrdinal() == o2.getSection().getOrdinal()) && o1.getOrdinal() < o2.getOrdinal())
+					return -1;
+				else if (((o1.getSection().getOrdinal() > o2.getSection().getOrdinal())
+						|| o1.getSection().getOrdinal() == o2.getSection().getOrdinal()) && o1.getOrdinal() > o2.getOrdinal())
+					return  1;
+				else 
+					return 0;//they must be the same
+			}
+		});
+		
+		return unorderedItems;
+	}
 }

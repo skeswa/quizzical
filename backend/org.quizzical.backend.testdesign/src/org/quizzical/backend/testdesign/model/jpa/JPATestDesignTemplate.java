@@ -31,4 +31,20 @@ public class JPATestDesignTemplate extends JPABaseEntity implements Serializable
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="template")
 	private Set<JPATestDesignTemplateSection> sections = new java.util.HashSet<JPATestDesignTemplateSection>();
+
+	public JPATestDesignTemplateType getTemplateType() {
+		return templateType;
+	}
+
+	public void setTemplateType(JPATestDesignTemplateType templateType) {
+		this.templateType = templateType;
+	}
+
+	public Set<JPATestDesignTemplateSection> getSections() {
+		return sections;
+	}
+
+	public void setSections(Set<JPATestDesignTemplateSection> sections) {
+		this.sections = sections;
+	}
 }

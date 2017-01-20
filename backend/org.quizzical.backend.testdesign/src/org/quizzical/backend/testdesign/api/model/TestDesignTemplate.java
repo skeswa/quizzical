@@ -1,8 +1,13 @@
 package org.quizzical.backend.testdesign.api.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.model.BaseEntity;
 import org.quizzical.backend.security.api.model.user.User;
 
@@ -55,5 +60,21 @@ public class TestDesignTemplate extends BaseEntity implements Serializable {
 
 	public void setSections(List<TestDesignTemplateSection> sections) {
 		this.sections = sections;
+	}
+	
+	public List<TestDesignTemplateSection> getOrderedSections() {
+		List<TestDesignTemplateSection> orderedSections = getSections();
+		Collections.sort(orderedSections, new Comparator<TestDesignTemplateSection>() {
+			@Override
+			public int compare(TestDesignTemplateSection o1, TestDesignTemplateSection o2) {
+				if  (o1.getOrdinal() < o2.getOrdinal())
+					return -1;
+				else if (o1.getOrdinal() > o2.getOrdinal())
+					return  1;
+				else 
+					return 0;//they must be the same
+			}
+		});
+		return orderedSections;
 	}
 }

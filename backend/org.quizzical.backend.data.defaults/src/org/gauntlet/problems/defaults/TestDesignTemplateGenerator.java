@@ -22,6 +22,7 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItemDifficultyType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 
@@ -48,9 +49,19 @@ public class TestDesignTemplateGenerator {
 		
 		
 		TestDesignTemplateContentSubType stRatesRatios = subTypes.get(Constants.CONTENT_TYPE_PROBLEM_SOLVING_AND_DATA_ANALYSIS+"/"+Constants.CONTENT_TYPE_RATES_RATIOS_PROPORTIONS_AND_PERCENTAGES);
+		TestDesignTemplateContentSubType stScatterplots = subTypes.get(Constants.CONTENT_TYPE_PROBLEM_SOLVING_AND_DATA_ANALYSIS+"/"+Constants.CONTENT_TYPE_SCATTERPLOTS);
+		TestDesignTemplateContentSubType stStatsAndProb = subTypes.get(Constants.CONTENT_TYPE_PROBLEM_SOLVING_AND_DATA_ANALYSIS+"/"+Constants.CONTENT_TYPE_STATISTICS_AND_PROBABILITY);
+		
+		TestDesignTemplateContentSubType stFunctions = subTypes.get(Constants.CONTENT_TYPE_PASSPORT_TO_ADVANCED_MATH+"/"+Constants.CONTENT_TYPE_FUNCTIONS);
+		TestDesignTemplateContentSubType stQuadratics = subTypes.get(Constants.CONTENT_TYPE_PASSPORT_TO_ADVANCED_MATH+"/"+Constants.CONTENT_TYPE_QUADRATICS);
+		TestDesignTemplateContentSubType stExponents= subTypes.get(Constants.CONTENT_TYPE_PASSPORT_TO_ADVANCED_MATH+"/"+Constants.CONTENT_TYPE_EXPONENTS);
+		
+		TestDesignTemplateContentSubType stGeometry = subTypes.get(Constants.CONTENT_TYPE_ADDITIONAL_TOPICS_IN_MATH+"/"+Constants.CONTENT_TYPE_GEOMETRY);
+		TestDesignTemplateContentSubType stImagNumbers = subTypes.get(Constants.CONTENT_TYPE_ADDITIONAL_TOPICS_IN_MATH+"/"+Constants.CONTENT_TYPE_IMAGINARY_NUMBERS);
+		TestDesignTemplateContentSubType stTrig = subTypes.get(Constants.CONTENT_TYPE_ADDITIONAL_TOPICS_IN_MATH+"/"+Constants.CONTENT_TYPE_TRIGONOMETRY);
 		
 		//PT
-		TestDesignTemplate practiceTest = new TestDesignTemplate("PracticeTest","PracticeTest");
+		TestDesignTemplate practiceTest = new TestDesignTemplate("PracticeTest1","PracticeTest1");
 		List<TestDesignTemplateSection> sections = new ArrayList<>();
 		practiceTest.setSections(sections);
 		
@@ -60,8 +71,154 @@ public class TestDesignTemplateGenerator {
 		sections.add(nonCalcSec);
 		sections.add(calcSec);
 		
-		//NonCal sect
-		TestDesignTemplateItem item = new TestDesignTemplateItem();
+		//********** NonCal sect
+		List<TestDesignTemplateItem> items = new ArrayList<>();
+		nonCalcSec.setItems(items);
+		
+		//---- Easy
+		TestDesignTemplateItem item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.EASY,1);
+		items.add(item);
+		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.EASY,2);
+		items.add(item);
+		item = new TestDesignTemplateItem(stGeometry,nonCalcSec,TestDesignTemplateItemDifficultyType.EASY,3);
+		items.add(item);
+		item = new TestDesignTemplateItem(stFunctions,nonCalcSec,TestDesignTemplateItemDifficultyType.EASY,4);
+		items.add(item);
+		
+		//---- Medium
+		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,5);
+		items.add(item);
+		item = new TestDesignTemplateItem(stFunctions,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,6);
+		items.add(item);
+		item = new TestDesignTemplateItem(stScatterplots,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,7);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,8);
+		items.add(item);
+		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,9);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,10);
+		items.add(item);
+		
+		//---- Hard
+		item = new TestDesignTemplateItem(stSysLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,11);
+		items.add(item);
+		item = new TestDesignTemplateItem(stInequal,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,12);
+		items.add(item);
+		item = new TestDesignTemplateItem(stFunctions,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,13);
+		items.add(item);
+		item = new TestDesignTemplateItem(stImagNumbers,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,14);
+		items.add(item);
+		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,15);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,16);
+		items.add(item);
+		item = new TestDesignTemplateItem(stInequal,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,17);
+		items.add(item);
+		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,18);
+		items.add(item);
+		item = new TestDesignTemplateItem(stGeometry,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,19);
+		items.add(item);
+		item = new TestDesignTemplateItem(stQuadratics,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,20);
+		items.add(item);
+		
+		//********** Calc allowed sect
+		items = new ArrayList<>();
+		calcSec.setItems(items);
+		
+		//---- Easy
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.EASY,1);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.EASY,2);
+		items.add(item);
+		item = new TestDesignTemplateItem(stInequal,calcSec,TestDesignTemplateItemDifficultyType.EASY,3);
+		items.add(item);
+		item = new TestDesignTemplateItem(stQuadratics,calcSec,TestDesignTemplateItemDifficultyType.EASY,4);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.EASY,5);
+		items.add(item);
+		item = new TestDesignTemplateItem(stScatterplots,calcSec,TestDesignTemplateItemDifficultyType.EASY,6);
+		items.add(item);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.EASY,7);
+		items.add(item);
+		
+		//---- Medium
+		//8.
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,8);
+		items.add(item);
+		item = new TestDesignTemplateItem(stSysLinEquations,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,9);
+		items.add(item);
+		item = new TestDesignTemplateItem(stSysLinEquations,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,10);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,11);
+		items.add(item);
+		item = new TestDesignTemplateItem(stGeometry,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,12);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,13);
+		items.add(item);
+		
+		//14.
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,14);
+		items.add(item);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,15);
+		items.add(item);
+		item = new TestDesignTemplateItem(stQuadratics,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,16);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,17);
+		items.add(item);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,18);
+		items.add(item);
+		item = new TestDesignTemplateItem(stQuadratics,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,19);
+		items.add(item);
+		
+		
+		//20.
+		item = new TestDesignTemplateItem(stFunctions,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,20);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,21);
+		items.add(item);
+		item = new TestDesignTemplateItem(stFunctions,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,22);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,23);
+		items.add(item);
+		item = new TestDesignTemplateItem(stInequal,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,24);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,25);
+		items.add(item);
+		
+		//26.
+		item = new TestDesignTemplateItem(stScatterplots,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,26);
+		items.add(item);
+		
+		//-- Hard
+		//27.
+		item = new TestDesignTemplateItem(stGeometry,calcSec,TestDesignTemplateItemDifficultyType.HARD,27);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.HARD,28);
+		items.add(item);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.HARD,29);
+		items.add(item);
+		item = new TestDesignTemplateItem(stExponents,calcSec,TestDesignTemplateItemDifficultyType.HARD,30);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.HARD,31);
+		items.add(item);
+		
+		//32.
+		item = new TestDesignTemplateItem(stExponents,calcSec,TestDesignTemplateItemDifficultyType.HARD,32);
+		items.add(item);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.HARD,33);
+		items.add(item);
+		item = new TestDesignTemplateItem(stGeometry,calcSec,TestDesignTemplateItemDifficultyType.HARD,34);
+		items.add(item);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.HARD,35);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.HARD,36);
+		items.add(item);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.HARD,37);
+		items.add(item);
+		item = new TestDesignTemplateItem(stTrig,calcSec,TestDesignTemplateItemDifficultyType.HARD,38);
+		items.add(item);
+		
+		testDesignService.provide(practiceTest);
 	}
 
 	private Map<String, TestDesignTemplateContentSubType> generateCategories() throws ApplicationException {
@@ -122,8 +279,8 @@ public class TestDesignTemplateGenerator {
 	}
 
 	private TestDesignTemplateContentSubType createSubType(Map<String, TestDesignTemplateContentSubType> subTypesMap,
-			TestDesignTemplateContentType type, String contentTypeLinearEquestions) {
-		final TestDesignTemplateContentSubType st = new TestDesignTemplateContentSubType(type,Constants.CONTENT_TYPE_LINEAR_EQUESTIONS,Constants.CONTENT_TYPE_LINEAR_EQUESTIONS);
+			TestDesignTemplateContentType type, String subType) {
+		final TestDesignTemplateContentSubType st = new TestDesignTemplateContentSubType(type,subType,subType);
 		subTypesMap.put(st.getCode(), st);
 		return st;
 	}

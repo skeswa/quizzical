@@ -9,11 +9,15 @@ public class QuizProblem extends BaseEntity implements Serializable {
 	
 	private Long problemId;
 	
+	private transient Integer sectionOrdinal;
+	
 	private Integer ordinal;
 	
 	private Problem problem;
 	
 	private Quiz quiz;
+	
+	private QuizProblemType type = QuizProblemType.REGULAR;
 	
 	public QuizProblem() {
 	}
@@ -73,5 +77,21 @@ public class QuizProblem extends BaseEntity implements Serializable {
 
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
+	}
+
+	public Integer getSectionOrdinal() {
+		return sectionOrdinal;
+	}
+
+	public void setSectionOrdinal(Integer sectionOrdinal) {
+		this.sectionOrdinal = sectionOrdinal;
+	}
+
+	public QuizProblemType getType() {
+		return type;
+	}
+
+	public void setType(QuizProblemType type) {
+		this.type = type;
 	}
 }

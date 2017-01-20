@@ -17,6 +17,12 @@ public class TestDesignTemplateItem extends BaseEntity implements Serializable {
 	public TestDesignTemplateItem() {
 	}
 	
+	public TestDesignTemplateItem(final String name, final String code, final Integer ordinal, final TestDesignTemplateItemDifficultyType difficultyType) {
+		setOrdinal(ordinal);
+		setName(name);
+		setCode(code);
+	}	
+	
 	public TestDesignTemplateItem(final TestDesignTemplateContentSubType contentSubType, final TestDesignTemplateSection section, final TestDesignTemplateItemDifficultyType difficultyType, final Integer ordinal) {
 		setOrdinal(ordinal);
 		setDifficultyType(difficultyType);

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.gauntlet.core.model.Constants;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.quizzes.api.model.QuizProblemType;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -27,6 +28,8 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 	@ManyToOne(targetEntity = JPAQuiz.class)
 	@JoinColumn
 	private JPAQuiz quiz;
+	
+	private QuizProblemType type = QuizProblemType.REGULAR;
 
 	public JPAQuizProblem() {
 		super();
@@ -53,6 +56,14 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 
 	public void setOrdinal(Integer ordinal) {
 		this.ordinal = ordinal;
+	}
+
+	public QuizProblemType getType() {
+		return type;
+	}
+
+	public void setType(QuizProblemType type) {
+		this.type = type;
 	}	
 }
 
