@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
@@ -267,30 +268,36 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			throws ApplicationException {
 		List<Problem> result = null;
 		try {
-			CriteriaBuilder builder = getEm().getCriteriaBuilder();
-			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
-			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			if (ids.isEmpty())
+				ids.add(-1L);
 			
-			Map<ParameterExpression,Object> pes = new HashMap<>();
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
 			
 			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
-			pes.put(pDiff, difficultyId);
 			
 			ParameterExpression<Long> pCat = builder.parameter(Long.class);
-			pes.put(pCat, categoryId);
 			
 			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
-			pes.put(pIn, ids);
 			
-			query.select(rootEntity).where(builder.and(
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.and(
 					builder.equal(rootEntity.get("category").get("id"),pCat),
 					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
 					builder.not(rootEntity.get("id").in(pIn))
 					));
-			query.select(rootEntity);
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pDiff, difficultyId);
+			typedQuery.setParameter(pCat, categoryId);
+			typedQuery.setParameter(pIn, ids);
+			
+			typedQuery.setFirstResult(offset);
+			typedQuery.setMaxResults(limit);
 			
 			
-			List<JPAProblem> resultList = findWithDynamicQueryAndParams(query,pes,offset,limit);
+			List<JPAProblem> resultList = typedQuery.getResultList();
 			result = JPAEntityUtil.copy(resultList, Problem.class);		
 		}
 		catch (Exception e) {
@@ -301,32 +308,37 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override 
-	public int countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids)  
+	public long countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final List<Long> ids)  
 			throws ApplicationException {
-		int count = 0;
+		long count = 0;
 		try {
-			CriteriaBuilder builder = getEm().getCriteriaBuilder();
-			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
-			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			if (ids.isEmpty())
+				ids.add(-1L);
 			
-			Map<ParameterExpression,Object> pes = new HashMap<>();
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
 			
 			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
-			pes.put(pDiff, difficultyId);
 			
 			ParameterExpression<Long> pCat = builder.parameter(Long.class);
-			pes.put(pCat, categoryId);
 			
 			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
-			pes.put(pIn, ids);
 			
-			query.select(rootEntity).where(builder.and(
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(qb.count(rootEntity));
+			cq.where(builder.and(
 					builder.equal(rootEntity.get("category").get("id"),pCat),
 					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
 					builder.not(rootEntity.get("id").in(pIn))
 					));
 			
-			count = (int)countWithDynamicQuery(query);
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pDiff, difficultyId);
+			typedQuery.setParameter(pCat, categoryId);
+			typedQuery.setParameter(pIn, ids);
+			
+			count = (long) typedQuery.getSingleResult();
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -42,7 +42,7 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public List<Problem> findByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids, final Integer randomOffset, final Integer limit)  throws ApplicationException;
 
-	public int countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final Collection ids)  throws ApplicationException;
+	public long countByDifficultyAndCategoryNotInIn(final Long difficultyId, final Long categoryId, final List<Long> ids)  throws ApplicationException;
 
 	
 	//ProblemDifficulty

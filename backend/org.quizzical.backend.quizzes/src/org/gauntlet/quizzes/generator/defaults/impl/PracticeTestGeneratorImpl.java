@@ -93,10 +93,10 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 						ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
 						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
 						
-						int count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), includedProblemIds.keySet());
-						int randomOffset = generateRandowOffset(count);
+						long count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						int randomOffset = (int)generateRandowOffset(count);
 						
-						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
+						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 						if (problems.isEmpty())
 							throw new RuntimeException(String.format("Test Item %s cannot match a problem",item.getCode()));
 						final Problem problem = problems.iterator().next();
@@ -137,8 +137,8 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 						final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
 						final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
 						
-						final int count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), includedProblemIds.keySet());
-						int randomOffset = generateRandowOffset(count);
+						final long count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						int randomOffset = (int)generateRandowOffset(count);
 						
 						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
 						if (problems.isEmpty())
@@ -213,8 +213,8 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		return persistedQuiz;
 	}
 
-	private int generateRandowOffset(int count) {
-		return ThreadLocalRandom.current().nextInt(0, count-1);
+	private long generateRandowOffset(long count) {
+		return ThreadLocalRandom.current().nextLong(0, count-1);
 	}
 
 	private String getDifficultyCode(TestDesignTemplateItemDifficultyType difficultyType) {
