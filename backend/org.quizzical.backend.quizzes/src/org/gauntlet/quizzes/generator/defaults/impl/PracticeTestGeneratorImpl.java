@@ -93,6 +93,17 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		
 		//=== NonCalc
 		Map<Long,Problem> includedProblemIds = new HashMap<>();
+
+		final Problem startNonCalcProblem = problemDAOService.getByCode(org.gauntlet.problems.api.model.Constants.SYSTEM_PROBLEM_START_NON_CALC_SEC);
+		includedProblemIds.put(startNonCalcProblem.getId(),startNonCalcProblem);
+		QuizProblem startNonCalcQuizProblem = new QuizProblem(
+				quizCode,
+				counter.incr(),
+				nonCalSec.getOrdinal(),
+				-1,
+				startNonCalcProblem.getId(),
+				startNonCalcProblem);
+		startNonCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
 		final List<QuizProblem> nonCalcQuizProblems = nonCalSec.getOrderedItems()
 				.parallelStream()
         		.map(item -> {
@@ -120,7 +131,6 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 								item.getOrdinal(),
 								problem.getId(),
 								problem);
-						System.out.println(qp.getQuizOrdinal());
 					} catch (Exception e) {
 						StringWriter sw = new StringWriter();
 						e.printStackTrace(new PrintWriter(sw));
@@ -133,21 +143,20 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
         			return qp;
     	    	})
         		.collect(Collectors.toList());
-		final Problem startNonCalcProblem = problemDAOService.getByCode(org.gauntlet.problems.api.model.Constants.SYSTEM_PROBLEM_START_NON_CALC_SEC);
-
-		includedProblemIds.put(startNonCalcProblem.getId(),startNonCalcProblem);
-		QuizProblem startNonCalcQuizProblem = new QuizProblem(
-				quizCode,
-				counter.incr(),
-				nonCalSec.getOrdinal(),
-				-1,
-				startNonCalcProblem.getId(),
-				startNonCalcProblem);
-		startNonCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
-		System.out.println(startNonCalcQuizProblem.getQuizOrdinal());
+	
 		
 		
 		//=== Calc
+		final Problem startCalcProblem = problemDAOService.getByCode(org.gauntlet.problems.api.model.Constants.SYSTEM_PROBLEM_START_CALC_SEC);
+		includedProblemIds.put(startCalcProblem.getId(),startCalcProblem);
+		QuizProblem startCalcQuizProblem = new QuizProblem(
+				quizCode,
+				counter.incr(),
+				calSec.getOrdinal(),
+				-1,
+				startCalcProblem.getId(),
+				startCalcProblem);
+		startCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
 		final List<QuizProblem> calcQuizProblems = calSec.getOrderedItems()
 				.parallelStream()
         		.map(item -> {
@@ -177,7 +186,6 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 									item.getOrdinal(),
 									problem.getId(),
 									problem); 
-							System.out.println(qp.getQuizOrdinal());
 						} catch (Exception e) {
 							StringWriter sw = new StringWriter();
 							e.printStackTrace(new PrintWriter(sw));
@@ -191,45 +199,9 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
         			return qp;
     	    	})
         		.collect(Collectors.toList());	
-		
-		final Problem startCalcProblem = problemDAOService.getByCode(org.gauntlet.problems.api.model.Constants.SYSTEM_PROBLEM_START_CALC_SEC);
-
-		includedProblemIds.put(startCalcProblem.getId(),startCalcProblem);
-		QuizProblem startCalcQuizProblem = new QuizProblem(
-				quizCode,
-				counter.incr(),
-				calSec.getOrdinal(),
-				-1,
-				startCalcProblem.getId(),
-				startCalcProblem);
-		startCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
-		
-		System.out.println(startCalcQuizProblem.getQuizOrdinal());
-
-		
-		final List<QuizProblem> orderedQuizProblems = Stream.concat(nonCalcQuizProblems.stream(), calcQuizProblems.stream()).collect(Collectors.toList());
-		Collections.sort(orderedQuizProblems, new Comparator<QuizProblem>() {
-			@Override
-			public int compare(QuizProblem o1, QuizProblem o2) {
-				if  (((o1.getSectionOrdinal() < o2.getSectionOrdinal())
-						|| o1.getSectionOrdinal() == o2.getSectionOrdinal()) && (
-								(o1.getOrdinal() < o2.getOrdinal()))
-							||  (o1.getOrdinal() == -1 && o2.getOrdinal() > -1)
-						)
-					return -1;
-				else if (((o1.getSectionOrdinal() > o2.getSectionOrdinal())
-						|| o1.getSectionOrdinal() == o2.getSectionOrdinal()) && (
-								(o1.getOrdinal() > o2.getOrdinal())
-							||  (o1.getOrdinal() > -1 && o2.getOrdinal() == -1)
-								)
-						)
-					return  1;
-				else 
-					return 0;//they must be the same
-			}
-		});
-		orderedQuizProblems.add(0,startNonCalcQuizProblem);
-		orderedQuizProblems.add(nonCalcQuizProblems.size()+1,startCalcQuizProblem);
+		final List<QuizProblem> unorderedQuizProblems = Stream.concat(nonCalcQuizProblems.stream(), calcQuizProblems.stream()).collect(Collectors.toList());
+		unorderedQuizProblems.add(startNonCalcQuizProblem);
+		unorderedQuizProblems.add(startCalcQuizProblem);
 
 		
 		final Quiz quiz = new Quiz();
@@ -237,7 +209,7 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		quiz.setCode(quizCode);
 		quiz.setName(quizName);
 		quiz.setQuizType(quizType);
-		quiz.setQuestions(orderedQuizProblems);
+		quiz.setQuestions(unorderedQuizProblems);
 		
 		final Quiz persistedQuiz = quizDAOService.provide(user, quiz);
 		persistedQuiz.getQuestions()
@@ -247,6 +219,18 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 				question.setQuiz(quiz);
 				question.setOrdinal(question.getQuizOrdinal());
 			});
+		
+		Collections.sort(persistedQuiz.getQuestions(), new Comparator<QuizProblem>() {
+			@Override
+			public int compare(QuizProblem o1, QuizProblem o2) {
+				if  (o1.getQuizOrdinal() < o2.getQuizOrdinal())
+					return -1;
+				else if (o1.getQuizOrdinal() > o2.getQuizOrdinal())
+					return  1;
+				else 
+					return 0;//they must be the same
+			}
+		});
 		
 		return persistedQuiz;
 	}

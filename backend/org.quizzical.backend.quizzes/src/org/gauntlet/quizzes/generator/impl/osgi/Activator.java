@@ -47,7 +47,7 @@ public class Activator extends DependencyActivatorBase {
 		
 		//--
 		properties = new Properties();
-		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_PRACTICE_TEST);
+		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_REALISTIC_TEST);
 		component = dm.createComponent()
 				.setInterface(IQuizGeneratorService.class.getName(), properties)
 				.setImplementation(PracticeTestGeneratorImpl.class)
