@@ -325,9 +325,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
 					builder.not(rootEntity.get("id").in(pIn))
 					));
-			query.select(rootEntity);
 			
-			count = countWithDynamicQueryAndParams(query,pes);
+			count = (int)countWithDynamicQuery(query);
 		}
 		catch (Exception e) {
 			throw processException(e);

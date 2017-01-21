@@ -67,7 +67,9 @@ public class TestDesignTemplateGenerator {
 		
 		//Sections
 		TestDesignTemplateSection nonCalcSec = new TestDesignTemplateSection(TestDesignTemplateSectionType.CALCULATOR_NOT_ALLOWED,practiceTest,1);
+		nonCalcSec.setTemplate(practiceTest);
 		TestDesignTemplateSection calcSec = new TestDesignTemplateSection(TestDesignTemplateSectionType.CALCULATOR_ALLOWED,practiceTest,2);
+		calcSec.setTemplate(practiceTest);
 		sections.add(nonCalcSec);
 		sections.add(calcSec);
 		

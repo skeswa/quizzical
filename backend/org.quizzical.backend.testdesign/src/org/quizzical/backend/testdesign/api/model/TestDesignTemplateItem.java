@@ -30,6 +30,7 @@ public class TestDesignTemplateItem extends BaseEntity implements Serializable {
 		final String code = String.format("%s-%s-%d",section.getCode(),contentSubType.getCode(),getOrdinal());
 		setName(code);
 		setCode(code);
+		setSection(section);
 	}
 
 	public TestDesignTemplateSection getSection() {

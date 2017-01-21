@@ -120,15 +120,20 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
     	        			try {
 								jpaEntityItem = 
 										JPAEntityUtil.copy(new TestDesignTemplateItem(item.getName(), item.getCode(), item.getOrdinal(), item.getDifficultyType()), JPATestDesignTemplateItem.class);
-								subType = (JPATestDesignTemplateContentSubType) super.findByPrimaryKey(JPATestDesignTemplateContentSubType.class, item.getContentSubType().getId());
+								subType = getSubTypeByCode(item.getContentSubType().getCode());
+								jpaEntityItem.setDifficultyType(item.getDifficultyType());
 								jpaEntityItem.setContentSubType(subType);
-							} catch (NoSuchModelException | ApplicationException e) {
-								throw new RuntimeException(String.format("JPATestDesignTemplateContentSubType(%s) not found",item.getContentSubType().getId()));
+							} catch (ApplicationException e) {
+								throw new RuntimeException(String.format("JPATestDesignTemplateContentSubType(%s) not found",item.getContentSubType().getCode()));
 							}
+    	        			
+    	        			jpaEntityItem.setSection(jpaEntitySection);
+    	        			
     	    				return jpaEntityItem;
     	    	    	})
     	        		.collect(Collectors.toList());
     			
+    	    	jpaEntitySection.setTemplate(jpaEntity);
     	    	jpaEntitySection.setItems(items);
     	    	
 				return jpaEntitySection;
@@ -139,6 +144,11 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 		
 		return jpaEntity;
 	}	
+	
+	public JPATestDesignTemplateContentSubType getSubTypeByCode(String code) throws ApplicationException {
+		JPATestDesignTemplateContentSubType jpaEntity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, JPATestDesignTemplateContentSubType.class);
+	}
 
 	@Override
 	public TestDesignTemplate update(TestDesignTemplate record) throws ApplicationException {
