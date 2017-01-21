@@ -1,5 +1,7 @@
 package org.gauntlet.quizzes.generator.defaults.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,12 +95,14 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 						ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
 						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
 						
-						long count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						if (count < 1)
+							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
 						int randomOffset = (int)generateRandowOffset(count);
 						
-						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
+						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 						if (problems.isEmpty())
-							throw new RuntimeException(String.format("Test Item %s cannot match a problem",item.getCode()));
+							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
 						final Problem problem = problems.iterator().next();
 						
 						includedProblemIds.put(problem.getId(),problem);
@@ -111,7 +115,12 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 								problem);
 						qp.setSectionOrdinal(item.getSection().getOrdinal());
 					} catch (Exception e) {
-						throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						String stacktrace = sw.toString();
+						System.out.println(e.getMessage());
+						//logger.log(LogService.LOG_ERROR,stacktrace);
+						//throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
 					}
         			
         			return qp;
@@ -133,30 +142,39 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 				.parallelStream()
         		.map(item -> {
         			QuizProblem qp = null;
-        			try {
-						final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
-						final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
-						
-						final long count = problemDAOService.countByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
-						int randomOffset = (int)generateRandowOffset(count);
-						
-						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
-						if (problems.isEmpty())
-							throw new RuntimeException(String.format("Test Item %s cannot match a problem",item.getCode()));
-						final Problem problem = problems.iterator().next();
-						
-						includedProblemIds.put(problem.getId(),problem);
-						
-						qp = new QuizProblem(
-								"",
-								String.format("%s-%s", quizCode, problem.getCode()),
-								item.getOrdinal(),
-								problem.getId(),
-								problem);
-						qp.setSectionOrdinal(item.getSection().getOrdinal());
-					} catch (Exception e) {
-						throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
-					}
+        			long count = 0;
+						try {
+							final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
+							final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
+							
+							count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+							if (count < 1)
+								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+							int randomOffset = (int)generateRandowOffset(count);
+							
+							final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
+							if (problems.isEmpty())
+								throw new RuntimeException(String.format("Empty: Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+							final Problem problem = problems.iterator().next();
+							
+							includedProblemIds.put(problem.getId(),problem);
+							
+							qp = new QuizProblem(
+									"",
+									String.format("%s-%s", quizCode, problem.getCode()),
+									item.getOrdinal(),
+									problem.getId(),
+									problem); 
+							qp.setSectionOrdinal(item.getSection().getOrdinal());
+						} catch (Exception e) {
+							StringWriter sw = new StringWriter();
+							e.printStackTrace(new PrintWriter(sw));
+							String stacktrace = sw.toString();
+							System.out.println(e.getMessage());
+							//logger.log(LogService.LOG_ERROR,stacktrace);
+							//throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
+						}
+				
         			
         			return qp;
     	    	})
@@ -214,7 +232,9 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 	}
 
 	private long generateRandowOffset(long count) {
-		return ThreadLocalRandom.current().nextLong(0, count-1);
+		if (count == 0)
+			return count;
+		return ThreadLocalRandom.current().nextLong(0, count);
 	}
 
 	private String getDifficultyCode(TestDesignTemplateItemDifficultyType difficultyType) {
