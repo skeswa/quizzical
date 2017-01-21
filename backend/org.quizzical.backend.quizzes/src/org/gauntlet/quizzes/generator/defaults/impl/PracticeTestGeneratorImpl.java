@@ -240,7 +240,7 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 	private String getDifficultyCode(TestDesignTemplateItemDifficultyType difficultyType) {
 		if (difficultyType.equals(TestDesignTemplateItemDifficultyType.EASY))
 			return "Easy";
-		else if (difficultyType.equals(TestDesignTemplateItemDifficultyType.EASY))
+		else if (difficultyType.equals(TestDesignTemplateItemDifficultyType.MEDIUM))
 			return "Medium";
 		else
 			return "Hard";

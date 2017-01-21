@@ -108,13 +108,13 @@ public class TestDesignTemplateGenerator {
 		items.add(item);
 		item = new TestDesignTemplateItem(stFunctions,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,13);
 		items.add(item);
-		item = new TestDesignTemplateItem(stImagNumbers,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,14);
+		item = new TestDesignTemplateItem(stImagNumbers,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,14);
 		items.add(item);
 		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,15);
 		items.add(item);
-		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,16);
+		item = new TestDesignTemplateItem(stLinEquations,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,16);
 		items.add(item);
-		item = new TestDesignTemplateItem(stInequal,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,17);
+		item = new TestDesignTemplateItem(stInequal,nonCalcSec,TestDesignTemplateItemDifficultyType.MEDIUM,17);
 		items.add(item);
 		item = new TestDesignTemplateItem(stExponents,nonCalcSec,TestDesignTemplateItemDifficultyType.HARD,18);
 		items.add(item);
@@ -201,13 +201,13 @@ public class TestDesignTemplateGenerator {
 		items.add(item);
 		item = new TestDesignTemplateItem(stExponents,calcSec,TestDesignTemplateItemDifficultyType.HARD,30);
 		items.add(item);
-		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.HARD,31);
+		item = new TestDesignTemplateItem(stLinEquations,calcSec,TestDesignTemplateItemDifficultyType.EASY,31);
 		items.add(item);
 		
 		//32.
-		item = new TestDesignTemplateItem(stExponents,calcSec,TestDesignTemplateItemDifficultyType.HARD,32);
+		item = new TestDesignTemplateItem(stExponents,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,32);
 		items.add(item);
-		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.HARD,33);
+		item = new TestDesignTemplateItem(stStatsAndProb,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,33);
 		items.add(item);
 		item = new TestDesignTemplateItem(stGeometry,calcSec,TestDesignTemplateItemDifficultyType.HARD,34);
 		items.add(item);
@@ -215,7 +215,7 @@ public class TestDesignTemplateGenerator {
 		items.add(item);
 		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.HARD,36);
 		items.add(item);
-		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.HARD,37);
+		item = new TestDesignTemplateItem(stRatesRatios,calcSec,TestDesignTemplateItemDifficultyType.MEDIUM,37);
 		items.add(item);
 		item = new TestDesignTemplateItem(stTrig,calcSec,TestDesignTemplateItemDifficultyType.HARD,38);
 		items.add(item);

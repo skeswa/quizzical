@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -35,6 +37,7 @@ public class JPATestDesignTemplateItem extends JPABaseEntity implements Serializ
 	
 	private Integer ordinal;
 	
+	@Enumerated(EnumType.STRING)
 	private TestDesignTemplateItemDifficultyType difficultyType;
 
 	public JPATestDesignTemplateSection getSection() {
