@@ -25,6 +25,7 @@ import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
+import org.gauntlet.quizzes.api.model.QuizProblemType;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
@@ -139,6 +140,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		final JPAQuizSubmission jpaQuizSubmission = JPAEntityUtil.copy(quizSubmission, JPAQuizSubmission.class);
     	final List<JPAQuizProblemResponse> responses = quizSubmission.getResponses()
     		.parallelStream()
+    		.filter(pr -> pr.getQuizProblem().getType() == QuizProblemType.REGULAR)
     		.map(problemResponse -> {
 	    		JPAQuizProblemResponse jpaEntity = null;
 				try {

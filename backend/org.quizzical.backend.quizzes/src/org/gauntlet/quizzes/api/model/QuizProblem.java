@@ -9,7 +9,9 @@ public class QuizProblem extends BaseEntity implements Serializable {
 	
 	private Long problemId;
 	
-	private transient Integer sectionOrdinal;
+	private Integer quizOrdinal;
+	
+	private Integer sectionOrdinal;
 	
 	private Integer ordinal;
 	
@@ -46,6 +48,22 @@ public class QuizProblem extends BaseEntity implements Serializable {
 		this(name, code, ordinal, problemId);
 		this.problem = problem;
 	}
+	
+	public QuizProblem(
+			final String quizCode,
+			final Integer quizOrdinal,
+			final Integer sectionOrdinal,
+			final Integer ordinal,
+			final Long problemId,
+			final Problem problem) {
+		this(null, null, ordinal, problemId);
+		this.problem = problem;
+		this.quizOrdinal = quizOrdinal;
+		this.sectionOrdinal = sectionOrdinal;
+		String code = String.format("%s-%s-O%d", quizCode, problem.getCode(), quizOrdinal);
+		setCode(code);
+		setName(code);
+	}	
 
 	public Integer getOrdinal() {
 		return ordinal;
@@ -94,4 +112,14 @@ public class QuizProblem extends BaseEntity implements Serializable {
 	public void setType(QuizProblemType type) {
 		this.type = type;
 	}
+
+	public Integer getQuizOrdinal() {
+		return quizOrdinal;
+	}
+
+	public void setQuizOrdinal(Integer quizOrdinal) {
+		this.quizOrdinal = quizOrdinal;
+	}
+	
+	
 }

@@ -20,6 +20,10 @@ import org.gauntlet.quizzes.api.model.QuizProblemType;
 	+"quiz_prob")
 public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 8538105534304495532L;
+	
+	private Integer quizOrdinal;
+	
+	private Integer sectionOrdinal;
 
 	private Integer ordinal;
 	
@@ -64,6 +68,22 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 
 	public void setType(QuizProblemType type) {
 		this.type = type;
+	}
+
+	public Integer getQuizOrdinal() {
+		return quizOrdinal;
+	}
+
+	public void setQuizOrdinal(Integer quizOrdinal) {
+		this.quizOrdinal = quizOrdinal;
+	}
+
+	public Integer getSectionOrdinal() {
+		return sectionOrdinal;
+	}
+
+	public void setSectionOrdinal(Integer sectionOrdinal) {
+		this.sectionOrdinal = sectionOrdinal;
 	}	
 }
 
