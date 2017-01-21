@@ -19,8 +19,9 @@
 	osgi.cmpn;version='[4.3.1,5)',\
 	osgi.enterprise;version='[5,6)',\
 	,\
-	org.ops4j.pax.logging.pax-logging-api;version=1.7.0,\
-	org.ops4j.pax.logging.pax-logging-service;version=1.7.0,\
+	slf4j.api;version=1.7.21,\
+	slf4j.simple;version=1.7.21,\
+	org.apache.felix.log;version=1.0.1,\
 	,\
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.gogo.shell,\
@@ -125,6 +126,4 @@
 	sun.reflect.misc
 -runfw: org.apache.felix.framework;version='[5, 6)'
 -runvm: -ea
--runproperties:  \
-  felix.log.level=4
 Private-Package: org.quizzical.backend.quizzes.itests

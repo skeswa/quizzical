@@ -16,6 +16,8 @@ import org.gauntlet.core.model.Constants;
 @Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
 +"user")
 public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
+	private static final long serialVersionUID = 7745549020494226091L;
+
 	private String uuid;
 	private String originalUuid;
 	private long userId;
