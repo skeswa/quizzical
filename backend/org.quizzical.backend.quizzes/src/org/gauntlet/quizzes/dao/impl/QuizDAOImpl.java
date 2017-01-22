@@ -275,4 +275,9 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	@Override
 	public void createDefaults() throws ApplicationException {
 	}	
+	
+	@Override
+	public void truncate() throws ApplicationException {
+		super.truncate("gnt_quiz");
+	}
 }

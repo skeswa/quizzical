@@ -1,5 +1,7 @@
 package org.quizzical.backend.testdesign.dao.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -26,9 +29,7 @@ import org.osgi.service.log.LogService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItemDifficultyType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateType;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplate;
 import org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentSubType;
@@ -106,25 +107,29 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 	
 
 	private JPATestDesignTemplate fromDTO(TestDesignTemplate record) {
+		final Map<String,JPATestDesignTemplateContentSubType> subTypeMap = new ConcurrentHashMap<>();
 		final JPATestDesignTemplate jpaEntity = JPAEntityUtil.copy(new TestDesignTemplate(record.getName(), record.getCode()), JPATestDesignTemplate.class);
     	final List<JPATestDesignTemplateSection> sections = record.getSections()
-    		.parallelStream()
+    		.stream()
     		.map(section -> {
     			JPATestDesignTemplateSection jpaEntitySection = 
     					JPAEntityUtil.copy(new TestDesignTemplateSection(section.getType(),record,section.getOrdinal()), JPATestDesignTemplateSection.class);
     	    	final List<JPATestDesignTemplateItem> items = section.getItems()
-    	        		.parallelStream()
+    	        		.stream()
     	        		.map(item -> {
     	        			JPATestDesignTemplateItem jpaEntityItem = null;
     	        			JPATestDesignTemplateContentSubType subType = null;
     	        			try {
 								jpaEntityItem = 
 										JPAEntityUtil.copy(new TestDesignTemplateItem(item.getName(), item.getCode(), item.getOrdinal(), item.getDifficultyType()), JPATestDesignTemplateItem.class);
-								subType = getSubTypeByCode(item.getContentSubType().getCode());
+								subType = getSubTypeByCode(subTypeMap,item.getContentSubType().getCode());
 								jpaEntityItem.setDifficultyType(item.getDifficultyType());
 								jpaEntityItem.setContentSubType(subType);
 							} catch (ApplicationException e) {
-								throw new RuntimeException(String.format("JPATestDesignTemplateContentSubType(%s) not found",item.getContentSubType().getCode()));
+								StringWriter sw = new StringWriter();
+								e.printStackTrace(new PrintWriter(sw));
+								String stacktrace = sw.toString();
+								throw new RuntimeException(String.format("JPATestDesignTemplateContentSubType(%s) of Difficulty(%s) not found",item.getContentSubType().getCode(),item.getDifficultyType()));
 							}
     	        			
     	        			jpaEntityItem.setSection(jpaEntitySection);
@@ -145,9 +150,20 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 		return jpaEntity;
 	}	
 	
-	public JPATestDesignTemplateContentSubType getSubTypeByCode(String code) throws ApplicationException {
-		JPATestDesignTemplateContentSubType jpaEntity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"code", code);
-		return JPAEntityUtil.copy(jpaEntity, JPATestDesignTemplateContentSubType.class);
+	public JPATestDesignTemplateContentSubType getSubTypeByCode(Map<String, JPATestDesignTemplateContentSubType> subTypeMap, String code) throws ApplicationException {
+		JPATestDesignTemplateContentSubType type = null;
+		try {
+			type = subTypeMap.get(code);
+			if (!subTypeMap.containsKey(code)) {
+				JPATestDesignTemplateContentSubType entity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"code", code);
+				type = JPAEntityUtil.copy(entity, JPATestDesignTemplateContentSubType.class);
+				subTypeMap.put(code, type);
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return type;
 	}
 
 	@Override

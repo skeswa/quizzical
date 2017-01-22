@@ -165,13 +165,14 @@ public class TestDesignTemplateContentTypeDAOImpl extends BaseServiceImpl implem
 		return dto;	
 	}	
 	
+	@Override
 	public TestDesignTemplateContentSubType getTestDesignTemplateContentSubTypeByCode(String code) throws ApplicationException{
 		JPATestDesignTemplateContentSubType jpaEntity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"code", code);
 		return JPAEntityUtil.copy(jpaEntity, TestDesignTemplateContentSubType.class);		
 	}
 	
-	public TestDesignTemplateContentSubType getTestDesignTemplateContentSubTypeByName(String code) throws ApplicationException{
-		JPATestDesignTemplateContentSubType jpaEntity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"name", code);
+	public TestDesignTemplateContentSubType getTestDesignTemplateContentSubTypeByName(String name) throws ApplicationException{
+		JPATestDesignTemplateContentSubType jpaEntity = (JPATestDesignTemplateContentSubType) super.findWithAttribute(JPATestDesignTemplateContentSubType.class, String.class,"name", name);
 		return JPAEntityUtil.copy(jpaEntity, TestDesignTemplateContentSubType.class);		
 	}
 	

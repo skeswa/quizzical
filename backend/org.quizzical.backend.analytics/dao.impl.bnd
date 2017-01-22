@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.quizzical.backend.testdesign.dao.impl,\
+	org.quizzical.backend.testdesign.dao.impl.osgi
+Bundle-Activator: org.quizzical.backend.testdesign.dao.impl.osgi.Activator

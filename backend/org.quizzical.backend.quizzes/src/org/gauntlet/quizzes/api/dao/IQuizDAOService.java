@@ -49,4 +49,7 @@ public interface IQuizDAOService extends IBaseService {
 	public QuizType getQuizTypeByName(String name) throws ApplicationException;
 	
 	public QuizType deleteQuizType(Long id) throws ApplicationException, NoSuchModelException;
+	
+	//Misc
+	public void truncate() throws ApplicationException;
 }

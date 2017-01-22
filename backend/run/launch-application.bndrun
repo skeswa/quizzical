@@ -18,6 +18,7 @@
 	,\
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.gogo.shell,\
+	org.apache.felix.shell.remote,\
 	org.apache.felix.gogo.command,\
 	org.osgi.service.remoteserviceadmin;version='[1.1.0,1.2)',\
 	org.apache.felix.configadmin;version='[1.8.0,1.9)',\
@@ -110,7 +111,9 @@
 	org.quizzical.backend.quizzes.dao.impl;version=latest,\
 	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\
 	org.quizzical.backend.quizzes.rest;version=latest,\
-	org.quizzical.backend.quizzes.generator.impl;version=latest
+	org.quizzical.backend.quizzes.generator.impl;version=latest,\
+	,\
+	org.quizzical.backend.gogo;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \

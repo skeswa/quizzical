@@ -15,6 +15,7 @@ import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.impl.QuizGeneratorManagerImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 
 public class Activator extends DependencyActivatorBase {
@@ -41,6 +42,8 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(ByProblemCategoryGeneratorImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestDesignTemplateDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestDesignTemplateContentTypeDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);

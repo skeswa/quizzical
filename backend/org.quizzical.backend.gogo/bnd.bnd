@@ -1,0 +1,23 @@
+Bundle-Version: 1.0.0.${tstamp}
+-buildpath: \
+	osgi.core;version=6.0.0,\
+	biz.aQute.bnd;version=2.3,\
+	org.apache.felix.dependencymanager;version='[4.0.0,5.0.0)',\
+	org.apache.felix.gogo.runtime,\
+	org.apache.commons.cli,\
+	slf4j.api;version=1.7,\
+	org.apache.commons.io;version=2.4,\
+	org.apache.felix.dependencymanager.annotation;version=4.0.1,\
+	org.amdatu.remote.admin.http;version=0.1,\
+	org.apache.felix.configadmin,\
+	org.quizzical.backend.quizzes.api;version=latest,\
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.problems.api;version=latest
+DynamicImport-Package: *
+Private-Package: \
+	org.quizzical.backend.gogo.collection,\
+	org.quizzical.backend.gogo.execute,\
+	org.quizzical.backend.gogo.service,\
+	org.quizzical.backend.gogo.service.osgi
+	
+Bundle-Activator: org.quizzical.backend.gogo.service.osgi.Activator

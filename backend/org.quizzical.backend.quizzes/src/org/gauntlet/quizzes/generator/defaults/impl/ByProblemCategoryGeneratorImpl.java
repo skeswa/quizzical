@@ -1,32 +1,46 @@
 package org.gauntlet.quizzes.generator.defaults.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
+import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItemDifficultyType;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
+import org.gauntlet.quizzes.api.model.QuizProblemType;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
-
 
 public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService { 
 	private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -39,6 +53,10 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 	private volatile IQuizDAOService quizDAOService;
 	
 	private volatile IProblemDAOService problemDAOService;
+	
+	private volatile ITestDesignTemplateDAOService testDesignTemplateDAOService;
+	
+	private volatile ITestDesignTemplateContentTypeDAOService testDesignContentTypeDAOService;
 	
 	@Override
 	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
@@ -74,47 +92,163 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 				timeFormat.format(quizDateTime),
 				dateFormat.format(quizDateTime));
 		
-		final Map<Long, Problem> problems = problemDAOService.findByCategory(
-				params.getProblemCategoryId(),
-				0,
-				params.getQuizSize())
-				.stream()
-				.collect(Collectors.toMap(
-						problem -> problem.getId(),
-						Function.identity()));
-		final List<Problem> orderedProblems = problems
-				.entrySet()
-				.stream()
-				.map(problemEntry -> problemEntry.getValue())
-				.collect(Collectors.toList());
-		final List<QuizProblem> orderedQuizProblems = IntStream
-				.range(0, orderedProblems.size())
-				.mapToObj(ordinal -> {
-					final Problem problem = orderedProblems.get(ordinal);
-					return new QuizProblem(
-							"",
-							String.format("%s-%s", quizCode, problem.getCode()),
-							ordinal,
-							problem.getId(),
-							problem);
-				})
-				.collect(Collectors.toList());
+		//-- Derive TestDesign based on Cat and Size
+		final String tdTemplateCode = generateTestDesignLookupCode(params, category);
+		final TestDesignTemplate tdTemplate = testDesignTemplateDAOService.getByCode(tdTemplateCode);
+		
+		TestDesignTemplateSection nonCalSec = null;
+		TestDesignTemplateSection calSec = null;
 
+		final List<TestDesignTemplateSection> sections = tdTemplate.getOrderedSections();
+		nonCalSec = sections.get(0);
+		calSec = sections.get(1);
+		
+		final Counter counterWithInfoCards = new Counter(0);
+		final Counter counter = new Counter(0);
+		
+		//=== NonCalc
+		Map<Long,Problem> includedProblemIds = new HashMap<>();
+
+
+		final List<QuizProblem> nonCalcQuizProblems = nonCalSec.getOrderedItems()
+				.parallelStream()
+        		.map(item -> {
+        			QuizProblem qp = null;
+        			try {
+						ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
+						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
+						
+						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						if (count < 1)
+							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+						int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
+						
+						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
+						if (problems.isEmpty())
+							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+						final Problem problem = problems.iterator().next();
+						
+						includedProblemIds.put(problem.getId(),problem);
+						qp = new QuizProblem(
+								quizCode,
+								counter.incr(),
+								item.getSection().getOrdinal(),
+								counterWithInfoCards.incr(),
+								problem.getId(),
+								problem);
+					} catch (Exception e) {
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						String stacktrace = sw.toString();
+						System.out.println(e.getMessage());
+						//logger.log(LogService.LOG_ERROR,stacktrace);
+						//throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
+					}
+        			
+        			return qp;
+    	    	})
+        		.collect(Collectors.toList());
+	
+		
+		
+		//=== Calc
+		final List<QuizProblem> calcQuizProblems = calSec.getOrderedItems()
+				.parallelStream()
+        		.map(item -> {
+        			QuizProblem qp = null;
+        			long count = 0;
+						try {
+							final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
+							final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
+							
+							count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+							if (count < 1)
+								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+							int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
+							
+							final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
+							if (problems.isEmpty())
+								throw new RuntimeException(String.format("Empty: Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+							final Problem problem = problems.iterator().next();
+							
+							includedProblemIds.put(problem.getId(),problem);
+							
+							qp = new QuizProblem(
+									quizCode,
+									counter.incr(),
+									item.getSection().getOrdinal(),
+									counterWithInfoCards.incr(),
+									problem.getId(),
+									problem); 
+						} catch (Exception e) {
+							StringWriter sw = new StringWriter();
+							e.printStackTrace(new PrintWriter(sw));
+							String stacktrace = sw.toString();
+							System.out.println(e.getMessage());
+							//logger.log(LogService.LOG_ERROR,stacktrace);
+							//throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
+						}
+				
+        			
+        			return qp;
+    	    	})
+        		.collect(Collectors.toList());	
+		final List<QuizProblem> unorderedQuizProblems = Stream.concat(nonCalcQuizProblems.stream(), calcQuizProblems.stream()).collect(Collectors.toList());
+			
 		final Quiz quiz = new Quiz();
 		quiz.setUserId(user.getId());
 		quiz.setCode(quizCode);
 		quiz.setName(quizName);
 		quiz.setQuizType(quizType);
-		quiz.setQuestions(orderedQuizProblems);
+		quiz.setQuestions(unorderedQuizProblems);
 		
 		final Quiz persistedQuiz = quizDAOService.provide(user, quiz);
 		persistedQuiz.getQuestions()
 			.stream()
 			.forEach(question -> {
-				question.setProblem(problems.get(question.getProblemId()));
+				question.setProblem(includedProblemIds.get(question.getProblemId()));
 				question.setQuiz(quiz);
 			});
 		
+		Collections.sort(persistedQuiz.getQuestions(), new Comparator<QuizProblem>() {
+			@Override
+			public int compare(QuizProblem o1, QuizProblem o2) {
+				if  (o1.getOrdinal() < o2.getOrdinal())
+					return -1;
+				else if (o1.getOrdinal() > o2.getOrdinal())
+					return  1;
+				else 
+					return 0;//they must be the same
+			}
+		});
+		
 		return persistedQuiz;
+	}
+	
+	private String generateTestDesignLookupCode(QuizGenerationParameters params, ProblemCategory category)
+			throws ApplicationException {
+		String tdTemplateCode;
+		final TestDesignTemplateContentSubType tdType = testDesignContentTypeDAOService.getTestDesignTemplateContentSubTypeByCode(category.getCode());
+
+		if (params.getQuizSize() <= org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE)
+			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					tdType.getCode()+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SUFFIX;
+		else if (params.getQuizSize() > org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE &&
+				params.getQuizSize() < org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SIZE)
+			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					tdType.getCode()+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SUFFIX;
+		else
+			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					tdType.getCode()+
+					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_FULL_SUFFIX;
+		return tdTemplateCode;
 	}
 }

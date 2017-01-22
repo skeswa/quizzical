@@ -1,6 +1,8 @@
 package org.gauntlet.quizzes.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -140,7 +142,6 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		final JPAQuizSubmission jpaQuizSubmission = JPAEntityUtil.copy(quizSubmission, JPAQuizSubmission.class);
     	final List<JPAQuizProblemResponse> responses = quizSubmission.getResponses()
     		.parallelStream()
-    		.filter(pr -> pr.getQuizProblem().getType() == QuizProblemType.REGULAR)
     		.map(problemResponse -> {
 	    		JPAQuizProblemResponse jpaEntity = null;
 				try {
@@ -160,6 +161,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 					throw new RuntimeException(e);
 				}
 	    	})
+    		.filter(pr -> pr.getQuizProblem().getType() == QuizProblemType.REGULAR)
     		.collect(Collectors.toList());
     	
     	jpaQuizSubmission.setResponses(responses);
@@ -237,7 +239,20 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
     	
     	quizSubmission.setResponses(augmentedResponses);
     	
-    	return add(quizSubmission);
+    	//--Persist
+    	quizSubmission = add(quizSubmission);
+    	
+    	//--Prep for UI
+       	final List<QuizProblemResponse> correctedResponses = quizSubmission.getResponses()
+        		.parallelStream()
+        		.map(problemResponse -> {
+    				problemResponse.getQuizProblem().setOrdinal(problemResponse.getQuizProblem().getQuizOrdinal());
+    				return problemResponse;
+    	    	})
+        		.collect(Collectors.toList());
+       	quizSubmission.setResponses(correctedResponses);
+       	
+    	return quizSubmission;
 	}
 	
 	

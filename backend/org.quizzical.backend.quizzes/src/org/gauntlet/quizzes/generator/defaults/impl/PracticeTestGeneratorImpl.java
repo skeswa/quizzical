@@ -89,6 +89,7 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 				58,
 				System.currentTimeMillis());
 		
+		final Counter counterWithInfoCards = new Counter(0);
 		final Counter counter = new Counter(0);
 		
 		//=== NonCalc
@@ -98,9 +99,9 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		includedProblemIds.put(startNonCalcProblem.getId(),startNonCalcProblem);
 		QuizProblem startNonCalcQuizProblem = new QuizProblem(
 				quizCode,
-				counter.incr(),
-				nonCalSec.getOrdinal(),
 				-1,
+				nonCalSec.getOrdinal(),
+				counterWithInfoCards.incr(),
 				startNonCalcProblem.getId(),
 				startNonCalcProblem);
 		startNonCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
@@ -110,12 +111,12 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
         			QuizProblem qp = null;
         			try {
 						ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
-						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
+						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 						
 						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
 						if (count < 1)
 							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
-						int randomOffset = (int)generateRandowOffset(count);
+						int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 						
 						final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 						if (problems.isEmpty())
@@ -123,12 +124,11 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 						final Problem problem = problems.iterator().next();
 						
 						includedProblemIds.put(problem.getId(),problem);
-						
 						qp = new QuizProblem(
 								quizCode,
 								counter.incr(),
 								item.getSection().getOrdinal(),
-								item.getOrdinal(),
+								counterWithInfoCards.incr(),
 								problem.getId(),
 								problem);
 					} catch (Exception e) {
@@ -151,9 +151,9 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		includedProblemIds.put(startCalcProblem.getId(),startCalcProblem);
 		QuizProblem startCalcQuizProblem = new QuizProblem(
 				quizCode,
-				counter.incr(),
-				calSec.getOrdinal(),
 				-1,
+				calSec.getOrdinal(),
+				counterWithInfoCards.incr(),
 				startCalcProblem.getId(),
 				startCalcProblem);
 		startCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
@@ -164,12 +164,12 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
         			long count = 0;
 						try {
 							final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
-							final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(getDifficultyCode(item.getDifficultyType()));
+							final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 							
 							count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
 							if (count < 1)
 								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
-							int randomOffset = (int)generateRandowOffset(count);
+							int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 							
 							final List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), includedProblemIds.keySet(),randomOffset,1);
 							if (problems.isEmpty())
@@ -178,12 +178,11 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 							
 							includedProblemIds.put(problem.getId(),problem);
 							
-							
 							qp = new QuizProblem(
 									quizCode,
 									counter.incr(),
 									item.getSection().getOrdinal(),
-									item.getOrdinal(),
+									counterWithInfoCards.incr(),
 									problem.getId(),
 									problem); 
 						} catch (Exception e) {
@@ -217,15 +216,14 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 			.forEach(question -> {
 				question.setProblem(includedProblemIds.get(question.getProblemId()));
 				question.setQuiz(quiz);
-				question.setOrdinal(question.getQuizOrdinal());
 			});
 		
 		Collections.sort(persistedQuiz.getQuestions(), new Comparator<QuizProblem>() {
 			@Override
 			public int compare(QuizProblem o1, QuizProblem o2) {
-				if  (o1.getQuizOrdinal() < o2.getQuizOrdinal())
+				if  (o1.getOrdinal() < o2.getOrdinal())
 					return -1;
-				else if (o1.getQuizOrdinal() > o2.getQuizOrdinal())
+				else if (o1.getOrdinal() > o2.getOrdinal())
 					return  1;
 				else 
 					return 0;//they must be the same
@@ -234,32 +232,4 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 		
 		return persistedQuiz;
 	}
-
-	private long generateRandowOffset(long count) {
-		if (count == 0)
-			return count;
-		return ThreadLocalRandom.current().nextLong(0, count);
-	}
-
-	private String getDifficultyCode(TestDesignTemplateItemDifficultyType difficultyType) {
-		if (difficultyType.equals(TestDesignTemplateItemDifficultyType.EASY))
-			return "Easy";
-		else if (difficultyType.equals(TestDesignTemplateItemDifficultyType.MEDIUM))
-			return "Medium";
-		else
-			return "Hard";
-	}
-	
-    public class Counter {
-
-        private final AtomicInteger number;
-
-        public Counter(int number) {
-          this.number = new AtomicInteger(number);
-        }
-
-        public Integer incr() {
-          return number.incrementAndGet();
-        }
-    }
 }

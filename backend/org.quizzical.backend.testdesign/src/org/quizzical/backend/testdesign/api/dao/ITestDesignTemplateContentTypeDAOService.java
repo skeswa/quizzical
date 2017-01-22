@@ -42,4 +42,6 @@ public interface ITestDesignTemplateContentTypeDAOService {
 	TestDesignTemplateContentSubType getContentSubTypeByCode(String code) throws ApplicationException;
 
 	TestDesignTemplateContentSubType getContentSubTypeByName(String name) throws ApplicationException;
+
+	TestDesignTemplateContentSubType getTestDesignTemplateContentSubTypeByCode(String code) throws ApplicationException;
 }

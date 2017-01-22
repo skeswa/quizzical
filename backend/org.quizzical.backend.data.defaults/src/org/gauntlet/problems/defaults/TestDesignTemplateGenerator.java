@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -40,9 +41,18 @@ public class TestDesignTemplateGenerator {
 	}
 	
 	public void generate() throws ApplicationException {
-		//Categories and subCategories
 		final Map<String,TestDesignTemplateContentSubType> subTypes = generateCategories();
 		
+		//-- Full PT
+		generateFullDefaultPracticeTest(subTypes);
+		
+		//-- Tests by Cat & Size
+		generateCategoryTestTemplate(subTypes,Constants.QUIZ_SMALL_SIZE, Constants.QUIZ_GENERATION_PREFIX_CATEGORY, Constants.QUIZ_SMALL_SUFFIX);
+		generateCategoryTestTemplate(subTypes,Constants.QUIZ_MEDIUM_SIZE, Constants.QUIZ_GENERATION_PREFIX_CATEGORY, Constants.QUIZ_MEDIUM_SUFFIX);
+		generateCategoryTestTemplate(subTypes,Constants.QUIZ_FULL_SIZE, Constants.QUIZ_GENERATION_PREFIX_CATEGORY, Constants.QUIZ_FULL_SUFFIX);
+	}
+	
+	public void generateFullDefaultPracticeTest(final Map<String,TestDesignTemplateContentSubType> subTypes) throws ApplicationException {
 		TestDesignTemplateContentSubType stLinEquations = subTypes.get(Constants.CONTENT_TYPE_HEART_OF_ALGEBRA+"/"+Constants.CONTENT_TYPE_LINEAR_EQUESTIONS);
 		TestDesignTemplateContentSubType stSysLinEquations = subTypes.get(Constants.CONTENT_TYPE_HEART_OF_ALGEBRA+"/"+Constants.CONTENT_TYPE_SYSTEMS_OF_LINEAR_EQUESTIONS);
 		TestDesignTemplateContentSubType stInequal = subTypes.get(Constants.CONTENT_TYPE_HEART_OF_ALGEBRA+"/"+Constants.CONTENT_TYPE_IEQUALITIES);
@@ -279,6 +289,62 @@ public class TestDesignTemplateGenerator {
 		
 		return subTypesMap;
 	}
+	
+	
+	public void generateCategoryTestTemplate(final Map<String,TestDesignTemplateContentSubType> subTypes, final Integer testItemCount, final String typePrefix,final String sizeSuffix) throws ApplicationException {
+		final Integer perSectionCount = (int)(testItemCount/2);
+		final Integer perDiffAndCalTypeCount = (int)(perSectionCount/3);
+		AtomicInteger counter = new AtomicInteger(0);
+		
+		for (String catKey : subTypes.keySet()) {
+			//PT
+			final String code = typePrefix+org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+catKey+org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+sizeSuffix;
+			
+			TestDesignTemplateContentSubType cst = subTypes.get(catKey);
+			TestDesignTemplate tt = new TestDesignTemplate(code,code);
+			List<TestDesignTemplateSection> sections = new ArrayList<>();
+			tt.setSections(sections);
+			
+			//Sections
+			TestDesignTemplateSection nonCalcSec = new TestDesignTemplateSection(TestDesignTemplateSectionType.CALCULATOR_NOT_ALLOWED,tt,1);
+			nonCalcSec.setTemplate(tt);
+			TestDesignTemplateSection calcSec = new TestDesignTemplateSection(TestDesignTemplateSectionType.CALCULATOR_ALLOWED,tt,2);
+			calcSec.setTemplate(tt);
+			sections.add(nonCalcSec);
+			sections.add(calcSec);
+			
+			//********** NonCal sect
+			List<TestDesignTemplateItem> items = new ArrayList<>();
+			nonCalcSec.setItems(items);
+			
+			
+			TestDesignTemplateItem item = null;
+			//---- Easy
+			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.EASY, perDiffAndCalTypeCount);
+			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.MEDIUM, perDiffAndCalTypeCount);
+			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.MEDIUM, perDiffAndCalTypeCount);
+
+			//********** Cal sect
+			items = new ArrayList<>();
+			calcSec.setItems(items);
+			
+			createItems(counter, cst, calcSec, items, TestDesignTemplateItemDifficultyType.EASY, perDiffAndCalTypeCount);
+			createItems(counter, cst, calcSec, items, TestDesignTemplateItemDifficultyType.MEDIUM, perDiffAndCalTypeCount);
+			createItems(counter, cst, calcSec, items, TestDesignTemplateItemDifficultyType.HARD, perDiffAndCalTypeCount);
+			
+			testDesignService.provide(tt);
+		}
+	}
+
+	private void createItems(AtomicInteger counter, TestDesignTemplateContentSubType cst, TestDesignTemplateSection nonCalcSec,
+			List<TestDesignTemplateItem> items, TestDesignTemplateItemDifficultyType diff, Integer perDiffAndCalTypeCount) {
+		TestDesignTemplateItem item;
+		for (int index = 0; index < perDiffAndCalTypeCount; index++) {
+			item = new TestDesignTemplateItem(cst,nonCalcSec,diff,counter.incrementAndGet());
+			items.add(item);
+		}
+	}
+
 
 	private TestDesignTemplateContentSubType createSubType(Map<String, TestDesignTemplateContentSubType> subTypesMap,
 			TestDesignTemplateContentType type, String subType) {

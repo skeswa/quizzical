@@ -19,11 +19,11 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import junit.framework.Assert;
 
 
-public class QuizGeneratorTest extends BaseOSGiServiceTest<LogService> {
+public class PracticeTestTestDesignTemplateTest extends BaseOSGiServiceTest<LogService> {
 	private volatile DependencyManager m_manager;
 	private final BundleContext m_bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
 
-	public QuizGeneratorTest() {
+	public PracticeTestTestDesignTemplateTest() {
 		super(LogService.class);
 	}
 	
@@ -32,8 +32,8 @@ public class QuizGeneratorTest extends BaseOSGiServiceTest<LogService> {
 		super.setUp();
 		addServiceDependencies(LogService.class);
 		getService(IUserDAOService.class);
-		getService(IQuizGeneratorManagerService.class);
 		getService(ITestDesignTemplateDAOService.class);
+		getService(IQuizGeneratorManagerService.class);
 	}
 	
     /**
@@ -58,11 +58,11 @@ public class QuizGeneratorTest extends BaseOSGiServiceTest<LogService> {
     	final TestDesignTemplate pt1 = tdSvc.getByCode("PracticeTest1");
     	Assert.assertNotNull(pt1);
     	
-    	QuizGenerationParameters params = new QuizGenerationParameters();
+/*    	QuizGenerationParameters params = new QuizGenerationParameters();
     	params.setGeneratorType(org.gauntlet.quizzes.generator.api.Constants.GENERATOR_TYPE_PRACTICE_TEST);
     	
     	Quiz quiz = qgSvc.generate(user, params);
-    	Assert.assertNotNull(quiz);
+    	Assert.assertNotNull(quiz);*/
     }
     
     @Override

@@ -216,7 +216,7 @@ class QuizResults extends Component {
     const response = sortedResponses
       .filter(({ quizProblem: { ordinal } }) =>
         ordinal === selectedQuestionOrdinal)
-      .reduce((a, b) => b ? b : a)
+      .reduce((a, b) => (b ? b : a), null)
 
     if (!response) return null
 
@@ -231,7 +231,7 @@ class QuizResults extends Component {
           answerPicture:          { id: answerPictureId },
           questionPicture:        { id: questionPictureId },
           requiresCalculator:     usedCalculator,
-          sourceIndexWithinPage:  questionNumber,
+          sourceIndexWithinPage:  questionNumber
         },
       },
       secondsElapsed: duration,

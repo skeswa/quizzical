@@ -464,4 +464,8 @@ public abstract class BaseServiceImpl implements IBaseService {
 		model = getEm().merge(model);
 		return model;
 	}
+	
+	public void truncate(String tableName) throws ApplicationException {
+	   getEm().createNativeQuery(String.format("truncate table %s cascade",tableName)).executeUpdate();
+	}
 }

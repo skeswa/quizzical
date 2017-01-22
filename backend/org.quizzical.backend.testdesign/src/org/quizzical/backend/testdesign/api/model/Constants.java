@@ -9,7 +9,19 @@ public interface Constants {
 	public static final String QUIZ_TYPE_GENERATED_CODE = "GeneratedQuiz";
 	public static final String QUIZ_TYPE_GENERATED_NAME = "Generated Quiz";
 	
+	// Sizes
+	public static final String  QUIZ_SMALL_SUFFIX = "SMALL";
+	public static final Integer QUIZ_SMALL_SIZE = 12;
+	public static final String  QUIZ_MEDIUM_SUFFIX = "MEDIUM";
+	public static final Integer QUIZ_MEDIUM_SIZE = 24;
+	public static final String  QUIZ_FULL_SUFFIX = "FULL";
+	public static final Integer QUIZ_FULL_SIZE = 48;
+	
+	
+	
 	// Categories & Sub-Categories
+	public static final String  QUIZ_GENERATION_PREFIX_CATEGORY = "BY_CATEGORY";
+	public static final String  QUIZ_GENERATION_PREFIX_WEAKNESS = "BY_WEAKNESS";
 	
 	//Heart of Algebra
 	public static final String CONTENT_TYPE_HEART_OF_ALGEBRA = "Heart of Algebra";
