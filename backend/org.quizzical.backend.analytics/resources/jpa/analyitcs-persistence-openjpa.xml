@@ -34,12 +34,9 @@
 
 
 		<!-- TD -->
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplate</class>
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateItem</class>
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateSection</class>
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateType</class>
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentType</class>
-		<class>org.quizzical.backend.testdesign.model.jpa.JPATestDesignTemplateContentSubType</class>
+		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryAttempt</class>
+		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating</class>
+		<class>org.quizzical.backend.analytics.model.jpa.JPATestUserAnalytics</class>
 		
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

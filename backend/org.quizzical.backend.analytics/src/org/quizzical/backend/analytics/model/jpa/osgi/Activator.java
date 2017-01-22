@@ -1,4 +1,4 @@
-package org.quizzical.backend.testdesign.model.jpa.osgi;
+package org.quizzical.backend.analytics.model.jpa.osgi;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
