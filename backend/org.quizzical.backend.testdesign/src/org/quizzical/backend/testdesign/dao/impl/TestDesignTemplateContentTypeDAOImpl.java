@@ -130,6 +130,20 @@ public class TestDesignTemplateContentTypeDAOImpl extends BaseServiceImpl implem
 	
 	//TestDesignTemplateContentSubType
 	@Override 
+	public List<TestDesignTemplateContentSubType> findAllContentSubTypes() throws ApplicationException {
+		List<TestDesignTemplateContentSubType> result = new ArrayList<>();
+		try {
+			List<JPABaseEntity> resultList = super.findAll(JPATestDesignTemplateContentSubType.class);
+			result = JPAEntityUtil.copy(resultList, TestDesignTemplateContentSubType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	
+	@Override 
 	public List<TestDesignTemplateContentSubType> findAllContentSubTypes(int start, int end) throws ApplicationException {
 		List<TestDesignTemplateContentSubType> result = new ArrayList<>();
 		try {

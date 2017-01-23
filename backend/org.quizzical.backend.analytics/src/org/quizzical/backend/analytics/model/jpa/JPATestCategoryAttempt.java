@@ -1,6 +1,7 @@
 package org.quizzical.backend.analytics.model.jpa;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,12 +26,57 @@ import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 	+"cat_attempt")
 public class JPATestCategoryAttempt extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 1897304303469354401L;
+	
+	private Long testProblemId;
+	private Date dateAttempted;
+	private Boolean successful;
+	private Boolean skipped;
 
 	@ManyToOne
 	@JoinColumn
 	private JPATestCategoryRating rating;
 	
 	public JPATestCategoryAttempt() {
+	}
+
+	public Long getTestProblemId() {
+		return testProblemId;
+	}
+
+	public void setTestProblemId(Long testProblemId) {
+		this.testProblemId = testProblemId;
+	}
+
+	public Date getDateAttempted() {
+		return dateAttempted;
+	}
+
+	public void setDateAttempted(Date dateAttempted) {
+		this.dateAttempted = dateAttempted;
+	}
+
+	public Boolean getSuccessful() {
+		return successful;
+	}
+
+	public void setSuccessful(Boolean successful) {
+		this.successful = successful;
+	}
+
+	public Boolean getSkipped() {
+		return skipped;
+	}
+
+	public void setSkipped(Boolean skipped) {
+		this.skipped = skipped;
+	}
+
+	public JPATestCategoryRating getRating() {
+		return rating;
+	}
+
+	public void setRating(JPATestCategoryRating rating) {
+		this.rating = rating;
 	}
 }
 

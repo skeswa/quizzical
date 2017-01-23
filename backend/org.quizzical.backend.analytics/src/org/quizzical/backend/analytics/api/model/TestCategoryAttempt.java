@@ -35,6 +35,10 @@ public class TestCategoryAttempt extends BaseEntity implements Serializable {
 	public void setSkipped(Boolean skipped) {
 		this.skipped = skipped;
 	}
+	
+	public TestCategoryAttempt() {
+	}
+
 	public TestCategoryAttempt(Long testProblemId, Date dateAttempted, Boolean successful, Boolean skipped) {
 		super();
 		this.testProblemId = testProblemId;

@@ -91,13 +91,42 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		TestUserAnalytics existingTestDesignTemplate = getByCode(record.getCode());
 		if (Validator.isNull(existingTestDesignTemplate))
 		{
-			JPATestUserAnalytics td = null;//fromDTO(record);
+			JPATestUserAnalytics td = toJPAEntity(record);
 			JPABaseEntity res = super.add(td);
 			existingTestDesignTemplate = JPAEntityUtil.copy(res, TestUserAnalytics.class);
 		}
 
 		return existingTestDesignTemplate;
 	}
+	
+	private JPATestUserAnalytics toJPAEntity(TestUserAnalytics record) {
+		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getCode(),record.getName());
+		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(recordCopy, JPATestUserAnalytics.class);
+    	final List<JPATestCategoryRating> ratings = record.getRatings()
+    		.stream()
+    		.map(rating -> {
+				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName(), rating.getCode());
+				JPATestCategoryRating jpaRatingRecord = (JPATestCategoryRating) JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
+		    	final List<JPATestCategoryAttempt> attempts = rating.getAttempts()
+		        		.stream()
+		        		.map(attempt -> {
+		        			JPATestCategoryAttempt jpaTestCategoryAttempt = (JPATestCategoryAttempt) JPAEntityUtil.copy(attempt, JPATestCategoryAttempt.class);
+		        			jpaTestCategoryAttempt.setRating(jpaRatingRecord);
+		    				return jpaTestCategoryAttempt;
+		    	    	})
+		        		.collect(Collectors.toList());
+		    	jpaRatingRecord.getAttempts().addAll(attempts);
+		    	calculateRating(jpaRatingRecord);
+		    	jpaRatingRecord.setAnalytics(jpaTestUserAnalytics);
+				return jpaRatingRecord;
+	    	})
+    		.collect(Collectors.toList());
+    	
+    	jpaTestUserAnalytics.getRatings().addAll(ratings);
+		
+		return jpaTestUserAnalytics;
+	}
+
 	
 
 	@Override
@@ -116,11 +145,14 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	
 	@Override
 	public TestUserAnalytics getByCode(String code) throws ApplicationException {
-		JPATestUserAnalytics jpaEntity = (JPATestUserAnalytics) super.findWithAttribute(JPATestUserAnalytics.class, String.class,"code", code);
+		JPATestUserAnalytics jpaEntity = getByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, TestUserAnalytics.class);
 	}
 
-
+	private JPATestUserAnalytics getByCode_(String code) throws ApplicationException {
+		return  (JPATestUserAnalytics) super.findWithAttribute(JPATestUserAnalytics.class, String.class,"code", code);
+	}
+	
 	@Override
 	public TestUserAnalytics getByName(String name) throws ApplicationException {
 		JPATestUserAnalytics jpaEntity = (JPATestUserAnalytics) super.findWithAttribute(JPATestUserAnalytics.class, String.class,"name", name);
@@ -130,4 +162,29 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	@Override
 	public void createDefaults() throws ApplicationException, Exception {
 	}
+	
+	@Override
+	public void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException {
+		JPATestUserAnalytics analytics = getByCode_(code);
+		for (JPATestCategoryRating rating : analytics.getRatings()) {
+			final TestCategoryRating newRating = newCategoryRatingsMap.get(rating.getCategoryId());
+			if (newRating != null) {
+				for (TestCategoryAttempt newAttempt : newRating.getAttempts()) {
+					final JPATestCategoryAttempt newJPAAttempt = JPAEntityUtil.copy(newAttempt, JPATestCategoryAttempt.class);
+					rating.getAttempts().add(newJPAAttempt);
+					calculateRating(rating);
+				}
+			}
+		}
+		update(analytics);
+	}
+
+	private void calculateRating(JPATestCategoryRating rating) {
+		final List<JPATestCategoryAttempt> correctAttempts = rating.getAttempts()
+			    .stream()
+			    .filter(p -> p.getSuccessful())
+			    .collect(Collectors.toList());
+		rating.setRating((int)((correctAttempts.size()/ rating.getAttempts().size())*100));
+	}
+	
 }

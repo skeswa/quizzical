@@ -1,9 +1,11 @@
 package org.quizzical.backend.analytics.api.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
+import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 
 public interface ITestUserAnalyticsDAOService {
@@ -23,4 +25,6 @@ public interface ITestUserAnalyticsDAOService {
 	TestUserAnalytics getByCode(String code) throws ApplicationException;
 
 	TestUserAnalytics getByName(String name) throws ApplicationException;
+
+	void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException;
 }

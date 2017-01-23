@@ -439,9 +439,8 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}
 
 	public JPABaseEntity update(JPABaseEntity model) throws ApplicationException {
-		JPABaseEntity managedEntity = getEm().merge(model);
-		managedEntity.setDateLastUpdated(new Date());
-		return managedEntity;
+		model.setDateLastUpdated(new Date());
+		return getEm().merge(model);
 	}
 	
 

@@ -31,4 +31,17 @@ public class JPATestUserAnalytics extends JPABaseEntity implements Serializable 
 	
 	public JPATestUserAnalytics() {
 	}
+	
+	public JPATestUserAnalytics(final String code, final String name) {
+		setCode(code);
+		setName(name);
+	}
+
+	public Set<JPATestCategoryRating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Set<JPATestCategoryRating> ratings) {
+		this.ratings = ratings;
+	}
 }

@@ -1,14 +1,13 @@
 package org.quizzical.backend.analytics.model.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,9 +34,49 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	private JPATestUserAnalytics analytics;
 	
 	@OneToMany(targetEntity = JPATestCategoryAttempt.class, cascade=CascadeType.ALL, mappedBy="rating")
-	private List<JPATestCategoryAttempt>  attempts;
+	private List<JPATestCategoryAttempt>  attempts = new ArrayList<JPATestCategoryAttempt>();
 	
 	public JPATestCategoryRating() {
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Date getDateOfLastAttempt() {
+		return dateOfLastAttempt;
+	}
+
+	public void setDateOfLastAttempt(Date dateOfLastAttempt) {
+		this.dateOfLastAttempt = dateOfLastAttempt;
+	}
+
+	public JPATestUserAnalytics getAnalytics() {
+		return analytics;
+	}
+
+	public void setAnalytics(JPATestUserAnalytics analytics) {
+		this.analytics = analytics;
+	}
+
+	public List<JPATestCategoryAttempt> getAttempts() {
+		return attempts;
+	}
+
+	public void setAttempts(List<JPATestCategoryAttempt> attempts) {
+		this.attempts = attempts;
 	}
 }
 

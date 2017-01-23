@@ -29,6 +29,8 @@ public interface ITestDesignTemplateContentTypeDAOService {
 
 
 	//
+	List<TestDesignTemplateContentSubType> findAllContentSubTypes() throws ApplicationException;
+	
 	List<TestDesignTemplateContentSubType> findAllContentSubTypes(int start, int end) throws ApplicationException;
 
 	long countAllContentSubTypes() throws ApplicationException;

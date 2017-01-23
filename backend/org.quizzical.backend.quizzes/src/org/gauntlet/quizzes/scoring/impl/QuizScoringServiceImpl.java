@@ -144,9 +144,9 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE)) {
 	    	tua = new TestUserAnalytics(code_, code_);
 			//Baseline across all categories
-			final List<TestDesignTemplateContentType> subTypes = testDesignTemplateContentTypeDAOService.findAll();
+			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 			TestCategoryRating rating = null;
-			for (TestDesignTemplateContentType subType : subTypes) {
+			for (TestDesignTemplateContentSubType subType : subTypes) {
 				if (!categoryRatingsMap.containsKey(subType.getId())) {
 					final String code = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
 					rating = new TestCategoryRating(subType.getId(), code, code);
@@ -158,23 +158,11 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				}
 				tua.addRating(rating);
 			}
+			testUserAnalyticsDAOService.provide(tua);
 		}
 		else {
-			tua = testUserAnalyticsDAOService.getByCode(code_);
-			tua.getRatings().stream().map(rating -> {
-				try {
-					if (categoryRatingsMap.containsKey(rating.getCategoryId())) {
-						final TestCategoryRating newRating = categoryRatingsMap.get(rating.getCategoryId());
-						rating.getAttempts().addAll(newRating.getAttempts());
-						rating.calculateRating();
-					}
-					return rating;
-				} catch (final Exception e) {
-					throw new RuntimeException(e);
-				} 
-	    	});
+			testUserAnalyticsDAOService.updateRatings(code_,categoryRatingsMap);
 		}
-		testUserAnalyticsDAOService.provide(tua);
     	
 		return quizSubmission;
 	}

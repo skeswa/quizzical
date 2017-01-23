@@ -36,6 +36,12 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 		this.name = name;
 		this.code = code;		
 	}
+	
+	
+	public TestCategoryRating(final Integer rating, final Date dateOfLastAttempt, final Long categoryId, final String name, final String code) {
+		this(categoryId, name, code);
+	}
+
 
 	public Integer getRating() {
 		return rating;
@@ -84,11 +90,4 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 		getAttempts().add(attempt);
 	}
 
-	public void calculateRating() {
-		final List<TestCategoryAttempt> correctAttempts = getAttempts()
-			    .stream()
-			    .filter(p -> p.getSuccessful())
-			    .collect(Collectors.toList());
-		setRating((int)((correctAttempts.size()/getAttempts().size())*100));
-	}
 }
