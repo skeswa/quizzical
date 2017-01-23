@@ -28,4 +28,7 @@ public class JPATestUserAnalytics extends JPABaseEntity implements Serializable 
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="analytics")
 	private Set<JPATestCategoryRating> ratings = new java.util.HashSet<JPATestCategoryRating>();
+	
+	public JPATestUserAnalytics() {
+	}
 }

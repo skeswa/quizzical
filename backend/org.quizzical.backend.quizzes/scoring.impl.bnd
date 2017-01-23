@@ -1,0 +1,6 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.quizzes.scoring.impl,\
+	org.gauntlet.quizzes.scoring.impl.osgi
+Bundle-Activator: org.gauntlet.quizzes.scoring.impl.osgi.Activator
+	

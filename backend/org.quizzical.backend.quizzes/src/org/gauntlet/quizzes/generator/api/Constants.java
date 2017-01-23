@@ -6,4 +6,5 @@ public interface Constants {
 	public static final String GENERATOR_TYPE_BY_CATEGORY = "generate_by_category";
 	public static final String GENERATOR_TYPE_PRACTICE_TEST = "generate_practice_test";
 	public static final String GENERATOR_TYPE_REALISTIC_TEST = "realistic";
+	public static final String GENERATOR_TYPE_DIAGNOSTIC_TEST = "diagnostic";
 }

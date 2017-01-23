@@ -17,7 +17,7 @@
 	<!-- JTA -->
 	<!-- ******************************************************************* -->
 
-	<persistence-unit name="q7l_td" transaction-type="JTA">
+	<persistence-unit name="q7l_ana" transaction-type="JTA">
 		<jta-data-source>
 			<![CDATA[
 			osgi:javax.sql.DataSource/(name=jta-gnt)
@@ -33,7 +33,7 @@
 		<class>org.gauntlet.core.model.JPABaseEntity</class>
 
 
-		<!-- TD -->
+		<!-- ANA -->
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryAttempt</class>
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating</class>
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestUserAnalytics</class>

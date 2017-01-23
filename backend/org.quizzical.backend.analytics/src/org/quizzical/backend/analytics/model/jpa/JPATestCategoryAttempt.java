@@ -28,6 +28,9 @@ public class JPATestCategoryAttempt extends JPABaseEntity implements Serializabl
 
 	@ManyToOne
 	@JoinColumn
-	private JPATestCategoryRating section;
+	private JPATestCategoryRating rating;
+	
+	public JPATestCategoryAttempt() {
+	}
 }
 

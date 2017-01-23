@@ -9,6 +9,8 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentType;
 
 public interface ITestDesignTemplateContentTypeDAOService {
 	//
+	List<TestDesignTemplateContentType> findAll() throws ApplicationException;
+	
 	List<TestDesignTemplateContentType> findAll(int start, int end) throws ApplicationException;
 
 	long countAll() throws ApplicationException;

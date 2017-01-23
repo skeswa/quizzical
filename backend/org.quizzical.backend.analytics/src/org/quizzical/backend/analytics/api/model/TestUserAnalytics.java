@@ -21,6 +21,8 @@ public class TestUserAnalytics extends BaseEntity implements Serializable {
 	}
 	
 	public List<TestCategoryRating> getRatings() {
+		if (ratings == null)
+			ratings = new ArrayList<>();
 		return ratings;
 	}
 
@@ -28,6 +30,9 @@ public class TestUserAnalytics extends BaseEntity implements Serializable {
 		this.ratings = ratings;
 	}
 
+	public void addRating(TestCategoryRating rating) {
+		getRatings().add(rating);
+	}
 	public List<TestCategoryRating> getOrderedSections() {
 		List<TestCategoryRating> orderedSections = getRatings();
 		Collections.sort(orderedSections, new Comparator<TestCategoryRating>() {

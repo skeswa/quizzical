@@ -43,6 +43,19 @@ public class TestDesignTemplateContentTypeDAOImpl extends BaseServiceImpl implem
 	}	
 	
 	@Override
+	public List<TestDesignTemplateContentType> findAll() throws ApplicationException {
+		List<TestDesignTemplateContentType> result = new ArrayList<>();
+		try {
+			List<JPABaseEntity> resultList = super.findAll(JPATestDesignTemplateContentType.class);
+			result = JPAEntityUtil.copy(resultList, TestDesignTemplateContentType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
 	public List<TestDesignTemplateContentType> findAll(int start, int end) throws ApplicationException {
 		List<TestDesignTemplateContentType> result = new ArrayList<>();
 		try {

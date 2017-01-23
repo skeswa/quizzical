@@ -1,6 +1,7 @@
 package org.quizzical.backend.analytics.model.jpa;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,17 +24,20 @@ import org.gauntlet.core.model.JPABaseEntity;
 	+"cat_rating")
 public class JPATestCategoryRating extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 601068620188199699L;
-
-	private Integer ordinal;
 	
+	private Integer rating = 0; //0-100
+	
+	private Long categoryId;
+	
+	private Date dateOfLastAttempt;
+
 	@ManyToOne
 	private JPATestUserAnalytics analytics;
 	
-	@OneToMany(targetEntity = JPATestCategoryAttempt.class, cascade=CascadeType.ALL, mappedBy="section")
-	private List<JPATestCategoryAttempt>  items;
-
-	public Integer getOrdinal() {
-		return ordinal;
+	@OneToMany(targetEntity = JPATestCategoryAttempt.class, cascade=CascadeType.ALL, mappedBy="rating")
+	private List<JPATestCategoryAttempt>  attempts;
+	
+	public JPATestCategoryRating() {
 	}
 }
 

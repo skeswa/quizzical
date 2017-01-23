@@ -3,6 +3,7 @@ package org.gauntlet.problems.defaults;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
@@ -37,9 +38,11 @@ public class Controller {
 		 */
 		
 		//-- Quiz related
-		final QuizType qt = new QuizType("Pop Quiz","Pop Quiz");
+		QuizType qt = new QuizType(Constants.QUIZ_TYPE_GENERATED_CODE, Constants.QUIZ_TYPE_GENERATED_NAME);
 		quizService.provideQuizType(qt);
-		
+
+		qt = new QuizType(Constants.QUIZ_TYPE_DIAGNOTIC_CODE, Constants.QUIZ_TYPE_DIAGNOTICS_NAME);
+		quizService.provideQuizType(qt);
 		//-- Users
 		//MK
 		User user = new User();

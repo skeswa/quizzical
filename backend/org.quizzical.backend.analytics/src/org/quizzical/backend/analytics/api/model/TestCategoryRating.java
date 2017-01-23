@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.model.BaseEntity;
 
 public class TestCategoryRating extends BaseEntity implements Serializable {
@@ -16,7 +19,7 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	
 	private Date dateOfLastAttempt;
 	
-	private TestUserAnalytics userAnalytics;
+	private TestUserAnalytics analytics;
 	
 	private List<TestCategoryAttempt>  attempts;
 	
@@ -50,19 +53,42 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public TestUserAnalytics getUserAnalytics() {
-		return userAnalytics;
-	}
-
-	public void setUserAnalytics(TestUserAnalytics userAnalytics) {
-		this.userAnalytics = userAnalytics;
-	}
-
 	public List<TestCategoryAttempt> getAttempts() {
+		if (this.attempts == null)
+			this.attempts = new ArrayList<>();
 		return attempts;
 	}
 
 	public void setAttempts(List<TestCategoryAttempt> attempts) {
 		this.attempts = attempts;
+	}
+	
+	
+	public Date getDateOfLastAttempt() {
+		return dateOfLastAttempt;
+	}
+
+	public void setDateOfLastAttempt(Date dateOfLastAttempt) {
+		this.dateOfLastAttempt = dateOfLastAttempt;
+	}
+
+	public TestUserAnalytics getAnalytics() {
+		return analytics;
+	}
+
+	public void setAnalytics(TestUserAnalytics analytics) {
+		this.analytics = analytics;
+	}
+
+	public void addAttempt(TestCategoryAttempt attempt) {
+		getAttempts().add(attempt);
+	}
+
+	public void calculateRating() {
+		final List<TestCategoryAttempt> correctAttempts = getAttempts()
+			    .stream()
+			    .filter(p -> p.getSuccessful())
+			    .collect(Collectors.toList());
+		setRating((int)((correctAttempts.size()/getAttempts().size())*100));
 	}
 }

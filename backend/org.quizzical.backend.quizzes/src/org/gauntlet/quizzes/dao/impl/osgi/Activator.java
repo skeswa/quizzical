@@ -11,6 +11,7 @@ import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizScoringService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
@@ -79,6 +80,7 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizScoringService.class).setRequired(true))
 				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
 	}

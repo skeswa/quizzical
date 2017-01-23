@@ -9,12 +9,13 @@
 	sun.misc
 -resolve.effective: active;skip:="osgi.service"
 
--runvm: -ea -Dorg.slf4j.simpleLogger.defaultLogLevel=trace -Dorg.owasp.esapi.resources=load
+-runvm: -ea -Dorg.owasp.esapi.resources=load
 
 -runbundles:  \
 	,\
-	org.ops4j.pax.logging.pax-logging-api;version=1.7.0,\
-	org.ops4j.pax.logging.pax-logging-service;version=1.7.0,\
+	slf4j.api;version=1.7.21,\
+	slf4j.simple;version=1.7.21,\
+	org.apache.felix.log;version=1.0.1,\
 	,\
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.gogo.shell,\
@@ -30,6 +31,7 @@
 	org.apache.commons.io;version=2.4.0,\
 	org.apache.commons.collections;version=3.2.1,\
 	org.apache.commons.lang3;version=3.1.0,\
+	org.apache.commons.math;version=2.2.0,\
 	com.springsource.org.apache.commons.logging;version=1.1.1,\
 	org.apache.commons.beanutils;version=1.8.3,\
 	com.springsource.org.json;version=1.0.0,\
@@ -112,12 +114,15 @@
 	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\
 	org.quizzical.backend.quizzes.rest;version=latest,\
 	org.quizzical.backend.quizzes.generator.impl;version=latest,\
+	org.quizzical.backend.quizzes.scoring.impl;version=latest,\
+	,\
+	org.quizzical.backend.analytics.api;version=latest,\
+	org.quizzical.backend.analytics.dao.impl;version=latest,\
+	org.quizzical.backend.analytics.model.persistence.openjpa.jpa2_0;version=latest,\
 	,\
 	org.quizzical.backend.gogo;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
-  felix.log.level=4,\
-  org.ops4j.pax.logging.DefaultServiceLog.level=WARN,\
   org.osgi.service.http.port=8080,\
   org.apache.felix.http.jetty.maxFormSize=1000000000

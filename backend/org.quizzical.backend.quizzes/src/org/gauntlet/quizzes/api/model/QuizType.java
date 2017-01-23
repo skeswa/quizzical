@@ -8,7 +8,7 @@ public class QuizType extends BaseEntity implements Serializable {
 	public QuizType() {
 	}
 	
-	public QuizType(String name, String code) {
+	public QuizType(String code, String name) {
 		setName(name);
 		setCode(code);
 	}

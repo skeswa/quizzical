@@ -23,6 +23,7 @@ import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizScoringService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
@@ -44,6 +45,8 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	private volatile IQuizProblemDAOService quizProblemService;
 	
 	private volatile IProblemDAOService problemService;
+	
+	private volatile IQuizScoringService scoringService;
 	
 	@SuppressWarnings("unused")
 	private volatile IQuizProblemResponseDAOService quizProblemResponseService;
@@ -203,41 +206,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 
 	@Override
 	public QuizSubmission submit(QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
-	   	final Long quizId = quizSubmission.getQuizId();
-    	final Quiz quiz = quizService.getByPrimary(quizId);
-
-    	quizSubmission.setQuiz(quiz);
-    	quizSubmission.setCode(String.format("%s-%d", quizId, System.currentTimeMillis()));
-    	
-    	// Evaluate the which quiz problem responses are correct.
-    	final List<QuizProblemResponse> augmentedResponses = quizSubmission.getResponses()
-    		.parallelStream()
-    		.map(problemResponse -> {
-	    		final Long quizProblemId = problemResponse.getQuizProblemId();
-				try {
-					final QuizProblem quizProblem = quizProblemService.getByPrimary(quizProblemId);
-					final Problem problem = problemService.getByPrimary(quizProblem.getProblemId());
-					final Boolean correct = problemResponse.getResponse() == null
-							? false
-							: problemResponse.getResponse().equalsIgnoreCase(problem.getAnswer());
-					final QuizProblemResponse newQuizProblemResponse = new QuizProblemResponse(
-							QuizProblemResponse.code(quizProblemId, problemResponse.getResponse()),
-							problemResponse.getResponse(),
-							problemResponse.getSkipped(),
-							correct,
-							problemResponse.getSecondsElapsed(),
-							quizProblemId);
-
-					return newQuizProblemResponse;
-				} catch (final NoSuchModelException e) {
-					throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);
-				} catch (final ApplicationException e) {
-					throw new RuntimeException(e);
-				}
-	    	})
-    		.collect(Collectors.toList());
-    	
-    	quizSubmission.setResponses(augmentedResponses);
+		quizSubmission = scoringService.score(quizSubmission);
     	
     	//--Persist
     	quizSubmission = add(quizSubmission);
