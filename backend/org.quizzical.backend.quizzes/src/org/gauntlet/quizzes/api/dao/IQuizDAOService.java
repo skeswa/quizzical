@@ -34,6 +34,8 @@ public interface IQuizDAOService extends IBaseService {
 	public List<Quiz> findByQuizType(User user, Long difficultyId, int start, int end) throws ApplicationException;
 	
 	public int countByQuizType(Long difficultyId) throws ApplicationException;
+	
+	public int countByQuizTypeCode(User user, String typeCode) throws ApplicationException;
 
 	//QuizType
 	public List<QuizType> findAllQuizTypes(int start, int end) throws ApplicationException;
@@ -52,4 +54,6 @@ public interface IQuizDAOService extends IBaseService {
 	
 	//Misc
 	public void truncate() throws ApplicationException;
+
+	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException;
 }

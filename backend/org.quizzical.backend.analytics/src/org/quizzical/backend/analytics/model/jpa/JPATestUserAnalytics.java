@@ -25,6 +25,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 public class JPATestUserAnalytics extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 1646753821796505776L;
 
+	private Long userId;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="analytics")
 	private Set<JPATestCategoryRating> ratings = new java.util.HashSet<JPATestCategoryRating>();
@@ -43,5 +44,13 @@ public class JPATestUserAnalytics extends JPABaseEntity implements Serializable 
 
 	public void setRatings(Set<JPATestCategoryRating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

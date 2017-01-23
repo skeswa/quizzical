@@ -77,5 +77,4 @@ public interface ITestDesignTemplateDAOService {
 
 	List<TestDesignTemplateItem> getOrderedTestItems(Long pk)
 			throws ApplicationException, NoSuchModelException;
-
 }

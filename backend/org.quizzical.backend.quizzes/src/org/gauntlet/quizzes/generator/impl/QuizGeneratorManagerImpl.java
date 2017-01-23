@@ -8,10 +8,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
+import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
+import org.gauntlet.quizzes.generator.api.UserHasNotTakenDiagnosticTestException;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 
 
@@ -20,6 +22,8 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	private volatile LogService logger;
 	
 	private volatile BundleContext ctx;
+	
+	private volatile IQuizDAOService quizService;
 	
     private Map<String, ServiceReference> references = new HashMap<String, ServiceReference>();
 	
@@ -36,6 +40,9 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	@Override
 	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+		if (!quizService.userHasTakenDiagnoticTest(user) && !params.getGeneratorType().equals(Constants.GENERATOR_TYPE_DIAGNOSTIC_TEST))
+			throw new UserHasNotTakenDiagnosticTestException(user.getCode());
+		
 		final ServiceReference generatorRef = references.get(params.getGeneratorType());
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
 		return generator.generate(user,params);

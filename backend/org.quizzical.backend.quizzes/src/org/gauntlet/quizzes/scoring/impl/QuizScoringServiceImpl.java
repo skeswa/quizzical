@@ -142,7 +142,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		final String code_ = String.format("User(%d) analytics", quiz.getUserId()); 
 		TestUserAnalytics tua = null;
 		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE)) {
-	    	tua = new TestUserAnalytics(code_, code_);
+	    	tua = new TestUserAnalytics( quiz.getUserId(), code_, code_);
 			//Baseline across all categories
 			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 			TestCategoryRating rating = null;

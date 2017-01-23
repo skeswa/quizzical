@@ -12,6 +12,8 @@ import org.gauntlet.core.model.BaseEntity;
 import org.quizzical.backend.security.api.model.user.User;
 
 public class TestDesignTemplate extends BaseEntity implements Serializable {
+	private Long userId;
+	
 	private TestDesignTemplateType templateType;
 
 	private List<TestDesignTemplateSection> sections;
@@ -35,6 +37,11 @@ public class TestDesignTemplate extends BaseEntity implements Serializable {
 
 	public TestDesignTemplate() {
 	}
+	
+	public TestDesignTemplate(final Long userId, final String name, final String code) {
+		this(name,code);
+		this.userId = userId;
+	}	
 	
 	public TestDesignTemplate(final String name, final String code) {
 		this.name = name;
@@ -62,6 +69,14 @@ public class TestDesignTemplate extends BaseEntity implements Serializable {
 		this.sections = sections;
 	}
 	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public List<TestDesignTemplateSection> getOrderedSections() {
 		List<TestDesignTemplateSection> orderedSections = getSections();
 		Collections.sort(orderedSections, new Comparator<TestDesignTemplateSection>() {

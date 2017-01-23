@@ -24,6 +24,7 @@ import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.quizzes.model.jpa.JPAQuiz;
@@ -155,7 +156,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	
 	@Override 
 	public List<Quiz> findByQuizType(User user, 
-			Long difficultyId, int start, int end) throws ApplicationException {
+			Long typeId, int start, int end) throws ApplicationException {
 		List<Quiz> resultList = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -167,7 +168,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			//quizType
 			ParameterExpression<Long> p = builder.parameter(Long.class);
 			query.select(rootEntity).where(builder.gt(rootEntity.get("quizType").get("id"),p));
-			pes.put(p, difficultyId);
+			pes.put(p, typeId);
 			
 			//userId
 			p = builder.parameter(Long.class);
@@ -183,7 +184,34 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}
 	
 	@Override 
-	public int countByQuizType(Long difficultyId) throws ApplicationException {
+	public int countByQuizTypeCode(User user, String typeCode) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuiz> query = builder.createQuery(JPAQuiz.class);
+			Root<JPAQuiz> rootEntity = query.from(JPAQuiz.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<String> p = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("quizType").get("code"),p));
+			pes.put(p, typeCode);
+			
+			//userId
+			ParameterExpression<Long> pl = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),p));
+			pes.put(pl, user.getId());
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public int countByQuizType(Long typeId) throws ApplicationException {
 		int count = 0;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -195,7 +223,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			query.select(rootEntity);
 			
 			Map<ParameterExpression,Object> pes = new HashMap<>();
-			pes.put(p, difficultyId);
+			pes.put(p, typeId);
 			
 			count = countWithDynamicQueryAndParams(query,pes);
 		}
@@ -204,6 +232,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 		}
 		return count;		
 	}	
+	
 	
 	
 	//QuizType
@@ -276,8 +305,15 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	public void createDefaults() throws ApplicationException {
 	}	
 	
+	//-- Misc
 	@Override
 	public void truncate() throws ApplicationException {
 		super.truncate("gnt_quiz");
+	}
+
+	@Override
+	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException {
+		final int count =countByQuizTypeCode(user, Constants.QUIZ_TYPE_GENERATED_CODE);
+		return count > 0;
 	}
 }

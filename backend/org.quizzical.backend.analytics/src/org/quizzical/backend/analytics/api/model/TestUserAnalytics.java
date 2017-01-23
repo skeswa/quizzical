@@ -12,17 +12,28 @@ import org.gauntlet.core.model.BaseEntity;
 import org.quizzical.backend.security.api.model.user.User;
 
 public class TestUserAnalytics extends BaseEntity implements Serializable {
+	
+	private Long userId;
 
 	private List<TestCategoryRating> ratings;
 	
 	public TestUserAnalytics() {
 	}
 	
-	public TestUserAnalytics(final String code, final String name) {
+	public TestUserAnalytics(final Long userId, final String code, final String name) {
 		super.setCode(code);
 		super.setName(name);
+		this.userId = userId;
 	}
 	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public List<TestCategoryRating> getRatings() {
 		if (ratings == null)
 			ratings = new ArrayList<>();

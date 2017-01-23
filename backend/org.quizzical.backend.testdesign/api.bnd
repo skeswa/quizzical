@@ -1,4 +1,5 @@
 Export-Package: \
 	org.quizzical.backend.testdesign.api.model,\
-	org.quizzical.backend.testdesign.api.dao
+	org.quizzical.backend.testdesign.api.dao,\
+	org.quizzical.backend.testdesign.api
 Bundle-Version: 1.0.0.${tstamp}

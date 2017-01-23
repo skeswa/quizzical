@@ -319,7 +319,6 @@ public class TestDesignTemplateGenerator {
 			
 			
 			TestDesignTemplateItem item = null;
-			//---- Easy
 			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.EASY, perDiffAndCalTypeCount);
 			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.MEDIUM, perDiffAndCalTypeCount);
 			createItems(counter, cst, nonCalcSec, items, TestDesignTemplateItemDifficultyType.MEDIUM, perDiffAndCalTypeCount);

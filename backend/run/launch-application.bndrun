@@ -102,6 +102,7 @@
 	org.quizzical.backend.testdesign.api;version=latest,\
 	org.quizzical.backend.testdesign.dao.impl;version=latest,\
 	org.quizzical.backend.testdesign.model.persistence.openjpa.jpa2_0;version=latest,\
+	org.quizzical.backend.testdesign.impl;version=latest,\
 	,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.problems.dao.impl;version=latest,\

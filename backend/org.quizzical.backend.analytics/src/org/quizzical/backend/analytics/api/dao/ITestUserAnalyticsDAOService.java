@@ -7,6 +7,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
+import org.quizzical.backend.security.api.model.user.User;
 
 public interface ITestUserAnalyticsDAOService {
 	//
@@ -27,4 +28,6 @@ public interface ITestUserAnalyticsDAOService {
 	TestUserAnalytics getByName(String name) throws ApplicationException;
 
 	void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException;
+
+	List<TestCategoryRating> findWeakestCategories(User user, Integer categoryLimit) throws ApplicationException;
 }

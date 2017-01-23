@@ -24,6 +24,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 	+"template")
 public class JPATestDesignTemplate extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 4048638638887859408L;
+	
+	private Long userId;
 
 	@ManyToOne
 	@JoinColumn
@@ -46,5 +48,13 @@ public class JPATestDesignTemplate extends JPABaseEntity implements Serializable
 
 	public void setSections(Set<JPATestDesignTemplateSection> sections) {
 		this.sections = sections;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }
