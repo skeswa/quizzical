@@ -1,5 +1,7 @@
 package org.gauntlet.quizzes.scoring.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
+import org.gauntlet.quizzes.api.model.QuizProblemType;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
@@ -65,7 +68,16 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
     	
     	// Evaluate the which quiz problem responses are correct.
     	final List<QuizProblemResponse> augmentedResponses = quizSubmission.getResponses()
-    		.parallelStream()
+    		.stream()
+    		.filter(qpr -> {
+    			boolean filter = false;
+    			try {
+					QuizProblem qp = quizProblemService.getByPrimary(qpr.getQuizProblemId());
+					filter = qp.getType() == QuizProblemType.REGULAR;
+				} catch (Exception e) {
+				}
+    			return filter;
+    			})
     		.map(problemResponse -> {
 	    		final Long quizProblemId = problemResponse.getQuizProblemId();
 				try {
@@ -78,13 +90,12 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 					TestCategoryRating rating = null;
 					if (categoryRatingsMap.containsKey(subType.getId())) {
 						rating = categoryRatingsMap.get(subType.getId());
-						categoryRatingsMap.put(subType.getId(), rating);
 					}
 					else {
 						final String code = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
 						rating = new TestCategoryRating(subType.getId(), code, code);
-						
 					}
+					categoryRatingsMap.put(subType.getId(), rating);
 					
 					if (problemResponse.getSkipped())
 						attempt = new TestCategoryAttempt(problem.getId(), quizSubmission.getDateCreated(),false,true);
@@ -104,8 +115,22 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 
 					return newQuizProblemResponse;
 				} catch (final NoSuchModelException e) {
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String stacktrace = sw.toString();
+					System.out.println(e.getMessage());
 					throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);
 				} catch (final ApplicationException e) {
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String stacktrace = sw.toString();
+					System.out.println(e.getMessage());
+					throw new RuntimeException(e);
+				} catch (final Exception e) {
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String stacktrace = sw.toString();
+					System.out.println(e.getMessage());
 					throw new RuntimeException(e);
 				}
 	    	})
@@ -115,8 +140,9 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
     	
     	//Process analytics
 		final String code_ = String.format("User(%d) analytics", quiz.getUserId()); 
-		if (quizSubmission.getQuiz().getQuizType().getCode() == Constants.QUIZ_TYPE_DIAGNOTIC_CODE) {
-	    	final TestUserAnalytics tua = new TestUserAnalytics(code_, code_);
+		TestUserAnalytics tua = null;
+		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE)) {
+	    	tua = new TestUserAnalytics(code_, code_);
 			//Baseline across all categories
 			final List<TestDesignTemplateContentType> subTypes = testDesignTemplateContentTypeDAOService.findAll();
 			TestCategoryRating rating = null;
@@ -134,7 +160,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 			}
 		}
 		else {
-			final TestUserAnalytics tua = testUserAnalyticsDAOService.getByCode(code_);
+			tua = testUserAnalyticsDAOService.getByCode(code_);
 			tua.getRatings().stream().map(rating -> {
 				try {
 					if (categoryRatingsMap.containsKey(rating.getCategoryId())) {
@@ -148,6 +174,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				} 
 	    	});
 		}
+		testUserAnalyticsDAOService.provide(tua);
     	
 		return quizSubmission;
 	}

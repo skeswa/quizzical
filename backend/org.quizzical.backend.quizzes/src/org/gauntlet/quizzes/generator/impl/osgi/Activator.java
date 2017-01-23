@@ -50,7 +50,7 @@ public class Activator extends DependencyActivatorBase {
 		dm.add(component);
 		
 		//--
-		properties = new Properties();
+/*		properties = new Properties();
 		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_REALISTIC_TEST);
 		component = dm.createComponent()
 				.setInterface(IQuizGeneratorService.class.getName(), properties)
@@ -60,11 +60,11 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(ITestDesignTemplateDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
-		dm.add(component);
+		dm.add(component);*/
 		
 		//--
 		properties = new Properties();
-		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_DIAGNOSTIC_TEST);
+		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_REALISTIC_TEST);
 		component = dm.createComponent()
 				.setInterface(IQuizGeneratorService.class.getName(), properties)
 				.setImplementation(DiagnosticTestGeneratorImpl.class)
