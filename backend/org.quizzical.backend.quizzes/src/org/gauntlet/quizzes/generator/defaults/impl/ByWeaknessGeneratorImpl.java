@@ -223,8 +223,10 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 			allowsCalc = !allowsCalc;
 			problems = problemDAOService.findByDifficultyAndCategoryNotInIn(allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 		}
-		if (problems.iterator().hasNext())
-			return problems.iterator().next();
+		if (problems.iterator().hasNext()) {
+			final Problem problem = problems.iterator().next();
+			return problem;
+		}
 		else
 			return null;
 	}

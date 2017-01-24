@@ -12,7 +12,8 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.apache.felix.configadmin,\
 	org.quizzical.backend.quizzes.api;version=latest,\
 	org.quizzical.backend.core.api;version=latest,\
-	org.quizzical.backend.problems.api;version=latest
+	org.quizzical.backend.problems.api;version=latest,\
+	org.quizzical.backend.testdesign.api;version=latest
 DynamicImport-Package: *
 Private-Package: \
 	org.quizzical.backend.gogo.collection,\

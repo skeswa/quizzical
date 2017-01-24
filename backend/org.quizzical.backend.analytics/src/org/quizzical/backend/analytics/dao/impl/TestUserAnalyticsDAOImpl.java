@@ -3,6 +3,7 @@ package org.quizzical.backend.analytics.dao.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
+import org.apache.commons.math.fraction.Fraction;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
@@ -224,9 +226,10 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 				for (TestCategoryAttempt newAttempt : newRating.getAttempts()) {
 					final JPATestCategoryAttempt newJPAAttempt = JPAEntityUtil.copy(newAttempt, JPATestCategoryAttempt.class);
 					rating.getAttempts().add(newJPAAttempt);
-					calculateRating(rating);
 				}
+				calculateRating(rating);
 			}
+			System.out.println(String.format("User (%d)/Rating %d in Category (%s)",analytics.getUserId(),rating.getRating(),rating.getCategoryId()));
 		}
 		update(analytics);
 	}
@@ -236,7 +239,10 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			    .stream()
 			    .filter(p -> p.getSuccessful())
 			    .collect(Collectors.toList());
-		rating.setRating((int)((correctAttempts.size()/ rating.getAttempts().size())*100));
+		int val = (int)(new Fraction(correctAttempts.size(),rating.getAttempts().size()).doubleValue()*100);
+		rating.setRating(val);
+		Date dateOfLastAttempt = rating.getAttempts().stream().map(u -> u.getDateAttempted()).max(Date::compareTo).get();
+		rating.setDateOfLastAttempt(dateOfLastAttempt);
 	}
 	
 }

@@ -11,11 +11,11 @@ public class TestCategoryAttempt extends BaseEntity implements Serializable {
 	private Boolean successful;
 	private Boolean skipped;
 	
-	public Long getTestProblemId() {
+	public Long getTestProblemResponseId() {
 		return testProblemId;
 	}
-	public void setTestProblemId(Long testProblemId) {
-		this.testProblemId = testProblemId;
+	public void setTestProblemResponseId(Long testProblemResponseId) {
+		this.testProblemId = testProblemResponseId;
 	}
 	public Date getDateAttempted() {
 		return dateAttempted;

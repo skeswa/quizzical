@@ -2,8 +2,13 @@ package org.quizzical.backend.analytics.model.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -14,6 +19,7 @@ import javax.persistence.Table;
 
 import org.gauntlet.core.model.Constants;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)

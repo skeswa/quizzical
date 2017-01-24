@@ -35,7 +35,7 @@ public class TestDesignTemplateGeneratorImpl implements ITestDesignTemplateGener
 			throws ApplicationException {
 		final int effectiveTestSize = deriveActualTestSize(testSize);
 		final int sizePerSection = deriveSectionSize(effectiveTestSize,categoryCodes.size());
-		final int sizeByDifficulty = sizePerSection/3;
+		final int sizeByDifficulty = sizePerSection/(3*2); //3=difficulty 2=cal/non-calc sections
 		
 		
 		final String code = String.format("Generated TestDesignTemplate User(%s) of [%s]",user.getCode(),categoryCodes);
