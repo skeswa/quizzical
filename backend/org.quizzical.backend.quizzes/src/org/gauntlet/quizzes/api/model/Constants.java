@@ -11,4 +11,7 @@ public interface Constants {
 	
 	public static final String QUIZ_TYPE_DIAGNOSTIC_CODE = "Diagnostic";
 	public static final String QUIZ_TYPE_DIAGNOSTIC_NAME = "Diagnostic Quiz";
+	
+	public static final String QUIZ_TYPE_WEAKNESS_CODE = "WeaknessBased";
+	public static final String QUIZ_TYPE_WEAKNESS_NAME = "WeaknessBased Quiz";
 }

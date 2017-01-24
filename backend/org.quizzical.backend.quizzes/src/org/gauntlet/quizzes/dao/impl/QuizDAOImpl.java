@@ -199,7 +199,7 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			
 			//userId
 			ParameterExpression<Long> pl = builder.parameter(Long.class);
-			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),p));
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),pl));
 			pes.put(pl, user.getId());
 			
 			count = countWithDynamicQueryAndParams(query,pes);

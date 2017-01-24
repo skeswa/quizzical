@@ -108,7 +108,7 @@ public class TestDesignTemplateDAOImpl extends BaseServiceImpl implements ITestD
 
 	private JPATestDesignTemplate fromDTO(TestDesignTemplate record) {
 		final Map<String,JPATestDesignTemplateContentSubType> subTypeMap = new ConcurrentHashMap<>();
-		final JPATestDesignTemplate jpaEntity = JPAEntityUtil.copy(new TestDesignTemplate(record.getName(), record.getCode()), JPATestDesignTemplate.class);
+		final JPATestDesignTemplate jpaEntity = JPAEntityUtil.copy(new TestDesignTemplate(record.getUserId(), record.getName(), record.getCode()), JPATestDesignTemplate.class);
     	final List<JPATestDesignTemplateSection> sections = record.getSections()
     		.stream()
     		.map(section -> {

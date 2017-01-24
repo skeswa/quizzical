@@ -85,6 +85,8 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 				resultList = findWithDynamicQueryAndParams(query,pes);
 			else
 				resultList = findWithDynamicQueryAndParams(query,pes,0,adjustedLimit);
+			
+			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
 		}
 		catch (Exception e) {
 			throw processException(e);

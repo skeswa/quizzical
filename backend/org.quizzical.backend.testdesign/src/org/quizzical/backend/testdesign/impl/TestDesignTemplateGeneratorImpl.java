@@ -21,7 +21,7 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 
 @SuppressWarnings("restriction")
-public class QuizGeneratorManagerImpl implements ITestDesignTemplateGeneratorService {
+public class TestDesignTemplateGeneratorImpl implements ITestDesignTemplateGeneratorService {
 	private volatile LogService logger;
 	
 	private volatile BundleContext ctx;
@@ -61,7 +61,7 @@ public class QuizGeneratorManagerImpl implements ITestDesignTemplateGeneratorSer
 		
 		TestDesignTemplateItem item = null;
 		for (String catCode : categoryCodes) {
-			final TestDesignTemplateContentSubType subType = contentTypeService.getContentSubTypeByCode(catCode);
+			final TestDesignTemplateContentSubType subType = contentTypeService.getTestDesignTemplateContentSubTypeByCode(catCode);
 			
 			//Easy
 			createItems(counter, subType, nonCalcSec, items, TestDesignTemplateItemDifficultyType.EASY, sizeByDifficulty);
@@ -79,7 +79,7 @@ public class QuizGeneratorManagerImpl implements ITestDesignTemplateGeneratorSer
 		
 		
 		for (String catCode : categoryCodes) {
-			final TestDesignTemplateContentSubType subType = contentTypeService.getContentSubTypeByCode(catCode);
+			final TestDesignTemplateContentSubType subType = contentTypeService.getTestDesignTemplateContentSubTypeByCode(catCode);
 			
 			//Easy
 			createItems(counter, subType, calcSec, items, TestDesignTemplateItemDifficultyType.EASY, sizeByDifficulty);

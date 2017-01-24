@@ -11,11 +11,14 @@ import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
 import org.gauntlet.quizzes.generator.defaults.impl.ByProblemCategoryGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.ByWeaknessGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.impl.QuizGeneratorManagerImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.testdesign.api.ITestDesignTemplateGeneratorService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 
@@ -33,8 +36,8 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizGeneratorService.class)
 						.setCallbacks("addGenerator", "removeGenerator")
 						.setRequired(false))
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
-		
 		//--
 		Properties properties = new Properties();
 		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_BY_CATEGORY);
@@ -71,6 +74,21 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_WEAKNESS_TEST);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(ByWeaknessGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestDesignTemplateGeneratorService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestUserAnalyticsDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestDesignTemplateContentTypeDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);
