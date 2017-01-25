@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1485129505000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1485366301000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="com.fasterxml.jackson.core.jackson-annotations"/>
@@ -1573,6 +1573,270 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="com.springsource.org.apache.velocity"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="7cebdb54c7a9ee3066d4c9243ef94df1b4c300b04533c274d7e9483fc288eac3"/>
+      <attribute name="url" value="com.springsource.org.apache.velocity/com.springsource.org.apache.velocity-1.6.2.jar"/>
+      <attribute name="size" type="Long" value="426178"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.exception"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.anakia"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="com.werken.xpath,org.apache.tools.ant,org.jdom,org.jdom.output"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.app"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.commons.collections,org.apache.velocity,org.apache.velocity.context,org.apache.velocity.exception,org.apache.velocity.runtime.log"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.app.event"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.runtime,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.app.event.implement"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.runtime,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.app.tools"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.context"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.app.event,org.apache.velocity.exception,org.apache.velocity.runtime,org.apache.velocity.runtime.parser.node,org.apache.velocity.runtime.resource,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.convert"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.exception"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.runtime.parser,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.io"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.commons.collections,org.apache.velocity,org.apache.velocity.app.event,org.apache.velocity.context,org.apache.velocity.exception,org.apache.velocity.runtime.directive,org.apache.velocity.runtime.log,org.apache.velocity.runtime.parser,org.apache.velocity.runtime.parser.node,org.apache.velocity.runtime.resource,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.defaults"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.directive"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.exception,org.apache.velocity.runtime,org.apache.velocity.runtime.log,org.apache.velocity.runtime.parser,org.apache.velocity.runtime.parser.node"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.log"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.runtime,org.apache.velocity.runtime.directive,org.apache.velocity.runtime.parser.node,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.parser"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.runtime,org.apache.velocity.runtime.directive,org.apache.velocity.runtime.parser.node"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.parser.node"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.commons.lang.text,org.apache.velocity.context,org.apache.velocity.exception,org.apache.velocity.runtime,org.apache.velocity.runtime.log,org.apache.velocity.runtime.parser,org.apache.velocity.util.introspection"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.resource"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.exception,org.apache.velocity.runtime,org.apache.velocity.runtime.resource.loader"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.resource.loader"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="javax.sql,org.apache.commons.collections,org.apache.velocity.exception,org.apache.velocity.runtime,org.apache.velocity.runtime.resource,org.apache.velocity.runtime.resource.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.resource.util"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.runtime.visitor"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.runtime.parser.node"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.servlet"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="javax.servlet,javax.servlet.http,org.apache.velocity,org.apache.velocity.context,org.apache.velocity.exception"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.texen"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity,org.apache.velocity.app,org.apache.velocity.context"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.texen.ant"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.commons.collections,org.apache.tools.ant,org.apache.velocity.context"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.texen.defaults"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.texen.util"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.util"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.context,org.apache.velocity.runtime"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.velocity.util.introspection"/>
+      <attribute name="version" type="Version" value="1.6.2"/>
+      <attribute name="bundle-symbolic-name" value="com.springsource.org.apache.velocity"/>
+      <attribute name="bundle-version" type="Version" value="1.6.2"/>
+      <directive name="uses" value="org.apache.velocity.runtime,org.apache.velocity.runtime.log,org.apache.velocity.runtime.parser.node"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=com.werken.xpath)(version&gt;=0.9.4)(!(version&gt;=1.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.naming)(version&gt;=0.0.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet)(version&gt;=2.3.0)(!(version&gt;=3.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.http)(version&gt;=2.3.0)(!(version&gt;=3.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.sql)(version&gt;=0.0.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections)(version&gt;=3.2.1)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.map)(version&gt;=3.2.1)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang)(version&gt;=2.4.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang.builder)(version&gt;=2.4.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang.text)(version&gt;=2.4.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.logging)(version&gt;=1.1.0)(!(version&gt;=2.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.log4j)(version&gt;=1.2.12)(!(version&gt;=2.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.oro.text.perl)(version&gt;=2.0.8)(!(version&gt;=3.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.jdom)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.jdom.input)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.jdom.output)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.xml.sax)(version&gt;=0.0.0))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="com.springsource.org.json"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="1.0.0"/>
@@ -2868,6 +3132,981 @@
       <directive name="filter" value="(osgi.wiring.package=org.springframework.core.io)"/>
       <directive name="resolution" value="optional"/>
     </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="net.sf.jasperreports.engine"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="978ede5cd3d66ab1b7cda825ec733555d300e54e2926a54d77f36b3f0bf42539"/>
+      <attribute name="url" value="net.sf.jasperreports.engine/net.sf.jasperreports.engine-6.4.0.jar"/>
+      <attribute name="size" type="Long" value="5568414"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.ant"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.base"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.design"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.fill"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.charts.xml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.compilers"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.barbecue"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.barcode4j"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.charts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.actions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.json"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.json.resources"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources.images"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources.images.format"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources.images.jive"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources.images.style"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.headertoolbar.resources.require"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.iconlabel"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.items"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.list"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map.fill"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map.resources"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map.resources.require"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map.resources.templates"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.map.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.sort"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.sort.actions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.sort.resources"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.sort.resources.images"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.spiderchart"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.spiderchart.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.table"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.table.fill"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.components.table.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.base"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.design"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.fill"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.fill.calculation"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.interactive"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.crosstabs.xml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.bean"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.cache"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.csv"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.ds"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.ejbql"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.empty"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.excel"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.hibernate"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.hibernate.spring"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.http"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.jdbc"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.jndi"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.json"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.mondrian"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.provider"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.qe"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.xls"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.xlsx"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.xml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.data.xmla"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.analytics"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.analytics.data"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.analytics.dataset"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.base"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.component"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.convert"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.data"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.design"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.design.events"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.dtds"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.data"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.draw"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.oasis"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.docx"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.docx._rels"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx._rels"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt.slideLayouts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt.slideLayouts._rels"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt.slideMasters"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt.slideMasters._rels"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.pptx.ppt.theme"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.xlsx"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.ooxml.xlsx._rels"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.tabulator"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.export.zip"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.fill"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.fonts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.images"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.part"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.print"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.query"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.scriptlets"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.style"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.util.xml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.virtualization"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.engine.xml"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.export"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.export.annotations"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.export.parameters"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.export.type"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.expressions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.extensions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.fonts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.fonts.pictonic"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.functions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.functions.annotations"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.governors"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.j2ee"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.j2ee.servlets"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap.mapping"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap.mondrian"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap.olap4j"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap.result"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.olap.xmla"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.parts"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.parts.subreport"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.renderers"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.repo"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.search"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.swing"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.types"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.types.date"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.view"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.view.images"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.view.save"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.actions"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.commands"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.listeners"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.require"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.require.report"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.require.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.require.viewer"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.templates"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.servlets.resources.viewer"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="net.sf.jasperreports.web.util"/>
+      <attribute name="version" type="Version" value="0.0.0"/>
+      <attribute name="bundle-symbolic-name" value="net.sf.jasperreports.engine"/>
+      <attribute name="bundle-version" type="Version" value="6.4.0"/>
+    </capability>
   </resource>
   <resource>
     <capability namespace="osgi.identity">
@@ -4793,6 +6032,60 @@
     </requirement>
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(osgi.wiring.package=org.xml.sax.helpers)"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.commons.email"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.3.2"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="93839276ad0726955a35d7fbaeac120dcf8b831e75c8da3e8a05a3e1c8fe96c3"/>
+      <attribute name="url" value="org.apache.commons.email/org.apache.commons.email-1.3.2.jar"/>
+      <attribute name="size" type="Long" value="49456"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.commons.email"/>
+      <attribute name="bundle-version" type="Version" value="1.3.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.commons.email"/>
+      <attribute name="bundle-version" type="Version" value="1.3.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.mail"/>
+      <attribute name="version" type="Version" value="1.3.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.email"/>
+      <attribute name="bundle-version" type="Version" value="1.3.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.mail.resolver"/>
+      <attribute name="version" type="Version" value="1.3.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.email"/>
+      <attribute name="bundle-version" type="Version" value="1.3.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.mail.util"/>
+      <attribute name="version" type="Version" value="1.3.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.email"/>
+      <attribute name="bundle-version" type="Version" value="1.3.2"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.activation)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.mail)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.mail.internet)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.mail.util)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.naming)"/>
     </requirement>
   </resource>
   <resource>

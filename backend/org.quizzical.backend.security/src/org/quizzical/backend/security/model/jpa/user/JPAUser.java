@@ -13,7 +13,7 @@ import org.gauntlet.core.model.Constants;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
+@Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
 +"user")
 public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private static final long serialVersionUID = 7745549020494226091L;

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Demo Application</title>
+  <meta name="description" content="Amdatu Security Demo Application">
+  <meta name="author" content="Amdatu Project Team">
+
+  <link rel="stylesheet" href="demo.css">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <h1>Demo Application</h1>
+  <h2>Welcome <span id='userName'></span></h2>
+
+  <p>
+    <form method='post' action='/auth/rest/logout'>
+  	  <input type='submit' value='log out...'>
+    </form>
+  </p>
+  <p>Change your password:<br>
+    <form method='post' action='/account/rest/updateCredentials'>
+      <fieldset>
+        <label for='change_pwd_email'>Email</label>
+        <input type='text' id='change_pwd_email' name='email' value='' readonly>
+
+        <label for='oldPwd'>Current</label>
+        <input id='oldPwd' type='password' name='oldPassword' value=''><br>
+        <label for='newPwd'>New</label>
+        <input id='newPwd' type='password' name='newPassword' value=''><br>
+
+        <input type='submit' value='update password'>
+      </fieldset>
+    </form>
+  </p>
+
+  <script src="demo.js"></script>
+</body>
+</html>

@@ -13,9 +13,9 @@ import org.gauntlet.core.model.JPABaseEntity;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
+@Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+org.quizzical.backend.testdesign.api.model.Constants.Q7L_MODULE
-	+Constants.GNT_TABLE_NAME_SEPARATOR
+	+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+"content_subtp")
 public class JPATestDesignTemplateContentSubType extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 4256511505548372125L;

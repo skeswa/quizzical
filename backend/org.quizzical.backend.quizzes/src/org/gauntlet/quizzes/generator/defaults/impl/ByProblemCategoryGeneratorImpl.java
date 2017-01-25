@@ -232,22 +232,22 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 
 		if (params.getQuizSize() <= org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE)
 			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					tdType.getCode()+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SUFFIX;
 		else if (params.getQuizSize() > org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE &&
 				params.getQuizSize() < org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SIZE)
 			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					tdType.getCode()+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SUFFIX;
 		else
 			tdTemplateCode = org.quizzical.backend.testdesign.api.model.Constants.QUIZ_GENERATION_PREFIX_CATEGORY+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					tdType.getCode()+
-					org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+
+					org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+
 					org.quizzical.backend.testdesign.api.model.Constants.QUIZ_FULL_SUFFIX;
 		return tdTemplateCode;
 	}

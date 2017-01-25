@@ -298,7 +298,7 @@ public class TestDesignTemplateGenerator {
 		
 		for (String catKey : subTypes.keySet()) {
 			//PT
-			final String code = typePrefix+org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+catKey+org.gauntlet.core.model.Constants.GNT_TABLE_NAME_SEPARATOR+sizeSuffix;
+			final String code = typePrefix+org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+catKey+org.gauntlet.core.model.Constants.Q7L_TABLE_NAME_SEPARATOR+sizeSuffix;
 			
 			TestDesignTemplateContentSubType cst = subTypes.get(catKey);
 			TestDesignTemplate tt = new TestDesignTemplate(code,code);

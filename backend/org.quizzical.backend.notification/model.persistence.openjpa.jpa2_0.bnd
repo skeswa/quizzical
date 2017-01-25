@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Gnt-Module: q7l_td
+Meta-Persistence: META-INF/persistence.xml
+Include-Resource: META-INF/persistence.xml=resources/jpa/analytics-persistence-openjpa.xml
+Bundle-Activator: org.quizzical.backend.notification.model.jpa.osgi.Activator
+Export-Package: org.quizzical.backend.notification.model.jpa
+Private-Package: org.quizzical.backend.notification.model.jpa.osgi

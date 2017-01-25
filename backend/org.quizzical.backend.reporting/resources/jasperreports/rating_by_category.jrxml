@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1dfa0b5-a4e5-4d5b-bf30-bd2842f6346e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     gnt_ana_cat_rating."id" AS gnt_ana_cat_rating_id,
+     gnt_ana_cat_rating."active_" AS gnt_ana_cat_rating_active_,
+     gnt_ana_cat_rating."code" AS gnt_ana_cat_rating_code,
+     gnt_ana_cat_rating."datecreated" AS gnt_ana_cat_rating_datecreated,
+     gnt_ana_cat_rating."datelastupdated" AS gnt_ana_cat_rating_datelastupdated,
+     gnt_ana_cat_rating."description" AS gnt_ana_cat_rating_description,
+     gnt_ana_cat_rating."externalcode" AS gnt_ana_cat_rating_externalcode,
+     gnt_ana_cat_rating."externalname" AS gnt_ana_cat_rating_externalname,
+     gnt_ana_cat_rating."externalrefid" AS gnt_ana_cat_rating_externalrefid,
+     gnt_ana_cat_rating."issystem" AS gnt_ana_cat_rating_issystem,
+     gnt_ana_cat_rating."name_" AS gnt_ana_cat_rating_name_,
+     gnt_ana_cat_rating."ownerentityid" AS gnt_ana_cat_rating_ownerentityid,
+     gnt_ana_cat_rating."ownerentitytypeid" AS gnt_ana_cat_rating_ownerentitytypeid,
+     gnt_ana_cat_rating."parentrefid" AS gnt_ana_cat_rating_parentrefid,
+     gnt_ana_cat_rating."portalid" AS gnt_ana_cat_rating_portalid,
+     gnt_ana_cat_rating."processid" AS gnt_ana_cat_rating_processid,
+     gnt_ana_cat_rating."refid" AS gnt_ana_cat_rating_refid,
+     gnt_ana_cat_rating."repositoryid" AS gnt_ana_cat_rating_repositoryid,
+     gnt_ana_cat_rating."schedulerjobid" AS gnt_ana_cat_rating_schedulerjobid,
+     gnt_ana_cat_rating."synchonized" AS gnt_ana_cat_rating_synchonized,
+     gnt_ana_cat_rating."temporary" AS gnt_ana_cat_rating_temporary,
+     gnt_ana_cat_rating."tenantid" AS gnt_ana_cat_rating_tenantid,
+     gnt_ana_cat_rating."tenantwide" AS gnt_ana_cat_rating_tenantwide,
+     gnt_ana_cat_rating."categoryid" AS gnt_ana_cat_rating_categoryid,
+     gnt_ana_cat_rating."dateoflastattempt" AS gnt_ana_cat_rating_dateoflastattempt,
+     gnt_ana_cat_rating."rating" AS gnt_ana_cat_rating_rating,
+     gnt_ana_cat_rating."version_" AS gnt_ana_cat_rating_version_,
+     gnt_ana_cat_rating."analytics_id" AS gnt_ana_cat_rating_analytics_id,
+     gnt_td_content_subtp."id" AS gnt_td_content_subtp_id,
+     gnt_td_content_subtp."active_" AS gnt_td_content_subtp_active_,
+     gnt_td_content_subtp."code" AS gnt_td_content_subtp_code,
+     gnt_td_content_subtp."datecreated" AS gnt_td_content_subtp_datecreated,
+     gnt_td_content_subtp."datelastupdated" AS gnt_td_content_subtp_datelastupdated,
+     gnt_td_content_subtp."description" AS gnt_td_content_subtp_description,
+     gnt_td_content_subtp."externalcode" AS gnt_td_content_subtp_externalcode,
+     gnt_td_content_subtp."externalname" AS gnt_td_content_subtp_externalname,
+     gnt_td_content_subtp."externalrefid" AS gnt_td_content_subtp_externalrefid,
+     gnt_td_content_subtp."issystem" AS gnt_td_content_subtp_issystem,
+     gnt_td_content_subtp."name_" AS gnt_td_content_subtp_name_,
+     gnt_td_content_subtp."ownerentityid" AS gnt_td_content_subtp_ownerentityid,
+     gnt_td_content_subtp."ownerentitytypeid" AS gnt_td_content_subtp_ownerentitytypeid,
+     gnt_td_content_subtp."parentrefid" AS gnt_td_content_subtp_parentrefid,
+     gnt_td_content_subtp."portalid" AS gnt_td_content_subtp_portalid,
+     gnt_td_content_subtp."processid" AS gnt_td_content_subtp_processid,
+     gnt_td_content_subtp."refid" AS gnt_td_content_subtp_refid,
+     gnt_td_content_subtp."repositoryid" AS gnt_td_content_subtp_repositoryid,
+     gnt_td_content_subtp."schedulerjobid" AS gnt_td_content_subtp_schedulerjobid,
+     gnt_td_content_subtp."synchonized" AS gnt_td_content_subtp_synchonized,
+     gnt_td_content_subtp."temporary" AS gnt_td_content_subtp_temporary,
+     gnt_td_content_subtp."tenantid" AS gnt_td_content_subtp_tenantid,
+     gnt_td_content_subtp."tenantwide" AS gnt_td_content_subtp_tenantwide,
+     gnt_td_content_subtp."version_" AS gnt_td_content_subtp_version_,
+     gnt_td_content_subtp."type_id" AS gnt_td_content_subtp_type_id
+FROM
+     "quizzical"."gnt_td_content_subtp" gnt_td_content_subtp INNER JOIN "quizzical"."gnt_ana_cat_rating" gnt_ana_cat_rating ON gnt_td_content_subtp."id" = gnt_ana_cat_rating."categoryid"]]>
+	</queryString>
+	<field name="gnt_ana_cat_rating_id" class="java.lang.Long"/>
+	<field name="gnt_ana_cat_rating_active_" class="java.lang.Boolean"/>
+	<field name="gnt_ana_cat_rating_code" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_datecreated" class="java.sql.Timestamp"/>
+	<field name="gnt_ana_cat_rating_datelastupdated" class="java.sql.Timestamp"/>
+	<field name="gnt_ana_cat_rating_description" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_externalcode" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_externalname" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_externalrefid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_issystem" class="java.lang.Boolean"/>
+	<field name="gnt_ana_cat_rating_name_" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_ownerentityid" class="java.lang.Long"/>
+	<field name="gnt_ana_cat_rating_ownerentitytypeid" class="java.lang.Long"/>
+	<field name="gnt_ana_cat_rating_parentrefid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_portalid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_processid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_refid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_repositoryid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_schedulerjobid" class="java.lang.String"/>
+	<field name="gnt_ana_cat_rating_synchonized" class="java.lang.Boolean"/>
+	<field name="gnt_ana_cat_rating_temporary" class="java.lang.Boolean"/>
+	<field name="gnt_ana_cat_rating_tenantid" class="java.lang.Long"/>
+	<field name="gnt_ana_cat_rating_tenantwide" class="java.lang.Boolean"/>
+	<field name="gnt_ana_cat_rating_categoryid" class="java.lang.Long"/>
+	<field name="gnt_ana_cat_rating_dateoflastattempt" class="java.sql.Timestamp"/>
+	<field name="gnt_ana_cat_rating_rating" class="java.lang.Integer"/>
+	<field name="gnt_ana_cat_rating_version_" class="java.lang.Integer"/>
+	<field name="gnt_ana_cat_rating_analytics_id" class="java.lang.Long"/>
+	<field name="gnt_td_content_subtp_id" class="java.lang.Long"/>
+	<field name="gnt_td_content_subtp_active_" class="java.lang.Boolean"/>
+	<field name="gnt_td_content_subtp_code" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_datecreated" class="java.sql.Timestamp"/>
+	<field name="gnt_td_content_subtp_datelastupdated" class="java.sql.Timestamp"/>
+	<field name="gnt_td_content_subtp_description" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_externalcode" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_externalname" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_externalrefid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_issystem" class="java.lang.Boolean"/>
+	<field name="gnt_td_content_subtp_name_" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_ownerentityid" class="java.lang.Long"/>
+	<field name="gnt_td_content_subtp_ownerentitytypeid" class="java.lang.Long"/>
+	<field name="gnt_td_content_subtp_parentrefid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_portalid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_processid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_refid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_repositoryid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_schedulerjobid" class="java.lang.String"/>
+	<field name="gnt_td_content_subtp_synchonized" class="java.lang.Boolean"/>
+	<field name="gnt_td_content_subtp_temporary" class="java.lang.Boolean"/>
+	<field name="gnt_td_content_subtp_tenantid" class="java.lang.Long"/>
+	<field name="gnt_td_content_subtp_tenantwide" class="java.lang.Boolean"/>
+	<field name="gnt_td_content_subtp_version_" class="java.lang.Integer"/>
+	<field name="gnt_td_content_subtp_type_id" class="java.lang.Long"/>
+	<sortField name="gnt_ana_cat_rating_rating" order="Descending"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="168" y="2" width="100" height="20" uuid="dcc2ea61-4701-41c2-b769-46db52cf0797"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rating]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="2" width="100" height="20" uuid="b4ab982c-b573-4f45-a248-28b1c3f0607e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Latest Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="2" width="146" height="20" uuid="4764a1ad-fd9a-43bd-b6ed-b1d2fe11f7d6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="168" y="11" width="100" height="20" uuid="6aa8dd09-0cb4-4f49-9d8e-808eea9cd4cc"/>
+				<textFieldExpression><![CDATA[$F{gnt_ana_cat_rating_rating}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="11" width="100" height="20" uuid="1a998c2b-6f41-4915-9e3d-45ce22ab2470"/>
+				<textFieldExpression><![CDATA[$F{gnt_ana_cat_rating_dateoflastattempt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="11" width="146" height="20" uuid="e1b8765a-c495-4832-af7d-724144173a94"/>
+				<textFieldExpression><![CDATA[$F{gnt_td_content_subtp_code}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

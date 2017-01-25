@@ -18,9 +18,9 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSectionType;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
+@Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+org.quizzical.backend.testdesign.api.model.Constants.Q7L_MODULE
-	+Constants.GNT_TABLE_NAME_SEPARATOR
+	+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+"template_section")
 public class JPATestDesignTemplateSection extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 4518315461849076887L;

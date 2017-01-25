@@ -18,7 +18,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name=Constants.CNX_TABLE_NAME_PREFIX+Constants.GNT_TABLE_NAME_SEPARATOR
+@Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+"quiz_submission")
 public class JPAQuizSubmission extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = -7656436051296927169L;
