@@ -158,16 +158,17 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 	
 	//Account management
+	@Override
 	public void addUser(String userId, String firstName, String newPassword, List<String> bccEmails) throws ApplicationException, EmailException {
 		User user = new User(userId, firstName, firstName);
 		user = add(user);
 		final WelcomeMessagePreparator prep = new WelcomeMessagePreparator(mailService, logger, user.getFirstName(), user.getFirstName(), userId,bccEmails, "Welcome to q7l", newPassword, "http://www.q7l.io");
 		try {
 			prep.prepare();
+			prep.send();
 		} catch (Exception e) {
 			throw new ApplicationException(e);
 		}
-		prep.send();
 	}
 	
 	@Override

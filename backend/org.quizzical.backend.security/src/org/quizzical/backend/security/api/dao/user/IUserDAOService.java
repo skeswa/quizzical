@@ -35,4 +35,7 @@ public interface IUserDAOService {
 	
 	//Account management
 	public void sendWelcome(String userId, String newPassword, List<String> bccEmails) throws ApplicationException, EmailException;
+
+	void addUser(String userId, String firstName, String newPassword, List<String> bccEmails)
+			throws ApplicationException, EmailException;
 }

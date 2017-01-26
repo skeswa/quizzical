@@ -9,7 +9,7 @@ import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-
+import org.quizzical.backend.mail.api.IMailService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.dao.impl.user.UserDAOServiceImpl;
 
@@ -32,6 +32,7 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(UserDAOServiceImpl.class)
 				.setCallbacks(null, "createDefaults", null, null)//init, start, stop and destroy.
 				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
+				.add(createServiceDependency().setService(IMailService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
 		
 	}

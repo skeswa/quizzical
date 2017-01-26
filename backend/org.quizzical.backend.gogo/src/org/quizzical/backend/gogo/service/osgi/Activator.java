@@ -12,6 +12,7 @@ import org.quizzical.backend.gogo.execute.ScriptExecutor;
 import org.quizzical.backend.gogo.service.QuestionCommands;
 import org.quizzical.backend.gogo.service.QuizCommands;
 import org.quizzical.backend.gogo.service.TestDesignCommands;
+import org.quizzical.backend.gogo.service.UserCommands;
 
 public class Activator extends DependencyActivatorBase {
 
@@ -35,6 +36,11 @@ public class Activator extends DependencyActivatorBase {
         manager.add(createComponent()
                 .setInterface(Object.class.getName(), createProps(TestDesignCommands.SCOPE, TestDesignCommands.FUNCTIONS))
                 .setImplementation(TestDesignCommands.class)
+                );
+        
+        manager.add(createComponent()
+                .setInterface(Object.class.getName(), createProps(UserCommands.SCOPE, UserCommands.FUNCTIONS))
+                .setImplementation(UserCommands.class)
                 );
 
         manager.add(createComponent()
