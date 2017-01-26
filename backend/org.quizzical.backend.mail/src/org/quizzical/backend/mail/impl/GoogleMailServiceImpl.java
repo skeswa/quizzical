@@ -1,31 +1,15 @@
 package org.quizzical.backend.mail.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.URL;
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-
-import javax.mail.Session;
-import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.util.StringUtils;
-import org.gauntlet.core.commons.util.StringUtil;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.mail.api.IMailService;
-import org.quizzical.backend.notification.api.model.SubscriberEmailNotification;
 
 
 public class GoogleMailServiceImpl implements IMailService, ManagedService {
@@ -56,6 +40,7 @@ public class GoogleMailServiceImpl implements IMailService, ManagedService {
 		this.name = (String)props.get(MAIL_SMTP_FROM_NAME);
 	}	
 	
+	@Override
 	synchronized public HtmlEmail createHtmlSender(String subject) throws EmailException {
 		Properties mailServerProperties = new Properties();
 		mailServerProperties.put("mail.smtp.port", "587");

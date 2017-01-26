@@ -1,34 +1,25 @@
 package org.quizzical.backend.security.dao.impl.user;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-
 import org.amdatu.jta.Transactional;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.mail.EmailException;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
-import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.mail.api.LogServiceChute;
+import org.quizzical.backend.mail.api.IMailService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.dao.impl.user.email.WelcomeMessagePreparator;
 import org.quizzical.backend.security.model.jpa.user.JPAUser;
 
 
@@ -36,6 +27,8 @@ import org.quizzical.backend.security.model.jpa.user.JPAUser;
 @Transactional
 public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOService {
 	private volatile LogService logger;
+	
+	private volatile IMailService mailService;
 	
 	private volatile EntityManager em;
 
@@ -165,20 +158,30 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 	
 	//Account management
-	public VelocityEngine getVelocityEngine() throws ApplicationException {
+	public void addUser(String userId, String firstName, String newPassword, List<String> bccEmails) throws ApplicationException, EmailException {
+		User user = new User(userId, firstName, firstName);
+		user = add(user);
+		final WelcomeMessagePreparator prep = new WelcomeMessagePreparator(mailService, logger, user.getFirstName(), user.getFirstName(), userId,bccEmails, "Welcome to q7l", newPassword, "http://www.q7l.io");
 		try {
-			if (this.ve == null) {
-				this.ve = new VelocityEngine();
-				this.ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new LogServiceChute(getLogger()));
-				this.ve.init(); 
-			}
+			prep.prepare();
 		} catch (Exception e) {
-			throw new ApplicationException("Error creating Velocity Engine", e);
+			throw new ApplicationException(e);
 		}
-		return this.ve;
+		prep.send();
 	}
 	
-	public void sendPassword(User user, List<String> bccEmails) throws ApplicationException {
-
+	@Override
+	public void sendWelcome(String userId, String newPassword, List<String> bccEmails) throws ApplicationException, EmailException {
+		final User user = getByEmail(userId);
+		String hash = DigestUtils.sha256Hex(newPassword);
+		user.setPassword(hash);
+		update(user);
+		final WelcomeMessagePreparator prep = new WelcomeMessagePreparator(mailService, logger, user.getFirstName(), user.getFirstName(), userId,bccEmails, "Welcome to q7l", newPassword, "http://www.q7l.io");
+		try {
+			prep.prepare();
+		} catch (Exception e) {
+			throw new ApplicationException(e);
+		}
+		prep.send();
 	}
 }

@@ -2,6 +2,7 @@ package org.quizzical.backend.security.api.dao.user;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
 import org.gauntlet.core.api.ApplicationException;
 import org.quizzical.backend.security.api.model.user.User;
 
@@ -33,5 +34,5 @@ public interface IUserDAOService {
 	public User getUserByEmail(String email) throws UserNotFoundException, ApplicationException;
 	
 	//Account management
-	public void sendPassword(User user, List<String> bccEmails) throws ApplicationException;
+	public void sendWelcome(String userId, String newPassword, List<String> bccEmails) throws ApplicationException, EmailException;
 }

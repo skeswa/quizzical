@@ -4,13 +4,17 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.gauntlet.core.commons.util.StringUtil;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.mail.api.IMailService;
+import org.quizzical.backend.mail.api.LogServiceChute;
 import org.quizzical.backend.mail.api.MailPreparator;
 
 public class WelcomeMessagePreparator extends MailPreparator {
@@ -21,6 +25,7 @@ public class WelcomeMessagePreparator extends MailPreparator {
 	private String firstName;
 	private String loginUrl;
 	private LogService logger;
+	private List<String> bccEmails;
 
 	public WelcomeMessagePreparator(
 			IMailService service, 
@@ -28,6 +33,7 @@ public class WelcomeMessagePreparator extends MailPreparator {
 			String firstName,
 			String fullName, 
 			String emailAddress,
+			List<String> bccEmails,
 			String subject,
 			String password,
 			String loginUrl) throws EmailException {
@@ -38,15 +44,25 @@ public class WelcomeMessagePreparator extends MailPreparator {
 		this.firstName = firstName;
 		this.loginUrl = loginUrl;
 		this.logger = logger;
+		this.bccEmails = bccEmails;
 	}
 
 	@Override
-	public void prepare() throws Exception {
+	public void prepare() throws Exception  {
 		super.sender.addTo(emailAddress, fullName);
+		if (this.bccEmails != null) {
+			for (String bcc : bccEmails) {
+				super.sender.addBcc(bcc);
+			}
+		}
+		
+		final VelocityEngine ve = new VelocityEngine();
+		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new LogServiceChute(this.logger));
+		ve.init();
 
 		
 		// -- Repare body
-		InputStream is = HTMLMailTest.class
+		InputStream is = WelcomeMessagePreparator.class
 				.getResourceAsStream("/email_templates/welcome/welcome-to-quizzical-cid.html");
 		String templateString = StringUtil.read(is);
 
@@ -57,18 +73,18 @@ public class WelcomeMessagePreparator extends MailPreparator {
 
 
 		Map<String, Object> vars = new HashMap<String, Object>();
-		URL img = HTMLMailTest.class.getResource(
+		URL img = WelcomeMessagePreparator.class.getResource(
 				"/email_templates/images/cloud.gif");
 		String cid = super.sender.embed(img, "img1");
 		vec.put("cloud_cid", cid);
 		
-		img = HTMLMailTest.class.getResource(
+		img = WelcomeMessagePreparator.class.getResource(
 				"/email_templates/images/quizzical-header-logo-small.png");
 		cid = super.sender.embed(img, "img2");
 		vec.put("logo_cid", cid);
 		
 		
-		img = HTMLMailTest.class.getResource(
+		img = WelcomeMessagePreparator.class.getResource(
 				"/email_templates/images/blank.png");
 		cid = super.sender.embed(img, "img3");
 		vec.put("blank_cid", cid);

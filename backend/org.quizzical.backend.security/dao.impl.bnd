@@ -1,5 +1,7 @@
 Bundle-Version: 1.0.0.${tstamp}
+Include-Resource: email_templates=resource/email_templates
 Private-Package: \
 	org.quizzical.backend.security.dao.impl.user,\
-	org.quizzical.backend.security.dao.impl.user.osgi
+	org.quizzical.backend.security.dao.impl.user.osgi,\
+	org.quizzical.backend.security.dao.impl.user.email
 Bundle-Activator: org.quizzical.backend.security.dao.impl.user.osgi.Activator
