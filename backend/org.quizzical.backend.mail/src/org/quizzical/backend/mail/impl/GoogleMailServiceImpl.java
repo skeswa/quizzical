@@ -7,7 +7,9 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Session;
 import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.mail.DefaultAuthenticator;
@@ -55,11 +57,21 @@ public class GoogleMailServiceImpl implements IMailService, ManagedService {
 	}	
 	
 	synchronized public HtmlEmail createHtmlSender(String subject) throws EmailException {
+		Properties mailServerProperties = new Properties();
+		mailServerProperties.put("mail.smtp.port", "587");
+		mailServerProperties.put("mail.smtp.auth", "true");
+		mailServerProperties.put("mail.smtp.starttls.enable", "true");
+		System.out.println("Mail Server Properties have been setup successfully..");
+		
+		//Session getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+ 
+		
 		HtmlEmail mailSender = new HtmlEmail();
 		mailSender.setHostName(this.hostname);
 		mailSender.setSmtpPort(this.port);
 		mailSender.setAuthenticator(new DefaultAuthenticator(this.username,this.password));
 		mailSender.setSSLOnConnect(true);
+		mailSender.setStartTLSEnabled(true);
 		mailSender.setFrom(this.email);
 		mailSender.setSubject(subject);
 		

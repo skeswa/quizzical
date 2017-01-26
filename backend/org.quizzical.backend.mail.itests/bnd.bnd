@@ -14,6 +14,7 @@
 	org.quizzical.backend.core.commons;version=latest,\
 	org.quizzical.backend.mail.api;version=latest,\
 	org.quizzical.backend.mail.impl;version=latest
+Include-Resource: email_templates=email_templates
 -runbundles:  \
 	biz.aQute.junit,\
 	org.amdatu.bndtools.test,\
@@ -102,29 +103,9 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.core.model;version=latest,\
 	,\
-	org.quizzical.backend.libraries.io.jsonwebtoken.jjwt,\
-	,\
-	org.quizzical.backend.security.jwt;version=latest,\
-	org.quizzical.backend.security.api;version=latest,\
-	org.quizzical.backend.security.rest;version=latest,\
-	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
-	org.quizzical.backend.security.dao.impl;version=latest,\
-	,\
-	org.quizzical.backend.testdesign.api;version=latest,\
-	org.quizzical.backend.testdesign.dao.impl;version=latest,\
-	org.quizzical.backend.testdesign.model.persistence.openjpa.jpa2_0;version=latest,\
-	,\
-	org.quizzical.backend.problems.api;version=latest,\
-	org.quizzical.backend.problems.dao.impl;version=latest,\
-	org.quizzical.backend.problems.model.persistence.openjpa.jpa2_0;version=latest,\
-	org.quizzical.backend.problems.rest;version=latest,\
-	org.quizzical.backend.data.defaults.mt;version=latest,\
-	,\
-	org.quizzical.backend.quizzes.api;version=latest,\
-	org.quizzical.backend.quizzes.dao.impl;version=latest,\
-	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\
-	org.quizzical.backend.quizzes.rest;version=latest,\
-	org.quizzical.backend.quizzes.generator.impl;version=latest
+	org.quizzical.backend.mail.api;version=latest,\
+	org.quizzical.backend.mail.impl;version=latest,\
+	org.quizzical.backend.mail.itests;version=latest
 -runee: JavaSE-1.6
 -runsystempackages: javax.xml.stream;version=1.0.0,\
 	javax.xml.stream.events;version=1.0.0,\

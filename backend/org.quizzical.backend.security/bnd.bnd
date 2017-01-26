@@ -9,13 +9,6 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.apache.felix.eventadmin,\
 	org.amdatu.web.rest.jaxrs;version=1.1.0,\
 	org.amdatu.web.rest.wink;version=3.0,\
-	org.amdatu.multitenant;version=1.0.0,\
-	org.amdatu.multitenant.conf;version=1.0.0,\
-	org.amdatu.multitenant.conf.rp;version=1.0.0,\
-	org.amdatu.multitenant.conf.rp.helper;version=1.0.0,\
-	org.amdatu.multitenant.factory;version=1.0.0,\
-	org.amdatu.multitenant.org.apache.felix.configadmin;version=1.0.1,\
-	org.amdatu.multitenant.adapter;version=1.0.0,\
 	org.amdatu.jta;version=2.0,\
 	org.apache.commons.codec;version=1.7,\
 	org.amdatu.persistence2_0;version=1.0,\
@@ -27,4 +20,11 @@ Bundle-Version: 1.0.0.${tstamp}
 	io.jsonwebtoken.jjwt;version=0.6,\
 	com.fasterxml.jackson.core.jackson-core;version=2.6,\
 	com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider;version=2.6,\
-	com.fasterxml.jackson.core.jackson-databind;version=2.6
+	com.fasterxml.jackson.core.jackson-databind;version=2.6,\
+	org.quizzical.backend.mail.api;version=latest,\
+	javax.mail;version=1.4,\
+	com.springsource.org.apache.velocity;version=1.6,\
+	org.apache.commons.email;version=1.3,\
+	org.quizzical.backend.notification.api;version=latest,\
+	org.quizzical.backend.core.commons;version=latest,\
+	org.quizzical.backend.mail.api;version=latest

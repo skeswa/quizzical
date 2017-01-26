@@ -16,6 +16,8 @@ import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
@@ -23,6 +25,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.mail.api.LogServiceChute;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.api.dao.user.UserNotFoundException;
 import org.quizzical.backend.security.api.model.user.User;
@@ -35,6 +38,8 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	private volatile LogService logger;
 	
 	private volatile EntityManager em;
+
+	private VelocityEngine ve;
 	
 	@Override
 	public LogService getLogger() {
@@ -159,4 +164,21 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	public void createDefaults() throws Exception {
 	}
 	
+	//Account management
+	public VelocityEngine getVelocityEngine() throws ApplicationException {
+		try {
+			if (this.ve == null) {
+				this.ve = new VelocityEngine();
+				this.ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new LogServiceChute(getLogger()));
+				this.ve.init(); 
+			}
+		} catch (Exception e) {
+			throw new ApplicationException("Error creating Velocity Engine", e);
+		}
+		return this.ve;
+	}
+	
+	public void sendPassword(User user, List<String> bccEmails) throws ApplicationException {
+
+	}
 }

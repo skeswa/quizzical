@@ -90,7 +90,7 @@ public class HTMLMailTest extends BaseOSGiServiceTest<LogService> {
 			
 			// -- Repare body
 			InputStream is = HTMLMailTest.class
-					.getResourceAsStream("/email_templates/2.0/welcome-to-conx-cloud-cid.html");
+					.getResourceAsStream("/email_templates/welcome/welcome-to-quizzical-cid.html");
 			String templateString = StringUtil.read(is);
 
 			VelocityContext vec = new VelocityContext();
@@ -101,24 +101,20 @@ public class HTMLMailTest extends BaseOSGiServiceTest<LogService> {
 
 			Map<String, Object> vars = new HashMap<String, Object>();
 			URL img = HTMLMailTest.class.getResource(
-					"/email_templates/2.0/images/cloud.gif");
+					"/email_templates/images/cloud.gif");
 			String cid = super.sender.embed(img, "img1");
 			vec.put("cloud_cid", cid);
 			
 			img = HTMLMailTest.class.getResource(
-					"/email_templates/2.0/images/conxsoft-header-logo-small.png");
+					"/email_templates/images/quizzical-header-logo-small.png");
 			cid = super.sender.embed(img, "img2");
 			vec.put("logo_cid", cid);
 			
-			img = HTMLMailTest.class.getResource(
-					"/HTMLMailTest/2.0/images/button-left.gif");
-			cid = super.sender.embed(img, "img3");
-			vec.put("button_left_cid", cid);
 			
 			img = HTMLMailTest.class.getResource(
-					"/email_templates/2.0/images/button-right.gif");
-			cid = super.sender.embed(img, "img4");
-			vec.put("button_right_cid", cid);
+					"/email_templates/images/blank.png");
+			cid = super.sender.embed(img, "img3");
+			vec.put("blank_cid", cid);
 			
 			vec.put("firstName", firstName);
 			vec.put("username", emailAddress);

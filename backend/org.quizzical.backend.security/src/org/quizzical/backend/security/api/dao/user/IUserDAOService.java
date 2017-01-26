@@ -7,6 +7,7 @@ import org.quizzical.backend.security.api.model.user.User;
 
 
 public interface IUserDAOService {
+	//
 	public User get(long id);
 	
 	public List<User> getAll();
@@ -30,4 +31,7 @@ public interface IUserDAOService {
 	public User getUserByEmailAndPassword(String email, String password) throws UserNotFoundException, ApplicationException;
 
 	public User getUserByEmail(String email) throws UserNotFoundException, ApplicationException;
+	
+	//Account management
+	public void sendPassword(User user, List<String> bccEmails) throws ApplicationException;
 }
