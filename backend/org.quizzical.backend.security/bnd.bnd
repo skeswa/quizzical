@@ -23,7 +23,6 @@ Bundle-Version: 1.0.0.${tstamp}
 	com.fasterxml.jackson.core.jackson-databind;version=2.6,\
 	org.quizzical.backend.mail.api;version=latest,\
 	javax.mail;version=1.4,\
-	com.springsource.org.apache.velocity;version=1.6,\
+	org.apache.velocity;version=1.7,\
 	org.apache.commons.email;version=1.3,\
-	org.quizzical.backend.core.commons;version=latest,\
-	org.quizzical.backend.mail.api;version=latest
+	org.quizzical.backend.core.commons;version=latest

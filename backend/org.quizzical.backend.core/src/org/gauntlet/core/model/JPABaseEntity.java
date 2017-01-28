@@ -107,7 +107,7 @@ public abstract class JPABaseEntity
     protected String repositoryid;
     
     @Basic
-    @Column(name = "tenantid", unique=true)
+    @Column(name = "tenantid")
     protected Long tenantId;
     
     protected boolean tenantWide = false;

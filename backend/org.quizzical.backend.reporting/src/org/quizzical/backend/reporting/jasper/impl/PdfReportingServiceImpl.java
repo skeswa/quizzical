@@ -1,4 +1,4 @@
-package org.quizzical.backend.reporting.impl;
+package org.quizzical.backend.reporting.jasper.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;

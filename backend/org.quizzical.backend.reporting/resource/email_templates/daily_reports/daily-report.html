@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CSS Table Layout</title>
+
+<style type="text/css">
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #3b3b3b;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  background: #FFFFFF
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding: 40px;
+  max-width: 800px;
+}
+
+.table {
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: table;
+}
+@media screen and (max-width: 580px) {
+  .table {
+    display: block;
+  }
+}
+
+.row {
+  display: table-row;
+  background: #f6f6f6;
+}
+.row:nth-of-type(odd) {
+  background: #e9e9e9;
+}
+.row.header {
+  font-weight: 900;
+  color: #ffffff;
+  background: #ea6153;
+}
+.row.green {
+  background: #27ae60;
+}
+.row.blue {
+  background: #2980b9;
+}
+@media screen and (max-width: 580px) {
+  .row {
+    padding: 8px 0;
+    display: block;
+  }
+}
+
+.cell {
+  padding: 6px 12px;
+  display: table-cell;
+}
+@media screen and (max-width: 580px) {
+  .cell {
+    padding: 2px 12px;
+    display: block;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <div class="wrapper">
+      <b>Needs Work</b><br><br>
+  <div class="table">
+    
+    <div class="row header">
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Score (%)
+      </div>
+      <div class="cell">
+        Date Last Quizzed
+      </div>
+      <div class="cell">
+        Last Score (%)
+      </div>
+      <div class="cell">
+        Lessons
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Luke Peters
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Freelance Web Developer
+      </div>
+      <div class="cell">
+        Brookline, MA
+      </div>
+      <div class="cell">
+          <a href="http://www.q7l.io">Lesson 1</a><br>  <a href="http://www.q7l.io">Lesson 2</a><br> <a href="http://www.q7l.io">Lesson 3</a>
+      </div>        
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Joseph Smith
+      </div>
+      <div class="cell">
+        27
+      </div>
+      <div class="cell">
+        Project Manager
+      </div>
+      <div class="cell">
+        Somerville, MA
+      </div>
+      <div class="cell">
+        <a href="http://www.q7l.io">Lesson 1</a> <a href="http://www.q7l.io">Lesson 2</a>
+      </div>        
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Maxwell Johnson
+      </div>
+      <div class="cell">
+        26
+      </div>
+      <div class="cell">
+        UX Architect & Designer
+      </div>
+      <div class="cell">
+        Arlington, MA
+      </div>
+      <div class="cell">
+        <a href="http://www.q7l.io">Lesson 1</a> <a href="http://www.q7l.io">Lesson 2</a>
+      </div>        
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Harry Harrison
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Front-End Developer
+      </div>
+      <div class="cell">
+        Boston, MA
+      </div>
+      <div class="cell">
+        <a href="http://www.q7l.io">Lesson 1</a> <a href="http://www.q7l.io">Lesson 2</a>
+      </div>        
+    </div>
+    
+  </div>
+  
+      <b>Getting better</b><br><br>
+  <div class="table">
+    
+    <div class="row header blue">
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Score (%)
+      </div>
+      <div class="cell">
+        Date Last Quizzed
+      </div>
+      <div class="cell">
+        Last Score (%)
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Luke Peters
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Freelance Web Developer
+      </div>
+      <div class="cell">
+        Brookline, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Joseph Smith
+      </div>
+      <div class="cell">
+        27
+      </div>
+      <div class="cell">
+        Project Manager
+      </div>
+      <div class="cell">
+        Somerville, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Maxwell Johnson
+      </div>
+      <div class="cell">
+        26
+      </div>
+      <div class="cell">
+        UX Architect & Designer
+      </div>
+      <div class="cell">
+        Arlington, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Harry Harrison
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Front-End Developer
+      </div>
+      <div class="cell">
+        Boston, MA
+      </div>
+    </div>
+    
+  </div>
+  
+<b>Great job!</b><br><br>
+   <div class="table">
+    
+    <div class="row header green">
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Score (%)
+      </div>
+      <div class="cell">
+        Date Last Quizzed
+      </div>
+      <div class="cell">
+        Last Score (%)
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Luke Peters
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Freelance Web Developer
+      </div>
+      <div class="cell">
+        Brookline, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Joseph Smith
+      </div>
+      <div class="cell">
+        27
+      </div>
+      <div class="cell">
+        Project Manager
+      </div>
+      <div class="cell">
+        Somerville, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Maxwell Johnson
+      </div>
+      <div class="cell">
+        26
+      </div>
+      <div class="cell">
+        UX Architect & Designer
+      </div>
+      <div class="cell">
+        Arlington, MA
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="cell">
+        Harry Harrison
+      </div>
+      <div class="cell">
+        25
+      </div>
+      <div class="cell">
+        Front-End Developer
+      </div>
+      <div class="cell">
+        Boston, MA
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+</body>
+</html>

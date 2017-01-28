@@ -1,0 +1,28 @@
+bcc = coll:toList mduduzi.keswa@gmail.com
+bcc = coll:toList mduduzi.keswa@gmail.com
+rpt:senddaily test@me.io $bcc
+
+bcc = coll:toList mduduzi.keswa@gmail.com
+usr:add sandile@me.io SK test $bcc
+
+
+prblm:showcat "Passport to Advanced Math/Quadratics"
+cntrepo:show pt1_review.pdf
+
+prblm:addcatlesson 954 25566
+prblm:addcatlesson 401 25551
+prblm:addcatlesson 402 25552
+prblm:addcatlesson 651 25553
+prblm:addcatlesson 652 25554
+prblm:addcatlesson 952 25555
+prblm:addcatlesson 953 25556
+prblm:addcatlesson 953 25557
+prblm:addcatlesson 1754 25558
+prblm:addcatlesson 954 25559
+prblm:addcatlesson 1751 25560
+prblm:addcatlesson 1752 25561
+prblm:addcatlesson 1752 25562
+prblm:addcatlesson 1752 25563
+prblm:addcatlesson 1752 25564
+prblm:addcatlesson 1753 25565
+

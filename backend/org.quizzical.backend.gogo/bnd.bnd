@@ -16,7 +16,9 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.quizzical.backend.core.api;version=latest,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.testdesign.api;version=latest,\
-	org.quizzical.backend.security.api;version=latest
+	org.quizzical.backend.security.api;version=latest,\
+	org.quizzical.backend.reporting.api;version=latest,\
+	org.quizzical.backend.contentrepository.api;version=latest
 DynamicImport-Package: *
 Private-Package: \
 	org.quizzical.backend.gogo.collection,\

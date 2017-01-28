@@ -1,6 +1,7 @@
 package org.gauntlet.core.service.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -297,12 +298,14 @@ public abstract class BaseServiceImpl implements IBaseService {
 			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
 			assert typedQuery != null : "typedQuery obj must not be null";
 			
+			final List<Predicate> exprList = new ArrayList<>();
 			for (AttrPair ap : attrs) {
 				final ParameterExpression p = builder.parameter(ap.getAttrClass());
-				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
-				
+				exprList.add(builder.equal(rootEntity.get(ap.getAttrName()), p));
 				typedQuery.setParameter(p, ap.getAttrValue());
 			}
+			
+			query.select(rootEntity).where(builder.and((Predicate[])exprList.toArray(new Predicate[]{})));
 
 			res = typedQuery.getSingleResult();
 				

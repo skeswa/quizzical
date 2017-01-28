@@ -92,8 +92,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 						rating = categoryRatingsMap.get(subType.getId());
 					}
 					else {
-						final String code = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
-						rating = new TestCategoryRating(subType.getId(), code, code);
+						final String description = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
+						rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
 					}
 					categoryRatingsMap.put(subType.getId(), rating);
 					
@@ -148,8 +148,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 			TestCategoryRating rating = null;
 			for (TestDesignTemplateContentSubType subType : subTypes) {
 				if (!categoryRatingsMap.containsKey(subType.getId())) {
-					final String code = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
-					rating = new TestCategoryRating(subType.getId(), code, code);
+					final String description = String.format("Rating on Quiz %s Category %s", quiz.getCode(), subType.getCode());
+					rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
 					rating.setRating(0);
 					rating.setAttempts(Collections.emptyList());
 				}

@@ -9,9 +9,12 @@ import org.osgi.framework.BundleContext;
 import org.quizzical.backend.gogo.collection.CollectionCommands;
 import org.quizzical.backend.gogo.execute.ExecuteCommands;
 import org.quizzical.backend.gogo.execute.ScriptExecutor;
+import org.quizzical.backend.gogo.service.ContentItemCommands;
+import org.quizzical.backend.gogo.service.ProblemCommands;
 import org.quizzical.backend.gogo.service.QuestionCommands;
 import org.quizzical.backend.gogo.service.QuizCommands;
 import org.quizzical.backend.gogo.service.TestDesignCommands;
+import org.quizzical.backend.gogo.service.UserAnalyticsReportingCommands;
 import org.quizzical.backend.gogo.service.UserCommands;
 
 public class Activator extends DependencyActivatorBase {
@@ -42,7 +45,22 @@ public class Activator extends DependencyActivatorBase {
                 .setInterface(Object.class.getName(), createProps(UserCommands.SCOPE, UserCommands.FUNCTIONS))
                 .setImplementation(UserCommands.class)
                 );
-
+        
+        manager.add(createComponent()
+                .setInterface(Object.class.getName(), createProps(UserAnalyticsReportingCommands.SCOPE, UserAnalyticsReportingCommands.FUNCTIONS))
+                .setImplementation(UserAnalyticsReportingCommands.class)
+                );
+        
+        manager.add(createComponent()
+                .setInterface(Object.class.getName(), createProps(ProblemCommands.SCOPE, ProblemCommands.FUNCTIONS))
+                .setImplementation(ProblemCommands.class)
+                );
+        
+        manager.add(createComponent()
+                .setInterface(Object.class.getName(), createProps(ContentItemCommands.SCOPE, ContentItemCommands.FUNCTIONS))
+                .setImplementation(ContentItemCommands.class)
+                );
+        
         manager.add(createComponent()
             .setInterface(Object.class.getName(), createProps(CollectionCommands.SCOPE, CollectionCommands.FUNCTIONS))
             .setImplementation(CollectionCommands.class)

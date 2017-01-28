@@ -180,9 +180,9 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 		final WelcomeMessagePreparator prep = new WelcomeMessagePreparator(mailService, logger, user.getFirstName(), user.getFirstName(), userId,bccEmails, "Welcome to q7l", newPassword, "http://www.q7l.io");
 		try {
 			prep.prepare();
+			prep.send();
 		} catch (Exception e) {
 			throw new ApplicationException(e);
 		}
-		prep.send();
 	}
 }

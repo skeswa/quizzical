@@ -30,41 +30,4 @@ public class QuestionCommands {
         svc.delete(p.getId());
         return "Question deleted successfully!";
     }
-    
-    public static String getConfigStringValue(BundleContext context, String key, Dictionary<String, ?> properties,
-            String defaultValue) throws ConfigurationException {
-
-            String value = null;
-            if (properties != null && properties.get(key) != null) {
-                value = properties.get(key).toString();
-            }
-            if (context != null && value == null) {
-                value = context.getProperty(key);
-            }
-            if (value == null) {
-                return defaultValue;
-            }
-            return value;
-        }   
-    
-    public static int getConfigIntValue(BundleContext context, String key, Dictionary<String, ?> properties,
-            int defaultValue) throws ConfigurationException {
-
-            String value = null;
-            if (properties != null && properties.get(key) != null) {
-                value = properties.get(key).toString();
-            }
-            if (context != null && value == null) {
-                value = context.getProperty(key);
-            }
-            if (value == null) {
-                return defaultValue;
-            }
-            try {
-                return Integer.parseInt(value);
-            }
-            catch (NumberFormatException e) {
-                throw new ConfigurationException(key, "not an integer", e);
-            }
-        }    
 }

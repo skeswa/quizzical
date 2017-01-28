@@ -6,13 +6,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.gauntlet.core.api.ApplicationException;
-import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.model.BaseEntity;
-import org.quizzical.backend.security.api.model.user.User;
 
 public class TestUserAnalytics extends BaseEntity implements Serializable {
-	
+	private static final long serialVersionUID = -4300245695745763213L;
+
 	private Long userId;
 
 	private List<TestCategoryRating> ratings;

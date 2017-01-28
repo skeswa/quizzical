@@ -45,7 +45,7 @@
 	org.apache.felix.http.servlet-api;version='[1.1,1.2)',\
 	,\
 	javax.mail;version=1.4,\
-	com.springsource.org.apache.velocity;version=1.6,\
+	org.apache.velocity;version=1.7,\
 	org.apache.commons.email;version=1.3,\
 	,\
 	,\
@@ -128,6 +128,14 @@
 	org.quizzical.backend.analytics.api;version=latest,\
 	org.quizzical.backend.analytics.dao.impl;version=latest,\
 	org.quizzical.backend.analytics.model.persistence.openjpa.jpa2_0;version=latest,\
+	,\
+	org.quizzical.backend.reporting.api;version=latest,\
+	org.quizzical.backend.reporting.impl;version=latest,\
+	,\
+	org.quizzical.backend.contentrepository.api;version=latest,\
+	org.quizzical.backend.contentrepository.dao.impl;version=latest,\
+	org.quizzical.backend.contentrepository.model.persistence.openjpa.jpa2_0;version=latest,\
+	org.quizzical.backend.contentrepository.rest;version=latest,\
 	,\
 	org.quizzical.backend.gogo;version=latest
 ## Uncomment if you need to change the HTTP port

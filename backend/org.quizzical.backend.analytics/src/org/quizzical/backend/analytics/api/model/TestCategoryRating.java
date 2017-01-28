@@ -6,18 +6,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.gauntlet.core.api.ApplicationException;
-import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.model.BaseEntity;
 
 public class TestCategoryRating extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -5340029917005503078L;
+
 	private Integer rating = 0; //0-100
 	
 	private Long categoryId;
 	
 	private Date dateOfLastAttempt;
+	
+	private Integer lastAttemptRating;
 	
 	private TestUserAnalytics analytics;
 	
@@ -28,18 +28,19 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	
 	public TestCategoryRating(final TestUserAnalytics userAnalytics,
 				final Long categoryId, final String name, final String code) {
-		this(categoryId,name,code);		
+		this(categoryId,name,code,null);		
 	}
 	
-	public TestCategoryRating(final Long categoryId, final String name, final String code) {
+	public TestCategoryRating(final Long categoryId, final String name, final String code, final String description) {
 		this.categoryId = categoryId;
 		this.name = name;
-		this.code = code;		
+		this.code = code;	
+		this.description = description;
 	}
 	
 	
 	public TestCategoryRating(final Integer rating, final Date dateOfLastAttempt, final Long categoryId, final String name, final String code) {
-		this(categoryId, name, code);
+		this(categoryId, name, code, null);
 	}
 
 
@@ -76,6 +77,15 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 
 	public void setDateOfLastAttempt(Date dateOfLastAttempt) {
 		this.dateOfLastAttempt = dateOfLastAttempt;
+	}
+	
+
+	public Integer getLastAttemptRating() {
+		return lastAttemptRating;
+	}
+
+	public void setLastAttemptRating(Integer lastAttemptRating) {
+		this.lastAttemptRating = lastAttemptRating;
 	}
 
 	public TestUserAnalytics getAnalytics() {

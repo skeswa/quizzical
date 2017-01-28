@@ -1,0 +1,5 @@
+Export-Package: \
+	org.quizzical.backend.contentrepository.api,\
+	org.quizzical.backend.contentrepository.api.model,\
+	org.quizzical.backend.contentrepository.api.dao
+Bundle-Version: 1.0.0.${tstamp}

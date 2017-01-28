@@ -96,6 +96,38 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		return resultList;		
 	}
 	
+	@Override 
+	public List<TestCategoryRating> findWeakestCategoriesLowerThanRating(final User user, final Integer startRatingCutoffIncl, final Integer endRatingCutoffIncl) throws ApplicationException {
+		List<TestCategoryRating> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
+			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//user
+			ParameterExpression<Long> userIdParam = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("analytics").get("userId"),userIdParam));
+			pes.put(userIdParam, user.getId());
+			
+			//userId
+			ParameterExpression<Integer> ratingParam = builder.parameter(Integer.class);
+			query.select(rootEntity).where(builder.and(builder.ge(rootEntity.get("rating"),startRatingCutoffIncl),builder.le(rootEntity.get("rating"),endRatingCutoffIncl)));
+			pes.put(ratingParam, user.getId());
+			
+			query.orderBy(builder.asc(rootEntity.get("rating")));
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+			
+			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}
+	
 	private Integer generateAdjustedLimit(final Integer categoryLimit)
 			throws ApplicationException {
 		if (categoryLimit <= org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE)
@@ -243,6 +275,18 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		rating.setRating(val);
 		Date dateOfLastAttempt = rating.getAttempts().stream().map(u -> u.getDateAttempted()).max(Date::compareTo).get();
 		rating.setDateOfLastAttempt(dateOfLastAttempt);
+		
+		//Update rating for recent attempts
+		final long recentlyAttempted = rating.getAttempts()
+			    .stream()
+			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
+			    .count();
+		final long recentlyAttemptedSuccessfully = rating.getAttempts()
+			    .stream()
+			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt && p.getSuccessful())
+			    .count();
+		val = (int)(new Fraction((int)recentlyAttemptedSuccessfully,(int)recentlyAttempted).doubleValue()*100);
+		rating.setLastAttemptRating(val);
 	}
 	
 }

@@ -48,6 +48,7 @@
     	<!-- Problem -->
     	<class>org.gauntlet.problems.model.jpa.JPAProblem</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemCategory</class>  
+   		<class>org.gauntlet.problems.model.jpa.JPAProblemCategoryLesson</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemDifficulty</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemSource</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemPicture</class>

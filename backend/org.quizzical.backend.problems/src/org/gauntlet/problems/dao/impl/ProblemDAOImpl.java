@@ -24,11 +24,13 @@ import org.osgi.service.log.LogService;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
+import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
 import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.gauntlet.problems.model.jpa.JPAProblemCategory;
+import org.gauntlet.problems.model.jpa.JPAProblemCategoryLesson;
 import org.gauntlet.problems.model.jpa.JPAProblemDifficulty;
 import org.gauntlet.problems.model.jpa.JPAProblemPicture;
 import org.gauntlet.problems.model.jpa.JPAProblemSource;
@@ -389,27 +391,27 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	
 	@Override 
 	public ProblemDifficulty provideProblemDifficulty(ProblemDifficulty record) throws ApplicationException {
-		ProblemDifficulty existingCountry = getProblemDifficultyByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
+		ProblemDifficulty recordEntity = getProblemDifficultyByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
 		{
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemDifficulty.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemDifficulty.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemDifficulty.class);
 		}
 
-		return existingCountry;	
+		return recordEntity;	
 	}
 	
 	@Override
 	public ProblemDifficulty provideProblemDifficulty(String name) throws ApplicationException {
-		ProblemDifficulty existingCountry = getProblemDifficultyByCode(name);
-		if (Validator.isNull(existingCountry))
+		ProblemDifficulty recordEntity = getProblemDifficultyByCode(name);
+		if (Validator.isNull(recordEntity))
 		{
 			final ProblemSource record = new ProblemSource(name,name);
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemDifficulty.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemDifficulty.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemDifficulty.class);
 		}
 
-		return existingCountry;			
+		return recordEntity;			
 	}
 	
 	public ProblemDifficulty updateProblemDifficulty(JPAProblemDifficulty record) throws ApplicationException {
@@ -469,27 +471,27 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	
 	@Override 
 	public ProblemCategory provideProblemCategory(ProblemCategory record) throws ApplicationException {
-		ProblemCategory existingCountry = getProblemCategoryByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
+		ProblemCategory recordEntity = getProblemCategoryByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
 		{
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemCategory.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemCategory.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemCategory.class);
 		}
 
-		return existingCountry;	
+		return recordEntity;	
 	}
 	
 	@Override
 	public ProblemCategory provideProblemCategory(String name) throws ApplicationException {
-		ProblemCategory existingCountry = getProblemCategoryByCode(name);
-		if (Validator.isNull(existingCountry))
+		ProblemCategory recordEntity = getProblemCategoryByCode(name);
+		if (Validator.isNull(recordEntity))
 		{
 			final ProblemSource record = new ProblemSource(name,name);
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemCategory.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemCategory.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemCategory.class);
 		}
 
-		return existingCountry;			
+		return recordEntity;			
 	}
 	
 	
@@ -514,6 +516,18 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, ProblemCategory.class);
 	}	
+	
+	public ProblemCategoryLesson addProblemCategoryLesson(Long categoryId, Long lessonId) throws ApplicationException, NoSuchModelException {
+		JPAProblemCategory jpaEntity = (JPAProblemCategory) super.findByPrimaryKey(JPAProblemCategory.class, categoryId);
+		JPAProblemCategoryLesson catLesson = new JPAProblemCategoryLesson(jpaEntity,lessonId);
+		catLesson = (JPAProblemCategoryLesson) super.add(catLesson);
+		return JPAEntityUtil.copy(catLesson, ProblemCategoryLesson.class);
+	}
+	
+	public void removeProblemCategoryLesson(Long categoryLessonId) throws ApplicationException, NoSuchModelException {
+		JPAProblemCategoryLesson jpaEntity = (JPAProblemCategoryLesson) super.findByPrimaryKey(JPAProblemCategoryLesson.class, categoryLessonId);
+		super.remove(jpaEntity);
+	}
 	
 	//ProblemSource
 	@Override 
@@ -549,27 +563,27 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	
 	@Override 
 	public ProblemSource provideProblemSource(ProblemSource record) throws ApplicationException {
-		ProblemSource existingCountry = getProblemSourceByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
+		ProblemSource recordEntity = getProblemSourceByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
 		{
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemSource.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemSource.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemSource.class);
 		}
 
-		return existingCountry;	
+		return recordEntity;	
 	}
 	
 	@Override
 	public ProblemSource provideProblemSource(String name) throws ApplicationException {
-		ProblemSource existingCountry = getProblemSourceByCode(name);
-		if (Validator.isNull(existingCountry))
+		ProblemSource recordEntity = getProblemSourceByCode(name);
+		if (Validator.isNull(recordEntity))
 		{
 			final ProblemSource record = new ProblemSource(name,name);
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemSource.class));
-			existingCountry = JPAEntityUtil.copy(res, ProblemSource.class);
+			recordEntity = JPAEntityUtil.copy(res, ProblemSource.class);
 		}
 
-		return existingCountry;			
+		return recordEntity;			
 	}
 	
 	public ProblemSource updateProblemSource(JPAProblemSource record) throws ApplicationException {

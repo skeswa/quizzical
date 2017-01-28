@@ -8,6 +8,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
+import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
@@ -77,7 +78,11 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public ProblemCategory getProblemCategoryByName(String name) throws ApplicationException;
 	
-	public ProblemCategory deleteProblemCategory(Long id) throws ApplicationException, NoSuchModelException;	
+	public ProblemCategory deleteProblemCategory(Long id) throws ApplicationException, NoSuchModelException;
+	
+	public ProblemCategoryLesson addProblemCategoryLesson(Long categoryId, Long lessonId) throws ApplicationException, NoSuchModelException;
+	
+	public void removeProblemCategoryLesson(Long categoryLessonId) throws ApplicationException, NoSuchModelException;
 	
 	//ProblemSource
 	public List<ProblemSource> findAllProblemSources(int start, int end) throws ApplicationException;

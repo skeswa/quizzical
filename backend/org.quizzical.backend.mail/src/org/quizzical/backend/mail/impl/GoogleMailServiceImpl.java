@@ -42,11 +42,11 @@ public class GoogleMailServiceImpl implements IMailService, ManagedService {
 	
 	@Override
 	synchronized public HtmlEmail createHtmlSender(String subject) throws EmailException {
-		Properties mailServerProperties = new Properties();
+/*		Properties mailServerProperties = new Properties();
 		mailServerProperties.put("mail.smtp.port", "587");
 		mailServerProperties.put("mail.smtp.auth", "true");
 		mailServerProperties.put("mail.smtp.starttls.enable", "true");
-		System.out.println("Mail Server Properties have been setup successfully..");
+		System.out.println("Mail Server Properties have been setup successfully..");*/
 		
 		//Session getMailSession = Session.getDefaultInstance(mailServerProperties, null);
  

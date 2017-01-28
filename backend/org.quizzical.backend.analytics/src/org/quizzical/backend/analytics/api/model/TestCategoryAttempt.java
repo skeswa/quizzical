@@ -6,6 +6,8 @@ import java.util.Date;
 import org.gauntlet.core.model.BaseEntity;
 
 public class TestCategoryAttempt extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -400437286101443018L;
+	
 	private Long testProblemId;
 	private Date dateAttempted;
 	private Boolean successful;

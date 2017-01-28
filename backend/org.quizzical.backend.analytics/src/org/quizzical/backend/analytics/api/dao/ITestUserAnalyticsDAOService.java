@@ -30,4 +30,7 @@ public interface ITestUserAnalyticsDAOService {
 	void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException;
 
 	List<TestCategoryRating> findWeakestCategories(User user, Integer categoryLimit) throws ApplicationException;
+
+	List<TestCategoryRating> findWeakestCategoriesLowerThanRating(User user, Integer startRatingCutoffIncl,
+			Integer endRatingCutoffIncl) throws ApplicationException;
 }

@@ -117,14 +117,14 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	@Override
 	public Quiz provide(User user, Quiz record)
 			  throws ApplicationException {
-		Quiz existingCountry = getByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
+		Quiz recordEntity = getByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
 		{
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAQuiz.class));
-			existingCountry = JPAEntityUtil.copy(res, Quiz.class);
+			recordEntity = JPAEntityUtil.copy(res, Quiz.class);
 		}
 
-		return existingCountry;
+		return recordEntity;
 	}
 	
 	@Override
@@ -269,14 +269,14 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	
 	@Override 
 	public QuizType provideQuizType(QuizType record) throws ApplicationException {
-		QuizType existingCountry = getQuizTypeByCode(record.getCode());
-		if (Validator.isNull(existingCountry))
+		QuizType recordEntity = getQuizTypeByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
 		{
 			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAQuizType.class));
-			existingCountry = JPAEntityUtil.copy(res, QuizType.class);
+			recordEntity = JPAEntityUtil.copy(res, QuizType.class);
 		}
 
-		return existingCountry;	
+		return recordEntity;	
 	}
 	
 	public QuizType updateQuizType(JPAQuizType record) throws ApplicationException {

@@ -1,6 +1,7 @@
 Bundle-Version: 1.0.0.${tstamp}
-Include-Resource: jasperreports=resources/jasperreports
+Include-Resource: email_templates=resource/email_templates
 Private-Package: \
-	org.quizzical.backend.reporting.impl,\
-	org.quizzical.backend.reporting.impl.osgi
+	org.quizzical.backend.reporting.analytics.impl,\
+	org.quizzical.backend.reporting.impl.osgi,\
+	org.quizzical.backend.reporting.email
 Bundle-Activator: org.quizzical.backend.reporting.impl.osgi.Activator
