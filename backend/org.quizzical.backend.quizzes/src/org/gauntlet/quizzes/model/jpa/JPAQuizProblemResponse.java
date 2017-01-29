@@ -27,8 +27,7 @@ public class JPAQuizProblemResponse extends JPABaseEntity implements Serializabl
 	
 	private Integer secondsElapsed = 0;
 	
-	@OneToOne(targetEntity=JPAQuizProblem.class, cascade = CascadeType.ALL)
-	private JPAQuizProblem quizProblem;	
+	private Long quizProblemId;	
 
 	public JPAQuizProblemResponse() {}
 
@@ -37,12 +36,12 @@ public class JPAQuizProblemResponse extends JPABaseEntity implements Serializabl
 			final Boolean correct,
 			final Boolean skipped,
 			final Integer secondsElapsed,
-			final JPAQuizProblem quizProblem) {
+			final Long quizProblemId) {
 		this.response = response;
 		this.correct = correct;
 		this.skipped = skipped;
 		this.secondsElapsed = secondsElapsed;
-		this.quizProblem = quizProblem;
+		this.quizProblemId = quizProblemId;
 	}
 
 	public String getResponse() {
@@ -84,15 +83,12 @@ public class JPAQuizProblemResponse extends JPABaseEntity implements Serializabl
 		this.secondsElapsed = secondsElapsed;
 	}
 
-
-	public JPAQuizProblem getQuizProblem() {
-		return quizProblem;
+	public Long getQuizProblemId() {
+		return quizProblemId;
 	}
 
-
-	public void setQuizProblem(JPAQuizProblem quizProblem) {
-		this.quizProblem = quizProblem;
+	public void setQuizProblemId(Long quizProblemId) {
+		this.quizProblemId = quizProblemId;
 	}
-
 }
 

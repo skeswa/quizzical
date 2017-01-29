@@ -59,7 +59,12 @@ public class ProblemsResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Problem> all(@QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException {
-		return problemService.findAll(start, end);
+		List<Problem> problems = problemService.findAll(start, end);
+		problems.stream()
+				.forEach(e -> {
+					((Problem)e).getCategory().setLessons(null);
+				});
+		return problems;
 	}
 
 	@GET

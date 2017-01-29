@@ -124,20 +124,30 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	   	final List<QuizProblemResponse> augmentedResponses = dto.getResponses()
 	    		.parallelStream()
 	    		.map(problemResponse -> {
+					QuizProblem qp = null;
 					try {
-						QuizProblem qp = problemResponse.getQuizProblem();
-						final Problem problem = problemService.getByPrimary(qp.getProblemId());
-						problemResponse.getQuizProblem().setProblem(problem);
-						
-						return problemResponse;
-					} catch (final NoSuchModelException e) {
-						throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);
-					} catch (final ApplicationException e) {
+						qp = toQuizProblemDTO(problemResponse.getQuizProblemId());
+					} 
+					catch (NoSuchModelException e) {
+						throw new IllegalArgumentException("Failed to find problem for provided quiz problem id.", e);					
+					}
+					catch (final ApplicationException e) {
 						throw new RuntimeException(e);
 					}
+					problemResponse.setQuizProblem(qp);
+					
+					return problemResponse;
 		    	})
 	    		.collect(Collectors.toList());
 	   	dto.setResponses(augmentedResponses);
+		return dto;
+	}
+	
+	public QuizProblem toQuizProblemDTO(Long pk) throws ApplicationException, NoSuchModelException {
+		final JPAQuizProblem jpaEntity = (JPAQuizProblem) super.findByPrimaryKey(JPAQuizProblem.class, pk);
+		final QuizProblem dto = JPAEntityUtil.copy(jpaEntity, QuizProblem.class);
+		final Problem problem = problemService.getByPrimary(dto.getProblemId());
+		dto.setProblem(problem);
 		return dto;
 	}
 
@@ -154,7 +164,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 							problemResponse.getCorrect(),
 							problemResponse.getSkipped(),
 							problemResponse.getSecondsElapsed(),
-							jpaQuizProblem);
+							jpaQuizProblem.getId());
 					return jpaEntity;
 				} 
 				catch (NoSuchModelException e) {
@@ -164,7 +174,15 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 					throw new RuntimeException(e);
 				}
 	    	})
-    		.filter(pr -> pr.getQuizProblem().getType() == QuizProblemType.REGULAR)
+    		.filter(pr -> {
+    			JPAQuizProblem jpaQuizProblem = null;
+				try {
+					jpaQuizProblem = (JPAQuizProblem) super.findByPrimaryKey(JPAQuizProblem.class, pr.getQuizProblemId());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+    			return jpaQuizProblem.getType() == QuizProblemType.REGULAR;
+    		})
     		.collect(Collectors.toList());
     	
     	jpaQuizSubmission.setResponses(responses);

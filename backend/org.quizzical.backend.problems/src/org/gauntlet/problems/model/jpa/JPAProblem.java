@@ -28,7 +28,7 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 	@JoinColumn
 	private JPAProblemSource source;
 	
-	@ManyToOne(targetEntity = JPAProblemCategory.class)
+	@ManyToOne(targetEntity = JPAProblemCategory.class, fetch=FetchType.LAZY)
 	@JoinColumn
 	private JPAProblemCategory category;
 	

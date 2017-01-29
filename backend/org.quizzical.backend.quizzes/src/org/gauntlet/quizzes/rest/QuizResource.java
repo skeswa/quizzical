@@ -64,7 +64,9 @@ public class QuizResource  {
 		List<QuizProblem> qproblems = quiz.getQuestions();
 		for (QuizProblem qproblem : qproblems) {
 			Problem problem = problemService.getByPrimary(qproblem.getProblemId());
+			problem.getCategory().setLessons(null);
 			qproblem.setProblem(problem);
+			qproblem.setQuiz(null);
 		}
 		return quiz;
     }
@@ -88,6 +90,11 @@ public class QuizResource  {
     @Produces(MediaType.APPLICATION_JSON) 
     public Quiz generate(@Context HttpServletRequest request, QuizGenerationParameters params) throws IOException, ApplicationException, NoSuchModelException { 
 		final User user = tokenService.extractUser(request);
-    	return quizGeneratorManagerService.generate(user,params);
+		final Quiz quiz = quizGeneratorManagerService.generate(user,params);
+		quiz.getQuestions().stream()
+				.forEach(e -> {
+					((QuizProblem)e).getProblem().getCategory().setLessons(null);
+				});
+		return quiz;
     }  
 }

@@ -1,6 +1,7 @@
 package org.gauntlet.problems.rest;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -25,7 +26,12 @@ public class CategoriesResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ProblemCategory> allCategories(@QueryParam("start") int start, @QueryParam("end") int end)
 			throws ApplicationException {
-		return problemService.findAllProblemCategories(start, end);
+		List<ProblemCategory> cats = problemService.findAllProblemCategories(start, end);
+		cats.stream()
+				.forEach(e -> {
+					((ProblemCategory)e).setLessons(null);
+				});
+		return cats;
 	}
 
 	@GET

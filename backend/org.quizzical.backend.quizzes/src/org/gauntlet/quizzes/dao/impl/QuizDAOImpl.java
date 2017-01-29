@@ -1,5 +1,7 @@
 package org.gauntlet.quizzes.dao.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -120,7 +122,13 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 		Quiz recordEntity = getByCode(record.getCode());
 		if (Validator.isNull(recordEntity))
 		{
-			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAQuiz.class));
+			JPAQuiz copiedEntity = JPAEntityUtil.copy(record, JPAQuiz.class);
+			copiedEntity.getQuestions().stream()
+				.forEach(qp -> {
+					qp.setQuiz(copiedEntity);
+				});
+			JPABaseEntity res = super.add(copiedEntity);
+			
 			recordEntity = JPAEntityUtil.copy(res, Quiz.class);
 		}
 
@@ -205,6 +213,10 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			count = countWithDynamicQueryAndParams(query,pes);
 		}
 		catch (Exception e) {
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String stacktrace = sw.toString();
+			System.out.println(e.getMessage());
 			throw processException(e);
 		}
 		return count;		

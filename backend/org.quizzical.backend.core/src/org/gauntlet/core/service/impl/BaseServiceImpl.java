@@ -456,6 +456,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 		//model.setId(null);
 		//model.setVersion(null);
 		getEm().persist(model);
+		getEm().flush();
 		//getEm().merge(model);
 		//getEm().refresh(model);
 		

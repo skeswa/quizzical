@@ -76,7 +76,8 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 				goodRatings,
 				needImprovRatings,
 				doNotMeetRatings,
-				lessonMap);
+				lessonMap,
+				config);
 		try {
 			prep.prepare();
 			prep.send();

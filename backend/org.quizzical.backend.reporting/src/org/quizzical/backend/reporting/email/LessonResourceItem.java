@@ -28,10 +28,6 @@ public class LessonResourceItem {
 	}
 	
 	public String html() {
-		return String.format("&#x02139; <a href=\"%s/content/id/%d/%s\" title=\"%s\">%s</a>",getContentUriEndpoint(),contentItemId,name,name,name);
-	}
-	
-	private String getContentUriEndpoint() {
-		return String.format("%s://%s:%d", this.config.getProtocol(),this.config.getHostname(),this.config.getPort());
+		return String.format("&#x02139; <a href=\"%s/content/id/%d/%s\" title=\"%s\">%s</a>",config.getBackendURLPrefix(),contentItemId,name,name,name);
 	}
 }

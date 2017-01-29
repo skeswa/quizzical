@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -442,7 +443,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	public List<ProblemCategory> findAllProblemCategories(int start, int end) throws ApplicationException {
 		List<ProblemCategory> result = new ArrayList<>();
 		try {
-			List<JPABaseEntity> resultList = super.findAll(JPAProblemCategory.class,start,end);
+			final List<JPABaseEntity> resultList = super.findAll(JPAProblemCategory.class,start,end);
 			result = JPAEntityUtil.copy(resultList, ProblemCategory.class);
 		}
 		catch (Exception e) {

@@ -20,6 +20,7 @@ import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.mail.api.IMailService;
 import org.quizzical.backend.mail.api.LogServiceChute;
 import org.quizzical.backend.mail.api.MailPreparator;
+import org.quizzical.backend.reporting.analytics.impl.UserAnalyticsReportingConfiguration;
 
 public class PerformanceReportingMessagePreparator extends MailPreparator {
 
@@ -33,6 +34,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 	private List<TestCategoryRating> needImprovRatings;
 	private List<TestCategoryRating> doNotMeetRatings;
 	private Map<String, LessonResources> lessonMap;
+	private UserAnalyticsReportingConfiguration config;
 
 	public PerformanceReportingMessagePreparator(
 			IMailService service, 
@@ -44,7 +46,9 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 			final List<TestCategoryRating> excellentRatings,
 			final List<TestCategoryRating> goodRatings,
 			final List<TestCategoryRating> needImprovRatings,
-			final List<TestCategoryRating> doNotMeetRatings, Map<String, LessonResources> lessonMap) throws EmailException {
+			final List<TestCategoryRating> doNotMeetRatings, 
+			Map<String, LessonResources> lessonMap, 
+			UserAnalyticsReportingConfiguration config) throws EmailException {
 		super(service,subject);
 		this.emailAddress = emailAddress;
 		this.firstName = firstName;
@@ -55,6 +59,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 		this.needImprovRatings = needImprovRatings;
 		this.doNotMeetRatings = doNotMeetRatings;
 		this.lessonMap = lessonMap;
+		this.config = config;
 	}
 	
 	@Override
@@ -87,6 +92,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 		vec.put("goodRatings", goodRatings);
 		vec.put("needImprovRatings", needImprovRatings);
 		vec.put("lessonMap", lessonMap);
+		vec.put("config", config);
 		
 
 		out = new StringWriter();

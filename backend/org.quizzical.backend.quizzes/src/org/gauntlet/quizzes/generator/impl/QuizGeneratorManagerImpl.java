@@ -45,6 +45,7 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		
 		final ServiceReference generatorRef = references.get(params.getGeneratorType());
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
+		
 		return generator.generate(user,params);
 	}
 }

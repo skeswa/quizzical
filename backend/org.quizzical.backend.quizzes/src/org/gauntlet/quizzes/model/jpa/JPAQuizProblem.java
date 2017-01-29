@@ -84,6 +84,14 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 
 	public void setSectionOrdinal(Integer sectionOrdinal) {
 		this.sectionOrdinal = sectionOrdinal;
+	}
+
+	public JPAQuiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(JPAQuiz quiz) {
+		this.quiz = quiz;
 	}	
 }
 

@@ -1,6 +1,7 @@
 package org.quizzical.backend.testdesign.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,7 +39,7 @@ public class TestDesignTemplateGeneratorImpl implements ITestDesignTemplateGener
 		final int sizeByDifficulty = sizePerSection/(3*2); //3=difficulty 2=cal/non-calc sections
 		
 		
-		final String code = String.format("Generated TestDesignTemplate User(%s) of [%s]",user.getCode(),categoryCodes);
+		final String code = String.format("Generated TestDesignTemplate (%s) User(%s)",new Date().toString(),user.getCode());
 		
 		AtomicInteger counter = new AtomicInteger(0);
 		

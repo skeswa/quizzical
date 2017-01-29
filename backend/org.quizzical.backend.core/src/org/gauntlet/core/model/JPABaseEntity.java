@@ -88,7 +88,7 @@ public abstract class JPABaseEntity
     @Column(name = "name_", length = 255)    
     protected String name;
     @Basic
-    @Column(name = "code", length = 255,unique = true)    
+    @Column(name = "code", length = 255 ,unique = true)    
     protected String code;
     @Basic
     @Column(name = "refid", length = 255)    

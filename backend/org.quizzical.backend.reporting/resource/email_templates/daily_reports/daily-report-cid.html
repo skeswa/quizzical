@@ -106,13 +106,13 @@ body {
         $rating.getName()
       </div>
       <div class="cell">
-        $rating.getRating()
+        <a href="$config.getFrontendURLPrefix()">$rating.getRating()</a>
       </div>
-      <div class="cell">
+      <div class="cell doccell">
         $rating.getDateOfLastAttempt()
       </div>
       <div class="cell">
-         $rating.getLastAttemptRating()
+         <a href="$config.getFrontendURLPrefix()/quiz/submissions/">$rating.getLastAttemptRating()</a>
       </div>
       <div class="cell doccell">
         $lessonMap.get($rating.getName()).toString()

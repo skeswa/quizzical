@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
+import org.gauntlet.quizzes.api.model.QuizProblem;
+import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
@@ -51,7 +53,14 @@ public class QuizSubmissionResource {
     @Produces(MediaType.APPLICATION_JSON) 
     public QuizSubmission put(final QuizSubmission quizSubmission)
     		throws IOException, ApplicationException, NoSuchModelException { 
-    	return quizSubmissionDAOService.submit(quizSubmission);
+    	final QuizSubmission submission = quizSubmissionDAOService.submit(quizSubmission);
+    	submission.getResponses().stream()
+		.forEach(e -> {
+			((QuizProblemResponse)e).getQuizProblem().getProblem().getCategory().setLessons(null);
+			((QuizProblemResponse)e).getQuizProblem().setQuiz(null);
+		});
+    	submission.getQuiz().setQuestions(null);
+    	return submission;
     }     
 
 	@DELETE
