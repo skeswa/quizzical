@@ -19,7 +19,7 @@ class QuizResultsPage extends Component {
 
   state = {
     quizResults:            null,
-    quizFinished:           false,
+    quizFinished:           true,
     loadingError:           null,
     isDataLoading:          false,
     currentQuestionIndex:   0,
@@ -49,8 +49,10 @@ class QuizResultsPage extends Component {
             isDataLoading:  false,
           })
         } else {
-          quizResults:   resultingActions.payload
-          this.setState({ isDataLoading: false })
+          this.setState({
+            quizResults:   resultingActions.payload,
+            isDataLoading: false,
+          })
         }
       })
   }
@@ -67,7 +69,11 @@ class QuizResultsPage extends Component {
   }
 
 
-
+  onQuizCancelled() {
+    // TODO(skeswa): tell the backend to delete the cancelled quiz.
+    this.context.router.push(`/quiz/start`)
+  }
+  
   onQuestionIndexChanged(currentQuestionIndex) {
     this.setState({ currentQuestionIndex })
   }
