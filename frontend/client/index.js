@@ -18,6 +18,7 @@ import SplashPage from 'containers/SplashPage'
 import QuizzesPage from 'containers/QuizzesPage'
 import NotFoundPage from 'containers/NotFoundPage'
 import QuizTakePage from 'containers/QuizTakePage'
+import QuizResultsPage from 'containers/QuizResultsPage'
 import QuestionsPage from 'containers/QuestionsPage'
 import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
@@ -64,6 +65,7 @@ function renderUI() {
             <IndexRedirect to="/quiz/start" />
             <Route path="start" component={QuizGenerationPage} />
             <Route path=":quizId/take" component={QuizTakePage} />
+            <Route path="submission/:quizId" component={QuizResultsPage} />
           </Route>
           <Route path="workbench" component={WorkbenchPage} />
           <Route path="login" component={LoginPage} onEnter={requireNoAuth} />

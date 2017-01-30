@@ -1,16 +1,26 @@
 package org.gauntlet.quizzes.dao.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import org.amdatu.jta.Transactional;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.api.model.user.User;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
+import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
+import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
+import org.gauntlet.quizzes.rest.QuizSubmissionResource;
 
 
 @SuppressWarnings("restriction")
@@ -33,6 +43,19 @@ public class QuizProblemResponseDAOImpl extends BaseServiceImpl implements IQuiz
 	public EntityManager getEm() {
 		return em;
 	}	
+	
+	@Override
+	public List<QuizProblemResponse> findAll() throws ApplicationException {
+		List<QuizProblemResponse> result = new ArrayList<>();
+		try {
+			List<JPABaseEntity> resultList = super.findAll(JPAQuizProblemResponse.class);
+			result = JPAEntityUtil.copy(resultList, QuizProblemResponse.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
 
 	@Override
 	public QuizProblemResponse add(QuizProblemResponse record)
@@ -54,6 +77,7 @@ public class QuizProblemResponseDAOImpl extends BaseServiceImpl implements IQuiz
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, QuizProblemResponse.class);
 	}
+	
 	
 	@Override
 	public void createDefaults() throws ApplicationException {

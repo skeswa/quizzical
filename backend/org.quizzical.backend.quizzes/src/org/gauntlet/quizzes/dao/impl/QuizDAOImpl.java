@@ -112,8 +112,14 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	
 	@Override
 	public Quiz getByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
-		JPAQuiz jpaEntity = (JPAQuiz) super.findByPrimaryKey(JPAQuiz.class, pk);
-		return JPAEntityUtil.copy(jpaEntity, Quiz.class);
+		Quiz res = null;
+		try {
+			JPAQuiz jpaEntity = (JPAQuiz) super.findByPrimaryKey(JPAQuiz.class, pk);
+			res = JPAEntityUtil.copy(jpaEntity, Quiz.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override

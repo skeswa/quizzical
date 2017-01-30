@@ -94,6 +94,7 @@ public class QuizResource  {
 		quiz.getQuestions().stream()
 				.forEach(e -> {
 					((QuizProblem)e).getProblem().getCategory().setLessons(null);
+					((QuizProblem)e).setQuiz(null);
 				});
 		return quiz;
     }  

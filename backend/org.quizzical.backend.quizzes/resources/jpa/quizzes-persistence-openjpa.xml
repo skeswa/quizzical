@@ -51,10 +51,8 @@
 			<property name="openjpa.Log"
 				value="DefaultLevel=WARN, Runtime=WARN, Tool=WARN, SQL=WARN" />	<!-- TRACE,INFO,WARN,ERROR,FATAL -->
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
-			<property name="openjpa.jdbc.SchemaFactory" value="native(ForeignKeys=true)" />
-			<property name="openjpa.jdbc.MappingDefaults"
-				value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
-
+			<property name="openjpa.jdbc.SchemaFactory" value="dynamic()"/>
+			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict"/>
 		</properties>
 	</persistence-unit>
 

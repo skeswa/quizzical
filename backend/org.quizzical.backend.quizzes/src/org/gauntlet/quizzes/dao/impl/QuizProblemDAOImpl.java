@@ -7,6 +7,8 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
@@ -18,6 +20,8 @@ public class QuizProblemDAOImpl extends BaseServiceImpl implements IQuizProblemD
 	private volatile LogService logger;
 	
 	private volatile EntityManager em;
+	
+	private volatile IProblemDAOService problemDAOService;
 	
 	@Override
 	public LogService getLogger() {
@@ -36,7 +40,10 @@ public class QuizProblemDAOImpl extends BaseServiceImpl implements IQuizProblemD
 	@Override
 	public QuizProblem getByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
 		final JPAQuizProblem jpaEntity = (JPAQuizProblem) super.findByPrimaryKey(JPAQuizProblem.class, pk);
-		return JPAEntityUtil.copy(jpaEntity, QuizProblem.class);
+		final QuizProblem dto = JPAEntityUtil.copy(jpaEntity, QuizProblem.class);
+		final Problem pdto = problemDAOService.getByPrimary(dto.getProblemId());
+		dto.setProblem(pdto);
+		return dto;
 	}
 
 	@Override

@@ -2,8 +2,10 @@ package org.quizzical.backend.quizzes.itests;
 
 import org.amdatu.bndtools.test.BaseOSGiServiceTest;
 import org.apache.felix.dm.DependencyManager;
+import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
+import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.framework.BundleContext;
@@ -20,11 +22,11 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import junit.framework.Assert;
 
 
-public class PracticeTestTestDesignTemplateTest extends BaseOSGiServiceTest<LogService> {
+public class QuizTest extends BaseOSGiServiceTest<LogService> {
 	private volatile DependencyManager m_manager;
 	private final BundleContext m_bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
 
-	public PracticeTestTestDesignTemplateTest() {
+	public QuizTest() {
 		super(LogService.class);
 	}
 	
@@ -33,8 +35,6 @@ public class PracticeTestTestDesignTemplateTest extends BaseOSGiServiceTest<LogS
 		super.setUp();
 		addServiceDependencies(LogService.class);
 		getService(IUserDAOService.class);
-		getService(ITestDesignTemplateDAOService.class);
-		getService(IQuizGeneratorManagerService.class);
 		getService(IQuizSubmissionDAOService.class);
 	}
 	
@@ -46,26 +46,17 @@ public class PracticeTestTestDesignTemplateTest extends BaseOSGiServiceTest<LogS
     }
     
     
-    public void testPracticeTestGenerator() throws Exception {
+    public void testQuiz() throws Exception {
     	IUserDAOService userSvc = getService(IUserDAOService.class,null);
     	Assert.assertNotNull(userSvc);
     	User user = userSvc.getByEmail("test@me.io");
     	Assert.assertNotNull(user);
     	
-    	IQuizGeneratorManagerService qgSvc = getService(IQuizGeneratorManagerService.class,null);
-    	Assert.assertNotNull(qgSvc);
-
-    	ITestDesignTemplateDAOService tdSvc = getService(ITestDesignTemplateDAOService.class,null);
-    	Assert.assertNotNull(tdSvc);
+    	IQuizProblemResponseDAOService svc1 = getService(IQuizProblemResponseDAOService.class,null);
+    	Assert.assertNotNull(svc1);
+    	svc1.add(new QuizProblemResponse("1234", null, true, true, 1111, null));
     	
-    	final TestDesignTemplate pt1 = tdSvc.getByCode("PracticeTest1");
-    	Assert.assertNotNull(pt1);
-    	
-/*    	QuizGenerationParameters params = new QuizGenerationParameters();
-    	params.setGeneratorType(org.gauntlet.quizzes.generator.api.Constants.GENERATOR_TYPE_PRACTICE_TEST);
-    	
-    	Quiz quiz = qgSvc.generate(user, params);
-    	Assert.assertNotNull(quiz);*/
+    	svc1.findAll();
     }
     
     @Override

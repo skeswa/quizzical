@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,6 +20,10 @@ import org.gauntlet.core.model.JPABaseEntity;
 	+"quiz_problem_response")
 public class JPAQuizProblemResponse extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = -8302783166411366183L;
+	
+	@ManyToOne(targetEntity = JPAQuizSubmission.class)
+	@JoinColumn
+	private JPAQuizSubmission submission;
 
 	private String response;
 	
@@ -89,6 +95,14 @@ public class JPAQuizProblemResponse extends JPABaseEntity implements Serializabl
 
 	public void setQuizProblemId(Long quizProblemId) {
 		this.quizProblemId = quizProblemId;
+	}
+
+	public JPAQuizSubmission getSubmission() {
+		return submission;
+	}
+
+	public void setSubmission(JPAQuizSubmission submission) {
+		this.submission = submission;
 	}
 }
 

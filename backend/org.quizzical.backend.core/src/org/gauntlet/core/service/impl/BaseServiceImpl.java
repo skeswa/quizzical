@@ -415,6 +415,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}
 
 	public ApplicationException processException(Exception e) {
+		e.printStackTrace();
 		return new ApplicationException(e);
 	}
 
@@ -456,7 +457,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 		//model.setId(null);
 		//model.setVersion(null);
 		getEm().persist(model);
-		getEm().flush();
+		//getEm().flush();
 		//getEm().merge(model);
 		//getEm().refresh(model);
 		

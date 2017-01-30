@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -27,8 +28,7 @@ public class JPAQuizSubmission extends JPABaseEntity implements Serializable {
 	@JoinColumn
 	private JPAQuiz quiz;
 	
-	@OneToMany(targetEntity = JPAQuizProblemResponse.class, cascade=CascadeType.ALL)
-	@JoinColumn
+	@OneToMany(targetEntity = JPAQuizProblemResponse.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="submission")
 	private List<JPAQuizProblemResponse> responses = new ArrayList<>();
 
 	public JPAQuizSubmission() {}

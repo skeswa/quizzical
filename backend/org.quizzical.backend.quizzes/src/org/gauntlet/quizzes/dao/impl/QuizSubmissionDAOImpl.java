@@ -3,12 +3,18 @@ package org.gauntlet.quizzes.dao.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
 import org.gauntlet.core.api.ApplicationException;
@@ -30,6 +36,7 @@ import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizProblemType;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
+import org.gauntlet.quizzes.model.jpa.JPAQuiz;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
@@ -102,6 +109,45 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		JPAQuizSubmission jpaEntity = (JPAQuizSubmission) super.findByPrimaryKey(JPAQuizSubmission.class, pk);
 		return JPAEntityUtil.copy(jpaEntity, QuizSubmission.class);
 	}
+	
+	@Override 
+	public QuizSubmission findByQuizId(User user, Long quizId) throws ApplicationException {
+		QuizSubmission result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizSubmission> query = builder.createQuery(JPAQuizSubmission.class);
+			Root<JPAQuizSubmission> rootEntity = query.from(JPAQuizSubmission.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//quiz Id
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("quiz").get("id"),p));
+			pes.put(p, quizId);
+			
+			
+			Set<AttrPair> attrs = new HashSet<>();
+			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
+			
+			List<JPAQuizSubmission> resultList = super.findWithDynamicQueryAndParams(query,pes);
+			if (resultList.iterator().hasNext()) {
+				result = JPAEntityUtil.copy(resultList.iterator().next(),QuizSubmission.class);
+				result.getResponses().stream()
+					.forEach(r -> {
+						try {
+							final QuizProblem dto = quizProblemService.getByPrimary(r.getQuizProblemId());
+							r.setQuizProblem(dto);
+						} catch (Exception e) {
+							processException(e);
+						}
+					});
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
 
 	@Override
 	public QuizSubmission add(QuizSubmission record)
@@ -122,7 +168,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	private QuizSubmission toDTO(JPAQuizSubmission newEntity) {
 		QuizSubmission dto = JPAEntityUtil.copy(newEntity, QuizSubmission.class);
 	   	final List<QuizProblemResponse> augmentedResponses = dto.getResponses()
-	    		.parallelStream()
+	    		.stream()
 	    		.map(problemResponse -> {
 					QuizProblem qp = null;
 					try {
@@ -154,7 +200,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	private JPAQuizSubmission toJPAEntity(QuizSubmission quizSubmission) {
 		final JPAQuizSubmission jpaQuizSubmission = JPAEntityUtil.copy(quizSubmission, JPAQuizSubmission.class);
     	final List<JPAQuizProblemResponse> responses = quizSubmission.getResponses()
-    		.parallelStream()
+    		.stream()
     		.map(problemResponse -> {
 	    		JPAQuizProblemResponse jpaEntity = null;
 				try {
@@ -165,6 +211,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 							problemResponse.getSkipped(),
 							problemResponse.getSecondsElapsed(),
 							jpaQuizProblem.getId());
+					jpaEntity.setSubmission(jpaQuizSubmission);
 					return jpaEntity;
 				} 
 				catch (NoSuchModelException e) {
@@ -231,7 +278,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
     	
     	//--Prep for UI
        	final List<QuizProblemResponse> correctedResponses = quizSubmission.getResponses()
-        		.parallelStream()
+        		.stream()
         		.map(problemResponse -> {
     				problemResponse.getQuizProblem().setOrdinal(problemResponse.getQuizProblem().getQuizOrdinal());
     				return problemResponse;

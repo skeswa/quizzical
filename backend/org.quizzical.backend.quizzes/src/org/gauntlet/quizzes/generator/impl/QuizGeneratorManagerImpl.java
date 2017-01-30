@@ -1,5 +1,7 @@
 package org.gauntlet.quizzes.generator.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +48,17 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		final ServiceReference generatorRef = references.get(params.getGeneratorType());
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
 		
-		return generator.generate(user,params);
+		Quiz quiz = null;
+		try {
+			quiz = generator.generate(user,params);
+		} catch (Exception e) {
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String stacktrace = sw.toString();
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return quiz;
 	}
 }

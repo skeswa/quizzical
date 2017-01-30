@@ -6,6 +6,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
+import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
 import org.quizzical.backend.security.api.model.user.User;
 
 public interface IQuizSubmissionDAOService extends IBaseService {
@@ -26,4 +27,6 @@ public interface IQuizSubmissionDAOService extends IBaseService {
 	public QuizSubmission getByName(String name) throws ApplicationException;	
 	
 	public QuizSubmission submit(QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException;
+
+	QuizSubmission findByQuizId(User user, Long quizId) throws ApplicationException;
 }

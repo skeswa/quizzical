@@ -111,7 +111,7 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 
 
 		final List<QuizProblem> nonCalcQuizProblems = nonCalSec.getOrderedItems()
-				.parallelStream()
+				.stream()
         		.map(item -> {
         			QuizProblem qp = null;
         			try {
@@ -153,7 +153,7 @@ public class ByProblemCategoryGeneratorImpl implements IQuizGeneratorService {
 		
 		//=== Calc
 		final List<QuizProblem> calcQuizProblems = calSec.getOrderedItems()
-				.parallelStream()
+				.stream()
         		.map(item -> {
         			QuizProblem qp = null;
         			long count = 0;

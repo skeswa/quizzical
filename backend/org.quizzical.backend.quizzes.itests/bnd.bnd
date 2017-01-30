@@ -36,6 +36,7 @@
 	org.apache.commons.io;version=2.4.0,\
 	org.apache.commons.collections;version=3.2.1,\
 	org.apache.commons.lang3;version=3.1.0,\
+	org.apache.commons.math;version=2.2.0,\
 	com.springsource.org.apache.commons.logging;version=1.1.1,\
 	org.apache.commons.beanutils;version=1.8.3,\
 	com.springsource.org.json;version=1.0.0,\
@@ -55,6 +56,10 @@
 	com.fasterxml.jackson.jaxrs.jackson-jaxrs-base;version="[2.6,2.7)",\
 	com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider;version="[2.6,2.7)",\
 	javax.ws.rs.jsr311-api;version=1.1.1,\
+	,\
+	javax.mail;version=1.4,\
+	org.apache.velocity;version=1.7,\
+	org.apache.commons.email;version=1.3,\
 	,\
 	com.google.guava;version='[18.0.0,20.0)',\
 	,\
@@ -103,9 +108,16 @@
 	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
 	org.quizzical.backend.security.dao.impl;version=latest,\
 	,\
+	org.quizzical.backend.mail.api;version=latest,\
+	org.quizzical.backend.mail.impl;version=latest,\
+	,\
 	org.quizzical.backend.testdesign.api;version=latest,\
 	org.quizzical.backend.testdesign.dao.impl;version=latest,\
 	org.quizzical.backend.testdesign.model.persistence.openjpa.jpa2_0;version=latest,\
+	,\
+	org.quizzical.backend.analytics.api;version=latest,\
+	org.quizzical.backend.analytics.dao.impl;version=latest,\
+	org.quizzical.backend.analytics.model.persistence.openjpa.jpa2_0;version=latest,\
 	,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.problems.dao.impl;version=latest,\

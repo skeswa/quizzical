@@ -56,6 +56,7 @@ public class Activator extends DependencyActivatorBase {
 		dm.add(createComponent().setInterface(Object.class.getName(), props)
 				.setImplementation(QuizProblemDAOImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(EntityManager.class,entityManagerModuleFilter).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
 		

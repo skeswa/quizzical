@@ -106,7 +106,7 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 				startNonCalcProblem);
 		startNonCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
 		final List<QuizProblem> nonCalcQuizProblems = nonCalSec.getOrderedItems()
-				.parallelStream()
+				.stream()
         		.map(item -> {
         			QuizProblem qp = null;
         			try {
@@ -158,7 +158,7 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 				startCalcProblem);
 		startCalcQuizProblem.setType(QuizProblemType.INFORMATIONAL);
 		final List<QuizProblem> calcQuizProblems = calSec.getOrderedItems()
-				.parallelStream()
+				.stream()
         		.map(item -> {
         			QuizProblem qp = null;
         			long count = 0;

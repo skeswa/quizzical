@@ -1,0 +1,86 @@
+
+.centerer {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 2rem;
+  padding-bottom: 8rem;
+}
+
+.errorPage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.errorWrapper {
+  max-width: 75%;
+}
+
+.errorPageButtons {
+  display: flex;
+  flex-basis: 7rem;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
+}
+
+.loader {
+  height: 5rem;
+  position: relative;
+  width: 5rem;
+}
+
+.resultsPage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.resultsCardWrapper {
+  display: flex;
+  flex: 1;
+  padding-bottom: 4rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+@media (max-width: 500px) {
+  .resultsCardWrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+.resultsCard {
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.resultsPageButtons {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
+}
+@media (max-width: 500px) {
+  .resultsPageButtons {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+  }
+}

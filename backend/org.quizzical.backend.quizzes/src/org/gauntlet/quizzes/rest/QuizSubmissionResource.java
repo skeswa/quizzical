@@ -19,12 +19,14 @@ import javax.ws.rs.core.MediaType;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
-import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.security.jwt.api.IJWTTokenService;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @Path("quiz/submissions")
@@ -32,7 +34,7 @@ public class QuizSubmissionResource {
 	@SuppressWarnings("unused")
 	private volatile LogService logger;
 	private volatile IQuizSubmissionDAOService quizSubmissionDAOService;
-	private volatile IJWTTokenService tokenProvider;
+	private volatile IJWTTokenService tokenService;
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,10 +44,18 @@ public class QuizSubmissionResource {
     }	
 	
     @GET 
-    @Path("{id}") 
+    @Path("{quizId}") 
     @Produces(MediaType.APPLICATION_JSON) 
-    public QuizSubmission get(@PathParam("id") long id) throws NoSuchModelException, ApplicationException {
-		return quizSubmissionDAOService.getByPrimary(id);
+    public QuizSubmission get(@Context HttpServletRequest request, @PathParam("quizId") long quizId) throws NoSuchModelException, ApplicationException, JsonParseException, JsonMappingException, IOException {
+    	final User user = tokenService.extractUser(request);
+    	final QuizSubmission submission = quizSubmissionDAOService.findByQuizId(user, quizId);
+    	submission.getResponses().stream()
+		.forEach(e -> {
+			((QuizProblemResponse)e).getQuizProblem().getProblem().getCategory().setLessons(null);
+			((QuizProblemResponse)e).getQuizProblem().setQuiz(null);
+		});
+    	submission.getQuiz().setQuestions(null);
+    	return submission;
     }
     
     @PUT

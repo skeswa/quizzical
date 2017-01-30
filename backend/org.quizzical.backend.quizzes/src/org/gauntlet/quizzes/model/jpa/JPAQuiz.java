@@ -26,7 +26,7 @@ public class JPAQuiz extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = -9161578622846589427L;
 
 	@Basic
-    @Column(name = "userId", unique=true)
+    @Column(name = "userId")
     protected Long userId;
     
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = JPAQuizType.class)
