@@ -98,10 +98,10 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 					categoryRatingsMap.put(subType.getId(), rating);
 					
 					if (problemResponse.getSkipped())
-						attempt = new TestCategoryAttempt(quizProblemId, quizSubmission.getDateCreated(),false,true);
+						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),false,true);
 					else {
 						final Boolean correct = gradeProblem(problemResponse, problem);
-						attempt = new TestCategoryAttempt(quizProblemId, quizSubmission.getDateCreated(),correct,false);
+						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),correct,false);
 					}
 					rating.addAttempt(attempt);
 					

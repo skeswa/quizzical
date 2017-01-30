@@ -13,6 +13,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemCategoryLesson;
+import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.api.dao.user.IUserDAOService;
@@ -41,6 +42,8 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 	private volatile IContentItemDAOService contentItemService;
 	
 	private volatile IProblemDAOService problemService;
+
+	private volatile IQuizProblemDAOService quizProblemService;
 	
 	private volatile IMailService mailService;
 	

@@ -19,6 +19,8 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	
 	private Integer lastAttemptRating;
 	
+	private Long lastAttemptTestId;
+	
 	private TestUserAnalytics analytics;
 	
 	private List<TestCategoryAttempt>  attempts;
@@ -39,8 +41,9 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	}
 	
 	
-	public TestCategoryRating(final Integer rating, final Date dateOfLastAttempt, final Long categoryId, final String name, final String code) {
+	public TestCategoryRating(final Integer rating, final Long lastAttemptTestId, final Date dateOfLastAttempt, final Long categoryId, final String name, final String code) {
 		this(categoryId, name, code, null);
+		this.lastAttemptTestId = lastAttemptTestId;
 	}
 
 
@@ -98,6 +101,14 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 
 	public void addAttempt(TestCategoryAttempt attempt) {
 		getAttempts().add(attempt);
+	}
+
+	public Long getLastAttemptTestId() {
+		return lastAttemptTestId;
+	}
+
+	public void setLastAttemptTestId(Long lastAttemptTestId) {
+		this.lastAttemptTestId = lastAttemptTestId;
 	}
 
 }

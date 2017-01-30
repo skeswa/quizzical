@@ -36,6 +36,8 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	
 	private Date dateOfLastAttempt;
 	
+	private Long lastAttemptTestId;
+	
 	private Integer lastAttemptRating;
 
 	@ManyToOne
@@ -95,6 +97,14 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 
 	public void setAttempts(List<JPATestCategoryAttempt> attempts) {
 		this.attempts = attempts;
+	}
+
+	public Long getLastAttemptTestId() {
+		return lastAttemptTestId;
+	}
+
+	public void setLastAttemptTestId(Long lastAttemptTestId) {
+		this.lastAttemptTestId = lastAttemptTestId;
 	}
 }
 

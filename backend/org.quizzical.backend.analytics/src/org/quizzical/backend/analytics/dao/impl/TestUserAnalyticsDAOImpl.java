@@ -191,7 +191,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
     	final List<JPATestCategoryRating> ratings = record.getRatings()
     		.stream()
     		.map(rating -> {
-				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName(), rating.getCode());
+				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName(), rating.getCode());
 				JPATestCategoryRating jpaRatingRecord = (JPATestCategoryRating) JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
 		    	final List<JPATestCategoryAttempt> attempts = rating.getAttempts()
 		        		.stream()
@@ -277,6 +277,12 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		rating.setDateOfLastAttempt(dateOfLastAttempt);
 		
 		//Update rating for recent attempts
+		final JPATestCategoryAttempt  recentAttempt = rating.getAttempts()
+			    .stream()
+			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
+			    .findFirst().get();
+		rating.setLastAttemptTestId(recentAttempt.getTestId());
+		
 		final long recentlyAttempted = rating.getAttempts()
 			    .stream()
 			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)

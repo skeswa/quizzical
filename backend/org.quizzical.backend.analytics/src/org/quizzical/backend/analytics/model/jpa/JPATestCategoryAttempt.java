@@ -27,6 +27,7 @@ import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 public class JPATestCategoryAttempt extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 1897304303469354401L;
 	
+	private Long testId;
 	private Long testProblemId;
 	private Date dateAttempted;
 	private Boolean successful;
@@ -77,6 +78,14 @@ public class JPATestCategoryAttempt extends JPABaseEntity implements Serializabl
 
 	public void setRating(JPATestCategoryRating rating) {
 		this.rating = rating;
+	}
+
+	public Long getTestId() {
+		return testId;
+	}
+
+	public void setTestId(Long testId) {
+		this.testId = testId;
 	}
 }
 

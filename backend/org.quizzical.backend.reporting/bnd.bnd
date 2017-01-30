@@ -34,5 +34,6 @@
 	javax.mail;version=1.4,\
 	org.apache.velocity;version=1.7,\
 	org.apache.commons.email;version=1.3,\
-	org.quizzical.backend.contentrepository.api;version=latest
+	org.quizzical.backend.contentrepository.api;version=latest,\
+	org.quizzical.backend.quizzes.api;version=latest
 -sub: *.bnd

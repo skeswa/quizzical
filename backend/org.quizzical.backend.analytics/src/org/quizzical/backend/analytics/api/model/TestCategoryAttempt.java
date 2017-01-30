@@ -8,6 +8,7 @@ import org.gauntlet.core.model.BaseEntity;
 public class TestCategoryAttempt extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -400437286101443018L;
 	
+	private Long testId;
 	private Long testProblemId;
 	private Date dateAttempted;
 	private Boolean successful;
@@ -38,14 +39,27 @@ public class TestCategoryAttempt extends BaseEntity implements Serializable {
 		this.skipped = skipped;
 	}
 	
+	public Long getTestId() {
+		return testId;
+	}
+	public void setTestId(Long testId) {
+		this.testId = testId;
+	}
+	public Long getTestProblemId() {
+		return testProblemId;
+	}
+	public void setTestProblemId(Long testProblemId) {
+		this.testProblemId = testProblemId;
+	}
 	public TestCategoryAttempt() {
 	}
 
-	public TestCategoryAttempt(Long testProblemId, Date dateAttempted, Boolean successful, Boolean skipped) {
+	public TestCategoryAttempt(Long testId, Long testProblemId, Date dateAttempted, Boolean successful, Boolean skipped) {
 		super();
 		this.testProblemId = testProblemId;
 		this.dateAttempted = dateAttempted;
 		this.successful = successful;
 		this.skipped = skipped;
+		this.testId = testId;
 	}
 }
