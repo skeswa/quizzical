@@ -25,6 +25,10 @@ public interface IUserDAOService {
 
 	public User update(User record) throws ApplicationException;
 	
+	public User activate(User record) throws ApplicationException;
+	
+	public User deactivate(User record) throws ApplicationException;
+	
 	public User provide(User record) throws Exception;
 
 	public List<User> getAllActiveUsers();

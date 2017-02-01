@@ -25,6 +25,7 @@ public class QuizTakeReminderJob implements Job {
 	public void execute() {
 		try {
 			for (User user : userService.getAllActiveUsers()) {
+				System.out.println(String.format("Notifying user %s", user.getUserId()));
 				List<QuizSubmission> submissions = quizSubmissionService.findQuizSubmissionsMadeToday(user);
 				if (submissions.isEmpty()) {
 					List<String> to = new ArrayList<>();
