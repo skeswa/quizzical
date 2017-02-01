@@ -1,6 +1,5 @@
 package org.quizzical.backend.sms.impl.twilio;
 
-import com.twilio.sdk.auth.AccessToken;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
@@ -20,14 +19,7 @@ import org.quizzical.backend.sms.api.IAlertNotifier;
 import org.quizzical.backend.sms.api.NotificationMessage;
 
 public class TwilioAlertNotifierImpl implements IAlertNotifier, ManagedService {
-
-	public static final String APIKEY_SID = "SKd8af0e88f1470e14eae7251720f84ff3";
-	public static final String APIKEY_SECRET = "Hpo3vdnQfv4S9oEf4od3tERik1QJIUTg";
-	public static final String ACCOUNT_SID = "AC209c62c65fef119415cb347379a479dc";
-	public static final String AUTH_TOKEN = "7cebf18fed1f17ef7e8a22244a80c76e";
-	
-	public static final String APIKEY_SID_PROP = "org.quizzical.backend.sms.apikey.sid";
-	public static final String APIKEY_SECRET_PROP = "org.quizzical.backend.sms.apikey.secret";
+	public static final String FROM_NUM_PROP = "org.quizzical.backend.sms.from";
 	public static final String ACCOUNT_SID_PROP = "org.quizzical.backend.sms.account.sid";
 	public static final String AUTH_TOKEN_PROP = "org.quizzical.backend.sms.auth.token";
 	
@@ -35,26 +27,26 @@ public class TwilioAlertNotifierImpl implements IAlertNotifier, ManagedService {
 
 	private TwilioRestClient m_client;
 	
-	private String apikeySid;
-	private String apikeySecret;
 	private String smsAccountSid;
 	private String authToken;
+	private String from;
 
 	public void start() {
-		m_client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+		m_client = new TwilioRestClient(smsAccountSid, authToken);
 	}
 	
 	@Override
 	public void updated(Dictionary properties) throws ConfigurationException {
-		this.apikeySid = (String)properties.get(APIKEY_SID_PROP);
-		this.apikeySecret = (String)properties.get(APIKEY_SECRET_PROP);
 		this.smsAccountSid = (String)properties.get(ACCOUNT_SID_PROP);
 		this.authToken = (String)properties.get(AUTH_TOKEN_PROP);
+		this.from =  (String)properties.get(FROM_NUM_PROP);
 	}
 
 
 	@Override
 	public void notifyViaSMS(NotificationMessage message) throws AlertNotificationException {
+		message.setFrom(this.from);
+		
 		// Build a filter for the MessageList
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("Body", message.getBody()));

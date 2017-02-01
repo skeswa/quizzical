@@ -107,6 +107,15 @@
 	org.quizzical.backend.mail.api;version=latest,\
 	org.quizzical.backend.mail.impl;version=latest,\
 	,\
+	org.quizzical.backend.libraries.twillio;version=latest,\
+	org.quizzical.backend.sms.api;version=latest,\
+	org.quizzical.backend.sms.twilio;version=latest,\
+	,\
+	org.quizzical.backend.scheduler.api;version=latest,\
+	org.quizzical.backend.scheduler.impl;version=latest,\
+	org.amdatu.scheduling.api;version=1.1.0,\
+	org.amdatu.scheduling.quartz;version=1.0.4,\
+	,\
 	org.quizzical.backend.testdesign.api;version=latest,\
 	org.quizzical.backend.testdesign.dao.impl;version=latest,\
 	org.quizzical.backend.testdesign.model.persistence.openjpa.jpa2_0;version=latest,\
