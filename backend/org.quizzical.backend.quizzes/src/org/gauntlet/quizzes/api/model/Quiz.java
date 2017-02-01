@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public class Quiz extends BaseEntity implements Serializable {
 	private Long userId;

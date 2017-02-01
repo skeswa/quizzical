@@ -6,8 +6,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
-import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface IQuizSubmissionDAOService extends IBaseService {
 	public List<QuizSubmission> findAll(User user, int start, int end) throws ApplicationException;

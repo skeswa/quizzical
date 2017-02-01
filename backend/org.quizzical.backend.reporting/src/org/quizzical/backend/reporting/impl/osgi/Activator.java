@@ -11,7 +11,7 @@ import org.quizzical.backend.mail.api.IMailService;
 import org.quizzical.backend.reporting.analytics.impl.UserAnalyticsReportingConfiguration;
 import org.quizzical.backend.reporting.analytics.impl.UserAnalyticsReportingServiceImpl;
 import org.quizzical.backend.reporting.api.IUserAnalyticsReporting;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 
 public class Activator extends DependencyActivatorBase {
 	private static final String PID = "org.quizzical.backend.reporting";

@@ -1,8 +1,8 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 

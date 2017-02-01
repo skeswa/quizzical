@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.gauntlet.core.api.ApplicationException;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.quizzical.backend.testdesign.api.ITestDesignTemplateGeneratorService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;

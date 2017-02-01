@@ -1,0 +1,6 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.quizzical.backend.security.authentication.jwt,\
+	org.quizzical.backend.security.authentication.jwt.osgi
+Bundle-Activator: org.quizzical.backend.security.authentication.jwt.osgi.Activator
+Export-Package: org.quizzical.backend.security.authentication.jwt.api

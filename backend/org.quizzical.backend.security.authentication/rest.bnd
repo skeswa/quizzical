@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.quizzical.backend.security.authentication.rest.osgi,\
+	org.quizzical.backend.security.authentication.rest
+Bundle-Activator: org.quizzical.backend.security.authentication.rest.osgi.Activator
+Include-Resource: \
+ /res=resource/app

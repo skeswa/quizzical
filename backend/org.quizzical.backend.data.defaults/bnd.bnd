@@ -20,7 +20,6 @@
 	javax.servlet,\
 	org.amdatu.web.rest.doc,\
 	org.amdatu.web.rest.jaxrs,\
-	org.amdatu.security.tokenprovider.api,\
 	org.amdatu.persistence2_0;version=1.0,\
 	org.quizzical.backend.core.model;version=latest,\
 	org.quizzical.backend.core.api;version=latest,\
@@ -30,7 +29,7 @@
 	org.quizzical.backend.core.impl.service;version=latest,\
 	org.quizzical.backend.problems.api;version=latest,\
 	org.quizzical.backend.quizzes.api;version=latest,\
-	org.quizzical.backend.security.api;version=latest,\
+	org.quizzical.backend.security.authorization.api;version=latest,\
 	org.apache.commons.io;version=2.4,\
 	org.quizzical.backend.testdesign.api;version=latest
 -sub: *.bnd

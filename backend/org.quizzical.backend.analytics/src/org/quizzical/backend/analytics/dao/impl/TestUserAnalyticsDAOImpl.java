@@ -24,7 +24,6 @@ import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
-import org.gauntlet.problems.api.model.ProblemCategory;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
@@ -33,7 +32,7 @@ import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 import org.quizzical.backend.analytics.model.jpa.JPATestCategoryAttempt;
 import org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating;
 import org.quizzical.backend.analytics.model.jpa.JPATestUserAnalytics;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
 
 
@@ -273,6 +272,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			    .collect(Collectors.toList());
 		int val = (int)(new Fraction(correctAttempts.size(),rating.getAttempts().size()).doubleValue()*100);
 		rating.setRating(val);
+		rating.setTotalAttemptsCorrect(correctAttempts.size());
+		rating.setTotalAttemptsTotal(rating.getAttempts().size());
+		
 		Date dateOfLastAttempt = rating.getAttempts().stream().map(u -> u.getDateAttempted()).max(Date::compareTo).get();
 		rating.setDateOfLastAttempt(dateOfLastAttempt);
 		
@@ -292,6 +294,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt && p.getSuccessful())
 			    .count();
 		val = (int)(new Fraction((int)recentlyAttemptedSuccessfully,(int)recentlyAttempted).doubleValue()*100);
+		
+		rating.setLastAttemptCorrect((int)recentlyAttemptedSuccessfully);
+		rating.setLastAttemptTotal((int)recentlyAttempted);
 		rating.setLastAttemptRating(val);
 	}
 	

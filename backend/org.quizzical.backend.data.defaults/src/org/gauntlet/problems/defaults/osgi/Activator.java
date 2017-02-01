@@ -7,7 +7,7 @@ import org.gauntlet.problems.defaults.Controller;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 

@@ -73,14 +73,14 @@ class QuizResultsPage extends Component {
     // TODO(skeswa): tell the backend to delete the cancelled quiz.
     this.context.router.push(`/quiz/start`)
   }
-  
+
   onQuestionIndexChanged(currentQuestionIndex) {
     this.setState({ currentQuestionIndex })
   }
 
   renderLoading(quizFinished) {
     const participle = quizFinished ? 'being submitted' : 'loading'
-    const subtitle = `Your quiz is ${participle}`
+    const subtitle = `Quiz results are ${participle}`
 
     return (
       <PracticeSkeleton

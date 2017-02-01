@@ -1,0 +1,6 @@
+Bundle-Version: 1.0.0.${tstamp}
+Meta-Persistence: META-INF/persistence.xml
+Include-Resource: META-INF/persistence.xml=resource/jpa/persistence-openjpa.xml
+Export-Package: \
+	org.quizzical.backend.security.authorization.model.jpa.tokenstorage,\
+	org.quizzical.backend.security.authorization.model.jpa.user

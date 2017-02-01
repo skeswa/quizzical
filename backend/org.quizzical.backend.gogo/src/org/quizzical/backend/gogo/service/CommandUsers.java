@@ -1,6 +1,6 @@
 package org.quizzical.backend.gogo.service;
 
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 
 public class CommandUsers {
 

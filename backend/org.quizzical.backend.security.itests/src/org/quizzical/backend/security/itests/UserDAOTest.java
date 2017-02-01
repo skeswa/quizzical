@@ -3,7 +3,6 @@ package org.quizzical.backend.security.itests;
 import javax.persistence.EntityManager;
 
 import org.amdatu.bndtools.test.BaseOSGiServiceTest;
-import org.amdatu.multitenant.TenantFactoryConfiguration;
 import org.apache.felix.dm.DependencyManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -11,8 +10,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 import junit.framework.Assert;
 

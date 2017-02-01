@@ -24,9 +24,8 @@
 	org.apache.commons.fileupload;version=1.2,\
 	org.apache.commons.io;version=2.4,\
 	org.quizzical.backend.problems.api;version=latest,\
-	org.quizzical.backend.security.api;version=latest,\
-	org.quizzical.backend.security.rest;version=latest,\
 	org.quizzical.backend.testdesign.api;version=latest,\
 	org.quizzical.backend.analytics.api;version=latest,\
-	org.apache.commons.math;version=2.2
+	org.apache.commons.math;version=2.2,\
+	org.quizzical.backend.security.authorization.api;version=latest
 -sub: *.bnd

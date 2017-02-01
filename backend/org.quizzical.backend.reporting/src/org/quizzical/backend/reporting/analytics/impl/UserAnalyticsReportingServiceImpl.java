@@ -16,8 +16,6 @@ import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.contentrepository.api.dao.IContentItemDAOService;
@@ -27,6 +25,8 @@ import org.quizzical.backend.reporting.api.IUserAnalyticsReporting;
 import org.quizzical.backend.reporting.email.LessonResourceItem;
 import org.quizzical.backend.reporting.email.LessonResources;
 import org.quizzical.backend.reporting.email.PerformanceReportingMessagePreparator;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 @SuppressWarnings("restriction")
 public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReporting {

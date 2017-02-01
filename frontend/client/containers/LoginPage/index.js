@@ -61,7 +61,7 @@ class LoginPage extends Component {
         return
       }
 
-      if (location.state && location.state.nextPathname) {
+     if (location.state && location.state.nextPathname) {
           router.replace(location.state.nextPathname)
         } else {
           router.replace('/quiz/start')

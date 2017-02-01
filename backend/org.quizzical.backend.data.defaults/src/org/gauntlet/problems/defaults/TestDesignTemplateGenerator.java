@@ -7,15 +7,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.gauntlet.core.api.ApplicationException;
-import org.gauntlet.problems.api.dao.IProblemDAOService;
-import org.gauntlet.problems.api.model.ProblemCategory;
-import org.gauntlet.problems.api.model.ProblemDifficulty;
-import org.gauntlet.problems.api.model.ProblemSource;
-import org.gauntlet.quizzes.api.dao.IQuizDAOService;
-import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.model.user.User;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 import org.quizzical.backend.testdesign.api.model.Constants;

@@ -97,11 +97,12 @@
 	,\
 	org.quizzical.backend.libraries.io.jsonwebtoken.jjwt,\
 	,\
-	org.quizzical.backend.security.jwt;version=latest,\
-	org.quizzical.backend.security.api;version=latest,\
-	org.quizzical.backend.security.rest;version=latest,\
-	org.quizzical.backend.security.model.persistence.jpa2_0;version=latest,\
-	org.quizzical.backend.security.dao.impl;version=latest,\
+	org.quizzical.backend.security.authorization.api;version=latest,\
+	org.quizzical.backend.security.authorization.model.persistence.jpa2_0;version=latest,\
+	org.quizzical.backend.security.authorization.dao.impl;version=latest,\
+	,\
+	org.quizzical.backend.security.authentication.jwt;version=latest,\
+	org.quizzical.backend.security.authentication.rest;version=latest,\
 	,\
 	org.quizzical.backend.mail.api;version=latest,\
 	org.quizzical.backend.mail.impl;version=latest,\

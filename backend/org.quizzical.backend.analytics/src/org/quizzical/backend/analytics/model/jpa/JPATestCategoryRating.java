@@ -39,6 +39,14 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	private Long lastAttemptTestId;
 	
 	private Integer lastAttemptRating;
+	
+	private Integer lastAttemptCorrect;
+	
+	private Integer lastAttemptTotal;
+	
+	private Integer totalAttemptsCorrect;
+	
+	private Integer totalAttemptsTotal;
 
 	@ManyToOne
 	private JPATestUserAnalytics analytics;
@@ -105,6 +113,38 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 
 	public void setLastAttemptTestId(Long lastAttemptTestId) {
 		this.lastAttemptTestId = lastAttemptTestId;
+	}
+
+	public Integer getLastAttemptCorrect() {
+		return lastAttemptCorrect;
+	}
+
+	public void setLastAttemptCorrect(Integer lastAttemptCorrect) {
+		this.lastAttemptCorrect = lastAttemptCorrect;
+	}
+
+	public Integer getLastAttemptTotal() {
+		return lastAttemptTotal;
+	}
+
+	public void setLastAttemptTotal(Integer lastAttemptTotal) {
+		this.lastAttemptTotal = lastAttemptTotal;
+	}
+
+	public Integer getTotalAttemptsCorrect() {
+		return totalAttemptsCorrect;
+	}
+
+	public void setTotalAttemptsCorrect(Integer totalAttemptsCorrect) {
+		this.totalAttemptsCorrect = totalAttemptsCorrect;
+	}
+
+	public Integer getTotalAttemptsTotal() {
+		return totalAttemptsTotal;
+	}
+
+	public void setTotalAttemptsTotal(Integer totalAttemptsTotal) {
+		this.totalAttemptsTotal = totalAttemptsTotal;
 	}
 }
 

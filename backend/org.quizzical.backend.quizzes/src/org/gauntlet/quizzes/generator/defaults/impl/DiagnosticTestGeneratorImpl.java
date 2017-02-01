@@ -29,7 +29,7 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;

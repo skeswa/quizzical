@@ -7,7 +7,7 @@
 	org.amdatu.jta.manager;version=latest,\
 	org.amdatu.bndtools.test;version=1.1,\
 	org.amdatu.multitenant;version=1.0,\
-	org.quizzical.backend.security.api;version=latest
+	org.quizzical.backend.security.authorization.api;version=latest
 -runbundles:  \
 	biz.aQute.junit,\
 	org.amdatu.bndtools.test,\

@@ -12,8 +12,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
-import org.quizzical.backend.security.api.dao.user.IUserDAOService;
-import org.quizzical.backend.security.api.model.user.User;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
 

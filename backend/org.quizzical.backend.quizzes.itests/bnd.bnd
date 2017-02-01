@@ -8,9 +8,9 @@
 	org.amdatu.bndtools.test;version=1.1,\
 	org.amdatu.multitenant;version=1.0,\
 	org.quizzical.backend.testdesign.api;version=latest,\
-	org.quizzical.backend.security.api;version=latest,\
 	org.quizzical.backend.core.api;version=latest,\
-	org.quizzical.backend.quizzes.api;version=latest
+	org.quizzical.backend.quizzes.api;version=latest,\
+	org.quizzical.backend.security.authorization.api;version=latest
 -runbundles:  \
 	biz.aQute.junit,\
 	org.amdatu.bndtools.test,\

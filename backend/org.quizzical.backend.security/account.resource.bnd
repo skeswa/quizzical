@@ -1,5 +1,0 @@
-Include-Resource: \
-	/res=resource/account
-
-Fragment-Host: \
-	org.amdatu.security.account.admin.rest

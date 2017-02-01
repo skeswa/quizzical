@@ -21,6 +21,14 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	
 	private Long lastAttemptTestId;
 	
+	private Integer lastAttemptCorrect;
+	
+	private Integer lastAttemptTotal;
+	
+	private Integer totalAttemptsCorrect;
+	
+	private Integer totalAttemptsTotal;
+	
 	private TestUserAnalytics analytics;
 	
 	private List<TestCategoryAttempt>  attempts;
@@ -111,4 +119,35 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 		this.lastAttemptTestId = lastAttemptTestId;
 	}
 
+	public Integer getLastAttemptCorrect() {
+		return lastAttemptCorrect;
+	}
+
+	public void setLastAttemptCorrect(Integer lastAttemptCorrect) {
+		this.lastAttemptCorrect = lastAttemptCorrect;
+	}
+
+	public Integer getLastAttemptTotal() {
+		return lastAttemptTotal;
+	}
+
+	public void setLastAttemptTotal(Integer lastAttemptTotal) {
+		this.lastAttemptTotal = lastAttemptTotal;
+	}
+
+	public Integer getTotalAttemptsCorrect() {
+		return totalAttemptsCorrect;
+	}
+
+	public void setTotalAttemptsCorrect(Integer totalAttemptsCorrect) {
+		this.totalAttemptsCorrect = totalAttemptsCorrect;
+	}
+
+	public Integer getTotalAttemptsTotal() {
+		return totalAttemptsTotal;
+	}
+
+	public void setTotalAttemptsTotal(Integer totalAttemptsTotal) {
+		this.totalAttemptsTotal = totalAttemptsTotal;
+	}
 }
