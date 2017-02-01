@@ -1,0 +1,2 @@
+Bundle-Activator: org.quizzical.backend.sms.impl.twilio.Activator
+Private-Package: org.quizzical.backend.sms.impl.twilio

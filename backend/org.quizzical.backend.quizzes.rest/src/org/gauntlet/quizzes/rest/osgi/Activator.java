@@ -11,12 +11,14 @@ import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizTakeDAOService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
+import org.gauntlet.quizzes.rest.QuizGenerationResource;
 import org.gauntlet.quizzes.rest.QuizResource;
 import org.gauntlet.quizzes.rest.QuizSubmissionResource;
 import org.gauntlet.quizzes.rest.QuizTypeResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 
 public class Activator extends DependencyActivatorBase {
 	@Override
@@ -67,6 +69,18 @@ public class Activator extends DependencyActivatorBase {
 						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));		
+		
+		manager.add(createComponent()
+				.setInterface(Object.class.getName(), serviceProperties)
+				.setImplementation(QuizGenerationResource.class)
+				.add(createServiceDependency().setService(IJWTTokenService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IUserDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IQuizDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(LogService.class)
+						.setRequired(false)));	
 	}
 
 	@Override

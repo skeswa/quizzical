@@ -248,6 +248,12 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	public void createDefaults() throws ApplicationException, Exception {
 	}
 	
+	//-- Misc
+	@Override
+	public void truncate() throws ApplicationException {
+		super.truncate("gnt_ana_testuser");
+	}
+	
 	@Override
 	public void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException {
 		JPATestUserAnalytics analytics = getByCode_(code);

@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -27,13 +26,15 @@ import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Path("quizzes")
 public class QuizResource  {
+    private ObjectMapper mapper = new ObjectMapper();
+	
 	private volatile LogService logger;
 	private volatile IQuizDAOService quizService;
 	private volatile IProblemDAOService problemService;

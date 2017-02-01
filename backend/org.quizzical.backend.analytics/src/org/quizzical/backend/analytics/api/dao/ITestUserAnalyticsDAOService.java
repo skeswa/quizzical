@@ -33,4 +33,6 @@ public interface ITestUserAnalyticsDAOService {
 
 	List<TestCategoryRating> findWeakestCategoriesLowerThanRating(User user, Integer startRatingCutoffIncl,
 			Integer endRatingCutoffIncl) throws ApplicationException;
+
+	void truncate() throws ApplicationException;
 }

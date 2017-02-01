@@ -36,9 +36,6 @@ public class LoginResource {
 		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
     private Pattern pattern;
     
-    private ObjectMapper mapper = new ObjectMapper();
-
-	
 	private volatile IUserDAOService userService;
 	private volatile IJWTTokenService tokenService;
 	private volatile IQuizDAOService quizService;
@@ -77,12 +74,7 @@ public class LoginResource {
 	@GET
 	public Response me(@Context HttpServletRequest request) throws UserNotFoundException, ApplicationException {
 		try {
-			final SessionUser sessionUser = tokenService.extractSessionUser(request);
-			final User user = userService.getUserByEmail(sessionUser.getEmail());
-			boolean isDiagnosed = quizService.userHasTakenDiagnoticTest(user);
-			sessionUser.setDignosed(isDiagnosed);
-			
-			final String userJson = mapper.writeValueAsString(sessionUser);
+			final String userJson = tokenService.extractSessionUserAsJson(request);
 			if (userJson == null || "null".equalsIgnoreCase(userJson))
 				return Response.status(403).build();
 			return Response.ok().entity(userJson).build();
