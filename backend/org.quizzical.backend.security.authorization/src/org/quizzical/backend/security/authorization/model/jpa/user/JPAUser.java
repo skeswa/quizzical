@@ -84,6 +84,7 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private int originalStatus;
 	private boolean setOriginalStatus;
 	private long columnBitmask;
+	private String mobileNumber;
 	
 	public JPAUser() {
 		super();
@@ -444,6 +445,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 		this.columnBitmask = columnBitmask;
 	}
 	
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)
 			return getFirstName()+" "+getLastName();

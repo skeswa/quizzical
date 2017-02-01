@@ -56,4 +56,6 @@ public interface IQuizDAOService extends IBaseService {
 	public void truncate() throws ApplicationException;
 
 	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException;
+
+	List<Quiz> findQuizzesTakenToday(User user) throws ApplicationException;
 }

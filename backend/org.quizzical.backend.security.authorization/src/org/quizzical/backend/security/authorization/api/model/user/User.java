@@ -65,6 +65,7 @@ public class User extends BaseEntity{
 	private boolean setOriginalStatus;
 	private long columnBitmask;
 	private String prictureUrl;
+	private String mobileNumber;
 	
 	public User() {
 		super();
@@ -455,5 +456,13 @@ public class User extends BaseEntity{
 
 	public String getPictureUrl() {
 		return prictureUrl;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 }

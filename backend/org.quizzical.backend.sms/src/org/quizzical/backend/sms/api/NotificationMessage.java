@@ -7,6 +7,12 @@ public class NotificationMessage {
 	private List<String> to;
 	private String body;
 	private String title;
+	public NotificationMessage(List<String> to, String body, String title) {
+		super();
+		this.to = to;
+		this.body = body;
+		this.title = title;
+	}
 	public NotificationMessage(String from, List<String> to, String body, String title) {
 		super();
 		this.from = from;

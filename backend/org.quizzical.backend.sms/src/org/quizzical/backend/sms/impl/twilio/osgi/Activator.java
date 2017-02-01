@@ -1,10 +1,11 @@
-package org.quizzical.backend.sms.impl.twilio;
+package org.quizzical.backend.sms.impl.twilio.osgi;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.sms.api.IAlertNotifier;
+import org.quizzical.backend.sms.impl.twilio.TwilioAlertNotifierImpl;
 
 public class Activator extends DependencyActivatorBase {
 	private static final String PID = "org.quizzical.backend.sms.impl.twilio";
