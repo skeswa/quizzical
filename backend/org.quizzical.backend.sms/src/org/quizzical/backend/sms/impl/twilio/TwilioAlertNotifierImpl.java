@@ -6,6 +6,8 @@ import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -81,5 +83,11 @@ public class TwilioAlertNotifierImpl implements IAlertNotifier, ManagedService {
 	@Override
 	public void notifyViaEmail(NotificationMessage message) throws AlertNotificationException {
 		throw new UnsupportedOperationException("Not implemented yet");
+	}
+
+	@Override
+	public void testSMS(final String mobileNumber) throws AlertNotificationException {
+		NotificationMessage msg = new NotificationMessage(Collections.singletonList(mobileNumber),"Testing @ "+new Date().toString(),"q7l test");
+		notifyViaSMS(msg);
 	}
 }

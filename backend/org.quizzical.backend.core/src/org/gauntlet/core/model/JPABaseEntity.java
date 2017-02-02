@@ -22,9 +22,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public abstract class JPABaseEntity
     implements Comparable, Serializable
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 6496298634521515410L;
 
 

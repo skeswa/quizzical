@@ -12,6 +12,7 @@ import org.gauntlet.problems.rest.ProblemsResource;
 import org.gauntlet.problems.rest.SourcesResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
 
 import static org.amdatu.web.rest.jaxrs.AmdatuWebRestConstants.JAX_RS_RESOURCE_BASE;
 
@@ -27,8 +28,12 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(ProblemsResource.class)
 				.add(createServiceDependency().setService(IProblemDAOService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(IJWTTokenService.class)
+						.setRequired(true))
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));
+		
+		
 		manager.add(createComponent()
 				.setInterface(Object.class.getName(), serviceProperties)
 				.setImplementation(CategoriesResource.class)

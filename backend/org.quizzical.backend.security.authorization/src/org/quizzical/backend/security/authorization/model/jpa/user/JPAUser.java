@@ -2,6 +2,7 @@ package org.quizzical.backend.security.authorization.model.jpa.user;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -17,7 +18,9 @@ import org.gauntlet.core.model.Constants;
 +"user")
 public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private static final long serialVersionUID = 7745549020494226091L;
-
+	
+	private Boolean admin = false;
+	
 	private String uuid;
 	private String originalUuid;
 	private long userId;
@@ -451,6 +454,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getName() {

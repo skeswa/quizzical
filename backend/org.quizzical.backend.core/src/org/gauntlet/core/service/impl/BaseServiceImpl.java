@@ -194,6 +194,26 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}	
 	
 	@SuppressWarnings("rawtypes")
+	public List<JPABaseEntity> findAll(Class<? extends JPABaseEntity> entityType, String orderByField, int start, int end)
+		throws ApplicationException {
+		List<JPABaseEntity> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPABaseEntity> query = (CriteriaQuery<JPABaseEntity>) builder.createQuery(entityType);
+			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityType);
+			query.select(rootEntity);
+			
+			query.orderBy(builder.asc(rootEntity.get(orderByField)));
+			
+			resultList = findWithDynamicQuery(query,start,end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public int countAll(Class<? extends JPABaseEntity> entityType, int start, int end)
 		throws ApplicationException {
 		int res = 0;
@@ -336,12 +356,14 @@ public abstract class BaseServiceImpl implements IBaseService {
 			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
 			assert typedQuery != null : "typedQuery obj must not be null";
 			
+			final List<Predicate> exprList = new ArrayList<>();
 			for (AttrPair ap : attrs) {
 				final ParameterExpression p = builder.parameter(ap.getAttrClass());
-				query.select(rootEntity).where(builder.equal(rootEntity.get(ap.getAttrName()), p));
-				
-				typedQuery.setParameter(p, ap.getAttrName());
+				exprList.add(builder.equal(rootEntity.get(ap.getAttrName()), p));
+				typedQuery.setParameter(p, ap.getAttrValue());
 			}
+			
+			query.select(rootEntity).where(builder.and((Predicate[])exprList.toArray(new Predicate[]{})));
 
 			res = typedQuery.getResultList();
 				

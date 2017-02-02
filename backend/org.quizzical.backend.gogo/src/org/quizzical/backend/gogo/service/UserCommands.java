@@ -35,7 +35,7 @@ public class UserCommands {
     	if (user == null)
     		return "User ("+userId+") not found";
     	else
-    		return "User ("+user.getFirstName()+") found";
+    		return String.format("User ("+user.getFirstName()+") found: {active:%b, mobileNumber:%s}",user.isActive(),user.getMobileNumber());
     } 
     
     @Descriptor("Activate user")

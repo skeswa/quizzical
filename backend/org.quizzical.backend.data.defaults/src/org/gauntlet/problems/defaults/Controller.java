@@ -54,6 +54,18 @@ public class Controller {
 		
 		userService.provide(user);
 		
+		//Admin
+		user = new User();
+		user.setCode(org.quizzical.backend.security.authorization.api.Constants.ADMIN_USER_CODE);
+		user.setFirstName(org.quizzical.backend.security.authorization.api.Constants.ADMIN_USER_NAME);
+		user.setEmailAddress(org.quizzical.backend.security.authorization.api.Constants.ADMIN_USER_CODE);
+		
+		user.setAdmin(true);
+		user.setPasswordEncrypted(true);
+		user.setPassword("q7ladmin");
+		
+		userService.provide(user);
+		
 		//Test
 		user = new User();
 		user.setCode("tester");

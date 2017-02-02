@@ -5,6 +5,8 @@ import java.util.Date;
 import org.gauntlet.core.model.BaseEntity;
 
 public class User extends BaseEntity{
+	private Boolean admin;
+	
 	private String uuid;
 	private String originalUuid;
 	private long userId;
@@ -464,5 +466,13 @@ public class User extends BaseEntity{
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 }

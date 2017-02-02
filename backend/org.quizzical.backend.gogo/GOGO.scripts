@@ -26,3 +26,56 @@ prblm:addcatlesson 1752 25563
 prblm:addcatlesson 1752 25564
 prblm:addcatlesson 1753 25565
 
+=== Source IDs
+  201 | MW4NSAT-PT1
+  202 | MW4NSAT-PT2
+  203 | MW4NSAT-PT3
+  601 | MW4NSAT-PT4
+  602 | MW4NSAT-PT5
+ 1001 | MW4NSAT-PT6
+ 1002 | MW4NSAT-PT7
+ 1807 | MW4NSAT-PT8
+ 1808 | MW4NSAT-PT9
+ 1003 | MW4NSAT-PT10
+ 1801 | MW4NSAT-PT11
+ 1802 | MW4NSAT-PT12
+ 1803 | MW4NSAT-PT13
+ 1804 | MW4NSAT-PT14
+ 1805 | MW4NSAT-PT15
+ 1806 | MW4NSAT-PT16
+ 4451 | MW4NSAT-FPT1
+ 
+ == Difficulty IDs
+  101 | Easy
+  351 | Medium
+  352 | Hard
+ 
+
+=== Updates Problems ===
+= PT1 =
+---- Source Page
+prblm:pages 201 23  //updates MW4NSAT-PT1 to page 23
+prblm:pages 202 23
+prblm:pages 203 23
+
+prblm:pages  201 23
+prblm:pages  202 37
+prblm:pages  203 51
+prblm:pages  601 65
+prblm:pages  602 81
+prblm:pages 1001 95
+prblm:pages 1002 111
+prblm:pages 1807 125
+prblm:pages 1808 139
+prblm:pages 1003 153
+prblm:pages 1801 167
+prblm:pages 1802 177
+prblm:pages 1803 187
+prblm:pages 1804 197
+prblm:pages 1805 207
+prblm:pages 1806 217
+prblm:pages 4451 232
+
+--- Difficulty
+prblm:diff 326 101
+
