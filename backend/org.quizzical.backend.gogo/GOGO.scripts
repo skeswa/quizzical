@@ -1,6 +1,6 @@
 bcc = coll:toList mduduzi.keswa@gmail.com
 bcc = coll:toList mduduzi.keswa@gmail.com
-rpt:senddaily test@me.io $bcc
+rpt:senddaily mazagroup32@gmail.com $bcc
 
 bcc = coll:toList mduduzi.keswa@gmail.com
 usr:add sandile@me.io SK test $bcc

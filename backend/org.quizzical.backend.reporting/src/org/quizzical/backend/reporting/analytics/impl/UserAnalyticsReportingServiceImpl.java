@@ -53,6 +53,9 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 	public void emailDailyReport(String userId, List<String> bccEmails) throws ApplicationException, EmailException {
 		final User user = userService.getByEmail(userId);
 		
+		if (user == null)
+			throw new ApplicationException(String.format("UserId (%s) not found", userId));
+		
 		Map<String,LessonResources> lessonMap = new HashMap<>();
 		
 		

@@ -29,12 +29,18 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	@Override
 	public void updated(Dictionary props) throws ConfigurationException {
 		this.backendHostname = (String)props.get(Q7L_BACKEND_SERVER_HOSTNAME);
-		this.backendPort = Integer.valueOf((String)props.get(Q7L_BACKEND_SERVER_HTTP_PORT));
+		
+		if (props.get(Q7L_BACKEND_SERVER_HTTP_PORT) != null && props.get(Q7L_BACKEND_SERVER_HTTP_PORT).toString().length() > 0)
+			this.backendPort = Integer.valueOf((String)props.get(Q7L_BACKEND_SERVER_HTTP_PORT));
+		
 		this.backendProtocol = (String)props.get(Q7L_BACKEND_SERVER_HTTP_PROTOCOL);
 		this.backendContextpath = (String)props.get(Q7L_BACKEND_SERVER_HTTP_CONTEXT_PATH);
 		
 		this.frontendHostname = (String)props.get(Q7L_FRONTEND_SERVER_HOSTNAME);
-		this.frontendPort = Integer.valueOf((String)props.get(Q7L_FRONTEND_SERVER_HTTP_PORT));
+		
+		if (props.get(Q7L_FRONTEND_SERVER_HTTP_PORT) != null && props.get(Q7L_FRONTEND_SERVER_HTTP_PORT).toString().length() > 0)
+			this.frontendPort = Integer.valueOf((String)props.get(Q7L_FRONTEND_SERVER_HTTP_PORT) );
+		
 		this.frontendProtocol = (String)props.get(Q7L_FRONTEND_SERVER_HTTP_PROTOCOL);
 		this.frontendContextpath = (String)props.get(Q7L_FRONTEND_SERVER_HTTP_CONTEXT_PATH);
 	}

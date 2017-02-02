@@ -10,8 +10,13 @@ public abstract class MailPreparator {
 		}
 		
 		public String send() throws EmailException {
-			Thread.currentThread().setContextClassLoader(javax.mail.Message.class.getClassLoader());
-			return this.sender.send();
+			try {
+				Thread.currentThread().setContextClassLoader(javax.mail.Message.class.getClassLoader());
+				return this.sender.send();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
 		}
 		
 		public abstract void prepare() throws Exception;

@@ -6,6 +6,7 @@ import org.gauntlet.quizzes.api.model.Quiz;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationException;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 
@@ -17,7 +18,14 @@ public class QuizCommands {
     public final static String[] FUNCTIONS = new String[] { "reset"};
 
     @Descriptor("Clears all quizzes and analytics from database")
-    public static String reset() throws Exception {
+    public static String reset(@Descriptor("Admin userId") String adminUserId, @Descriptor("Admin password") String adminPassword) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+    	try {
+			uSvc.getUserByEmailAndPassword(adminUserId, adminPassword);
+		} catch (Exception e) {
+			return "Admin creds invalid.";
+		}
+    	
     	IQuizDAOService qSvc  = (IQuizDAOService) createServiceFromServiceType(IQuizDAOService.class);
         qSvc.truncate();
         

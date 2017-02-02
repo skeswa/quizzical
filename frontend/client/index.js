@@ -23,6 +23,7 @@ import QuestionsPage from 'containers/QuestionsPage'
 import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import QuizAutoGenerationPage from 'containers/QuizAutoGenerationPage'
+import QuizGenerationQAPage from 'containers/QuizGenerationQAPage'
 
 const store = configure()
 const history = syncHistoryWithStore(browserHistory, store)
@@ -64,6 +65,7 @@ function renderUI() {
           <Route path="quiz" onEnter={requireAuth}>
             <IndexRedirect to="/quiz/start" />
             <Route path="start" component={QuizAutoGenerationPage} />
+            <Route path="startqa" component={QuizGenerationQAPage} />
             <Route path=":quizId/take" component={QuizTakePage} />
             <Route path="submission/:quizId" component={QuizResultsPage} />
           </Route>

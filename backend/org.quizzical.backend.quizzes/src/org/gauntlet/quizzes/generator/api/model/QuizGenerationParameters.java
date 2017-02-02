@@ -10,6 +10,8 @@ public class QuizGenerationParameters extends BaseEntity implements Serializable
 	
 	private String generatorType;
 	
+	private Long problemSourceId;
+	
 	private Long problemCategoryId;
 	
 	private Integer quizSize;
@@ -23,6 +25,14 @@ public class QuizGenerationParameters extends BaseEntity implements Serializable
 
 	public void setProblemCategoryId(Long problemCategoryId) {
 		this.problemCategoryId = problemCategoryId;
+	}
+
+	public Long getProblemSourceId() {
+		return problemSourceId;
+	}
+
+	public void setProblemSourceId(Long problemSourceId) {
+		this.problemSourceId = problemSourceId;
 	}
 
 	public Integer getQuizSize() {

@@ -226,6 +226,7 @@ class QuizResults extends Component {
         id:       quizProblemId,
         ordinal:  questionOrdinal,
         problem:  {
+          id:                     problemId,
           answer:                 questionAnswer,
           difficulty:             { name: difficulty, color: difficultyColor },
           answerPicture:          { id: answerPictureId },
@@ -238,7 +239,8 @@ class QuizResults extends Component {
     } = response
 
     const outcome = this.getOutcome(response)
-    const heading = this.getOutcomeHeading(outcome, selectedQuestionOrdinal)
+    const heading = this.getOutcomeHeading(
+      outcome, selectedQuestionOrdinal, quizProblemId)
     const subHeading = this.getOutcomeSubHeading(outcome, quizProblemId)
     const durationColor = this.getDurationColor(duration, usedCalculator)
     const answerPictureStyle = {
@@ -330,14 +332,14 @@ class QuizResults extends Component {
               <div className={style.responseDetailsStatText}>
                 <span>You were asked to answer question&nbsp;</span>
                 <span className={style.responseDetailsStatHighlight}>
-                  {`#${questionNumber}`}
+                  {`#${questionNumber}/${problemId}`}
                 </span>
                 {
                   usedCalculator
                     ? <span>
                         <span>, which&nbsp;</span>
                         <span className={style.responseDetailsStatHighlight}>
-                          required your calculator.
+                          allows use of your calculator.
                         </span>
                       </span>
                     : <span>.</span>
