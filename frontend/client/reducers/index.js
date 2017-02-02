@@ -7,6 +7,7 @@ import category from './category'
 import difficulty from './difficulty'
 import question from './question'
 import quizSubmission from './quiz-submission'
+import quizGeneration from './quiz-generation'
 import quiz from './quiz'
 import source from './source'
 
@@ -16,6 +17,7 @@ export default combineReducers({
   difficulty,
   question,
   quizSubmission,
+  quizGeneration,
   quiz,
   routing,
   source,

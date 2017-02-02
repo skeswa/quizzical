@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.quizzical.backend.scheduler.job.reminder,\
+	org.quizzical.backend.scheduler.osgi,\
+	org.quizzical.backend.scheduler.impl
+Bundle-Activator: org.quizzical.backend.scheduler.osgi.Activator
+	

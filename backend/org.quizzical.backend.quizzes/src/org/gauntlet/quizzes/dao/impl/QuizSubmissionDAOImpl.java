@@ -1,8 +1,11 @@
 package org.gauntlet.quizzes.dao.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -289,5 +292,31 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
     	return quizSubmission;
 	}
 	
-	
+	@Override 
+	public List<QuizSubmission> findQuizSubmissionsMadeToday(User user) throws ApplicationException {
+		List<QuizSubmission> resultList = null;
+		try {
+			LocalDateTime now = LocalDateTime.now();
+			LocalDateTime midnight = now.toLocalDate().atStartOfDay();
+			Date midnightDate = Date.from(midnight.atZone(ZoneId.systemDefault()).toInstant());
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizSubmission> query = builder.createQuery(JPAQuizSubmission.class);
+			Root<JPAQuizSubmission> rootEntity = query.from(JPAQuizSubmission.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//dateCreated
+			ParameterExpression<Date> p = builder.parameter(Date.class);
+			query.select(rootEntity).where(builder.greaterThanOrEqualTo(rootEntity.<Date>get("dateCreated"),p));
+			pes.put(p, midnightDate);
+			
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}	
 }

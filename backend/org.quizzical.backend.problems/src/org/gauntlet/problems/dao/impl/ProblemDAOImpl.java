@@ -3,8 +3,10 @@ package org.gauntlet.problems.dao.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -20,6 +22,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -63,7 +66,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	public List<Problem> findAll(int start, int end) throws ApplicationException {
 		List<Problem> result = new ArrayList<>();
 		try {
-			List<JPABaseEntity> resultList = super.findAll(JPAProblem.class,start,end);
+			List<JPABaseEntity> resultList = super.findAll(JPAProblem.class,"sourceIndexWithinPage",start,end);
 			result = JPAEntityUtil.copy(resultList, Problem.class);
 		}
 		catch (Exception e) {
@@ -174,6 +177,30 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override 
+	public List<Problem> findAllByCategory(Long categoryId) throws ApplicationException {
+		List<Problem> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("category").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, categoryId);
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+			resultList = JPAEntityUtil.copy(resultList, Problem.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}	
+	
+	@Override 
 	public List<Problem> findByDifficulty(Long difficultyId, int start, int end) throws ApplicationException {
 		List<Problem> resultList = null;
 		try {
@@ -195,6 +222,31 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		}
 		return resultList;		
 	}
+	
+	@Override 
+	public List<Problem> findAllBySource(Long sourceId) throws ApplicationException {
+		List<Problem> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			Map<ParameterExpression, Object> pes = new HashMap<>();
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("source").get("id"),p));
+			pes.put(p, sourceId);
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+			
+			resultList = JPAEntityUtil.copy(resultList, Problem.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}	
+	
+	
 	
 	@Override 
 	public int countByDifficulty(Long difficultyId) throws ApplicationException {

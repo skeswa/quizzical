@@ -183,6 +183,13 @@ class QuestionTable extends Component {
             <TableTextCell data={questions} />
           } />
         <Column
+            columnKey="answer"
+            header={<TableHeaderCell title="Answer" />}
+            width={155}
+            cell={
+              <TableTextCell data={questions} />
+            } />
+        <Column
           columnKey="pictures"
           header={<TableHeaderCell title="Pictures" />}
           width={125}
@@ -191,6 +198,13 @@ class QuestionTable extends Component {
               data={questions}
               handler={::this.onLightboxOpened} />
           } />
+          <Column
+              columnKey="id"
+              header={<TableHeaderCell title="ID" />}
+              width={90}
+              cell={
+                <TableTextCell data={questions} />
+              } />
       </Table>
     )
   }

@@ -2,7 +2,10 @@ package org.gauntlet.quizzes.dao.impl;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -181,12 +184,12 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			
 			//quizType
 			ParameterExpression<Long> p = builder.parameter(Long.class);
-			query.select(rootEntity).where(builder.gt(rootEntity.get("quizType").get("id"),p));
+			query.select(rootEntity).where(builder.equal(rootEntity.get("quizType").get("id"),p));
 			pes.put(p, typeId);
 			
 			//userId
 			p = builder.parameter(Long.class);
-			query.select(rootEntity).where(builder.gt(rootEntity.get("userId"),p));
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),p));
 			pes.put(p, user.getId());
 			
 			resultList = findWithDynamicQueryAndParams(query,pes,start,end);
@@ -333,5 +336,33 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException {
 		final int count =countByQuizTypeCode(user, Constants.QUIZ_TYPE_GENERATED_CODE);
 		return count > 0;
+	}
+	
+	@Override 
+	public List<Quiz> findQuizzesTakenToday(User user) throws ApplicationException {
+		List<Quiz> resultList = null;
+		try {
+			LocalDateTime now = LocalDateTime.now();
+			LocalDateTime midnight = now.toLocalDate().atStartOfDay();
+			Date midnightDate = Date.from(midnight.atZone(ZoneId.systemDefault()).toInstant());
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuiz> query = builder.createQuery(JPAQuiz.class);
+			Root<JPAQuiz> rootEntity = query.from(JPAQuiz.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//dateCreated
+			ParameterExpression<Date> p = builder.parameter(Date.class);
+			query.select(rootEntity).where(builder.greaterThanOrEqualTo(rootEntity.<Date>get("dateCreated"),p));
+			pes.put(p, midnightDate);
+			
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
 	}
 }

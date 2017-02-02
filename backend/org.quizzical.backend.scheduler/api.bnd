@@ -1,0 +1,2 @@
+Export-Package: org.quizzical.backend.scheduler.api
+Bundle-Version: 1.0.0.${tstamp}

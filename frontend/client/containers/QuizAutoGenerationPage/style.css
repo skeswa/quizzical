@@ -1,0 +1,24 @@
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.middle {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+}
+
+.bottom {
+  display: flex;
+  flex-basis: 7rem;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
+}

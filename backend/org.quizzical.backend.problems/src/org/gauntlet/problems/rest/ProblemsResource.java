@@ -39,26 +39,42 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @Path("problems")
 public class ProblemsResource {
 	private volatile IProblemDAOService problemService;
+	private volatile IJWTTokenService tokenService;
 
 	/**
 	 * 
 	 * ========= Problems
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
+	 * @throws IllegalAccessException 
 	 */
 	@GET
 	@Path("difficulty")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Problem> listProblems(@PathParam("difficulty") long difficulty, @QueryParam("start") int start,
-			@QueryParam("end") int end) throws ApplicationException {
+	public List<Problem> listProblems(@Context HttpServletRequest request, @PathParam("difficulty") long difficulty, @QueryParam("start") int start,
+			@QueryParam("end") int end) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		return problemService.findByDifficulty(difficulty, start, end);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Problem> all(@QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException {
+	public List<Problem> all(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		List<Problem> problems = problemService.findAll(start, end);
 		problems.stream()
 				.forEach(e -> {
@@ -70,28 +86,40 @@ public class ProblemsResource {
 	@GET
 	@Path("{problemId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Problem getProblem(@PathParam("problemId") long problemId)
-			throws NoSuchModelException, ApplicationException {
+	public Problem getProblem(@Context HttpServletRequest request, @PathParam("problemId") long problemId)
+			throws NoSuchModelException, ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		return problemService.getByPrimary(problemId);
 	}
 
 	@POST
 	@Path("{problemId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateProblem(Problem problem) throws ApplicationException {
+	public void updateProblem(@Context HttpServletRequest request, Problem problem) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		problemService.update(problem);
 	}
 
 	@DELETE
 	@Path("{problemId}")
-	public void delete(@PathParam("problemId") long problemId) throws NoSuchModelException, ApplicationException {
+	public void delete(@Context HttpServletRequest request, @PathParam("problemId") long problemId) throws NoSuchModelException, ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		problemService.delete(problemId);
 	}
 
 	@PUT
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Problem provide(@Context HttpServletRequest request) throws IOException, ApplicationException {
+	public Problem provide(@Context HttpServletRequest request) throws IOException, ApplicationException, IllegalAccessException {
+		final User user = tokenService.extractUser(request);
+		if (!user.getAdmin())
+			throw new IllegalAccessException("Admin Role required");
 		Problem newProblem = null;
 
 		String answer = null;

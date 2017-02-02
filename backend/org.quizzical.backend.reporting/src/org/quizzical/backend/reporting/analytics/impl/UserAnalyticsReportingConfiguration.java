@@ -65,10 +65,16 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	}
 
 	public String getBackendURLPrefix() {
-		return String.format("%s://%s:%d", getBackendProtocol(), getBackendHostname(), getBackendPort());
+		if (getBackendPort() != null)
+			return String.format("%s://%s:%d", getBackendProtocol(), getBackendHostname(), getBackendPort());
+		else
+			return String.format("%s://%s", getBackendProtocol(), getBackendHostname());
 	}
 	
 	public String getFrontendURLPrefix() {
-		return String.format("%s://%s:%d", getFrontendProtocol(), getFrontendHostname(), getFrontendPort());
+		if (getFrontendPort() != null)
+			return String.format("%s://%s:%d", getFrontendProtocol(), getFrontendHostname(), getFrontendPort());
+		else
+			return String.format("%s://%s", getFrontendProtocol(), getFrontendHostname());
 	}
 }

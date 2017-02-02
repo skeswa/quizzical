@@ -86,6 +86,18 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 		super.merge(entity);
 		return JPAEntityUtil.copy(entity, User.class);
 	}
+	
+	public User activate(User record) throws ApplicationException {
+		User usr = getByCode(record.getCode());
+		usr.setActive(true);
+		return update(usr);		
+	}
+	
+	public User deactivate(User record) throws ApplicationException {
+		User usr = getByCode(record.getCode());
+		usr.setActive(false);
+		return update(usr);				
+	}
 
 	@Override
 	public User provide(User record)

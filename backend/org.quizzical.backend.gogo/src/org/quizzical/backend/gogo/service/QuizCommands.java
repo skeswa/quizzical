@@ -5,6 +5,7 @@ import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationException;
+import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 
@@ -15,12 +16,15 @@ public class QuizCommands {
     public final static String SCOPE = "qz";
     public final static String[] FUNCTIONS = new String[] { "reset"};
 
-    @Descriptor("Clears all quizzes from database")
+    @Descriptor("Clears all quizzes and analytics from database")
     public static String reset() throws Exception {
-        CommandQuizzes cmd = new CommandQuizzes((IQuizDAOService)createServiceFromServiceType(IQuizDAOService.class));
-        IQuizDAOService svc = (IQuizDAOService)cmd.get();
-        svc.truncate();
-        return "Quizzes reset successfully!";
+    	IQuizDAOService qSvc  = (IQuizDAOService) createServiceFromServiceType(IQuizDAOService.class);
+        qSvc.truncate();
+        
+        ITestUserAnalyticsDAOService aSvc  = (ITestUserAnalyticsDAOService) createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
+        aSvc.truncate();
+        
+        return "Quizzes and analytics cleared successfully!";
     }
     
     public static String getConfigStringValue(BundleContext context, String key, Dictionary<String, ?> properties,

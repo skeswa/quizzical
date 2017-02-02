@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Amdatu Account Admin</title>
+  <meta name="description" content="Default Amdatu Account Self-Service Page">
+  <meta name="author" content="Amdatu Project Team">
+
+  <link rel="stylesheet" href="account.css">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <h1>Reset Your Amdatu Account Password</h1>
+
+  <div class="error">
+    <span id="error_msg"></span>
+  </div>
+
+  <form method="post" action="/account/rest/credentialReset">
+    <p>Enter your email to request a new password...</p>
+    <fieldset>
+       <label for="requestReset_email">E-mail</label>
+       <input id="requestReset_email" type="text" name="accountId" placeholder="email"><br>
+
+       <input type="submit" value="reset password">
+    </fieldset>
+  </form>
+
+  <script src="account.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+-buildpath: \
+	osgi.core,\
+	osgi.cmpn,\
+	osgi.enterprise,\
+	org.apache.felix.dependencymanager;version=4.1,\
+	org.amdatu.scheduling.api;version=latest,\
+	org.amdatu.scheduling.quartz;version=latest,\
+	org.quizzical.backend.core.api;version=latest,\
+	org.quizzical.backend.security.authorization.api;version=latest,\
+	org.quizzical.backend.quizzes.api;version=latest,\
+	org.quizzical.backend.sms.api;version=latest
+-sub: *.bnd
