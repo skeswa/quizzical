@@ -273,8 +273,8 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	}
 
 	@Override
-	public QuizSubmission submit(QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
-		quizSubmission = scoringService.score(quizSubmission);
+	public QuizSubmission submit(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
+		quizSubmission = scoringService.score(user, quizSubmission);
     	
     	//--Persist
     	quizSubmission = add(quizSubmission);

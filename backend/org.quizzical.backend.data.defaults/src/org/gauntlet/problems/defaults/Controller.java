@@ -66,6 +66,18 @@ public class Controller {
 		
 		userService.provide(user);
 		
+		//QA
+		user = new User();
+		user.setCode(org.quizzical.backend.security.authorization.api.Constants.QA_USER_CODE);
+		user.setFirstName(org.quizzical.backend.security.authorization.api.Constants.QA_USER_NAME);
+		user.setEmailAddress(org.quizzical.backend.security.authorization.api.Constants.QA_USER_CODE);
+		
+		user.setQa(true);
+		user.setPasswordEncrypted(true);
+		user.setPassword("q7lqa");
+		
+		userService.provide(user);
+		
 		//Test
 		user = new User();
 		user.setCode("tester");

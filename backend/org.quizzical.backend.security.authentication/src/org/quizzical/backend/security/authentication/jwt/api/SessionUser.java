@@ -9,20 +9,22 @@ public class SessionUser {
 	private String pictureUrl;
 	private Boolean dignosed;
 	private Boolean admin;
+	private Boolean qa;
 	
 	public SessionUser() {
 	}
 	
-	public SessionUser(final Long id, final String email, final String name, final String pictureUrl, final Boolean admin) {
+	public SessionUser(final Long id, final String email, final String name, final String pictureUrl, final Boolean admin, final Boolean qa) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.name = name;
 		this.pictureUrl = pictureUrl;
 		this.admin = admin;
+		this.qa = qa;
 	}
 	public SessionUser(User user) {
-		this(user.getId(), user.getEmailAddress(), user.getName(), user.getPictureUrl(),user.getAdmin());
+		this(user.getId(), user.getEmailAddress(), user.getName(), user.getPictureUrl(),user.getAdmin(),user.getQa());
 	}
 	public Long getId() {
 		return id;
@@ -63,5 +65,13 @@ public class SessionUser {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+
+	public Boolean getQa() {
+		return qa;
+	}
+
+	public void setQa(Boolean qa) {
+		this.qa = qa;
 	}
 }

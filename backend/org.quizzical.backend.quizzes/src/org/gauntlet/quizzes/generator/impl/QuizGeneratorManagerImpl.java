@@ -42,7 +42,8 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	@Override
 	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
-		if (!quizService.userHasTakenDiagnoticTest(user) && !params.getGeneratorType().equals(Constants.GENERATOR_TYPE_REALISTIC_TEST))
+		if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 
+				!params.getGeneratorType().equals(Constants.GENERATOR_TYPE_REALISTIC_TEST)))
 			throw new UserHasNotTakenDiagnosticTestException(user.getCode());
 		
 		final ServiceReference generatorRef = references.get(params.getGeneratorType());

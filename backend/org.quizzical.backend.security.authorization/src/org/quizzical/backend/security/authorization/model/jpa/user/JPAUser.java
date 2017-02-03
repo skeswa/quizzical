@@ -20,6 +20,7 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private static final long serialVersionUID = 7745549020494226091L;
 	
 	private Boolean admin = false;
+	private Boolean qa = false;
 	
 	private String uuid;
 	private String originalUuid;
@@ -462,6 +463,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+	
+	public Boolean getQa() {
+		return qa;
+	}
+
+	public void setQa(Boolean qa) {
+		this.qa = qa;
 	}
 
 	public String getName() {

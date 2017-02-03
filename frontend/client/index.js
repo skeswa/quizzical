@@ -12,6 +12,7 @@ import React from 'react'
 import style from './index.css'
 import configure from './store'
 import AuthActions from 'actions/auth'
+import Session from 'utils/session'
 
 import LoginPage from 'containers/LoginPage'
 import SplashPage from 'containers/SplashPage'
@@ -89,6 +90,15 @@ function requireAuth(nextState, replace) {
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }
     })
+  }
+  else {//send to QA if qa role
+    const session = Session.retrieve()
+    if (
+        session.user.qa === true &&
+        nextState.location.pathname !== '/quiz/startqa'
+      ) {
+      replace({pathname: '/quiz/startqa'})
+    }
   }
 }
 

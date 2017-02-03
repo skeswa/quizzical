@@ -5,7 +5,8 @@ import java.util.Date;
 import org.gauntlet.core.model.BaseEntity;
 
 public class User extends BaseEntity{
-	private Boolean admin;
+	private Boolean admin = false;
+	private Boolean qa = false;
 	
 	private String uuid;
 	private String originalUuid;
@@ -445,17 +446,6 @@ public class User extends BaseEntity{
 	}
 
 
-	public String getName() {
-		if (getFirstName() != null && getLastName() != null)
-			return getFirstName()+" "+getLastName();
-		else if (getFirstName() != null)
-			return getFirstName();
-		else if (getLastName() != null)
-			return getLastName();
-		else
-			return null;
-	}
-
 	public String getPictureUrl() {
 		return prictureUrl;
 	}
@@ -474,5 +464,25 @@ public class User extends BaseEntity{
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+
+
+	public Boolean getQa() {
+		return qa;
+	}
+
+	public void setQa(Boolean qa) {
+		this.qa = qa;
+	}
+
+	public String getName() {
+		if (getFirstName() != null && getLastName() != null)
+			return getFirstName()+" "+getLastName();
+		else if (getFirstName() != null)
+			return getFirstName();
+		else if (getLastName() != null)
+			return getLastName();
+		else
+			return null;
 	}
 }

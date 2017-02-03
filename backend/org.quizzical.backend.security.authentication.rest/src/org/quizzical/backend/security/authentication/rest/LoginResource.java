@@ -58,8 +58,12 @@ public class LoginResource {
 			final SessionUser sessionUser = new SessionUser(user);
 			final String token = tokenService.generateToken(sessionUser);
 			
-			Boolean isDiagnosed = quizService.userHasTakenDiagnoticTest(user);
-			sessionUser.setDignosed(isDiagnosed);
+			if (user.getQa() || user.getAdmin())
+				sessionUser.setDignosed(true);
+			else {
+				Boolean isDiagnosed = quizService.userHasTakenDiagnoticTest(user);
+				sessionUser.setDignosed(isDiagnosed);
+			}
 
 			return Response.ok().entity(sessionUser).header("Authorization","Basic " + token).build();
 		} catch(final UserNotFoundException ex) {

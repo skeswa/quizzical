@@ -61,9 +61,10 @@ public class QuizSubmissionResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON) 
     @Produces(MediaType.APPLICATION_JSON) 
-    public QuizSubmission put(final QuizSubmission quizSubmission)
+    public QuizSubmission put(@Context HttpServletRequest request,final QuizSubmission quizSubmission)
     		throws IOException, ApplicationException, NoSuchModelException { 
-    	final QuizSubmission submission = quizSubmissionDAOService.submit(quizSubmission);
+    	final User user = tokenService.extractUser(request);
+    	final QuizSubmission submission = quizSubmissionDAOService.submit(user,quizSubmission);
     	submission.getResponses().stream()
 		.forEach(e -> {
 			((QuizProblemResponse)e).getQuizProblem().getProblem().getCategory().setLessons(null);

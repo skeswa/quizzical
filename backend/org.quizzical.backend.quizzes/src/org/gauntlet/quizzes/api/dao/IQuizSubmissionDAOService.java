@@ -25,7 +25,7 @@ public interface IQuizSubmissionDAOService extends IBaseService {
 
 	public QuizSubmission getByName(String name) throws ApplicationException;	
 	
-	public QuizSubmission submit(QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException;
+	public QuizSubmission submit(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException;
 
 	QuizSubmission findByQuizId(User user, Long quizId) throws ApplicationException;
 

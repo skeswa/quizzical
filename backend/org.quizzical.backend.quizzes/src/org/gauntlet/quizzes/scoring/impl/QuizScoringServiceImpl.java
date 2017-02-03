@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,6 +34,8 @@ import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 
 @SuppressWarnings("restriction")
@@ -50,10 +53,16 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 	private volatile ITestDesignTemplateContentTypeDAOService testDesignTemplateContentTypeDAOService;
 	
 	private volatile ITestUserAnalyticsDAOService testUserAnalyticsDAOService;
+	
+	private volatile IUserDAOService userService;
 
 
 	@Override
-	public QuizSubmission score(QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
+	public QuizSubmission score(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
+		//Ensure baseline
+		ensureAnalyticsBaseline(user);
+		
+		
 		final Map<Long,TestCategoryRating> categoryRatingsMap = new ConcurrentHashMap<>();
 		
 	   	final Long quizId = quizSubmission.getQuizId();
@@ -161,6 +170,30 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		}
     	
 		return quizSubmission;
+	}
+
+
+	private void ensureAnalyticsBaseline(User user) throws ApplicationException {
+		//Ensure base lining
+		final String code_ = String.format("User(%d) analytics", user.getId());
+		
+		TestUserAnalytics tua = null;
+		tua = testUserAnalyticsDAOService.getByCode(code_);
+		if (tua == null) {
+			tua = new TestUserAnalytics( user.getId(), code_, code_);
+			//Baseline across all categories
+			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
+			TestCategoryRating rating = null;
+			for (TestDesignTemplateContentSubType subType : subTypes) {
+				final String description = String.format("Rating on Category %s", subType.getCode());
+				rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
+				rating.setRating(0);
+				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false);
+				rating.getAttempts().add(attempt);
+				tua.addRating(rating);
+			}
+			testUserAnalyticsDAOService.provide(tua);
+		}
 	}
 
 
