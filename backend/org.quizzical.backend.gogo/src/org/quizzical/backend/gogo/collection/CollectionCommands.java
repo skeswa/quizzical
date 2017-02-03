@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class CollectionCommands {
     public static final String SCOPE = "coll";
-    public static final String[] FUNCTIONS = { "first", "rest", "toList" };
+    public static final String[] FUNCTIONS = { "first", "rest", "toList", "toLongList" };
 
     /** Returns the first object in a list. */
     public Object first(List<?> list) {
@@ -30,6 +30,15 @@ public class CollectionCommands {
     	List<String> list = new ArrayList<>();
     	while (st.hasMoreTokens()) {
     		list.add(st.nextToken());
+    	}
+        return list;
+    }
+    
+    public List<Long> toLongList(String commaDelimitedList) {
+    	StringTokenizer st = new StringTokenizer(commaDelimitedList,",");
+    	List<Long> list = new ArrayList<>();
+    	while (st.hasMoreTokens()) {
+    		list.add(Long.valueOf(st.nextToken()));
     	}
         return list;
     }

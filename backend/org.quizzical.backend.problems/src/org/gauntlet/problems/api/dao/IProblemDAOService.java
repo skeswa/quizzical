@@ -12,10 +12,13 @@ import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.model.jpa.JPAProblemPicture;
 
 public interface IProblemDAOService extends IBaseService {
 	// Problems
 	public List<Problem> findAll(int start, int end) throws ApplicationException;
+	
+	List<Problem> findAll(List<Long> ids) throws ApplicationException;
 	
 	public long countAll() throws ApplicationException;
 	
@@ -108,5 +111,7 @@ public interface IProblemDAOService extends IBaseService {
 	
 	//Problem Picture
 	public ProblemPicture getProblemPictureByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
+
+	ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
 	
 }

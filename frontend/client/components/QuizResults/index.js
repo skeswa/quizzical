@@ -150,7 +150,7 @@ class QuizResults extends Component {
         return ''
     }
 
-    return `Question #${ordinal + 1} was ${status}.`
+    return `Question #${ordinal} was ${status}.`
   }
 
   getOutcomeSubHeading(outcome, quizProblemId) {
@@ -376,7 +376,7 @@ class QuizResults extends Component {
           <i className={QUESTION_BUTTON_ICON_CLASSNAME}>
             {this.outcomeIconNameOf(outcome)}
           </i>
-          <div className={style.questionButtonNumber}>#{ordinal + 1}</div>
+          <div className={style.questionButtonNumber}>#{ordinal}</div>
         </div>
       )
     })

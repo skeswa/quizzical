@@ -75,6 +75,39 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		return result;		
 	}
 	
+	
+	@Override
+	public List<Problem> findAll(List<Long> ids)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (ids.isEmpty())
+				ids.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(rootEntity.get("id").in(pIn));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pIn, ids);
+			
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public long countAll() throws ApplicationException {
 		long res = 0;
@@ -668,6 +701,13 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		JPAProblemPicture jpaEntity = (JPAProblemPicture) super.findByPrimaryKey(JPAProblemPicture.class, pk);
 		return JPAEntityUtil.copy(jpaEntity, ProblemPicture.class);
 	}	
+	
+	@Override
+	public ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException {
+		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAProblemPicture.class));
+		ProblemPicture dto = JPAEntityUtil.copy(res, ProblemPicture.class);
+		return dto;	
+	}
 	
 	@Override
 	public void createDefaults() throws ApplicationException {

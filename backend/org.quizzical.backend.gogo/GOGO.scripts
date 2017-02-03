@@ -79,3 +79,12 @@ prblm:pages 4451 232
 --- Difficulty
 prblm:diff 326 101
 
+****** QA ******
+PT2
+http://localhost:3000/quiz/submission/49353
+ids = coll:toLongList 322,324,326
+prblm:calcs $ids false
+
+prblm:apicupdate 336 /Users/mduduzikeswa/Downloads/q7l/PT2/A16.png
+
+

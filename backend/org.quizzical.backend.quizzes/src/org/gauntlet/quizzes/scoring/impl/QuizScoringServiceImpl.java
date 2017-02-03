@@ -2,6 +2,8 @@ package org.gauntlet.quizzes.scoring.impl;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
@@ -216,12 +218,27 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				return false;
 			}
 			try {
-				Fraction resp = ff.parse(problem.getAnswer().trim());
+				Fraction answer = ff.parse(problem.getAnswer().trim());
+				answerDblValue = answer.doubleValue();
 			}
 			catch(ParseException e) {
-				return false;
+				//Maybe it's answer in double format
+				try {
+					answerDblValue = Double.valueOf(problem.getAnswer().trim());
+				} catch (NumberFormatException e1) {
+					e.printStackTrace();
+					throw e1;
+				}
 			}
-			return respDblValue.equals(answerDblValue);
+			return round(respDblValue,2) == round(answerDblValue,2);
 		}
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 }

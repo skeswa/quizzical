@@ -93,11 +93,10 @@ function requireAuth(nextState, replace) {
   }
   else {//send to QA if qa role
     const session = Session.retrieve()
-    if (
-        session.user.qa === true &&
-        nextState.location.pathname !== '/quiz/startqa'
-      ) {
-      replace({pathname: '/quiz/startqa'})
+    if (session.user.qa === true) {
+      if (!((nextState.location.pathname === '/quiz/startqa') ||
+          nextState.location.pathname.startsWith('/quiz/submission')))
+        replace({pathname: '/quiz/startqa'})
     }
   }
 }
