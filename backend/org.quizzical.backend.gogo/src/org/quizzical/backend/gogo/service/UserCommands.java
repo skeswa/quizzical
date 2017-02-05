@@ -6,18 +6,19 @@ import org.quizzical.backend.security.authorization.api.model.user.User;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate"};
+    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","lru","ptest"};
 
     
     @Descriptor("Creates a new user")
-    public static String add(@Descriptor("Email address as userid") String userId, @Descriptor("User firstname") String firstName,  @Descriptor("User password")  String password, @Descriptor("Bcc list to notify")  List<String> bccList) throws Exception {
+    public static String add(@Descriptor("Email address as userid") String userId, @Descriptor("User firstname") String firstName,  @Descriptor("User password")  String password) throws Exception {
     	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
-    	svc.addUser(userId, firstName, password, bccList);
+    	svc.addUser(userId, firstName, password, new ArrayList<String>());
         return "User ("+userId+") added successfully!";
     }   
     
@@ -58,5 +59,37 @@ public class UserCommands {
     		
        	user = svc.activate(user);
        	return "User ("+user.getFirstName()+") deactivated";
+    } 
+    
+    @Descriptor("Deletes user ")
+    public static String del(@Descriptor("User emailAddress") String emailAddress) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+		User user = uSvc.getUserByEmail(emailAddress);
+		uSvc.delete(user);
+        return "Deleted user successfully!";
+    }
+    
+    @Descriptor("Mark for LRU next quiz")
+    public static String lru(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user.setMakeNextRunLeastRecentlyPractice(true);
+       	svc.update(user);
+       	return "MakeNextRunLeastRecentlyPractice ("+user.getFirstName()+") set";
+    } 
+    
+    @Descriptor("Mark for Practice Test next quiz")
+    public static String ptest(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user.setMakeNextRunAPracticeTest(true);
+       	svc.update(user);
+       	return "MakeNextRunAPracticeTest ("+user.getFirstName()+") set";
     } 
 }

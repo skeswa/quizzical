@@ -1,9 +1,14 @@
 package org.quizzical.backend.reporting.impl.osgi;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.contentrepository.api.dao.IContentItemDAOService;
@@ -24,9 +29,14 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(PdfReportingServiceImpl.class)
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));*/
+        String[] topics = new String[] {
+                IUserAnalyticsReporting.EVENT_TOPIC_SEND_DAILY_REPORT
+            };
+        Dictionary props = new Hashtable();
+        props.put(EventConstants.EVENT_TOPIC, topics);
 		
 		manager.add(createComponent()
-				.setInterface(IUserAnalyticsReporting.class.getName(), null)
+				.setInterface(new String[]{IUserAnalyticsReporting.class.getName(),EventHandler.class.getName()}, props)
 				.setImplementation(UserAnalyticsReportingServiceImpl.class)
 				.add(createServiceDependency().setService(IUserDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestUserAnalyticsDAOService.class).setRequired(true))

@@ -62,8 +62,8 @@ public class PracticeTestGeneratorImpl implements IQuizGeneratorService {
 
 		//=== Init params
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
-				Constants.QUIZ_TYPE_GENERATED_NAME,
-				Constants.QUIZ_TYPE_GENERATED_CODE));
+				Constants.QUIZ_TYPE_PRACTICE_NAME,
+				Constants.QUIZ_TYPE_PRACTICE_CODE));
 
 		final Date quizDateTime = Calendar.getInstance().getTime();
 		final String quizName = String.format(

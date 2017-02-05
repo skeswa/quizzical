@@ -16,6 +16,8 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	public static final String Q7L_FRONTEND_SERVER_HTTP_PORT = "q7l.frontend.server.port";
 	public static final String Q7L_FRONTEND_SERVER_HTTP_CONTEXT_PATH = "q7l.frontend.server.contextpath";	
 	
+	public static final String Q7L_REPORTING_EMAIL_RESULTS = "q7l.reporting.emailresults";
+	
 	private String backendHostname;
 	private Integer backendPort;
 	private String backendProtocol;
@@ -25,6 +27,8 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	private Integer frontendPort;
 	private String frontendProtocol;
 	private String frontendContextpath;	
+	
+	private Boolean handleEmailResultsEvent = false;
 	
 	@Override
 	public void updated(Dictionary props) throws ConfigurationException {
@@ -43,6 +47,9 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 		
 		this.frontendProtocol = (String)props.get(Q7L_FRONTEND_SERVER_HTTP_PROTOCOL);
 		this.frontendContextpath = (String)props.get(Q7L_FRONTEND_SERVER_HTTP_CONTEXT_PATH);
+		
+		if (props.get(Q7L_REPORTING_EMAIL_RESULTS) != null && props.get(Q7L_REPORTING_EMAIL_RESULTS).toString().length() > 0)
+			this.handleEmailResultsEvent = props.get(Q7L_REPORTING_EMAIL_RESULTS).toString().equalsIgnoreCase("true") ? true : false;		
 	}
 
 	public String getBackendHostname() {
@@ -68,6 +75,12 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	}
 	public String getFrontendContextpath() {
 		return frontendContextpath;
+	}
+	public Boolean getHandleEmailResultsEvent() {
+		return handleEmailResultsEvent;
+	}
+	public void setHandleEmailResultsEvent(Boolean handleEmailResultsEvent) {
+		this.handleEmailResultsEvent = handleEmailResultsEvent;
 	}
 
 	public String getBackendURLPrefix() {

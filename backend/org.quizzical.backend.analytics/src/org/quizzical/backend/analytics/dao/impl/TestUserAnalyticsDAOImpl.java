@@ -190,7 +190,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
     	final List<JPATestCategoryRating> ratings = record.getRatings()
     		.stream()
     		.map(rating -> {
-				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName(), rating.getCode());
+				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName());
 				JPATestCategoryRating jpaRatingRecord = (JPATestCategoryRating) JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
 		    	final List<JPATestCategoryAttempt> attempts = rating.getAttempts()
 		        		.stream()

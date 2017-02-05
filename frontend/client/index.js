@@ -95,7 +95,8 @@ function requireAuth(nextState, replace) {
     const session = Session.retrieve()
     if (session.user.qa === true) {
       if (!((nextState.location.pathname === '/quiz/startqa') ||
-          nextState.location.pathname.startsWith('/quiz/submission')))
+          nextState.location.pathname.startsWith('/quiz/submission') ||
+          nextState.location.pathname.startsWith('/admin')))
         replace({pathname: '/quiz/startqa'})
     }
   }

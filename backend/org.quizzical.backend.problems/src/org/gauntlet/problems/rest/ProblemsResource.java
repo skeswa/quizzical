@@ -64,7 +64,7 @@ public class ProblemsResource {
 	public List<Problem> listProblems(@Context HttpServletRequest request, @PathParam("difficulty") long difficulty, @QueryParam("start") int start,
 			@QueryParam("end") int end) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
 		final User user = tokenService.extractUser(request);
-		if (!user.getAdmin())
+		if (!(user.getAdmin() || user.getQa()))
 			throw new IllegalAccessException("Admin Role required");
 		return problemService.findByDifficulty(difficulty, start, end);
 	}
@@ -73,7 +73,7 @@ public class ProblemsResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Problem> all(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
 		final User user = tokenService.extractUser(request);
-		if (!user.getAdmin())
+		if (!(user.getAdmin() || user.getQa()))
 			throw new IllegalAccessException("Admin Role required");
 		List<Problem> problems = problemService.findAll(start, end);
 		problems.stream()
@@ -89,7 +89,7 @@ public class ProblemsResource {
 	public Problem getProblem(@Context HttpServletRequest request, @PathParam("problemId") long problemId)
 			throws NoSuchModelException, ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
 		final User user = tokenService.extractUser(request);
-		if (!user.getAdmin())
+		if (!(user.getAdmin() || user.getQa()))
 			throw new IllegalAccessException("Admin Role required");
 		return problemService.getByPrimary(problemId);
 	}

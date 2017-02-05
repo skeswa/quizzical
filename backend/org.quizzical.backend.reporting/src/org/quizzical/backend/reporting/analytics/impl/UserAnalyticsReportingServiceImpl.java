@@ -1,6 +1,8 @@
 package org.quizzical.backend.reporting.analytics.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,8 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
@@ -29,7 +33,7 @@ import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 @SuppressWarnings("restriction")
-public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReporting {
+public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReporting, EventHandler {
 	
 	private volatile LogService logger;
 	
@@ -109,6 +113,22 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 					.collect(Collectors.toList());
 			final LessonResources lrs = new LessonResources(ritems);
 			lessonMap.put(r.getName(),lrs);
+		}
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		if (config.getHandleEmailResultsEvent()) {
+	        String userId = (String) event.getProperty(EVENT_TOPIC_PROP_USERID);
+	        try {
+				emailDailyReport(userId,Collections.emptyList());
+			} catch (ApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

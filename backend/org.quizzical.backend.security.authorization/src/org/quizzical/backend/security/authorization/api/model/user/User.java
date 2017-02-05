@@ -7,6 +7,8 @@ import org.gauntlet.core.model.BaseEntity;
 public class User extends BaseEntity{
 	private Boolean admin = false;
 	private Boolean qa = false;
+	private Boolean makeNextRunAPracticeTest = false;
+	private Boolean makeNextRunLeastRecentlyPractice = false;
 	
 	private String uuid;
 	private String originalUuid;
@@ -466,7 +468,6 @@ public class User extends BaseEntity{
 		this.admin = admin;
 	}
 
-
 	public Boolean getQa() {
 		return qa;
 	}
@@ -474,6 +475,23 @@ public class User extends BaseEntity{
 	public void setQa(Boolean qa) {
 		this.qa = qa;
 	}
+
+	public Boolean getMakeNextRunAPracticeTest() {
+		return makeNextRunAPracticeTest;
+	}
+
+	public void setMakeNextRunAPracticeTest(Boolean makeNextRunAPracticeTest) {
+		this.makeNextRunAPracticeTest = makeNextRunAPracticeTest;
+	}
+
+	public Boolean getMakeNextRunLeastRecentlyPractice() {
+		return makeNextRunLeastRecentlyPractice;
+	}
+
+	public void setMakeNextRunLeastRecentlyPractice(Boolean makeNextRunLeastRecentlyPractice) {
+		this.makeNextRunLeastRecentlyPractice = makeNextRunLeastRecentlyPractice;
+	}
+
 
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)

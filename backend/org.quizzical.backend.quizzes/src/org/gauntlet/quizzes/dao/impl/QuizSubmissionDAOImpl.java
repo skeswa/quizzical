@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,12 +45,18 @@ import org.gauntlet.quizzes.model.jpa.JPAQuiz;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse;
 import org.gauntlet.quizzes.model.jpa.JPAQuizSubmission;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 
 @Transactional
 public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmissionDAOService {
+	
+	private BundleContext ctx;
 	
 	private volatile IQuizDAOService quizService;
 	
@@ -274,7 +282,8 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 
 	@Override
 	public QuizSubmission submit(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
-		quizSubmission = scoringService.score(user, quizSubmission);
+		boolean ensureBaline = user.getAdmin() || user.getQa();
+		quizSubmission = scoringService.score(user, quizSubmission,ensureBaline);
     	
     	//--Persist
     	quizSubmission = add(quizSubmission);
@@ -289,8 +298,28 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
         		.collect(Collectors.toList());
        	quizSubmission.setResponses(correctedResponses);
        	
+       	//--Email report
+       	if (!(user.getAdmin() || user.getQa()))
+       		reportStatsViaEmail(user);
+       	
     	return quizSubmission;
 	}
+	
+    public void reportStatsViaEmail(User user)
+    {
+        ServiceReference ref = ctx.getServiceReference(EventAdmin.class.getName());
+        if (ref != null)
+        {
+            EventAdmin eventAdmin = (EventAdmin) ctx.getService(ref);
+
+            Dictionary properties = new Hashtable();
+            properties.put("userid", user.getEmailAddress());
+
+            Event reportGeneratedEvent = new Event("org/quizzical/backend/reporting/SEND_DAILY_REPORT", properties);
+
+            eventAdmin.sendEvent(reportGeneratedEvent);
+        }
+    }
 	
 	@Override 
 	public List<QuizSubmission> findQuizSubmissionsMadeToday(User user) throws ApplicationException {

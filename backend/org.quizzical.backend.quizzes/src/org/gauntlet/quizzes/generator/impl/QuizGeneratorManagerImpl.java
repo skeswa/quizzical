@@ -9,6 +9,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -27,6 +28,8 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	private volatile IQuizDAOService quizService;
 	
+	private volatile IUserDAOService userService;
+	
     private Map<String, ServiceReference> references = new HashMap<String, ServiceReference>();
 	
 	protected void addGenerator(final ServiceReference ref) {
@@ -42,11 +45,21 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	@Override
 	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+		//refresh user
+		user = userService.getByEmail(user.getEmailAddress());
+		
 		if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 
 				!params.getGeneratorType().equals(Constants.GENERATOR_TYPE_REALISTIC_TEST)))
 			throw new UserHasNotTakenDiagnosticTestException(user.getCode());
 		
-		final ServiceReference generatorRef = references.get(params.getGeneratorType());
+
+		ServiceReference generatorRef = references.get(params.getGeneratorType());		
+		//Check if next quiz is a practice test
+		if (user.getMakeNextRunAPracticeTest())
+			generatorRef = references.get(Constants.GENERATOR_TYPE_PRACTICE_TEST);
+		else if (user.getMakeNextRunLeastRecentlyPractice())
+			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);
+		
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
 		
 		Quiz quiz = null;
@@ -59,6 +72,17 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		//Update user
+		if (user.getMakeNextRunAPracticeTest()) {
+			user.setMakeNextRunAPracticeTest(false);
+			userService.update(user);
+		}
+		else if (user.getMakeNextRunLeastRecentlyPractice()) {
+			user.setMakeNextRunLeastRecentlyPractice(false);
+			userService.update(user);
+		}
+			
 		
 		return quiz;
 	}

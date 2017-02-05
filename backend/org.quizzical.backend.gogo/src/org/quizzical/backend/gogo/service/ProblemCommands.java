@@ -6,6 +6,9 @@ import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
+import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 
@@ -15,7 +18,7 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "apicupdate","qpicupdate","addcatlesson","showcat","calcs","answer","index","page","pages","source","diff","src","calc","mc"};
+    public final static String[] FUNCTIONS = new String[] { "apicupdate","qpicupdate","addcatlesson","showcat","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
 
     @Descriptor("Adds lesson to problem category")
     public static String addcatlesson(@Descriptor("Category Id") Long categoryId, @Descriptor("Lesson Id") Long lessonId) throws Exception {
@@ -104,6 +107,15 @@ public class ProblemCommands {
     		});
     }
     
+    @Descriptor("Updates problem multiplechoice flag")
+    public static void mc(@Descriptor("Unique problem ID") Long id,
+    		@Descriptor("Multiplechoice flag") Boolean mc) throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+    	Problem problem = svc.getByPrimary(id);
+    	problem.setMultipleChoice(mc);
+    	svc.update(problem);
+    }   
+    
     @Descriptor("Updates problem Q pic")
     public static void qpicupdate(@Descriptor("problem ID") Long id,
     		@Descriptor("Path to image") String picPath) throws Exception {
@@ -145,5 +157,20 @@ public class ProblemCommands {
 		pic.setPicture(content);
     	svc.updateProblemPicture(pic);
     } 
+    
+    @Descriptor("Deletes problem ")
+    public static String del(@Descriptor("Problem ID") Long problemId, @Descriptor("Admin userId") String adminUserId, @Descriptor("Admin password") String adminPassword) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+    	try {
+			uSvc.getUserByEmailAndPassword(adminUserId, adminPassword);
+		} catch (Exception e) {
+			return "Admin creds invalid.";
+		}
+    	
+    	IProblemDAOService pSvc  = (IProblemDAOService) createServiceFromServiceType(IProblemDAOService.class);
+    	pSvc.delete(problemId);
+        
+        return "Deleted problem successfully!";
+    }
     
 }

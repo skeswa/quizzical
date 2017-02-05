@@ -31,7 +31,6 @@ import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizProblemType;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
-
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
@@ -60,9 +59,10 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 
 
 	@Override
-	public QuizSubmission score(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
+	public QuizSubmission score(User user, QuizSubmission quizSubmission, boolean ensureBaline) throws ApplicationException, NoSuchModelException {
 		//Ensure baseline
-		ensureAnalyticsBaseline(user);
+		if (ensureBaline) 
+			ensureAnalyticsBaseline(user);
 		
 		
 		final Map<Long,TestCategoryRating> categoryRatingsMap = new ConcurrentHashMap<>();
@@ -99,8 +99,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 						rating = categoryRatingsMap.get(subType.getId());
 					}
 					else {
-						final String description = String.format("Rating on Quiz %s Categoryt %s", quiz.getCode(), subType.getCode());
-						rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
+						final String description = String.format("Rating on Quiz %s Category %s", quiz.getCode(), subType.getCode());
+						rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 					}
 					categoryRatingsMap.put(subType.getId(), rating);
 					
@@ -156,7 +156,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 			for (TestDesignTemplateContentSubType subType : subTypes) {
 				if (!categoryRatingsMap.containsKey(subType.getId())) {
 					final String description = String.format("Rating on Quiz %s Category %s", quiz.getCode(), subType.getCode());
-					rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
+					rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 					rating.setRating(0);
 					rating.setAttempts(Collections.emptyList());
 				}
@@ -186,9 +186,10 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 			//Baseline across all categories
 			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 			TestCategoryRating rating = null;
+			int cnt = 1;
 			for (TestDesignTemplateContentSubType subType : subTypes) {
-				final String description = String.format("Rating on Category %s", subType.getCode());
-				rating = new TestCategoryRating(subType.getId(), subType.getCode(), subType.getCode(), description);
+				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
+				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 				rating.setRating(0);
 				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false);
 				rating.getAttempts().add(attempt);
@@ -215,7 +216,13 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				respDblValue = resp.doubleValue();
 			}
 			catch(ParseException e) {
-				return false;
+				//Maybe it's answer in double format
+				try {
+					respDblValue = Double.valueOf(problemResponse.getResponse().trim());
+				} catch (NumberFormatException e1) {
+					e.printStackTrace();
+					throw e1;
+				}
 			}
 			try {
 				Fraction answer = ff.parse(problem.getAnswer().trim());

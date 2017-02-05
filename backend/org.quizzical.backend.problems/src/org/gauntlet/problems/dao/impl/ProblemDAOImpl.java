@@ -25,6 +25,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
@@ -442,6 +443,75 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		return count;		
 	}	
 	
+	
+	@Override
+	public List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (usedInQuizProblemIds.isEmpty())
+				usedInQuizProblemIds.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(rootEntity.get("id").in(pIn));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pIn, usedInQuizProblemIds);
+			
+			typedQuery.setFirstResult(0);
+			typedQuery.setMaxResults(limit);
+			
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (usedInQuizProblemIds.isEmpty())
+				usedInQuizProblemIds.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.not(rootEntity.get("id").in(pIn)));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pIn, usedInQuizProblemIds);
+			
+			typedQuery.setFirstResult(0);
+			typedQuery.setMaxResults(limit);
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
 	
 	//ProblemDifficulty
 	@Override 

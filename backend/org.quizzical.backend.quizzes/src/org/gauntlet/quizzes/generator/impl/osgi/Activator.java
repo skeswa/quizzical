@@ -7,6 +7,7 @@ import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
@@ -14,11 +15,13 @@ import org.gauntlet.quizzes.generator.defaults.impl.ByProblemCategoryGeneratorIm
 import org.gauntlet.quizzes.generator.defaults.impl.ByProblemSourceGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.ByWeaknessGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.LRUGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.impl.QuizGeneratorManagerImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.testdesign.api.ITestDesignTemplateGeneratorService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
 import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
@@ -38,7 +41,10 @@ public class Activator extends DependencyActivatorBase {
 						.setCallbacks("addGenerator", "removeGenerator")
 						.setRequired(false))
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IUserDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
+		
+		
 		//--
 		Properties properties = new Properties();
 		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_BY_CATEGORY);
@@ -101,6 +107,33 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(ITestDesignTemplateGeneratorService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestUserAnalyticsDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateContentTypeDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, Constants.GENERATOR_TYPE_PRACTICE_TEST);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(PracticeTestGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(ITestDesignTemplateDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+		
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(LRUGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);

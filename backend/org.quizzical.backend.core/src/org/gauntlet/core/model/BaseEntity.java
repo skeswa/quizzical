@@ -3,6 +3,7 @@ package org.gauntlet.core.model;
 
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +39,7 @@ public abstract class BaseEntity extends SuperEntity
     protected Boolean synchonized = false;    
     protected String parentRefId;
     protected String name;
-    protected String code;
+    protected String code = UUID.randomUUID().toString();
     protected String refId;
     protected String description;
     protected String portalId;

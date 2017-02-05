@@ -87,4 +87,15 @@ prblm:calcs $ids false
 
 prblm:apicupdate 336 /Users/mduduzikeswa/Downloads/q7l/PT2/A16.png
 
+Pt4
+prblm:mc 763 false
+
+PT5
+prblm:qpicupdate  773 /Users/mduduzikeswa/Downloads/PT5/Q3.PNG
+prblm:apicupdate  773 /Users/mduduzikeswa/Downloads/PT5/A3.PNG
+
+prblm:answer 929 B
+
+
+
 

@@ -13,6 +13,7 @@ import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
 import org.gauntlet.problems.model.jpa.JPAProblemPicture;
+import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface IProblemDAOService extends IBaseService {
 	// Problems
@@ -113,5 +114,11 @@ public interface IProblemDAOService extends IBaseService {
 	public ProblemPicture getProblemPictureByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
 
 	ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
+
+	List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
+			throws ApplicationException;
+
+	List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
+			throws ApplicationException;
 	
 }

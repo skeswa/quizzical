@@ -86,8 +86,7 @@ class Cell extends Component {
 
   isDisabled(column, value) {
     return (
-      (((column % 3) === 0) && (value === '/')) ||
-      ((column === 0) && (value === '0')))
+      (((column % 3) === 0) && (value === '/')))
   }
 
   onClick(e) {

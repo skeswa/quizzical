@@ -37,11 +37,11 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	}
 	
 	public TestCategoryRating(final TestUserAnalytics userAnalytics,
-				final Long categoryId, final String name, final String code) {
-		this(categoryId,name,code,null);		
+				final Long categoryId, final String name) {
+		this(categoryId,name,null);		
 	}
 	
-	public TestCategoryRating(final Long categoryId, final String name, final String code, final String description) {
+	public TestCategoryRating(final Long categoryId, final String name, final String description) {
 		this.categoryId = categoryId;
 		this.name = name;
 		this.code = code;	
@@ -49,8 +49,8 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	}
 	
 	
-	public TestCategoryRating(final Integer rating, final Long lastAttemptTestId, final Date dateOfLastAttempt, final Long categoryId, final String name, final String code) {
-		this(categoryId, name, code, null);
+	public TestCategoryRating(final Integer rating, final Long lastAttemptTestId, final Date dateOfLastAttempt, final Long categoryId, final String name) {
+		this(categoryId, name, null);
 		this.lastAttemptTestId = lastAttemptTestId;
 	}
 
