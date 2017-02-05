@@ -23,6 +23,7 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private Boolean qa = false;
 	private Boolean makeNextRunAPracticeTest = false;
 	private Boolean makeNextRunLeastRecentlyPractice = false;
+	private Boolean makeNextRunPracticeSkippedOrIncorrect = false;
 	
 	private String uuid;
 	private String originalUuid;
@@ -490,6 +491,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 
 	public void setMakeNextRunLeastRecentlyPractice(Boolean makeNextRunLeastRecentlyPractice) {
 		this.makeNextRunLeastRecentlyPractice = makeNextRunLeastRecentlyPractice;
+	}
+
+	public Boolean getMakeNextRunPracticeSkippedOrIncorrect() {
+		return makeNextRunPracticeSkippedOrIncorrect;
+	}
+
+	public void setMakeNextRunPracticeSkippedOrIncorrect(Boolean makeNextRunPracticeSkippedOrIncorrect) {
+		this.makeNextRunPracticeSkippedOrIncorrect = makeNextRunPracticeSkippedOrIncorrect;
 	}
 
 	public String getName() {

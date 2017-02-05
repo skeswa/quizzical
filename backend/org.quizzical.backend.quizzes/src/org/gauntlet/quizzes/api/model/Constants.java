@@ -20,4 +20,7 @@ public interface Constants {
 	
 	public static final String QUIZ_TYPE_LRU_CODE = "LeastRecentlyUsed";
 	public static final String QUIZ_TYPE_LRU_NAME = "Least Recently Used Quiz";
+	
+	public static final String QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE = "SkippedOrIncorrect";
+	public static final String QUIZ_TYPE_SKIPPED_OR_INCORRECT_NAME = "Skipped Or Incorrect Quiz";
 }

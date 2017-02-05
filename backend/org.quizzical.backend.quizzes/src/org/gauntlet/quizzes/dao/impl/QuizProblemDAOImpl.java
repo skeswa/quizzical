@@ -1,16 +1,11 @@
 package org.gauntlet.quizzes.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
@@ -20,16 +15,11 @@ import org.amdatu.jta.Transactional;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
-import org.gauntlet.core.model.JPABaseEntity;
-import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
-import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
-import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
-import org.gauntlet.quizzes.model.jpa.JPAQuiz;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;

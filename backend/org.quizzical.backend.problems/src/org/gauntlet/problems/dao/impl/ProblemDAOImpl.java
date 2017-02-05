@@ -109,6 +109,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		return result;
 	}
 	
+	
+	
 	@Override
 	public long countAll() throws ApplicationException {
 		long res = 0;

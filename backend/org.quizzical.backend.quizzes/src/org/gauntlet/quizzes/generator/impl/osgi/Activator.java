@@ -8,6 +8,7 @@ import org.apache.felix.dm.DependencyManager;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.generator.api.Constants;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorManagerService;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
@@ -17,6 +18,7 @@ import org.gauntlet.quizzes.generator.defaults.impl.ByWeaknessGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.LRUGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.SkippedOrIncorrectGeneratorImpl;
 import org.gauntlet.quizzes.generator.impl.QuizGeneratorManagerImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
@@ -134,6 +136,19 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(SkippedOrIncorrectGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);

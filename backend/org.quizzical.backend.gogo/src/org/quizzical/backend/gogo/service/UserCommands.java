@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","lru","ptest"};
+    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","lru","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -91,5 +91,17 @@ public class UserCommands {
        	user.setMakeNextRunAPracticeTest(true);
        	svc.update(user);
        	return "MakeNextRunAPracticeTest ("+user.getFirstName()+") set";
+    } 
+    
+    @Descriptor("Mark for SkippedOrIncorrect next quiz")
+    public static String sori(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user.setMakeNextRunPracticeSkippedOrIncorrect(true);
+       	svc.update(user);
+       	return "MakeNextRunPracticeSkippedOrIncorrect ("+user.getFirstName()+") set";
     } 
 }
