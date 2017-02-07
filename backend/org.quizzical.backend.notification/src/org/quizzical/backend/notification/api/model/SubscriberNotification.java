@@ -67,5 +67,17 @@ public abstract class SubscriberNotification extends BaseEntity implements Seria
 
 	public void setBody(String body) {
 		this.body = body;
-	}        
+	}
+	
+	protected SubscriberNotification() {
+	}
+
+	protected SubscriberNotification(long subscriberId, NOTIFICATIONSTATUS status, Date dateSent,
+			String body) {
+		super();
+		this.subscriberId = subscriberId;
+		this.status = status;
+		this.dateSent = dateSent;
+		this.body = body;
+	}     
 }

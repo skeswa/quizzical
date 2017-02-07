@@ -27,5 +27,7 @@
 	org.quizzical.backend.security.rest;version=latest,\
 	org.quizzical.backend.testdesign.api;version=latest,\
 	org.apache.commons.math;version=2.2,\
-	org.quizzical.backend.security.authorization.api;version=latest
+	org.quizzical.backend.security.authorization.api;version=latest,\
+	org.quizzical.backend.sms.api;version=latest,\
+	org.quizzical.backend.mail.api;version=latest
 -sub: *.bnd

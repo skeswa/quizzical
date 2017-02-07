@@ -1,6 +1,7 @@
 package org.quizzical.backend.notification.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.amdatu.jta.Transactional;
@@ -14,6 +15,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.notification.api.dao.INotificationDAOService;
+import org.quizzical.backend.notification.api.model.NOTIFICATIONSTATUS;
 import org.quizzical.backend.notification.api.model.SubscriberEmailNotification;
 import org.quizzical.backend.notification.api.model.SubscriberSMSNotification;
 import org.quizzical.backend.notification.model.jpa.JPASubscriberEmailNotification;
@@ -195,14 +197,22 @@ public class NotificationDAOImpl extends BaseServiceImpl implements INotificatio
 
 	@Override
 	public void handleEvent(Event event) {
-        String userId = (String) event.getProperty(EVENT_TOPIC_PROP_USERID);
+        Long userId = Long.valueOf((String) event.getProperty(EVENT_TOPIC_PROP_USERID));
         String type = (String) event.getProperty(EVENT_TOPIC_PROP_NOTIFICATION_TYPE);
+        String subject = (String) event.getProperty(EVENT_TOPIC_PROP_NOTIFICATION_SUBJECT);
         try {
+        	String body = (String) event.getProperty(EVENT_TOPIC_PROP_NOTIFICATION_BODY);
         	if (EVENT_TOPIC_PROP_NOTIFICATION_TYPE_EMAIL.equalsIgnoreCase(type)) {
+        		String cc = (String) event.getProperty(EVENT_TOPIC_PROP_NOTIFICATION_EMAIL_CC);
+        		SubscriberEmailNotification email = new SubscriberEmailNotification(cc,subject,userId,NOTIFICATIONSTATUS.SENT,new Date(),body);
+        		provideSubscriberEmailNotification(email);
         	}
-        	else {
+        	else if (EVENT_TOPIC_PROP_NOTIFICATION_TYPE_SMS.equalsIgnoreCase(type)) {
+        		String cc = (String) event.getProperty(EVENT_TOPIC_PROP_NOTIFICATION_SMS_CC);
+        		SubscriberSMSNotification sms = new SubscriberSMSNotification(cc,subject,userId,NOTIFICATIONSTATUS.SENT,new Date(),body);
+        		provideSubscriberSMSNotification(sms);
         	}
-		} catch (ApplicationException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

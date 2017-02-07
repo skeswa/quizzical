@@ -1,6 +1,8 @@
 package org.quizzical.backend.scheduler.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,7 +17,9 @@ import org.quizzical.backend.scheduler.api.IQuizTakerReminderService;
 import org.quizzical.backend.scheduler.job.reminder.QuizTakeReminderJob;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
+import org.quizzical.backend.sms.api.AlertNotificationException;
 import org.quizzical.backend.sms.api.IAlertNotifier;
+import org.quizzical.backend.sms.api.NotificationMessage;
 
 public class QuizTakerReminderServiceImpl implements IQuizTakerReminderService{
 	
@@ -37,7 +41,7 @@ public class QuizTakerReminderServiceImpl implements IQuizTakerReminderService{
 		properties.put(Constants.CRON, cronDefinition);
 		properties.put(Constants.DESCRIPTION, user.getEmailAddress());
 		
-		QuizTakeReminderJob qReminderJob = new QuizTakeReminderJob(notifier,userService,quizSubmissionService);
+		QuizTakeReminderJob qReminderJob = new QuizTakeReminderJob(notifier,userService,quizSubmissionService,this);
 		
 		dm.add(dm.createComponent()
 				.setInterface(Job.class.getName(), properties)
@@ -52,6 +56,19 @@ public class QuizTakerReminderServiceImpl implements IQuizTakerReminderService{
 	public void voidExistingQuizReminderSchedule(User user) throws ApplicationException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void sendReminder(User user) {
+		List<String> to = new ArrayList<>();
+		to.add(user.getMobileNumber());
+		String body = String.format("It's Q7L Time %s!, at http://www.q7l.io", user.getFirstName());
+		NotificationMessage message = new NotificationMessage(to, body, "q7l Alert");
+		try {
+			notifier.notifyViaSMS(message);
+		} catch (AlertNotificationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

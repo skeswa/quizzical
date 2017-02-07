@@ -1,6 +1,7 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
+import org.quizzical.backend.scheduler.api.IQuizTakerReminderService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -113,5 +114,18 @@ public class UserCommands {
        	user.setMakeNextRunPracticeSkippedOrIncorrect(true);
        	svc.update(user);
        	return "MakeNextRunPracticeSkippedOrIncorrect ("+user.getFirstName()+") set";
+    } 
+    
+    @Descriptor("Text reminder")
+    public static String remindViaText(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    	
+    	IQuizTakerReminderService qsvc = (IQuizTakerReminderService)createServiceFromServiceType(IQuizTakerReminderService.class);
+    	qsvc.sendReminder(user);
+    		
+       	return "Reminded ("+user.getFirstName()+") successfully";
     } 
 }

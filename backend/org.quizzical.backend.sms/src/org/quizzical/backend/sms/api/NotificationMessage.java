@@ -1,5 +1,6 @@
 package org.quizzical.backend.sms.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class NotificationMessage {
@@ -7,6 +8,12 @@ public class NotificationMessage {
 	private List<String> to;
 	private String body;
 	private String title;
+	public NotificationMessage(String to, String body, String title) {
+		super();
+		this.to = Arrays.asList(to);
+		this.body = body;
+		this.title = title;
+	}
 	public NotificationMessage(List<String> to, String body, String title) {
 		super();
 		this.to = to;

@@ -11,9 +11,13 @@ public interface INotificationDAOService {
 	//Events
 	public static final String EVENT_TOPIC_SAVE_NOTIFICATION = "org/quizzical/backend/notification/SAVE_NOTIFICATION";
 	public static final String EVENT_TOPIC_PROP_USERID = "userid";
-	public static final String EVENT_TOPIC_PROP_NOTIFICATION_TYPE = "type";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_BODY     = "messagebody";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_SUBJECT  = "subject";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_EMAIL_CC = "cc";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_SMS_CC   = "cc";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_TYPE       = "type";
 	public static final String EVENT_TOPIC_PROP_NOTIFICATION_TYPE_EMAIL = "email";
-	public static final String EVENT_TOPIC_PROP_NOTIFICATION_TYPE_SMS = "sms";
+	public static final String EVENT_TOPIC_PROP_NOTIFICATION_TYPE_SMS   = "sms";
 	
 	
 	// SubscriberEmailNotification

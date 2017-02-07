@@ -1,6 +1,7 @@
 package org.quizzical.backend.notification.api.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class SubscriberEmailNotification extends SubscriberNotification implements Serializable {
     /**
@@ -26,5 +27,17 @@ public class SubscriberEmailNotification extends SubscriberNotification implemen
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public SubscriberEmailNotification() {
+	}
+
+	public SubscriberEmailNotification(String sentToEmailList, 
+			String subject,
+			long subscriberId, 
+			NOTIFICATIONSTATUS status, 
+			Date dateSent,
+			String body) {
+		super(subscriberId, status, dateSent, body);
 	} 
 }
