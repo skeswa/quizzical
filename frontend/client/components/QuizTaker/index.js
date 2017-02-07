@@ -281,6 +281,7 @@ class QuizTaker extends Component {
     const { questionIndex, quiz: { questions } } = this.props
     const {
       problem: {
+        id:                     questionId,
         multipleChoice:         questionIsMutipleChoice,
         questionPicture:        { id: questionPictureId },
         requiresCalculator:     questionRequiresCalculator,
@@ -292,6 +293,7 @@ class QuizTaker extends Component {
     return (
       <div className={style.main}>
         <QuestionPicture
+          questionId={questionId}
           pictureId={questionPictureId}
           questionNumber={questionNumber}
           onPictureLoaded={::this.onQuestionPictureLoaded}

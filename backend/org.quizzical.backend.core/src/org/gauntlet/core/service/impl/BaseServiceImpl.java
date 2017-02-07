@@ -301,6 +301,37 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}	
 	
 	@SuppressWarnings("rawtypes")
+	public List<JPABaseEntity> findAllWithAttribute(Class<? extends JPABaseEntity> entityClass, Class attrClass, String attrName, Object attrValue)
+		throws ApplicationException {
+		List<JPABaseEntity>  res = null;
+		try {
+			CriteriaQuery<JPABaseEntity> query = null;
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			assert builder != null : "query builder obj must not be null";
+			
+			query = (CriteriaQuery<JPABaseEntity>) builder.createQuery(entityClass);
+			assert query != null : "query obj must not be null";
+			
+			Root<JPABaseEntity> rootEntity = (Root<JPABaseEntity>) query.from(entityClass);
+			TypedQuery<JPABaseEntity> typedQuery = getEm().createQuery(query);
+			
+			ParameterExpression p = builder.parameter(attrClass);
+			query.select(rootEntity).where(builder.equal(rootEntity.get(attrName), p));
+			assert typedQuery != null : "typedQuery obj must not be null";
+			typedQuery.setParameter(p, attrValue);
+
+			res = typedQuery.getResultList();
+				
+		}
+		catch (NoResultException e) {
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public JPABaseEntity findWithAttributes(Class<? extends JPABaseEntity> entityClass, Set<AttrPair> attrs)
 		throws ApplicationException {
 		JPABaseEntity res = null;

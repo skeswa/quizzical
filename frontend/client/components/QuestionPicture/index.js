@@ -11,6 +11,7 @@ const BASE_QUESTION_PICTURE_URL = '/api/problems/pictures'
 
 class QuestionPicture extends Component {
   static propTypes = {
+    questionId:         React.PropTypes.number,
     pictureId:          React.PropTypes.number.isRequired,
     questionNumber:     React.PropTypes.number,
     onPictureLoaded:    React.PropTypes.func,
@@ -44,7 +45,7 @@ class QuestionPicture extends Component {
   }
 
   renderPrompt() {
-    const { questionNumber, requiresCalculator } = this.props
+    const { questionNumber, questionId, requiresCalculator } = this.props
 
     // Don't render a prompt if there is not question number.
     if (!questionNumber && questionNumber !== 0) {
@@ -53,7 +54,7 @@ class QuestionPicture extends Component {
 
     return (
       <div className={style.questionPrompt}>
-        <span>{`Please answer question #${questionNumber}`}</span>
+        <span>{`Please answer question #${questionNumber}/${questionId}`}</span>
         {
           requiresCalculator
             ? <span className={style.withCalculator}>
@@ -66,7 +67,7 @@ class QuestionPicture extends Component {
 
   render() {
     const pictureURL = this.getPictureURL()
-    const { prompt, pictureId } = this.props
+    const { prompt, pictureId, questionId } = this.props
     const { pictureLoaded, lightboxVisible } = this.state
 
     const pictureStyle = { backgroundImage: `url(${pictureURL})` }

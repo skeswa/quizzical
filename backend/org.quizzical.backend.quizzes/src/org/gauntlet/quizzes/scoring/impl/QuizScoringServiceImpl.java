@@ -149,7 +149,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		final String code_ = String.format("User(%d) analytics", quiz.getUserId()); 
 		TestUserAnalytics tua = null;
 		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE)) {
-	    	tua = new TestUserAnalytics( quiz.getUserId(), code_, code_);
+	    	tua = new TestUserAnalytics( user.getId(), code_, code_);
 			//Baseline across all categories
 			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 			TestCategoryRating rating = null;
@@ -158,7 +158,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 					final String description = String.format("Rating on Quiz %s Category %s", quiz.getCode(), subType.getCode());
 					rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 					rating.setRating(0);
-					rating.setAttempts(Collections.emptyList());
+					rating.setRatingSubmissions(Collections.emptyList());
 				}
 				else {//Add to analytics
 					rating = categoryRatingsMap.get(subType.getId());
@@ -192,7 +192,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 				rating.setRating(0);
 				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false);
-				rating.getAttempts().add(attempt);
+				rating.setRatingSubmissions(Collections.emptyList());
 				tua.addRating(rating);
 			}
 			testUserAnalyticsDAOService.provide(tua);

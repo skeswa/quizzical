@@ -1,13 +1,9 @@
 package org.quizzical.backend.analytics.model.jpa;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,9 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.math.fraction.Fraction;
 import org.gauntlet.core.model.Constants;
 import org.gauntlet.core.model.JPABaseEntity;
-import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -28,8 +24,8 @@ import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 	+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+"cat_rating")
 public class JPATestCategoryRating extends JPABaseEntity implements Serializable {
-	private static final long serialVersionUID = 601068620188199699L;
-	
+	private static final long serialVersionUID = -5148669857283031803L;
+
 	private Integer rating = 0; //0-100
 	
 	private Long categoryId;
@@ -51,8 +47,8 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	@ManyToOne
 	private JPATestUserAnalytics analytics;
 	
-	@OneToMany(targetEntity = JPATestCategoryAttempt.class, cascade=CascadeType.ALL, mappedBy="rating")
-	private List<JPATestCategoryAttempt>  attempts = new ArrayList<JPATestCategoryAttempt>();
+	@OneToMany(targetEntity = JPATestCategoryRatingSubmission.class, cascade=CascadeType.ALL, mappedBy="rating")
+	private Set<JPATestCategoryRatingSubmission>  ratingSubmissions = new HashSet<JPATestCategoryRatingSubmission>();
 	
 	public JPATestCategoryRating() {
 	}
@@ -97,14 +93,12 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 		this.analytics = analytics;
 	}
 
-	public List<JPATestCategoryAttempt> getAttempts() {
-		if (attempts == null)
-			attempts = new ArrayList<JPATestCategoryAttempt>();
-		return attempts;
+	public Set<JPATestCategoryRatingSubmission> getSubmissions() {
+		return ratingSubmissions;
 	}
 
-	public void setAttempts(List<JPATestCategoryAttempt> attempts) {
-		this.attempts = attempts;
+	public void setSubmissions(Set<JPATestCategoryRatingSubmission> ratingSubmissions) {
+		this.ratingSubmissions = ratingSubmissions;
 	}
 
 	public Long getLastAttemptTestId() {
@@ -145,6 +139,37 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 
 	public void setTotalAttemptsTotal(Integer totalAttemptsTotal) {
 		this.totalAttemptsTotal = totalAttemptsTotal;
+	}
+	
+	public Integer calculateScore() {
+		//Total avg rating
+		final int sumOfScores = getSubmissions().stream().mapToInt(s -> {
+			return s.calculateScore();
+		}).sum();
+		int avrgScore = (int)(new Fraction(sumOfScores,getSubmissions().size()).doubleValue());
+		setRating(avrgScore);
+		
+		//Total correct attempts
+		final int sumOfCorrectAttempts = getSubmissions().stream().mapToInt(s -> {
+			return s.getCorrectCount();
+		}).sum();
+		setTotalAttemptsCorrect(sumOfCorrectAttempts);
+		
+		//Last submission stats
+		Date dateOfLastAttempt = getSubmissions().stream().map(s -> s.getDateAttempted()).max(Date::compareTo).get();
+		setDateOfLastAttempt(dateOfLastAttempt);
+		
+		final JPATestCategoryRatingSubmission  recentSubmmission = getSubmissions()
+			    .stream()
+			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
+			    .findFirst().get();
+		setLastAttemptTestId(recentSubmmission.getTestId());
+		
+		setLastAttemptCorrect(recentSubmmission.getCorrectCount());
+		setLastAttemptTotal(recentSubmmission.getAttempts().size());
+		setLastAttemptRating(recentSubmmission.getSubmissionScore());
+		
+		return getRating();
 	}
 }
 

@@ -3331,59 +3331,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.quizzical.backend.security.api"/>
-      <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="1.0.0.201701130502"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="8578bf8fedd6e0fed669dd46826fe0e1009cdee9d342b71d280e1cf540b20ee8"/>
-      <attribute name="url" value="org.quizzical.backend.security.api/org.quizzical.backend.security.api-1.0.0.jar"/>
-      <attribute name="size" type="Long" value="15028"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-    </capability>
-    <capability namespace="osgi.wiring.bundle">
-      <attribute name="osgi.wiring.bundle" value="org.quizzical.backend.security.api"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701130502"/>
-    </capability>
-    <capability namespace="osgi.wiring.host">
-      <attribute name="osgi.wiring.host" value="org.quizzical.backend.security.api"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701130502"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.quizzical.backend.security.api.model.user"/>
-      <attribute name="version" type="Version" value="1.0.0"/>
-      <attribute name="bundle-symbolic-name" value="org.quizzical.backend.security.api"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701130502"/>
-      <directive name="uses" value="org.gauntlet.core.model"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.quizzical.backend.security.api.dao.user"/>
-      <attribute name="version" type="Version" value="1.0.0"/>
-      <attribute name="bundle-symbolic-name" value="org.quizzical.backend.security.api"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701130502"/>
-      <directive name="uses" value="org.gauntlet.core.api,org.quizzical.backend.security.api.model.user"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.quizzical.backend.security.api.tokenstorage"/>
-      <attribute name="version" type="Version" value="1.0.0"/>
-      <attribute name="bundle-symbolic-name" value="org.quizzical.backend.security.api"/>
-      <attribute name="bundle-version" type="Version" value="1.0.0.201701130502"/>
-    </capability>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.gauntlet.core.api)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.gauntlet.core.model)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.quizzical.backend.security.api.model.user)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
-    </requirement>
-    <requirement namespace="osgi.ee">
-      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
-    </requirement>
-  </resource>
-  <resource>
-    <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.quizzical.backend.security.dao.impl"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="1.0.0.201701130502"/>

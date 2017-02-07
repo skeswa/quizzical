@@ -61,13 +61,13 @@
 	net.sf.dozer.dozer-osgi;version=5.5.1,\
 	org.amdatu.persistence2_0;version='[1.0.1,1.1)',\
 	org.postgresql.jdbc41;version=9.4.0,\
-	org.apache.openjpa;version='[2.4.0,2.5.0)',\
+	org.apache.openjpa;version='[2.4.2,2.5.0)',\
 	org.apache.xbean.asm5-shaded;version=3.17.0,\
-	org.apache.servicemix.bundles.serp;version=1.14.1.1,\
+	org.apache.servicemix.bundles.serp;version=1.15.1.1,\
 	org.apache.commons.codec;version=1.7.0,\
 	org.apache.commons.lang;version=2.6.0,\
 	org.apache.commons.dbcp;version=1.4.0,\
-	org.apache.commons.pool;version=1.5.4,\
+	org.apache.commons.pool;version=1.6,\
 	org.conxworks.library.postgresql-datasourcefactory.osgi;version=1.0.0,\
 	,\
 	org.amdatu.jpa.datasourcefactory;version='[1.1.1,1.2)',\

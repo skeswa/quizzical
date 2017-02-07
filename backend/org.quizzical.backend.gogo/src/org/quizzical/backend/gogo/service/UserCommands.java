@@ -8,11 +8,12 @@ import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromSe
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","lru","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","showactive","lru","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -59,6 +60,15 @@ public class UserCommands {
     		
        	user = svc.activate(user);
        	return "User ("+user.getFirstName()+") deactivated";
+    } 
+    
+    @Descriptor("Show all active users")
+    public static String showactive() throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	String res = svc.getAllActiveUsers().stream()
+    			.map( Object::toString )
+                .collect( Collectors.joining( ";" ) );
+       	return "Active: Users: "+res;
     } 
     
     @Descriptor("Deletes user ")

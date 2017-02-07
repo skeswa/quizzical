@@ -511,4 +511,9 @@ public class User extends BaseEntity{
 		else
 			return null;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("{\"id\":%d,\"emailAddress\":\"%s\",\"name\":\"%s\"}",getId(),getEmailAddress(),getName());
+	}
 }

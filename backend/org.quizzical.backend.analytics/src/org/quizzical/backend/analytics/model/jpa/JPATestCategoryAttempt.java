@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.gauntlet.core.model.Constants;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 
 @Entity
@@ -25,8 +26,7 @@ import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 	+Constants.Q7L_TABLE_NAME_SEPARATOR
 	+"cat_attempt")
 public class JPATestCategoryAttempt extends JPABaseEntity implements Serializable {
-	private static final long serialVersionUID = 1897304303469354401L;
-	
+	private static final long serialVersionUID = -6972020737204651800L;
 	private Long testId;
 	private Long testProblemId;
 	private Date dateAttempted;
@@ -35,9 +35,17 @@ public class JPATestCategoryAttempt extends JPABaseEntity implements Serializabl
 
 	@ManyToOne
 	@JoinColumn
-	private JPATestCategoryRating rating;
+	private JPATestCategoryRatingSubmission ratingSubmission;
 	
-	public JPATestCategoryAttempt() {
+	public JPATestCategoryAttempt(){
+	}
+	
+	public JPATestCategoryAttempt(TestCategoryAttempt attempt) {
+		setTestId(attempt.getTestId());
+		setTestProblemId(attempt.getTestProblemId());
+		setDateAttempted(attempt.getDateAttempted());
+		setSuccessful(attempt.getSuccessful());
+		setSkipped(attempt.getSkipped());
 	}
 
 	public Long getTestProblemId() {
@@ -72,20 +80,20 @@ public class JPATestCategoryAttempt extends JPABaseEntity implements Serializabl
 		this.skipped = skipped;
 	}
 
-	public JPATestCategoryRating getRating() {
-		return rating;
-	}
-
-	public void setRating(JPATestCategoryRating rating) {
-		this.rating = rating;
-	}
-
 	public Long getTestId() {
 		return testId;
 	}
 
 	public void setTestId(Long testId) {
 		this.testId = testId;
+	}
+
+	public JPATestCategoryRatingSubmission getRatingSubmission() {
+		return ratingSubmission;
+	}
+
+	public void setRatingSubmission(JPATestCategoryRatingSubmission ratingSubmission) {
+		this.ratingSubmission = ratingSubmission;
 	}
 }
 

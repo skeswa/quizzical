@@ -12,6 +12,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
+import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.osgi.service.log.LogService;
@@ -49,9 +50,9 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}	
 
 	@Override
-	public List<User> getAllActiveUsers() {
-		return em.createQuery("select o from User o record where o.active = true order by o.id", User.class).getResultList();
-	}
+	public List<User> getAllActiveUsers() throws ApplicationException {
+		List<JPABaseEntity> jpaEntities = super.findAllWithAttribute(JPAUser.class, Boolean.class,"active", true);
+		return JPAEntityUtil.copy(jpaEntities, User.class);	}
 	
 
 	
@@ -119,7 +120,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 
 	@Override
 	public List<User> getAll() {
-		return em.createQuery("select o from User o order by o.id", User.class).getResultList();
+		return em.createQuery("select o from JPAUser o order by o.id", User.class).getResultList();
 	}
 
 	@Override

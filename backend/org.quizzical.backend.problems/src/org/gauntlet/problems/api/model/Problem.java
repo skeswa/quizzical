@@ -131,6 +131,6 @@ public class Problem extends BaseEntity implements Serializable {
 	
 	@Override
 	public String toString() {
-		return this.code;
+		return String.format("{\"id\":%d,\"sourcePageNumber\":%d,\"sourceIndexWithinPage\":%d,\"answer\":%s}",id,sourcePageNumber,sourceIndexWithinPage,answer);
 	}
 }

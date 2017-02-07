@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1485476308000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1486401319000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="com.fasterxml.jackson.core.jackson-annotations"/>
@@ -6357,6 +6357,39 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.commons.pool"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.6.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="46c42b4a38dc6b2db53a9ee5c92c63db103665d56694e2cfce2c95d51a6860cc"/>
+      <attribute name="url" value="org.apache.commons.pool/org.apache.commons.pool-1.6.0.jar"/>
+      <attribute name="size" type="Long" value="111119"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.commons.pool"/>
+      <attribute name="bundle-version" type="Version" value="1.6.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.commons.pool"/>
+      <attribute name="bundle-version" type="Version" value="1.6.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.pool.impl"/>
+      <attribute name="version" type="Version" value="1.6.0"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.pool"/>
+      <attribute name="bundle-version" type="Version" value="1.6.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.pool"/>
+      <attribute name="version" type="Version" value="1.6.0"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.pool"/>
+      <attribute name="bundle-version" type="Version" value="1.6.0"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.apache.felix.configadmin"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="1.8.10"/>
@@ -8595,6 +8628,569 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.openjpa"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="b6caf4c2396f663f909196b87e12927cb0f95f0f17f01d5c0e5ba7939b223b9e"/>
+      <attribute name="url" value="org.apache.openjpa/org.apache.openjpa-2.4.2.jar"/>
+      <attribute name="size" type="Long" value="4491383"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.slice.transaction"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.audit"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.kernel,org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.util"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.conf,org.apache.commons.collections.set,org.apache.commons.collections.iterators,org.apache.openjpa.lib.util,org.apache.commons.collections,org.apache.openjpa.kernel,org.apache.openjpa.meta,org.apache.openjpa.enhance,org.apache.commons.lang,org.apache.openjpa.lib.util.concurrent,serp.bytecode,serp.util,org.apache.openjpa.lib.log"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.criteria"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.kernel.exps,javax.persistence.criteria,org.apache.openjpa.enhance,javax.persistence.metamodel,org.apache.openjpa.kernel,org.apache.openjpa.persistence,javax.persistence,org.apache.openjpa.lib.util,org.apache.openjpa.persistence.meta,org.apache.openjpa.meta,org.apache.openjpa.kernel.jpql,org.apache.openjpa.util,org.apache.openjpa.persistence.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.util"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="serp.bytecode,serp.util,org.apache.commons.lang.exception,org.apache.commons.lang,javax.validation,org.apache.commons.collections.map,org.apache.commons.collections.set,serp.bytecode.lowlevel"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.identifier"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.commons.lang,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.kernel.exps"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.sql,org.apache.openjpa.kernel.exps,org.apache.openjpa.meta,org.apache.openjpa.kernel,org.apache.openjpa.jdbc.meta,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.jdbc.schema,org.apache.openjpa.util,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.jdbc.conf,org.apache.openjpa.enhance,org.apache.openjpa.jdbc.meta.strats,serp.util,org.apache.commons.lang,org.apache.openjpa.jdbc.identifier"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.meta"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.sql,org.apache.openjpa.util,org.apache.openjpa.lib.rop,org.apache.openjpa.conf,org.apache.openjpa.lib.log,org.apache.openjpa.enhance,org.apache.openjpa.lib.util,org.apache.openjpa.kernel,org.apache.openjpa.meta,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.jdbc.schema,org.apache.openjpa.jdbc.meta.strats,org.apache.openjpa.lib.xml,org.apache.openjpa.lib.meta,org.apache.commons.lang,serp.util,org.apache.openjpa.jdbc.conf,org.apache.openjpa.lib.conf,serp.bytecode"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.slice"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.slice.jdbc,org.apache.openjpa.kernel,org.apache.openjpa.util,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.lib.conf,org.apache.openjpa.enhance"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.conf"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.jdbc.meta,javax.sql,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.lib.jdbc,org.apache.openjpa.jdbc.sql,org.apache.openjpa.conf,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.kernel,org.apache.openjpa.jdbc.schema,serp.bytecode,serp.bytecode.lowlevel,org.apache.openjpa.util,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.meta,org.apache.commons.lang,serp.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.ee"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.transaction,org.apache.openjpa.util,org.apache.openjpa.lib.util,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,javax.naming,org.osgi.framework,javax.transaction.xa,com.ibm.websphere.jtaextensions,org.apache.openjpa.lib.log,serp.bytecode,org.apache.openjpa.enhance,com.ibm.wsspi.uow"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.util"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.query"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.meta,org.apache.openjpa.kernel,org.apache.openjpa.util,org.apache.openjpa.persistence,org.apache.openjpa.conf,org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.meta"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.persistence.metamodel,org.apache.openjpa.kernel,org.apache.openjpa.meta,org.apache.openjpa.conf,org.apache.openjpa.lib.util,javax.annotation,javax.lang.model.util,javax.tools,javax.lang.model.type,javax.lang.model,org.apache.openjpa.persistence,javax.lang.model.element,org.apache.openjpa.persistence.util,javax.annotation.processing,org.apache.openjpa.util,org.apache.openjpa.lib.log,org.apache.openjpa.kernel.exps,javax.persistence"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.instrumentation"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.datacache,org.apache.openjpa.lib.instrumentation,org.apache.openjpa.kernel,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.rop"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.util,org.apache.commons.lang,org.apache.commons.lang.exception,org.apache.commons.collections"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.conf"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.abstractstore,org.apache.openjpa.util,org.apache.openjpa.kernel,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.meta,org.apache.openjpa.audit,org.apache.openjpa.lib.encryption,org.apache.openjpa.instrumentation,org.apache.openjpa.event,org.apache.openjpa.datacache,org.apache.openjpa.ee,org.apache.openjpa.kernel.exps,org.apache.commons.lang,org.apache.openjpa.validation,org.apache.openjpa.lib.instrumentation,org.apache.openjpa.lib.util.concurrent"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.kernel.jpql"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.util,org.apache.openjpa.kernel.exps,org.apache.openjpa.lib.util,org.apache.openjpa.kernel,org.apache.openjpa.conf,org.apache.openjpa.lib.log,org.apache.openjpa.meta"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.enhance"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.lib.util,serp.bytecode,serp.util,org.apache.openjpa.util,org.apache.openjpa.lib.log,org.apache.commons.lang,org.apache.openjpa.meta,org.apache.openjpa.lib.meta,org.apache.xbean.asm5,serp.bytecode.lowlevel,org.apache.openjpa.kernel,org.apache.openjpa.lib.util.svn,org.apache.openjpa.lib.util.concurrent"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.kernel"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.transaction,org.apache.openjpa.audit,org.apache.openjpa.instrumentation,org.apache.openjpa.util,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.log,org.apache.openjpa.conf,org.apache.openjpa.enhance,org.apache.openjpa.lib.util,org.apache.openjpa.meta,org.apache.openjpa.event,org.apache.commons.lang,org.apache.openjpa.lib.util.concurrent,org.apache.openjpa.datacache,org.apache.openjpa.ee,org.apache.openjpa.lib.instrumentation,org.apache.commons.collections.set,org.apache.commons.collections.map,org.apache.openjpa.kernel.exps,org.apache.commons.collections.iterators,org.apache.openjpa.validation,org.apache.openjpa.lib.rop,org.apache.commons.collections,serp.util,javax.transaction.xa"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.xmlstore"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.util,org.apache.openjpa.conf,org.apache.openjpa.event,org.apache.openjpa.meta,org.apache.openjpa.kernel,org.apache.openjpa.lib.conf,org.apache.openjpa.enhance,org.apache.openjpa.lib.util,org.xml.sax,org.xml.sax.helpers,org.apache.openjpa.lib.xml,javax.xml.parsers,org.apache.openjpa.lib.rop,org.apache.openjpa.abstractstore"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.ant"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.meta,org.apache.tools.ant.types,org.apache.openjpa.jdbc.schema,org.apache.openjpa.util,org.apache.openjpa.jdbc.conf,org.apache.openjpa.lib.conf,org.apache.tools.ant,org.apache.openjpa.lib.ant,org.apache.openjpa.lib.util,org.apache.commons.lang"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.util.svn"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.validation"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.meta,org.apache.openjpa.event,org.apache.openjpa.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.kernel"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.kernel,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.jdbc.meta,javax.sql,org.apache.openjpa.jdbc.sql,org.apache.openjpa.util,org.apache.openjpa.jdbc.conf,org.apache.openjpa.jdbc.schema,org.apache.openjpa.meta,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.lib.jdbc,org.apache.openjpa.lib.meta,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.lib.graph,org.apache.commons.lang,org.apache.openjpa.lib.rop,org.apache.openjpa.enhance,org.apache.openjpa.event,org.apache.openjpa.datacache,org.apache.openjpa.kernel.exps,org.apache.openjpa.jdbc.meta.strats,org.apache.openjpa.jdbc.kernel.exps,org.apache.openjpa.kernel.jpql,javax.transaction,org.apache.openjpa.ee"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.jdbc"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,javax.sql,org.apache.openjpa.lib.util.concurrent"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.graph"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.persistence,org.apache.openjpa.persistence.criteria,javax.persistence.criteria,org.apache.openjpa.lib.util,org.apache.openjpa.kernel,org.apache.openjpa.meta,serp.util,org.apache.commons.lang,org.apache.openjpa.util,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.log,org.apache.openjpa.conf,org.apache.openjpa.enhance,org.apache.openjpa.event,org.apache.openjpa.lib.meta,org.apache.openjpa.persistence.meta,org.apache.openjpa.datacache,javax.persistence.spi,org.apache.openjpa.persistence.query,javax.persistence.metamodel,org.apache.openjpa.persistence.validation,org.apache.openjpa.ee,org.apache.openjpa.kernel.exps,javax.naming,javax.rmi,org.xml.sax,org.apache.openjpa.persistence.osgi,javax.sql,org.apache.openjpa.lib.rop,org.apache.openjpa.lib.xml"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.instrumentation.jmx"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.datacache,org.apache.openjpa.instrumentation,org.apache.openjpa.util,org.apache.openjpa.lib.conf,javax.management,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.lib.instrumentation,org.apache.openjpa.kernel"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.abstractstore"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.util,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.kernel,org.apache.openjpa.lib.rop,org.apache.openjpa.meta"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.jdbc"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.persistence,org.apache.openjpa.jdbc.sql,org.apache.openjpa.util,org.apache.openjpa.conf,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.meta,org.apache.commons.lang,org.apache.openjpa.jdbc.meta,org.apache.openjpa.persistence,org.apache.openjpa.jdbc.conf,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.jdbc.meta.strats,org.apache.openjpa.jdbc.schema,serp.util,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.kernel,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.xml,org.xml.sax"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.instrumentation"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.encryption"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.validation"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.validation,org.apache.openjpa.persistence,javax.persistence.spi,org.apache.openjpa.validation,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.log,org.apache.openjpa.conf,org.apache.openjpa.lib.util,javax.persistence,javax.validation.metadata,javax.validation.groups,org.apache.commons.lang"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.log"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.commons.logging,org.apache.log4j,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.util,org.slf4j"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.ant"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.tools.ant.types,org.apache.tools.ant.taskdefs,org.apache.openjpa.lib.conf,org.apache.tools.ant,org.apache.openjpa.lib.util,org.apache.commons.lang"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.slice.jdbc"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="javax.sql,org.apache.openjpa.lib.jdbc,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.slice,org.apache.openjpa.jdbc.conf,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.kernel,org.apache.openjpa.meta,org.apache.openjpa.jdbc.sql,org.apache.openjpa.util,org.apache.openjpa.lib.log,org.apache.openjpa.jdbc.meta,org.apache.openjpa.datacache,org.apache.openjpa.jdbc.schema,org.apache.openjpa.lib.rop,org.apache.openjpa.enhance,org.apache.openjpa.kernel.exps"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.datacache"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="serp.util,org.apache.openjpa.util,org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.commons.lang,org.apache.openjpa.event,org.apache.openjpa.kernel,org.apache.openjpa.lib.util.concurrent,org.apache.openjpa.meta,serp.bytecode,org.apache.openjpa.enhance,org.apache.openjpa.lib.rop,org.apache.commons.collections.map,org.apache.openjpa.kernel.exps"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.meta"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="serp.util,org.apache.openjpa.lib.util,org.xml.sax,org.apache.commons.lang,serp.bytecode.lowlevel,org.apache.openjpa.lib.log,org.apache.commons.lang.exception,org.apache.openjpa.lib.xml,javax.xml.parsers,org.xml.sax.ext,org.xml.sax.helpers,javax.xml.transform,javax.xml.transform.stream,javax.xml.transform.sax"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.identifier"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.commons.lang,org.apache.openjpa.lib.identifier,org.apache.openjpa.jdbc.schema,org.apache.openjpa.jdbc.sql,org.apache.openjpa.jdbc.conf,org.apache.openjpa.lib.conf"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.ant"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.conf,org.apache.openjpa.enhance,org.apache.openjpa.lib.ant,org.apache.openjpa.lib.util,org.apache.tools.ant.types,org.apache.openjpa.meta,org.apache.tools.ant"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.schema"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.conf,org.apache.openjpa.jdbc.meta,org.apache.openjpa.jdbc.sql,org.apache.openjpa.jdbc.identifier,org.apache.commons.lang,org.apache.commons.dbcp,javax.sql,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.util,org.apache.openjpa.lib.jdbc,org.apache.openjpa.util,org.apache.openjpa.lib.log,org.apache.openjpa.kernel,org.apache.openjpa.lib.identifier,org.apache.openjpa.lib.meta,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.lib.xml,org.xml.sax"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.xml"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.util,org.xml.sax,org.apache.commons.lang.exception,javax.xml.parsers,org.w3c.dom"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.sql"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.kernel.exps,org.apache.openjpa.jdbc.meta,org.apache.openjpa.kernel.exps,org.apache.openjpa.jdbc.schema,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.util,serp.util,org.apache.openjpa.lib.util,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.lib.log,org.apache.openjpa.kernel,org.apache.openjpa.meta,javax.sql,org.apache.openjpa.jdbc.conf,org.apache.openjpa.lib.identifier,org.apache.commons.lang,org.apache.openjpa.lib.conf,org.apache.openjpa.lib.jdbc,org.postgresql.largeobject,org.postgresql,org.apache.openjpa.lib.xml,javax.xml.parsers,org.w3c.dom,org.apache.commons.collections.iterators,org.apache.openjpa.jdbc.meta.strats"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.conf"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,serp.util,org.apache.commons.lang,org.apache.openjpa.lib.util.concurrent,javax.naming,org.apache.commons.lang.exception"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.meta"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.lib.meta,org.apache.openjpa.util,serp.util,org.apache.openjpa.conf,org.apache.commons.lang,org.apache.openjpa.enhance,org.apache.openjpa.lib.xml,org.apache.openjpa.lib.conf,org.apache.openjpa.datacache,org.apache.commons.collections.comparators,org.apache.openjpa.kernel,serp.bytecode,org.apache.openjpa.event,org.apache.commons.collections.bidimap"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.event"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.conf,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.util,org.apache.openjpa.kernel,org.apache.openjpa.lib.util.concurrent,org.apache.openjpa.meta,javax.jms,javax.naming,org.apache.openjpa.conf,org.apache.commons.pool,org.apache.commons.pool.impl,serp.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.persistence.osgi"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.osgi.framework,org.apache.openjpa.persistence,org.apache.openjpa.ee,javax.persistence.spi"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.lib.util.concurrent"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.lib.util,org.apache.commons.collections.set"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.kernel.exps"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.kernel,serp.util,org.apache.openjpa.util,org.apache.openjpa.conf,org.apache.openjpa.lib.util,org.apache.openjpa.meta,org.apache.openjpa.enhance,org.apache.commons.lang,org.apache.openjpa.kernel.jpql"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.openjpa.jdbc.meta.strats"/>
+      <attribute name="version" type="Version" value="2.4.2"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.openjpa"/>
+      <attribute name="bundle-version" type="Version" value="2.4.2"/>
+      <directive name="uses" value="org.apache.openjpa.jdbc.meta,org.apache.openjpa.jdbc.kernel,org.apache.openjpa.jdbc.sql,org.apache.openjpa.lib.rop,org.apache.openjpa.kernel,org.apache.openjpa.lib.log,org.apache.openjpa.lib.util,org.apache.openjpa.util,org.apache.openjpa.jdbc.identifier,org.apache.openjpa.jdbc.schema,org.apache.commons.lang,org.apache.openjpa.jdbc.conf,org.apache.openjpa.meta,org.apache.openjpa.enhance,org.apache.openjpa.conf,javax.xml.transform,javax.xml.transform.stream,javax.xml.bind"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=com.ibm.websphere.jtaextensions)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=com.ibm.wsspi.uow)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.annotation)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.annotation.processing)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.jms)(version&gt;=1.1.0)(!(version&gt;=1.2.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.lang.model)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.lang.model.element)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.lang.model.type)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.lang.model.util)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.management)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.naming)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.persistence)(version&gt;=1.1.0)(!(version&gt;=2.1.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.persistence.criteria)(version&gt;=1.1.0)(!(version&gt;=2.1.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.persistence.metamodel)(version&gt;=1.1.0)(!(version&gt;=2.1.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.persistence.spi)(version&gt;=1.1.0)(!(version&gt;=2.1.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.rmi)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.sql)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.tools)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.transaction)(version&gt;=1.1.0)(!(version&gt;=1.3.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.transaction.xa)(version&gt;=1.1.0)(!(version&gt;=1.3.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.validation)(version&gt;=1.0.0)(!(version&gt;=1.1.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.validation.groups)(version&gt;=1.0.0)(!(version&gt;=1.1.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.validation.metadata)(version&gt;=1.0.0)(!(version&gt;=1.1.0)))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.xml.bind)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.xml.parsers)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.xml.transform)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.xml.transform.sax)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.xml.transform.stream)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.bidimap)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.comparators)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.iterators)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.map)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.collections.set)(version&gt;=3.2.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.commons.dbcp)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang)(version&gt;=2.6.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang.exception)(version&gt;=2.6.0)(!(version&gt;=3.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.commons.logging)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.pool)(version&gt;=1.6.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.pool.impl)(version&gt;=1.6.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.log4j)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.tools.ant)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.tools.ant.taskdefs)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.apache.tools.ant.types)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5)(version&gt;=5.0.0)(!(version&gt;=6.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.osgi.framework)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.postgresql)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.postgresql.largeobject)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.slf4j)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.w3c.dom)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.xml.sax)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.xml.sax.ext)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=org.xml.sax.helpers)"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=serp.bytecode)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=serp.bytecode.lowlevel)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=serp.util)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.apache.servicemix.bundles.serp"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="1.14.1.1"/>
@@ -8639,6 +9235,54 @@
       <attribute name="version" type="Version" value="1.14.1"/>
       <attribute name="bundle-symbolic-name" value="org.apache.servicemix.bundles.serp"/>
       <attribute name="bundle-version" type="Version" value="1.14.1.1"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.15.1.1"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="2d74d6c1645697170dab3f8ebb16305f34f1961cf49d10020d1aaf9bdd195f30"/>
+      <attribute name="url" value="org.apache.servicemix.bundles.serp/org.apache.servicemix.bundles.serp-1.15.1.jar"/>
+      <attribute name="size" type="Long" value="227177"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="serp.bytecode.visitor"/>
+      <attribute name="version" type="Version" value="1.15.1"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
+      <directive name="uses" value="serp.bytecode,serp.bytecode.lowlevel"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="serp.bytecode"/>
+      <attribute name="version" type="Version" value="1.15.1"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
+      <directive name="uses" value="serp.bytecode.visitor,serp.bytecode.lowlevel,serp.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="serp.bytecode.lowlevel"/>
+      <attribute name="version" type="Version" value="1.15.1"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
+      <directive name="uses" value="serp.bytecode.visitor,serp.util"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="serp.util"/>
+      <attribute name="version" type="Version" value="1.15.1"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.servicemix.bundles.serp"/>
+      <attribute name="bundle-version" type="Version" value="1.15.1.1"/>
     </capability>
   </resource>
   <resource>
@@ -9025,6 +9669,72 @@
       <attribute name="version" type="Version" value="5.0.4"/>
       <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
       <attribute name="bundle-version" type="Version" value="4.3.0"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5.shade.commons)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5.signature)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5.commons)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5.tree)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="267116b8eb5a30bd5186b91e03be324dc4b6b44d14e137ba8263c9fd8cfcb7a9"/>
+      <attribute name="url" value="org.apache.xbean.asm5-shaded/org.apache.xbean.asm5-shaded-4.5.0.jar"/>
+      <attribute name="size" type="Long" value="144663"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.xbean.asm5.shade.commons"/>
+      <attribute name="version" type="Version" value="5.0.4"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.xbean.asm5"/>
+      <attribute name="version" type="Version" value="5.0.4"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.xbean.asm5.signature"/>
+      <attribute name="version" type="Version" value="5.0.4"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.xbean.asm5.commons"/>
+      <attribute name="version" type="Version" value="5.0.4"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.xbean.asm5.tree"/>
+      <attribute name="version" type="Version" value="5.0.4"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.xbean.asm5-shaded"/>
+      <attribute name="bundle-version" type="Version" value="4.5.0"/>
     </capability>
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.xbean.asm5.shade.commons)(version&gt;=5.0.4)(version&lt;=5.0.4))"/>

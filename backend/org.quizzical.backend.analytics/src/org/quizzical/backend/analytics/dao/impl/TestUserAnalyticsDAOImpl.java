@@ -1,39 +1,37 @@
 package org.quizzical.backend.analytics.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
-import org.apache.commons.math.fraction.Fraction;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
+import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
-import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
+import org.quizzical.backend.analytics.api.model.TestCategoryRatingSubmission;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 import org.quizzical.backend.analytics.model.jpa.JPATestCategoryAttempt;
 import org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating;
+import org.quizzical.backend.analytics.model.jpa.JPATestCategoryRatingSubmission;
 import org.quizzical.backend.analytics.model.jpa.JPATestUserAnalytics;
 import org.quizzical.backend.security.authorization.api.model.user.User;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
 
 
 @SuppressWarnings("restriction")
@@ -100,25 +98,28 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		List<TestCategoryRating> resultList = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
-			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
-			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
 			
-			final Map<ParameterExpression,Object> pes = new HashMap<>();
-			
-			//user
 			ParameterExpression<Long> userIdParam = builder.parameter(Long.class);
-			query.select(rootEntity).where(builder.equal(rootEntity.get("analytics").get("userId"),userIdParam));
-			pes.put(userIdParam, user.getId());
+			ParameterExpression<Integer> startRatingCutoffInclExpr = builder.parameter(Integer.class);
+			ParameterExpression<Integer> endRatingCutoffInclExpr = builder.parameter(Integer.class);
+
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPATestCategoryRating> cq = qb.createQuery(JPATestCategoryRating.class);
+			Root<JPATestCategoryRating> rootEntity = cq.from(JPATestCategoryRating.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("analytics").get("userId"),userIdParam),
+					builder.ge(rootEntity.get("rating"),startRatingCutoffInclExpr),
+					builder.le(rootEntity.get("rating"),endRatingCutoffInclExpr
+							)));
 			
-			//userId
-			ParameterExpression<Integer> ratingParam = builder.parameter(Integer.class);
-			query.select(rootEntity).where(builder.and(builder.ge(rootEntity.get("rating"),startRatingCutoffIncl),builder.le(rootEntity.get("rating"),endRatingCutoffIncl)));
-			pes.put(ratingParam, user.getId());
+			cq.orderBy(builder.asc(rootEntity.get("rating")));
 			
-			query.orderBy(builder.asc(rootEntity.get("rating")));
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(userIdParam, user.getId());
+			typedQuery.setParameter(startRatingCutoffInclExpr, startRatingCutoffIncl);
+			typedQuery.setParameter(endRatingCutoffInclExpr, endRatingCutoffIncl);
 			
-			resultList = findWithDynamicQueryAndParams(query,pes);
-			
+			resultList = typedQuery.getResultList();
 			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
 		}
 		catch (Exception e) {
@@ -178,30 +179,60 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		{
 			JPATestUserAnalytics td = toJPAEntity(record);
 			JPABaseEntity res = super.add(td);
-			existingTestDesignTemplate = JPAEntityUtil.copy(res, TestUserAnalytics.class);
+			existingTestDesignTemplate = toDTO((JPATestUserAnalytics)res);//JPAEntityUtil.copy(res, TestUserAnalytics.class);
 		}
 
 		return existingTestDesignTemplate;
 	}
 	
+	private TestUserAnalytics toDTO(JPATestUserAnalytics res) {
+		TestUserAnalytics anaDTO = new  TestUserAnalytics(res.getUserId(), res.getCode(), res.getName());
+		List<TestCategoryRating> ratings = res.getRatings().stream()
+			.map(r -> {
+				TestCategoryRating rDTO = JPAEntityUtil.copy(r, TestCategoryRating.class);
+				
+				List<TestCategoryRatingSubmission> subs = r.getSubmissions().stream()
+					.map(s -> {
+						return JPAEntityUtil.copy(s, TestCategoryRatingSubmission.class);
+					})
+					.collect(Collectors.toList());
+				
+				rDTO.setRatingSubmissions(subs);
+				
+				return rDTO;
+			})
+			.collect(Collectors.toList());
+		
+		anaDTO.setRatings(ratings);
+		
+		return anaDTO;
+	}
+
 	private JPATestUserAnalytics toJPAEntity(TestUserAnalytics record) {
-		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getId(),record.getCode(),record.getName());
+		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getUserId(),record.getCode(),record.getName());
 		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(recordCopy, JPATestUserAnalytics.class);
     	final List<JPATestCategoryRating> ratings = record.getRatings()
     		.stream()
     		.map(rating -> {
 				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName());
-				JPATestCategoryRating jpaRatingRecord = (JPATestCategoryRating) JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
-		    	final List<JPATestCategoryAttempt> attempts = rating.getAttempts()
+				JPATestCategoryRating jpaRatingRecord = JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
+		    	final Set<JPATestCategoryRatingSubmission> submissionEnties = rating.getRatingSubmissions()
 		        		.stream()
-		        		.map(attempt -> {
-		        			JPATestCategoryAttempt jpaTestCategoryAttempt = (JPATestCategoryAttempt) JPAEntityUtil.copy(attempt, JPATestCategoryAttempt.class);
-		        			jpaTestCategoryAttempt.setRating(jpaRatingRecord);
-		    				return jpaTestCategoryAttempt;
+		        		.map(submission -> {
+		        			JPATestCategoryRatingSubmission submissionEntity = new JPATestCategoryRatingSubmission(submission.getDateAttempted());
+		        			List<JPATestCategoryAttempt> attemptEntities = submission.getAttempts().stream()
+		        					.map(a -> {
+		        						JPATestCategoryAttempt attempt = new JPATestCategoryAttempt(a);
+		        						attempt.setRatingSubmission(submissionEntity);
+		        						return attempt;
+		        					}).collect(Collectors.toList());
+		        			submissionEntity.setAttempts(attemptEntities);
+		        			submissionEntity.setRating(jpaRatingRecord);
+		    				return submissionEntity;
 		    	    	})
-		        		.collect(Collectors.toList());
-		    	jpaRatingRecord.getAttempts().addAll(attempts);
-		    	calculateRating(jpaRatingRecord);
+		        		.collect(Collectors.toSet());
+		    	jpaRatingRecord.setSubmissions(submissionEnties);
+		    	jpaRatingRecord.calculateScore();
 		    	jpaRatingRecord.setAnalytics(jpaTestUserAnalytics);
 				return jpaRatingRecord;
 	    	})
@@ -260,50 +291,15 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		for (JPATestCategoryRating rating : analytics.getRatings()) {
 			final TestCategoryRating newRating = newCategoryRatingsMap.get(rating.getCategoryId());
 			if (newRating != null) {
-				for (TestCategoryAttempt newAttempt : newRating.getAttempts()) {
-					final JPATestCategoryAttempt newJPAAttempt = JPAEntityUtil.copy(newAttempt, JPATestCategoryAttempt.class);
-					rating.getAttempts().add(newJPAAttempt);
-				}
-				calculateRating(rating);
+				newRating.getRatingSubmissions().stream()
+					.forEach(newSubmission -> {
+						final JPATestCategoryRatingSubmission newSubmissionEntity = JPAEntityUtil.copy(newSubmission, JPATestCategoryRatingSubmission.class);
+						rating.getSubmissions().add(newSubmissionEntity);
+					});
+				rating.calculateScore();
+				System.out.println(String.format("User (%d)/Rating %d in Category (%s)",analytics.getUserId(),rating.getRating(),rating.getCategoryId()));
 			}
-			System.out.println(String.format("User (%d)/Rating %d in Category (%s)",analytics.getUserId(),rating.getRating(),rating.getCategoryId()));
 		}
 		update(analytics);
 	}
-
-	private void calculateRating(JPATestCategoryRating rating) {
-		final List<JPATestCategoryAttempt> correctAttempts = rating.getAttempts()
-			    .stream()
-			    .filter(p -> p.getSuccessful())
-			    .collect(Collectors.toList());
-		int val = (int)(new Fraction(correctAttempts.size(),rating.getAttempts().size()).doubleValue()*100);
-		rating.setRating(val);
-		rating.setTotalAttemptsCorrect(correctAttempts.size());
-		rating.setTotalAttemptsTotal(rating.getAttempts().size());
-		
-		Date dateOfLastAttempt = rating.getAttempts().stream().map(u -> u.getDateAttempted()).max(Date::compareTo).get();
-		rating.setDateOfLastAttempt(dateOfLastAttempt);
-		
-		//Update rating for recent attempts
-		final JPATestCategoryAttempt  recentAttempt = rating.getAttempts()
-			    .stream()
-			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
-			    .findFirst().get();
-		rating.setLastAttemptTestId(recentAttempt.getTestId());
-		
-		final long recentlyAttempted = rating.getAttempts()
-			    .stream()
-			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
-			    .count();
-		final long recentlyAttemptedSuccessfully = rating.getAttempts()
-			    .stream()
-			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt && p.getSuccessful())
-			    .count();
-		val = (int)(new Fraction((int)recentlyAttemptedSuccessfully,(int)recentlyAttempted).doubleValue()*100);
-		
-		rating.setLastAttemptCorrect((int)recentlyAttemptedSuccessfully);
-		rating.setLastAttemptTotal((int)recentlyAttempted);
-		rating.setLastAttemptRating(val);
-	}
-	
 }

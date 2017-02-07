@@ -299,7 +299,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
        	quizSubmission.setResponses(correctedResponses);
        	
        	//--Email report
-       	if (!(user.getAdmin() || user.getQa()))
+       	if (!(user.getAdmin() || user.getQa()) && user.isActive())
        		reportStatsViaEmail(user);
        	
     	return quizSubmission;

@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.gauntlet.core.model.BaseEntity;
 
 public class TestCategoryRating extends BaseEntity implements Serializable {
@@ -31,7 +33,7 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	
 	private TestUserAnalytics analytics;
 	
-	private List<TestCategoryAttempt>  attempts;
+	private List<TestCategoryRatingSubmission>  ratingSubmissions;
 	
 	public TestCategoryRating() {
 	}
@@ -44,7 +46,6 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	public TestCategoryRating(final Long categoryId, final String name, final String description) {
 		this.categoryId = categoryId;
 		this.name = name;
-		this.code = code;	
 		this.description = description;
 	}
 	
@@ -71,14 +72,14 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public List<TestCategoryAttempt> getAttempts() {
-		if (this.attempts == null)
-			this.attempts = new ArrayList<>();
-		return attempts;
+	public List<TestCategoryRatingSubmission> getRatingSubmissions() {
+		if (this.ratingSubmissions == null)
+			this.ratingSubmissions = new ArrayList<>();
+		return ratingSubmissions;
 	}
 
-	public void setAttempts(List<TestCategoryAttempt> attempts) {
-		this.attempts = attempts;
+	public void setRatingSubmissions(List<TestCategoryRatingSubmission> ratingSubmissions) {
+		this.ratingSubmissions = ratingSubmissions;
 	}
 	
 	
@@ -108,7 +109,17 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	}
 
 	public void addAttempt(TestCategoryAttempt attempt) {
-		getAttempts().add(attempt);
+		TestCategoryRatingSubmission rs = null;
+		Optional<TestCategoryRatingSubmission> rsOptional = this.getRatingSubmissions().stream()
+			. filter(s -> s.getDateAttempted() == attempt.getDateAttempted())
+		    .findFirst();
+		if (!rsOptional.isPresent()) {
+			rs = new TestCategoryRatingSubmission(attempt.getDateAttempted());
+			getRatingSubmissions().add(rs);
+		}
+		else
+			rs = rsOptional.get();
+		rs.getAttempts().add(attempt);
 	}
 
 	public Long getLastAttemptTestId() {

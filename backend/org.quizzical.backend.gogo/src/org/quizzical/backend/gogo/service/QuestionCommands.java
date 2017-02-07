@@ -13,12 +13,18 @@ import java.util.Dictionary;
 
 public class QuestionCommands {
     public final static String SCOPE = "qstn";
-    public final static String[] FUNCTIONS = new String[] { "show", "delete"};
+    public final static String[] FUNCTIONS = new String[] { "show","showbyid","delete"};
 
     @Descriptor("Shows a question by code")
     public static String show(@Descriptor("Unique problem code") String code) throws Exception {
     	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
         return svc.getByCode(code).toString();
+    }
+    
+    @Descriptor("Shows a question by id")
+    public static String showbyid(@Descriptor("Unique problem id") Long id) throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+        return svc.getByPrimary(id).toString();
     }
     
     @Descriptor("Deletes a question by code")

@@ -36,6 +36,7 @@
 		<!-- ANA -->
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryAttempt</class>
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating</class>
+		<class>org.quizzical.backend.analytics.model.jpa.JPATestCategoryRatingSubmission</class>
 		<class>org.quizzical.backend.analytics.model.jpa.JPATestUserAnalytics</class>
 		
 

@@ -11,7 +11,7 @@ public interface IUserDAOService {
 	//
 	public User get(long id);
 	
-	public List<User> getAll();
+	public List<User> getAll() throws ApplicationException;
 	
 	public User getByEmail(String email) throws ApplicationException;
 	
@@ -31,7 +31,7 @@ public interface IUserDAOService {
 	
 	public User provide(User record) throws Exception;
 
-	public List<User> getAllActiveUsers();
+	public List<User> getAllActiveUsers() throws ApplicationException;
 	
 	public User getUserByEmailAndPassword(String email, String password) throws UserNotFoundException, ApplicationException;
 
