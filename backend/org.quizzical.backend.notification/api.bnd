@@ -1,4 +1,5 @@
 Export-Package: \
+	org.quizzical.backend.notification.api.dao,\
 	org.quizzical.backend.notification.api,\
 	org.quizzical.backend.notification.api.model
 Bundle-Version: 1.0.0.${tstamp}

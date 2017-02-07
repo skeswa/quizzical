@@ -5,10 +5,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class JPASubscriberEmailNotification extends JPASubscriberNotification {
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -8365667417766713633L;
 
 	@Column(length=1024)
@@ -16,6 +12,9 @@ public class JPASubscriberEmailNotification extends JPASubscriberNotification {
     
     @Column(length=256)
     private String subject;
+    
+    public JPASubscriberEmailNotification() {
+    }
 
 	public String getSentToEmailList() {
 		return sentToEmailList;

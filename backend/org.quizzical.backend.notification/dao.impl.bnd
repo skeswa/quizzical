@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Bundle-Activator: org.quizzical.backend.notification.dao.impl.osgi.Activator
+Private-Package: \
+	org.quizzical.backend.notification.dao.impl,\
+	org.quizzical.backend.notification.dao.impl.osgi

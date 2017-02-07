@@ -17,7 +17,7 @@
 	<!-- JTA -->
 	<!-- ******************************************************************* -->
 
-	<persistence-unit name="q7l_ana" transaction-type="JTA">
+	<persistence-unit name="q7l_ntfy" transaction-type="JTA">
 		<jta-data-source>
 			<![CDATA[
 			osgi:javax.sql.DataSource/(name=jta-gnt)
