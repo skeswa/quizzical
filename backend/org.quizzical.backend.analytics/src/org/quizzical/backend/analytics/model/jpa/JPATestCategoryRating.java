@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -47,7 +48,7 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	@ManyToOne
 	private JPATestUserAnalytics analytics;
 	
-	@OneToMany(targetEntity = JPATestCategoryRatingSubmission.class, cascade=CascadeType.ALL, mappedBy="rating")
+	@OneToMany(targetEntity = JPATestCategoryRatingSubmission.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="rating")
 	private Set<JPATestCategoryRatingSubmission>  ratingSubmissions = new HashSet<JPATestCategoryRatingSubmission>();
 	
 	public JPATestCategoryRating() {
@@ -95,6 +96,12 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 
 	public Set<JPATestCategoryRatingSubmission> getSubmissions() {
 		return ratingSubmissions;
+	}
+	
+	public Set<JPATestCategoryRatingSubmission> addSubmission(JPATestCategoryRatingSubmission submission) {
+		System.out.print(String.format("Adding %d th submission to rating %s", getSubmissions().size()+1,getName()));
+		getSubmissions().add(submission);
+		return getSubmissions();
 	}
 
 	public void setSubmissions(Set<JPATestCategoryRatingSubmission> ratingSubmissions) {
@@ -144,7 +151,9 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 	public Integer calculateScore() {
 		//Total avg rating
 		final int sumOfScores = getSubmissions().stream().mapToInt(s -> {
-			return s.calculateScore();
+			Integer sscore = s.calculateScore();
+			System.out.println(String.format("Calculated submission %s with score %d",s.getDateAttempted().toString(),sscore));
+			return sscore;
 		}).sum();
 		int avrgScore = (int)(new Fraction(sumOfScores,getSubmissions().size()).doubleValue());
 		setRating(avrgScore);

@@ -10,6 +10,7 @@ import org.quizzical.backend.gogo.collection.CollectionCommands;
 import org.quizzical.backend.gogo.execute.ExecuteCommands;
 import org.quizzical.backend.gogo.execute.ScriptExecutor;
 import org.quizzical.backend.gogo.service.ContentItemCommands;
+import org.quizzical.backend.gogo.service.NotifyCommands;
 import org.quizzical.backend.gogo.service.ProblemCommands;
 import org.quizzical.backend.gogo.service.QuestionCommands;
 import org.quizzical.backend.gogo.service.QuizCommands;
@@ -65,7 +66,12 @@ public class Activator extends DependencyActivatorBase {
         manager.add(createComponent()
                 .setInterface(Object.class.getName(), createProps(SMSCommands.SCOPE, SMSCommands.FUNCTIONS))
                 .setImplementation(SMSCommands.class)
-                );        
+                );  
+        
+        manager.add(createComponent()
+                .setInterface(Object.class.getName(), createProps(NotifyCommands.SCOPE, NotifyCommands.FUNCTIONS))
+                .setImplementation(NotifyCommands.class)
+                );   
         
         manager.add(createComponent()
             .setInterface(Object.class.getName(), createProps(CollectionCommands.SCOPE, CollectionCommands.FUNCTIONS))

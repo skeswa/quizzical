@@ -1,6 +1,8 @@
 package org.quizzical.backend.reporting.analytics.impl;
 
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
@@ -18,6 +20,8 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	
 	public static final String Q7L_REPORTING_EMAIL_RESULTS = "q7l.reporting.emailresults";
 	
+	public static final String Q7L_REPORTING_EMAIL_BCC = "q7l.reporting.emailbcc";
+	
 	private String backendHostname;
 	private Integer backendPort;
 	private String backendProtocol;
@@ -29,6 +33,7 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 	private String frontendContextpath;	
 	
 	private Boolean handleEmailResultsEvent = false;
+	private List<String> bcc;
 	
 	@Override
 	public void updated(Dictionary props) throws ConfigurationException {
@@ -49,7 +54,11 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 		this.frontendContextpath = (String)props.get(Q7L_FRONTEND_SERVER_HTTP_CONTEXT_PATH);
 		
 		if (props.get(Q7L_REPORTING_EMAIL_RESULTS) != null && props.get(Q7L_REPORTING_EMAIL_RESULTS).toString().length() > 0)
-			this.handleEmailResultsEvent = props.get(Q7L_REPORTING_EMAIL_RESULTS).toString().equalsIgnoreCase("true") ? true : false;		
+			this.handleEmailResultsEvent = props.get(Q7L_REPORTING_EMAIL_RESULTS).toString().equalsIgnoreCase("true") ? true : false;	
+		
+		if (props.get(Q7L_REPORTING_EMAIL_BCC) != null && props.get(Q7L_REPORTING_EMAIL_BCC).toString().length() > 0)
+			this.bcc = Arrays.asList(props.get(Q7L_REPORTING_EMAIL_BCC).toString().split(","));
+
 	}
 
 	public String getBackendHostname() {
@@ -95,5 +104,13 @@ public class UserAnalyticsReportingConfiguration implements ManagedService {
 			return String.format("%s://%s:%d", getFrontendProtocol(), getFrontendHostname(), getFrontendPort());
 		else
 			return String.format("%s://%s", getFrontendProtocol(), getFrontendHostname());
+	}
+
+	public List<String> getBcc() {
+		return bcc;
+	}
+
+	public void setBcc(List<String> bcc) {
+		this.bcc = bcc;
 	}
 }

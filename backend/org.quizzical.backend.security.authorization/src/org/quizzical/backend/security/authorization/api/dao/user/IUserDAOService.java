@@ -25,6 +25,8 @@ public interface IUserDAOService {
 
 	public User update(User record) throws ApplicationException;
 	
+	User updateWithPassword(User record) throws ApplicationException;
+	
 	public User activate(User record) throws ApplicationException;
 	
 	public User deactivate(User record) throws ApplicationException;

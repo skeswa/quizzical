@@ -13,6 +13,8 @@ public class TestCategoryAttempt extends BaseEntity implements Serializable {
 	private Date dateAttempted;
 	private Boolean successful;
 	private Boolean skipped;
+
+	private Integer secondsElapsed;
 	
 	public Long getTestProblemResponseId() {
 		return testProblemId;
@@ -51,15 +53,23 @@ public class TestCategoryAttempt extends BaseEntity implements Serializable {
 	public void setTestProblemId(Long testProblemId) {
 		this.testProblemId = testProblemId;
 	}
+	
+	public Integer getSecondsElapsed() {
+		return secondsElapsed;
+	}
+	public void setSecondsElapsed(Integer secondsElapsed) {
+		this.secondsElapsed = secondsElapsed;
+	}
 	public TestCategoryAttempt() {
 	}
 
-	public TestCategoryAttempt(Long testId, Long testProblemId, Date dateAttempted, Boolean successful, Boolean skipped) {
+	public TestCategoryAttempt(Long testId, Long testProblemId, Date dateAttempted, Boolean successful, Boolean skipped, Integer secondsElapsed) {
 		super();
 		this.testProblemId = testProblemId;
 		this.dateAttempted = dateAttempted;
 		this.successful = successful;
 		this.skipped = skipped;
 		this.testId = testId;
+		this.secondsElapsed = secondsElapsed;
 	}
 }

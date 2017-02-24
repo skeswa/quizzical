@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -37,7 +38,7 @@ public class JPATestCategoryRatingSubmission extends JPABaseEntity implements Se
 	@ManyToOne
 	private JPATestCategoryRating rating;
 	
-	@OneToMany(targetEntity = JPATestCategoryAttempt.class, cascade=CascadeType.ALL, mappedBy="ratingSubmission")
+	@OneToMany(targetEntity = JPATestCategoryAttempt.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="ratingSubmission")
 	private List<JPATestCategoryAttempt>  attempts = new ArrayList<JPATestCategoryAttempt>();
 	
 	public JPATestCategoryRatingSubmission() {
@@ -122,6 +123,9 @@ public class JPATestCategoryRatingSubmission extends JPABaseEntity implements Se
 			    .filter(p -> p.getSuccessful())
 			    .collect(Collectors.toList());
 		int val = (int)(new Fraction(correctAttempts.size(),getAttempts().size()).doubleValue()*100);
+		
+		System.out.println(String.format("Calculated attempt score %d (%d/%d) of submission %s",val,correctAttempts.size(),getAttempts().size(),getDateAttempted().toString()));
+		
 		final List<JPATestCategoryAttempt> skippedAttempts = getAttempts()
 			    .stream()
 			    .filter(p -> p.getSkipped())

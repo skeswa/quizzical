@@ -1,6 +1,8 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
+import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
+import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.quizzical.backend.scheduler.api.IQuizTakerReminderService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
@@ -14,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "add", "welcome", "whois", "deactivate", "activate","showactive","lru","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate", "activate","showactive","lru","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -52,14 +54,14 @@ public class UserCommands {
        	return "User ("+user.getFirstName()+") activated";
     } 
     
-    @Descriptor("Deactive user")
+    @Descriptor("Deactivate user")
     public static String deactivate(@Descriptor("Email address as userid") String userId) throws Exception {
     	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
     	User user = svc.getUserByEmail(userId);
     	if (user == null)
     		return "User ("+userId+") not found";
     		
-       	user = svc.activate(user);
+       	user = svc.deactivate(user);
        	return "User ("+user.getFirstName()+") deactivated";
     } 
     
@@ -128,4 +130,17 @@ public class UserCommands {
     		
        	return "Reminded ("+user.getFirstName()+") successfully";
     } 
+    
+    @Descriptor("List todays submissions")
+    public static String submissions(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    	
+    	IQuizSubmissionDAOService qsvc = (IQuizSubmissionDAOService)createServiceFromServiceType(IQuizSubmissionDAOService.class);
+    	List<QuizSubmission> subs = qsvc.findQuizSubmissionsMadeToday(user);
+    		
+       	return String.format("Found %d submissions: %s",subs.size(),subs.toString());
+    }
 }

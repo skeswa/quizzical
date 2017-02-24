@@ -72,9 +72,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			pes.put(userIdParam, user.getId());
 			
 			//userId
-			ParameterExpression<Integer> ratingParam = builder.parameter(Integer.class);
-			query.select(rootEntity).where(builder.le(rootEntity.get("rating"),50));
-			pes.put(ratingParam, user.getId());
+/*			ParameterExpression<Integer> ratingParam = builder.parameter(Integer.class);
+			query.select(rootEntity).where(builder.le(rootEntity.get("rating"),ratingParam));
+			pes.put(ratingParam, user.getId());*/
 			
 			query.orderBy(builder.asc(rootEntity.get("rating")));
 			
@@ -294,10 +294,15 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 				newRating.getRatingSubmissions().stream()
 					.forEach(newSubmission -> {
 						final JPATestCategoryRatingSubmission newSubmissionEntity = JPAEntityUtil.copy(newSubmission, JPATestCategoryRatingSubmission.class);
-						rating.getSubmissions().add(newSubmissionEntity);
+						newSubmissionEntity.getAttempts().stream()
+							.forEach(att -> {
+								att.setRatingSubmission(newSubmissionEntity);
+							});
+						newSubmissionEntity.setRating(rating);
+						rating.addSubmission(newSubmissionEntity);
 					});
 				rating.calculateScore();
-				System.out.println(String.format("User (%d)/Rating %d in Category (%s)",analytics.getUserId(),rating.getRating(),rating.getCategoryId()));
+				System.out.println(String.format("User (%d)/Rating %d in Category (%s)",analytics.getUserId(),rating.getRating(),rating.getName()));
 			}
 		}
 		update(analytics);

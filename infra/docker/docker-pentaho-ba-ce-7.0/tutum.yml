@@ -1,0 +1,4 @@
+biserver-ce:
+  image: 'bytekast/docker-pentaho-ce-6.0:latest'
+  ports:
+    - '80:8080'

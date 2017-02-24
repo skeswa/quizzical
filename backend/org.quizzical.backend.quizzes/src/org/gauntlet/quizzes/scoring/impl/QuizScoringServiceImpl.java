@@ -105,10 +105,10 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 					categoryRatingsMap.put(subType.getId(), rating);
 					
 					if (problemResponse.getSkipped())
-						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),false,true);
+						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),false,true,problemResponse.getSecondsElapsed());
 					else {
 						final Boolean correct = gradeProblem(problemResponse, problem);
-						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),correct,false);
+						attempt = new TestCategoryAttempt(quizProblem.getQuiz().getId(), quizProblemId, quizSubmission.getDateCreated(),correct,false,problemResponse.getSecondsElapsed());
 					}
 					rating.addAttempt(attempt);
 					
@@ -191,7 +191,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
 				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 				rating.setRating(0);
-				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false);
+				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false,-1);
 				rating.setRatingSubmissions(Collections.emptyList());
 				tua.addRating(rating);
 			}

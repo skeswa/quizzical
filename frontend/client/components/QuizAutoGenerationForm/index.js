@@ -39,7 +39,7 @@ const QUIZ_LENGTH_NAMES = [
   'Very Long',
   'Full Size'
 ]
-const MIN_QUESTIONS_COUNT = 3
+const MIN_QUESTIONS_COUNT = 15
 const MAX_QUESTIONS_COUNT = 20
 const CATEGORY_SELECT_STYLE = { maxWidth: '100%' }
 
@@ -57,7 +57,7 @@ class QuizAutoGenerationForm extends Component {
   }
 
   state = {
-    quizLength:                     1,
+    quizLength:                     2,
     selectedCategoryId:             null,
     generationStrategy:             GENERATION_STRATEGY_BY_WEAKNESS,
     categorySelectHeight:           72,

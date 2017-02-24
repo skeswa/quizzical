@@ -27,12 +27,12 @@ public class SMSCommands {
     	IAlertNotifier svc = (IAlertNotifier)createServiceFromServiceType(IAlertNotifier.class);
 		String body = String.format(message, name);
 		NotificationMessage sms = new NotificationMessage(mobileNumber, body, title);
-    	svc.testSMS(mobileNumber);
+    	svc.notifyViaSMS(sms);
         return "Text sent successfully!";
     }  
     
     @Descriptor("Text mobile")
-    public static String text(@Descriptor("Mobile #") List<String> mobileNumberList, @Descriptor("Recepient name") String name, @Descriptor("Message") String message, @Descriptor("Title") String title) throws Exception {
+    public static String textList(@Descriptor("Mobile #") List<String> mobileNumberList, @Descriptor("Recepient name") String name, @Descriptor("Message") String message, @Descriptor("Title") String title) throws Exception {
     	IAlertNotifier svc = (IAlertNotifier)createServiceFromServiceType(IAlertNotifier.class);
 		String body = String.format(message, name);
 		NotificationMessage sms = new NotificationMessage(mobileNumberList, body, title);

@@ -80,6 +80,13 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 
 	@Override
 	public User update(User record) throws ApplicationException {
+		JPAUser entity = JPAEntityUtil.copy(record, JPAUser.class);
+		entity = (JPAUser) super.merge(entity);
+		return JPAEntityUtil.copy(entity, User.class);
+	}
+	
+	@Override
+	public User updateWithPassword(User record) throws ApplicationException {
 		if (record.isPasswordEncrypted())
 			record.setPassword(DigestUtils.sha256Hex(record.getPassword()));
 		
@@ -89,13 +96,13 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	}
 	
 	public User activate(User record) throws ApplicationException {
-		User usr = getByCode(record.getCode());
+		User usr = getByEmail(record.getEmailAddress());
 		usr.setActive(true);
 		return update(usr);		
 	}
 	
 	public User deactivate(User record) throws ApplicationException {
-		User usr = getByCode(record.getCode());
+		User usr = getByEmail(record.getEmailAddress());
 		usr.setActive(false);
 		return update(usr);				
 	}
@@ -103,7 +110,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	@Override
 	public User provide(User record)
 			throws Exception {
-		User existingProblem = getByCode(record.getCode());
+		User existingProblem = getByEmail(record.getEmailAddress());
 		if (Validator.isNull(existingProblem))
 		{
 			existingProblem = add(record);

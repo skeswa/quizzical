@@ -10,6 +10,9 @@ import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface IQuizProblemResponseDAOService extends IBaseService {
+	public static final Integer AVG_RESPONSE_TIME_IN_SECS_CALCULATOR_PER_PROBLEM = 77;
+	public static final Integer AVG_RESPONSE_TIME_IN_SECS_NON_CALCULATOR_PER_PROBLEM = 75;
+	
 	public QuizProblemResponse add(QuizProblemResponse record) throws ApplicationException;
 	
 	public QuizProblemResponse update(QuizProblemResponse record) throws ApplicationException;
@@ -19,4 +22,8 @@ public interface IQuizProblemResponseDAOService extends IBaseService {
 	public List<QuizProblemResponse> findAll() throws ApplicationException;
 
 	public List<Long> getAllUserSkippedOrIncorrectProblemIds(User user, Integer limit) throws ApplicationException;
+
+	public List<Long> getAllUserCorrectAndWithinTimeProblemIds(User user) throws ApplicationException;
+
+	List<Long> getAllUserPracticedProblemIds(User user) throws ApplicationException;
 }

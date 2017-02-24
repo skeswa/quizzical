@@ -23,4 +23,7 @@ public interface Constants {
 	
 	public static final String QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE = "SkippedOrIncorrect";
 	public static final String QUIZ_TYPE_SKIPPED_OR_INCORRECT_NAME = "Skipped Or Incorrect Quiz";
+	
+	public static final String QUIZ_TYPE_UNPRACTICED_CODE = "Unpracticed";
+	public static final String QUIZ_TYPE_UNPRACTICED_NAME = "Unpracticed Quiz";
 }

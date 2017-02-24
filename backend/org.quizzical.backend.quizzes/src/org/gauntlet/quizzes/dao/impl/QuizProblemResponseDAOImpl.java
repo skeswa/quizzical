@@ -60,6 +60,42 @@ public class QuizProblemResponseDAOImpl extends BaseServiceImpl implements IQuiz
 		return result;		
 	}
 	
+	
+	@Override
+	public List<Long> getAllUserPracticedProblemIds(User user) throws ApplicationException {
+		List<Long> res;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizProblemResponse> query = builder.createQuery(JPAQuizProblemResponse.class);
+			Root<JPAQuizProblemResponse> rootEntity = query.from(JPAQuizProblemResponse.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//userId
+			ParameterExpression<Long> pid = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("submission").get("quiz").get("userId"),pid));
+			pes.put(pid, user.getId());
+			
+			List<JPAQuizProblemResponse> resultList = findWithDynamicQueryAndParams(query,pes);
+			
+			res = resultList.stream()
+				.map(qp -> {
+					Long pId;
+					try {
+						pId = ((JPAQuizProblem)findByPrimaryKey(JPAQuizProblem.class,qp.getQuizProblemId())).getProblemId();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					return pId;
+					})
+				.collect(Collectors.toList());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;			
+	}
+	
 	@Override
 	public List<Long> getAllUserSkippedOrIncorrectProblemIds(User user, Integer limit) throws ApplicationException {
 		List<Long> res;
@@ -75,15 +111,72 @@ public class QuizProblemResponseDAOImpl extends BaseServiceImpl implements IQuiz
 			ParameterExpression<Long> pid = builder.parameter(Long.class);
 			query.select(rootEntity).where(builder.and(
 					builder.equal(rootEntity.get("submission").get("quiz").get("userId"),pid),
-					builder.or(builder.equal(rootEntity.get("correct"),pbool),builder.equal(rootEntity.get("correct"),pbool))
+					builder.or(builder.equal(rootEntity.get("correct"),pbool),builder.equal(rootEntity.get("skipped"),pbool))
 					));
 			pes.put(pid, user.getId());
 			pes.put(pbool, true);
 			
-			List<JPAQuizProblem> resultList = findWithDynamicQueryAndParams(query,pes,0,limit);
+			List<JPAQuizProblemResponse> resultList = findWithDynamicQueryAndParams(query,pes,0,limit);
 			
 			res = resultList.stream()
-				.map(qp -> qp.getProblemId())
+				.map(qp -> {
+					Long pId;
+					try {
+						pId = ((JPAQuizProblem)findByPrimaryKey(JPAQuizProblem.class,qp.getQuizProblemId())).getProblemId();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					return pId;
+					})
+				.collect(Collectors.toList());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;			
+	}
+	
+	@Override
+	public List<Long> getAllUserCorrectAndWithinTimeProblemIds(User user) throws ApplicationException {
+		List<Long> res;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizProblemResponse> query = builder.createQuery(JPAQuizProblemResponse.class);
+			Root<JPAQuizProblemResponse> rootEntity = query.from(JPAQuizProblemResponse.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//userId
+			ParameterExpression<Boolean> pbool = builder.parameter(Boolean.class);
+			ParameterExpression<Boolean> pskipped = builder.parameter(Boolean.class);
+			ParameterExpression<Integer> pelapsed = builder.parameter(Integer.class);
+			
+			ParameterExpression<Long> pid = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("submission").get("quiz").get("userId"),pid),
+					builder.equal(rootEntity.get("skipped"),pskipped),
+					builder.equal(rootEntity.get("correct"),pbool),
+					builder.le(rootEntity.get("secondsElapsed"),pelapsed)
+					));
+			pes.put(pid, user.getId());
+			pes.put(pskipped, false);
+			pes.put(pbool, true);
+			pes.put(pelapsed, AVG_RESPONSE_TIME_IN_SECS_CALCULATOR_PER_PROBLEM);
+			
+			query.orderBy(builder.asc(rootEntity.get("secondsElapsed")));
+			
+			List<JPAQuizProblemResponse> resultList = findWithDynamicQueryAndParams(query,pes);
+			
+			res = resultList.stream()
+				.map(qp -> {
+					Long pId;
+					try {
+						pId = ((JPAQuizProblem)findByPrimaryKey(JPAQuizProblem.class,qp.getQuizProblemId())).getProblemId();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					return pId;
+					})
 				.collect(Collectors.toList());
 		}
 		catch (Exception e) {

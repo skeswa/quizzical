@@ -40,4 +40,9 @@ public class QuizSubmission extends BaseEntity implements Serializable {
 	public void setResponses(List<QuizProblemResponse> responses) {
 		this.responses = responses;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("{\"id\":%d,\"date\":\"%s\",\"code\":\"%s\"}",getId(),getDateCreated(),getCode());
+	}
 }

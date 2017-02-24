@@ -10,6 +10,7 @@ public class User extends BaseEntity{
 	private Boolean makeNextRunAPracticeTest = false;
 	private Boolean makeNextRunLeastRecentlyPractice = false;
 	private Boolean makeNextRunPracticeSkippedOrIncorrect = false;
+	private Boolean makeNextRunUnpracticed = false;
 	
 	private String uuid;
 	private String originalUuid;
@@ -500,6 +501,17 @@ public class User extends BaseEntity{
 	public void setMakeNextRunPracticeSkippedOrIncorrect(Boolean makeNextRunPracticeSkippedOrIncorrect) {
 		this.makeNextRunPracticeSkippedOrIncorrect = makeNextRunPracticeSkippedOrIncorrect;
 	}
+	
+
+	public Boolean getMakeNextRunUnpracticed() {
+		return makeNextRunUnpracticed;
+	}
+
+
+	public void setMakeNextRunUnpracticed(Boolean makeNextRunUnpracticed) {
+		this.makeNextRunUnpracticed = makeNextRunUnpracticed;
+	}
+
 
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)

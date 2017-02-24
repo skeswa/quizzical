@@ -19,6 +19,7 @@ import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.LRUGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.SkippedOrIncorrectGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.UnpracticedGeneratorImpl;
 import org.gauntlet.quizzes.generator.impl.QuizGeneratorManagerImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
@@ -106,6 +107,7 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(ByWeaknessGeneratorImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateGeneratorService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestUserAnalyticsDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateContentTypeDAOService.class).setRequired(true))
@@ -146,6 +148,18 @@ public class Activator extends DependencyActivatorBase {
 		component = dm.createComponent()
 				.setInterface(IQuizGeneratorService.class.getName(), properties)
 				.setImplementation(SkippedOrIncorrectGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_UNPRACTICED_CODE);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(UnpracticedGeneratorImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))

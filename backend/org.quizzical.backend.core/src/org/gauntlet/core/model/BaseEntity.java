@@ -211,6 +211,10 @@ public abstract class BaseEntity extends SuperEntity
     public Boolean isActive() {
         return active;
     }
+    
+    public Boolean getActive() {
+        return active;
+    }
 
     /**
      * Sets the value of the active property.
@@ -482,6 +486,10 @@ public abstract class BaseEntity extends SuperEntity
 	}
 	
 	public boolean isNew() {
+		return this.getId() == null;
+	}
+	
+	public boolean getNew() {
 		return this.getId() == null;
 	}
 	

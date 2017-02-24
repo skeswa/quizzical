@@ -270,6 +270,10 @@ public abstract class JPABaseEntity
     public boolean isActive() {
         return active;
     }
+    
+    public boolean getActive() {
+        return active;
+    }
 
     /**
      * Sets the value of the active property.
@@ -541,6 +545,10 @@ public abstract class JPABaseEntity
 	}
 	
 	public boolean isNew() {
+		return this.getId() == null;
+	}
+	
+	public boolean getNew() {
 		return this.getId() == null;
 	}
 	

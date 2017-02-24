@@ -32,6 +32,7 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubTy
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
@@ -50,6 +51,8 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	private volatile IQuizDAOService quizDAOService;
 	
 	private volatile IProblemDAOService problemDAOService;
+	
+	private volatile IQuizProblemResponseDAOService problemResponseDAOService;
 	
 	private volatile ITestDesignTemplateGeneratorService testDesignTemplateGeneratorService;
 	
@@ -98,6 +101,9 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 		final Counter counterWithInfoCards = new Counter(0);
 		final Counter counter = new Counter(0);
 		
+		//=== Problem Ids already correct and within time
+		List<Long> excludeIds = problemResponseDAOService.getAllUserCorrectAndWithinTimeProblemIds(user);
+		
 		//=== NonCalc
 		Map<Long,Problem> includedProblemIds = new HashMap<>();
 
@@ -110,7 +116,8 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 						ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
 						ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 						
-						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+						final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
+						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), allExcludedIds);
 						if (count < 1)
 							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
 						int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
@@ -153,7 +160,8 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 							final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
 							final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 							
-							count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()));
+							final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
+							count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), allExcludedIds);
 							if (count < 1)
 								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
 							int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
@@ -218,6 +226,7 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 
 	private Problem fuzzyMatchProblem(Boolean allowsCalc, Map<Long, Problem> includedProblemIds, TestDesignTemplateItem item,
 			ProblemCategory cat, ProblemDifficulty diff, int randomOffset) throws ApplicationException {
+		
 		List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 		if (problems.isEmpty()) {
 			allowsCalc = !allowsCalc;

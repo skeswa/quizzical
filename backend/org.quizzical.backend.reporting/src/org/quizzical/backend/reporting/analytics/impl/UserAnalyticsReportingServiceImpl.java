@@ -73,12 +73,12 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 		generateLessons(lessonMap, doNotMeetRatings);
 
 		
-		final String subject = String.format("q7l Progress Report for %s",new SimpleDateFormat("EEE, d MMM yyyy HH:mm").format(new Date()) );
+		final String subject = String.format("%s's q7l Progress Report @ %s", user.getFirstName(),new SimpleDateFormat("EEE, d MMM yyyy HH:mm").format(new Date()) );
 		
 		final PerformanceReportingMessagePreparator prep = new PerformanceReportingMessagePreparator(
 				this.mailService, 
 				this.logger,
-				user.getEmailAddress(),
+				user.getFirstName(),
 				user.getEmailAddress(),
 				bccEmails,
 				subject,
@@ -121,7 +121,10 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 		if (config.getHandleEmailResultsEvent()) {
 	        String userId = (String) event.getProperty(EVENT_TOPIC_PROP_USERID);
 	        try {
-				emailDailyReport(userId,Collections.emptyList());
+	        	if (config.getBcc() != null && !config.getBcc().isEmpty())
+	        		emailDailyReport(userId,config.getBcc());
+	        	else
+	        		emailDailyReport(userId,Collections.emptyList());
 			} catch (ApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
