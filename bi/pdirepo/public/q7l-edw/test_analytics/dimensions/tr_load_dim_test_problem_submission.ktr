@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>tr_load_dim_test_problem</name>
+    <name>tr_load_dim_test_problem_submission</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -451,35 +451,12 @@
     <created_user>admin</created_user>
     <created_date>2015&#x2f;02&#x2f;14 09&#x3a;14&#x3a;23.541</created_date>
     <modified_user>mkeswa</modified_user>
-    <modified_date>2017&#x2f;02&#x2f;27 11&#x3a;46&#x3a;52.172</modified_date>
+    <modified_date>2017&#x2f;02&#x2f;27 11&#x3a;43&#x3a;18.970</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
-  <connection>
-    <name>AgileBI</name>
-    <server>localhost</server>
-    <type>MONETDB</type>
-    <access>Native</access>
-    <database>pentaho-instaview</database>
-    <port>50000</port>
-    <username>monetdb</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb14a17edb86abd8</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <read_only>true</read_only>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_INFOBRIGHT.characterEncoding</code><attribute>UTF-8</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>50000</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-    </attributes>
-  </connection>
   <connection>
     <name>q7ledw</name>
     <server>&#x24;&#x7b;Q7L_EDW_DB_HOSTNAME&#x7d;</server>
@@ -530,32 +507,32 @@
   </connection>
   <order>
     <hop>
-      <from>Read Test Problem</from>
+      <from>Read Submissions</from>
       <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>DB Lookup Category FK</from>
-      <to>DB Lookup Source FK</to>
+      <to>DB Lookup User FK</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Lookup Source FK</from>
-      <to>DB Lookup Difficulty FK</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>DB Lookup Difficulty FK</from>
+      <from>DB Lookup User FK</from>
       <to>Insert &#x2f; Update</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values</from>
-      <to>User Defined Java Expression</to>
+      <to>Calc Date&#x2f;Time TK</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>User Defined Java Expression</from>
+      <from>Calc Date&#x2f;Time TK</from>
+      <to>startTK2epochUTC</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>startTK2epochUTC</from>
       <to>DB Lookup Category FK</to>
       <enabled>Y</enabled>
     </hop>
@@ -576,56 +553,41 @@
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>public</schema>
-      <table>dim_test_problem</table>
+      <table>dim_test_submission</table>
       <key>
-        <name>bk</name>
-        <field>test_problem_bk</field>
+        <name>sub_bk</name>
+        <field>test_submission_bk</field>
         <condition>&#x3d;</condition>
         <name2/>
       </key>
       <value>
-        <name>test_problem_bk</name>
-        <rename>bk</rename>
+        <name>test_submission_bk</name>
+        <rename>sub_bk</rename>
         <update>N</update>
       </value>
       <value>
-        <name>answer</name>
-        <rename>answer</rename>
+        <name>user_fk</name>
+        <rename>user_pk</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>multiple_choice</name>
-        <rename>multiplechoice_yn</rename>
+        <name>submission_date_lc_fk</name>
+        <rename>submission_date_tk</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>calculator_allowed</name>
-        <rename>allowscalculator_yn</rename>
+        <name>submission_time_lc_fk</name>
+        <rename>submission_time_tk</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>source_page_index</name>
-        <rename>sourceindexwithinpage</rename>
+        <name>submission_date_utc_fk</name>
+        <rename>tzDateTK</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>source_page_number</name>
-        <rename>sourcepagenumber</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_category_fk</name>
-        <rename>test_problem_category_pk</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_difficulty_fk</name>
-        <rename>test_problem_difficulty_pk</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_source_fk</name>
-        <rename>test_problem_source_pk</rename>
+        <name>submission_time_utc_fk</name>
+        <rename>tzTimeTK</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -637,14 +599,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1024</xloc>
-      <yloc>48</yloc>
+      <xloc>768</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
 
   <step>
-    <name>Read Test Problem</name>
+    <name>Read Submissions</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -655,7 +617,7 @@
       <schema_name/>
     </partitioning>
     <connection>q7lods</connection>
-    <sql>SELECT&#xa;  id&#xa;, code&#xa;, answer&#xa;, multiplechoice&#xa;, requirescalculator&#xa;, sourceindexwithinpage&#xa;, sourcepagenumber&#xa;, category_id&#xa;, difficulty_id&#xa;, source_id&#xa;FROM &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem&#xa;</sql>
+    <sql>select sub.id as sub_id, dateattempted as submission_date, ana.userid as user_id,cat.id as category_id  from &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_rating_submit sub&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_rating rating  on sub.rating_id &#x3d; rating.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_category cat on rating.name_ &#x3d; cat.name_&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_testuser ana on rating.analytics_id &#x3d; ana.id&#x3b;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -669,8 +631,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>176</xloc>
-      <yloc>48</yloc>
+      <xloc>160</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -687,8 +649,8 @@
       <schema_name/>
     </partitioning>
     <fields>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>id</name>
-        <rename>bk</rename>
+      <meta>        <name>sub_id</name>
+        <rename>sub_bk</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -717,23 +679,8 @@
         <grouping_symbol/>
         <currency_symbol/>
         <storage_type/>
-      </meta>      <meta>        <name>difficulty_id</name>
-        <rename>difficulty_bk</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>source_id</name>
-        <rename>source_bk</rename>
+      </meta>      <meta>        <name>user_id</name>
+        <rename>user_bk</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -755,8 +702,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>176</yloc>
+      <xloc>224</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -803,14 +750,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>176</yloc>
+      <xloc>528</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
 
   <step>
-    <name>DB Lookup Source FK</name>
+    <name>DB Lookup User FK</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -826,19 +773,19 @@
     <cache_size>0</cache_size>
     <lookup>
       <schema>public</schema>
-      <table>dim_test_problem_source</table>
+      <table>dim_user</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>source_bk</name>
-        <field>test_problem_source_bk</field>
+        <name>user_bk</name>
+        <field>user_bk</field>
         <condition>&#x3d;</condition>
         <name2/>
       </key>
       <value>
-        <name>test_problem_source_pk</name>
-        <rename>test_problem_source_pk</rename>
+        <name>user_pk</name>
+        <rename>user_pk</rename>
         <default/>
         <type>Number</type>
       </value>
@@ -851,62 +798,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>48</yloc>
+      <xloc>624</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
 
   <step>
-    <name>DB Lookup Difficulty FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_difficulty</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>difficulty_bk</name>
-        <field>test_problem_difficulty_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_difficulty_pk</name>
-        <rename>test_problem_difficulty_pk</rename>
-        <default/>
-        <type>Number</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>User Defined Java Expression</name>
+    <name>Calc Date&#x2f;Time TK</name>
     <type>Janino</type>
     <description/>
     <distribute>Y</distribute>
@@ -916,15 +815,29 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-       <formula><field_name>multiplechoice_yn</field_name>
-<formula_string>multiplechoice &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22; </formula_string>
+       <formula><field_name>submission_date_tk</field_name>
+<formula_string>Integer.parseInt&#x28;new java.text.SimpleDateFormat&#x28;&#x22;yyyyMMdd&#x22;&#x29;.format&#x28;submission_date&#x29;&#x29;</formula_string>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>tmp_submission_time_hhmm</field_name>
+<formula_string>new java.text.SimpleDateFormat&#x28;&#x22;HHmm&#x22;&#x29;.format&#x28;submission_date&#x29;</formula_string>
 <value_type>String</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <replace_field/>
 </formula>
-       <formula><field_name>allowscalculator_yn</field_name>
-<formula_string>requirescalculator &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22;</formula_string>
+       <formula><field_name>submission_time_tk</field_name>
+<formula_string>Integer.parseInt&#x28;tmp_submission_time_hhmm.replaceAll&#x28;&#x22;&#x5e;0&#x2b;&#x28;&#x3f;&#x3d;&#x5c;&#x5c;d&#x2b;&#x24;&#x29;&#x22;, &#x22;&#x22;&#x29;&#x29;</formula_string>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>utcTimeZone</field_name>
+<formula_string>&#x22;EST&#x22;</formula_string>
 <value_type>String</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
@@ -938,8 +851,62 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>48</yloc>
+      <xloc>336</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>startTK2epochUTC</name>
+    <type>SimpleMapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>tr_sub_datetime_tk_to_epoch</trans_name>
+    <filename/>
+    <directory_path>&#x2f;public&#x2f;q7l-edw&#x2f;common&#x2f;utilities</directory_path>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>Y</rename_on_output>
+    <description/>
+       <connector><parent>submission_date_tk</parent><child>date_key</child></connector>
+       <connector><parent>submission_time_tk</parent><child>time_key</child></connector>
+       <connector><parent>utcTimeZone</parent><child>timezone</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+       <connector><parent>utcDateTK</parent><child>startUtcDateTK</child></connector>
+       <connector><parent>utcTimeTK</parent><child>startUtcTimeTK</child></connector>
+       <connector><parent>utcEpoch</parent><child>startDateTimeEpoch</child></connector>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>416</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
     </step>

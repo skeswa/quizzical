@@ -1,12 +1,12 @@
 <transformation>
   <info>
-    <name>tr_load_dim_test_problem</name>
+    <name>tr_sub_generate_utc_epoch_from_datetime_and_timezone</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
-    <directory>&#x2f;public&#x2f;q7l-edw&#x2f;test_analytics&#x2f;dimensions</directory>
+    <directory>&#x2f;public&#x2f;q7l-edw&#x2f;common&#x2f;utilities</directory>
     <parameters>
     </parameters>
     <log>
@@ -24,7 +24,7 @@
         </field>
         <field>
           <id>CHANNEL_ID</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>CHANNEL_ID</name>
         </field>
         <field>
@@ -69,7 +69,7 @@
         </field>
         <field>
           <id>LINES_REJECTED</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
           <subject/>
         </field>
@@ -105,7 +105,7 @@
         </field>
         <field>
           <id>LOG_FIELD</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>LOG_FIELD</name>
         </field>
         <field>
@@ -417,7 +417,7 @@
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
-    <step_performance_capturing_size_limit/>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
     <dependencies>
     </dependencies>
     <partitionschemas>
@@ -448,10 +448,10 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
-    <created_user>admin</created_user>
-    <created_date>2015&#x2f;02&#x2f;14 09&#x3a;14&#x3a;23.541</created_date>
+    <created_user>mkeswa</created_user>
+    <created_date>2015&#x2f;07&#x2f;05 17&#x3a;59&#x3a;47.649</created_date>
     <modified_user>mkeswa</modified_user>
-    <modified_date>2017&#x2f;02&#x2f;27 11&#x3a;46&#x3a;52.172</modified_date>
+    <modified_date>2017&#x2f;02&#x2f;27 11&#x3a;46&#x3a;05.497</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -478,6 +478,80 @@
       <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>bidatawarehouse</name>
+    <server>&#x24;&#x7b;VE_BIWAREHOUSE_DB_HOSTNAME&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;VE_BIWAREHOUSE_DB_NAME&#x7d;</database>
+    <port>&#x24;&#x7b;VE_BIWAREHOUSE_DB_PORT&#x7d;</port>
+    <username>&#x24;&#x7b;VE_BIWAREHOUSE_DB_LOGIN_USER&#x7d;</username>
+    <password>&#x24;&#x7b;VE_BIWAREHOUSE_DB_LOGIN_PASSWORD&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VE_BIWAREHOUSE_DB_PORT&#x7d;</attribute></attribute>
+      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VE_BIWAREHOUSE_DB_SCHEMA&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>bidatawarehouse_audit</name>
+    <server>&#x24;&#x7b;VE_BIWAREHOUSE_DB_HOSTNAME&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;VE_BIWAREHOUSE_LOGGING_DB_NAME&#x7d;</database>
+    <port>&#x24;&#x7b;VE_BIWAREHOUSE_DB_PORT&#x7d;</port>
+    <username>&#x24;&#x7b;VE_BIWAREHOUSE_DB_LOGIN_USER&#x7d;</username>
+    <password>&#x24;&#x7b;VE_BIWAREHOUSE_DB_LOGIN_PASSWORD&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VE_BIWAREHOUSE_DB_PORT&#x7d;</attribute></attribute>
+      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VE_BIWAREHOUSE_DB_SCHEMA&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>optdatamart</name>
+    <server>analytics.myvpowerint.com</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>optdatamart</database>
+    <port>5433</port>
+    <username>pentahoadmin</username>
+    <password>Encrypted 2be98afb80fc98685a316af74d39ba19b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5433</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
   <connection>
@@ -528,41 +602,153 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>Sampledata</name>
+    <server/>
+    <type>H2</type>
+    <access>JNDI</access>
+    <database>SampleData</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>sls_dma</name>
+    <server>&#x24;&#x7b;VAR_DB_DMA_HOST&#x7d;</server>
+    <type>MONETDB</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;VAR_DB_DMA_NAME&#x7d;</database>
+    <port>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</port>
+    <username>&#x24;&#x7b;VAR_DB_DMA_USER&#x7d;</username>
+    <password>&#x24;&#x7b;VAR_DB_DMA_PW&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>VPower_EDW_Dev</name>
+    <server>pentaho.myvpowerint.com</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>biwarehouse</database>
+    <port>5433</port>
+    <username>pentahoadmin</username>
+    <password>Encrypted 2be98afb80fc98685a316af74d39ba19b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5433</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>vpower_edw_local</name>
+    <server>172.16.250.130</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>vpower_edw</database>
+    <port>5432</port>
+    <username>conxadmin</username>
+    <password>Encrypted 2be98afc86aa7f287a417b671da9fa6d4</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>prototype</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>wcm_dwh</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm_dwh</database>
+    <port>3306</port>
+    <username>wcm_dwh</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb0ead7de196b8d2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.characterEncoding</code><attribute>UTF8</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SQL_CONNECT</code><attribute>set sql_mode &#x3a;&#x3d; &#x27;&#x27;</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Read Test Problem</from>
-      <to>Select values</to>
+      <from>format</from>
+      <to>Log after_sub_generate_utc_epoch</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Lookup Category FK</from>
-      <to>DB Lookup Source FK</to>
+      <from>Log after_sub_generate_utc_epoch</from>
+      <to>Mapping output specification</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Lookup Source FK</from>
-      <to>DB Lookup Difficulty FK</to>
+      <from>Mapping input specification</from>
+      <to>Log before_sub_generate_utc_epoch</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Lookup Difficulty FK</from>
-      <to>Insert &#x2f; Update</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
-      <to>User Defined Java Expression</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>User Defined Java Expression</from>
-      <to>DB Lookup Category FK</to>
+      <from>Log before_sub_generate_utc_epoch</from>
+      <to>format</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Insert &#x2f; Update</name>
-    <type>InsertUpdate</type>
+    <name>Log after_sub_generate_utc_epoch</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -571,278 +757,16 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>q7ledw</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem</table>
-      <key>
-        <name>bk</name>
-        <field>test_problem_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_bk</name>
-        <rename>bk</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>answer</name>
-        <rename>answer</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>multiple_choice</name>
-        <rename>multiplechoice_yn</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>calculator_allowed</name>
-        <rename>allowscalculator_yn</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>source_page_index</name>
-        <rename>sourceindexwithinpage</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>source_page_number</name>
-        <rename>sourcepagenumber</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_category_fk</name>
-        <rename>test_problem_category_pk</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_difficulty_fk</name>
-        <rename>test_problem_difficulty_pk</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>test_problem_source_fk</name>
-        <rename>test_problem_source_pk</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1024</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>Read Test Problem</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7lods</connection>
-    <sql>SELECT&#xa;  id&#xa;, code&#xa;, answer&#xa;, multiplechoice&#xa;, requirescalculator&#xa;, sourceindexwithinpage&#xa;, sourcepagenumber&#xa;, category_id&#xa;, difficulty_id&#xa;, source_id&#xa;FROM &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem&#xa;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>176</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>id</name>
-        <rename>bk</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>category_id</name>
-        <rename>category_bk</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>difficulty_id</name>
-        <rename>difficulty_bk</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>source_id</name>
-        <rename>source_bk</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>    </fields>    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>272</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Category FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_category</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>category_bk</name>
-        <field>test_problem_category_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_category_pk</name>
-        <rename>test_problem_category_pk</rename>
-        <default/>
-        <type>Number</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Source FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_source</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>source_bk</name>
-        <field>test_problem_source_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_source_pk</name>
-        <rename>test_problem_source_pk</rename>
-        <default/>
-        <type>Number</type>
-      </value>
-    </lookup>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>epochInTZ</name>
+        </field>
+      </fields>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -852,14 +776,14 @@
     </remotesteps>
     <GUI>
       <xloc>656</xloc>
-      <yloc>48</yloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
 
   <step>
-    <name>DB Lookup Difficulty FK</name>
-    <type>DBLookup</type>
+    <name>Log before_sub_generate_utc_epoch</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -868,29 +792,22 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_difficulty</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>difficulty_bk</name>
-        <field>test_problem_difficulty_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_difficulty_pk</name>
-        <rename>test_problem_difficulty_pk</rename>
-        <default/>
-        <type>Number</type>
-      </value>
-    </lookup>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>dateTime</name>
+        </field>
+      <field>
+        <name>timezone</name>
+        </field>
+      <field>
+        <name>dateTimeFormat</name>
+        </field>
+      </fields>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -899,15 +816,15 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>176</yloc>
+      <xloc>336</xloc>
+      <yloc>191</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
 
   <step>
-    <name>User Defined Java Expression</name>
-    <type>Janino</type>
+    <name>Mapping input specification</name>
+    <type>MappingInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -916,20 +833,27 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-       <formula><field_name>multiplechoice_yn</field_name>
-<formula_string>multiplechoice &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22; </formula_string>
-<value_type>String</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<replace_field/>
-</formula>
-       <formula><field_name>allowscalculator_yn</field_name>
-<formula_string>requirescalculator &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22;</formula_string>
-<value_type>String</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<replace_field/>
-</formula>
+    <fields>
+      <field>
+        <name>timezone</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>dateTimeFormat</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>dateTime</name>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+        <select_unspecified>N</select_unspecified>
+    </fields>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -938,8 +862,69 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>48</yloc>
+      <xloc>200</xloc>
+      <yloc>100</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Mapping output specification</name>
+    <type>MappingOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>827</xloc>
+      <yloc>101</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>format</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var sdf &#x3d; new java.text.SimpleDateFormat&#x28;dateTimeFormat&#x29;&#x3b;&#xa;sdf.setTimeZone&#x28;java.util.TimeZone.getTimeZone&#x28;timezone&#x29;&#x29;&#x3b;&#xa;var dtFormated &#x3d; sdf.format&#x28;dateTime&#x29;&#x3b;&#xa;var epochInTZ &#x3d; sdf.parse&#x28;dtFormated&#x29;.getTime&#x28;&#x29;&#x3b;&#xa;&#xa;&#xa;&#xa;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>epochInTZ</name>
+        <rename>epochInTZ</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>495</xloc>
+      <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
