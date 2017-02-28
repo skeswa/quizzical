@@ -11,6 +11,7 @@ public class User extends BaseEntity{
 	private Boolean makeNextRunLeastRecentlyPractice = false;
 	private Boolean makeNextRunPracticeSkippedOrIncorrect = false;
 	private Boolean makeNextRunUnpracticed = false;
+	private Long makeNextRunOnCategory = null;
 	
 	private String uuid;
 	private String originalUuid;
@@ -510,6 +511,15 @@ public class User extends BaseEntity{
 
 	public void setMakeNextRunUnpracticed(Boolean makeNextRunUnpracticed) {
 		this.makeNextRunUnpracticed = makeNextRunUnpracticed;
+	}
+
+	public Long getMakeNextRunOnCategory() {
+		return makeNextRunOnCategory;
+	}
+
+
+	public void setMakeNextRunOnCategory(Long makeNextRunOnCategory) {
+		this.makeNextRunOnCategory = makeNextRunOnCategory;
 	}
 
 

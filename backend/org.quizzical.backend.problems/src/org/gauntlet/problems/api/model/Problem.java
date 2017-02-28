@@ -133,4 +133,11 @@ public class Problem extends BaseEntity implements Serializable {
 	public String toString() {
 		return String.format("{\"id\":%d,\"sourcePageNumber\":%d,\"sourceIndexWithinPage\":%d,\"answer\":%s}",id,sourcePageNumber,sourceIndexWithinPage,answer);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		return toString().equals(obj.toString());
+	}
 }

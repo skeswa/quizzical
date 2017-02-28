@@ -62,6 +62,10 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);
 		else if (user.getMakeNextRunPracticeSkippedOrIncorrect())
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE);
+		else if (user.getMakeNextRunOnCategory() != null) {
+			params.setProblemCategoryId(user.getMakeNextRunOnCategory());
+			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_CATEGORY_CODE);
+		}
 		else if (user.getMakeNextRunUnpracticed())
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_UNPRACTICED_CODE);
 		
@@ -87,6 +91,9 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		}
 		else if (user.getMakeNextRunPracticeSkippedOrIncorrect()) {
 			user.setMakeNextRunPracticeSkippedOrIncorrect(false);
+		}
+		else if (user.getMakeNextRunOnCategory() != null) {
+			user.setMakeNextRunOnCategory(null);
 		}
 		
 		user.setMakeNextRunUnpracticed(!user.getMakeNextRunUnpracticed());

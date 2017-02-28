@@ -15,6 +15,7 @@ import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
 import org.gauntlet.quizzes.generator.defaults.impl.ByProblemCategoryGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.ByProblemSourceGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.ByWeaknessGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.CategoryPracticeGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.LRUGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
@@ -163,6 +164,19 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_CATEGORY_CODE);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(CategoryPracticeGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);

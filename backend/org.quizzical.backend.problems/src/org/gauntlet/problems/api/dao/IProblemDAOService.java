@@ -53,6 +53,8 @@ public interface IProblemDAOService extends IBaseService {
 
 	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  throws ApplicationException;
 
+	public List<Problem> findByCategoryNotInIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException;
 	
 	//ProblemDifficulty
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException;

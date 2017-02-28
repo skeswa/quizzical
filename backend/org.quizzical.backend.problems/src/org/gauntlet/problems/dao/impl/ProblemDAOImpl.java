@@ -401,6 +401,45 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		
 		return result;
 	}
+	@Override
+	public List<Problem> findByCategoryNotInIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (ids.isEmpty())
+				ids.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("category").get("id"),pCat),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pCat, categoryId);
+			typedQuery.setParameter(pIn, ids);
+			
+			typedQuery.setFirstResult(offset);
+			typedQuery.setMaxResults(limit);
+			
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
 	
 	@Override 
 	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  

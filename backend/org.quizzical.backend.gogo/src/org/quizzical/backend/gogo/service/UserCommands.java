@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate", "activate","showactive","lru","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate", "activate","showactive","lru","category","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -92,6 +92,18 @@ public class UserCommands {
        	user.setMakeNextRunLeastRecentlyPractice(true);
        	svc.update(user);
        	return "MakeNextRunLeastRecentlyPractice ("+user.getFirstName()+") set";
+    } 
+    
+    @Descriptor("Mark for Category next quiz")
+    public static String category(@Descriptor("Email address as userid") String userId, @Descriptor("Category id") Long categoryId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user.setMakeNextRunOnCategory(categoryId);
+       	svc.update(user);
+       	return "MakeNextRunOnCategory ("+user.getFirstName()+") set";
     } 
     
     @Descriptor("Mark for Practice Test next quiz")
