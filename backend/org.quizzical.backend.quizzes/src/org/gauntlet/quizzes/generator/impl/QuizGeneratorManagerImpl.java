@@ -64,6 +64,7 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE);
 		else if (user.getMakeNextRunOnCategory() != null) {
 			params.setProblemCategoryId(user.getMakeNextRunOnCategory());
+			params.setQuizSize(10);
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_CATEGORY_CODE);
 		}
 		else if (user.getMakeNextRunUnpracticed())

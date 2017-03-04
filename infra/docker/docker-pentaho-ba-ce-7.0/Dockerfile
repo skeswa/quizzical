@@ -16,6 +16,11 @@ RUN wget https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%
 RUN unzip pentaho-server-ce-7.0.0.0-25.zip -d pentaho-server-ce-7.0.0.0-25
 RUN rm pentaho-server-ce-7.0.0.0-25.zip
 
+# Copy config files
+ADD config.sh /home/pentaho/
+RUN chmod +x /home/pentaho/config.sh
+ADD config/tomcat/context.xml pentaho-server-ce-7.0.0.0-25/pentaho-server/tomcat/webapps/pentaho/META-INF/
+
 # Copy PDI repo db scripts
 ADD custom_data/postgresql/create_pdirepo_postgresql.sql /home/pentaho/data/postgresql/create_pdirepo_postgresql.sql
 

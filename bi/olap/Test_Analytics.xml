@@ -1,0 +1,198 @@
+<Schema name="TestAnalytics" description="TestAnalytics version 0.1">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time">
+    <Hierarchy name="HH-MM" visible="true" hasAll="true" primaryKey="time_key" caption="Time">
+      <Table name="dim_time" schema="public">
+      </Table>
+      <Level name="Hour" visible="true" column="time_hour" type="Integer" uniqueMembers="false" levelType="TimeHours" hideMemberIf="Never" caption="Hr">
+        <Property name="TIME_VALUE" column="time_value" type="String" description="Time Value">
+        </Property>
+        <Property name="1HrGrain" column="time_1hr_grp_value" type="Integer">
+        </Property>
+        <Property name="TIME_MINUTE" column="time_minute" type="Integer">
+        </Property>
+      </Level>
+      <Level name="Minutes" visible="true" column="time_minute" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never">
+        <Property name="TIME_VALUE" column="time_value" type="String" description="Time Value">
+        </Property>
+        <Property name="1HrGrain" column="time_1hr_grp_value" type="Integer">
+        </Property>
+      </Level>
+      <Level name="5MinGrain" visible="true" column="time_5min_grp_value" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never" caption="5MinGrain">
+      </Level>
+      <Level name="10MinGrain" visible="true" column="time_10min_grp_value" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never" caption="10MinGrain">
+      </Level>
+      <Level name="15MinGrain" visible="true" column="time_15min_grp_value" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never" caption="15MinGrain">
+      </Level>
+      <Level name="20MinGrain" visible="true" column="time_20min_grp_value" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never" caption="20MinGrain">
+      </Level>
+      <Level name="30MinGrain" visible="true" column="time_30min_grp_value" type="Integer" uniqueMembers="false" levelType="TimeMinutes" hideMemberIf="Never" caption="30MinGrain">
+      </Level>
+      <Level name="1HrGrain" visible="true" column="time_1hr_grp_value" type="Integer" uniqueMembers="false" levelType="TimeHours" hideMemberIf="Never" caption="1HrGrain">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Category">
+    <Hierarchy name="Category hierarchy" visible="true" hasAll="true" primaryKey="test_problem_category_pk">
+      <Table name="dim_test_problem_category" schema="public">
+      </Table>
+      <Level name="Name" visible="true" column="test_problem_category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="BusinessKey" visible="true" column="test_problem_category_bk" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="test_problem_category_bk">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Date" description="M-W-D">
+    <Hierarchy name="Y-M-D" visible="true" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date_simple" schema="public">
+      </Table>
+      <Level name="Year" visible="true" column="year4_value" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+      </Level>
+      <Level name="Month" visible="true" column="month_number" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never" captionColumn="month_abbreviation">
+      </Level>
+      <Level name="Day" visible="true" column="day_in_month" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never" captionColumn="day_in_month">
+        <Property name="DATE_VALUE" column="date_value" type="Date" description="Date Value">
+        </Property>
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Y-M-W-D" visible="true" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date_simple" schema="public">
+      </Table>
+      <Level name="Year" visible="true" column="year4_value" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never" captionColumn="year4">
+      </Level>
+      <Level name="Month" visible="true" column="month_number" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never" captionColumn="month_abbreviation">
+      </Level>
+      <Level name="Week" visible="true" column="week_in_year" type="Integer" uniqueMembers="false" levelType="TimeWeeks" hideMemberIf="Never" description="Week In Year" captionColumn="week_in_year">
+        <Property name="DATE_VALUE" column="date_value" type="Date" caption="Date" description="Actual Value Date">
+        </Property>
+        <Property name="DATE_MEDIUM" column="date_medium" type="String" caption="Date Medium" description="Format May 1, 2000">
+        </Property>
+      </Level>
+      <Level name="Day" visible="true" column="day_in_month" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never" captionColumn="day_in_month">
+        <Property name="DATE_VALUE" column="date_value" type="Date" description="Actual Value Date">
+        </Property>
+        <Property name="DATE_MEDIUM" column="date_medium" type="String" caption="Date Medium" description="Format May 1, 2000">
+        </Property>
+        <Property name="WEEK_IN_MONTH" column="week_in_month" type="Integer" caption="Week In Month" description="Week In Month">
+        </Property>
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Y-W-D" visible="true" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date_simple" schema="public">
+      </Table>
+      <Level name="Year" visible="true" column="year4_value" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never" captionColumn="year4_value">
+      </Level>
+      <Level name="Week" visible="true" column="week_in_year" type="Integer" uniqueMembers="false" levelType="TimeWeeks" hideMemberIf="Never" caption="week_in_year" description="Week In A Year">
+      </Level>
+      <Level name="Day" visible="true" column="day_in_week" type="Integer" uniqueMembers="false" levelType="TimeWeeks" hideMemberIf="Never" caption="day_in_week" description="Day in Week">
+        <Property name="DATE_VALUE" column="date_value" type="Date" description="Actual Value Date">
+        </Property>
+        <Property name="DATE_MEDIUM" column="date_medium" type="String" caption="Date Medium" description="Format May 1, 2000">
+        </Property>
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Timestamp">
+    <Hierarchy name="TSValue" visible="true" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date_simple" schema="public">
+      </Table>
+      <Level name="time_stamp" visible="true" column="date_value" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Year" visible="true" column="year4_value" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Month" visible="true" column="month_number" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="month_abbreviation">
+      </Level>
+      <Level name="Day" visible="true" column="day_in_month" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        <Property name="DATE_VALUE" column="date_value" type="Date" description="Actual Value Date">
+        </Property>
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Source">
+    <Hierarchy name="Source  hierarchy" visible="true" hasAll="true" primaryKey="test_problem_source_pk">
+      <Table name="dim_test_problem_source" schema="public">
+      </Table>
+      <Level name="Name" visible="true" column="test_problem_source_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="BusinessKey" visible="true" column="test_problem_source_bk" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" caption="BusinessKey">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Timetimestamp">
+    <Hierarchy name="TTSValue" visible="true" hasAll="true" primaryKey="time_key">
+      <Table name="dim_time" schema="public">
+      </Table>
+      <Level name="ttime_stamp" visible="true" column="time_value2" type="Time" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="time_value2">
+        <Property name="5MinGrain" column="time_5min_grp_value" type="Integer">
+        </Property>
+        <Property name="10MinGrain" column="time_10min_grp_value" type="Integer" description="10MinGrain">
+        </Property>
+        <Property name="15MinGrain" column="time_15min_grp_value" type="Integer" caption="15MinGrain">
+        </Property>
+        <Property name="20MinGrain" column="time_20min_grp_value" type="Integer" caption="20MinGrain">
+        </Property>
+        <Property name="30MinGrain" column="time_30min_grp_value" type="Integer" caption="30MinGrain">
+        </Property>
+        <Property name="1MinGrain" column="time_1min_grp_value" type="Integer" caption="1MinGrain">
+        </Property>
+        <Property name="1HrGrain" column="time_1hr_grp_value" type="Integer" caption="1HrGrain">
+        </Property>
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="StandardDate">
+    <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date_simple" schema="public">
+      </Table>
+      <Level name="Value" visible="true" column="date_value" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" caption="Full Date" captionColumn="date_medium">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="StandardTime">
+    <Hierarchy name="Time" visible="true" hasAll="true" primaryKey="time_key">
+      <Table name="dim_time" schema="public">
+      </Table>
+      <Level name="Value" visible="true" column="time_value" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" description="Time in HH:MM">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Difficulty">
+    <Hierarchy name="Difficulty hierarchy" visible="true" hasAll="true" primaryKey="test_problem_difficulty_pk">
+      <Table name="dim_test_problem_difficulty" schema="public">
+      </Table>
+      <Level name="Name" visible="true" column="test_problem_difficulty_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="test_problem_difficulty_name">
+      </Level>
+      <Level name="BusinessKey" visible="true" column="test_problem_difficulty_bk" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" caption="BusinessKey">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="ProblemAttempt" visible="true" description="problem attempt" cache="true" enabled="true">
+    <Table name="fct_test_submission_attempt" schema="public">
+    </Table>
+    <DimensionUsage source="Date" name="Date" visible="true" foreignKey="date_attempted_lc_date_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="date_attempted_lc_time_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Category" name="Category" visible="true" foreignKey="test_problem_category_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Timestamp" name="Timestamp" visible="true" foreignKey="date_attempted_lc_date_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Timetimestamp" name="Timetimestamp" visible="true" foreignKey="date_attempted_lc_time_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Difficulty" name="Difficulty" visible="true" foreignKey="test_problem_difficulty_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Source" name="Source" visible="true" foreignKey="test_problem_source_fk" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="Time(s)" column="seconds_elapsed" datatype="Integer" formatString="#" aggregator="avg" description="Elapsed Time" visible="true">
+    </Measure>
+    <Measure name="Correct" column="successful" datatype="Integer" formatString="#" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="Skipped" column="skipped" datatype="Integer" formatString="#" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="CalcAllowed" column="calculator_allowed" datatype="Integer" formatString="#" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="MultipleChoice" column="multiple_choice" datatype="Integer" formatString="#" aggregator="distinct-count" visible="true">
+    </Measure>
+    <CalculatedMember name="TSTime" formula="CAST(CAST(DateSerial([Timestamp].[Year].CurrentMember.Value,[Timestamp].[Month].CurrentMember.Value,[Timestamp].[Day].CurrentMember.Value) AS STRING) || CAST(TimeSerial([Time].[Hour].CurrentMember.Value,[Time].[Minutes].CurrentMember.Value,0) AS STRING) AS INTEGER)" dimension="Timestamp" visible="true">
+    </CalculatedMember>
+  </Cube>
+</Schema>

@@ -39,7 +39,7 @@ const QUIZ_LENGTH_NAMES = [
   'Very Long',
   'Full Size'
 ]
-const MIN_QUESTIONS_COUNT = 15
+const MIN_QUESTIONS_COUNT = 10
 const MAX_QUESTIONS_COUNT = 20
 const CATEGORY_SELECT_STYLE = { maxWidth: '100%' }
 

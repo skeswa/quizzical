@@ -36,3 +36,6 @@ docker logs $CONTAINER_ID
 
 When the server is running (check the logs), go to: http://${DOCKER_HOST_IP}:8888/pentaho
 
+
+
+docker run -d -p 2222:22 -p 8888:8080 --link :q7ledw --env-file ./env.properties -p 5433:5432 mazagroup/pentaho-ba-ce-7.0

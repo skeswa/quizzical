@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories>
+  <connection>
+    <name>lighthouse-kdr</name>
+    <server>postgres.mylighthouse.com</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>kdr</database>
+    <port>5432</port>
+    <username>lhadmin</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb15a671da9fa6d4</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>snapinc_aws_server_mysql</name>
+    <server>172.16.1.30&#xa;Request timeout for icmp_seq 1&#xa;Request timeout for icmp_seq 2</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>snap</database>
+    <port>3306</port>
+    <username>snap</username>
+    <password>Encrypted 2be98afc86aa7f2e49817af608dc6ff9b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <repository>    <id>KettleDatabaseRepository</id>
+    <name>Lighthouse KDR</name>
+    <description>Lighthouse KDR</description>
+    <is_default>false</is_default>
+    <connection>lighthouse-kdr</connection>
+  </repository>  <repository>    <id>KettleDatabaseRepository</id>
+    <name>PDI Repo</name>
+    <description>PDI Repo</description>
+    <is_default>false</is_default>
+    <connection>snapinc_aws_server_mysql</connection>
+  </repository>  <repository>    <id>KettleFileRepository</id>
+    <name>q7l repo</name>
+    <description>File repository</description>
+    <is_default>true</is_default>
+    <base_directory>&#x2f;Users&#x2f;mduduzikeswa&#x2f;Documents&#x2f;dev&#x2f;mazasoft&#x2f;projects&#x2f;quizical&#x2f;quizzical&#x2f;bi&#x2f;pdirepo</base_directory>
+    <read_only>N</read_only>
+    <hides_hidden_files>N</hides_hidden_files>
+  </repository>  </repositories>

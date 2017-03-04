@@ -451,12 +451,35 @@
     <created_user>admin</created_user>
     <created_date>2015&#x2f;02&#x2f;14 09&#x3a;14&#x3a;23.541</created_date>
     <modified_user>mkeswa</modified_user>
-    <modified_date>2017&#x2f;02&#x2f;27 14&#x3a;35&#x3a;48.193</modified_date>
+    <modified_date>2017&#x2f;03&#x2f;01 17&#x3a;51&#x3a;23.160</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>AgileBI</name>
+    <server>localhost</server>
+    <type>MONETDB</type>
+    <access>Native</access>
+    <database>pentaho-instaview</database>
+    <port>50000</port>
+    <username>monetdb</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb14a17edb86abd8</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <read_only>true</read_only>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_INFOBRIGHT.characterEncoding</code><attribute>UTF-8</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>50000</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>q7ledw</name>
     <server>&#x24;&#x7b;Q7L_EDW_DB_HOSTNAME&#x7d;</server>
@@ -527,16 +550,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Lookup Problem</from>
-      <to>DB Lookup Junk Dims</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>DB Lookup Junk Dims</from>
-      <to>DB Lookup Source FK</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>DB Lookup Source FK</from>
       <to>DB Lookup Category FK</to>
       <enabled>Y</enabled>
@@ -551,7 +564,216 @@
       <to>Insert &#x2f; Update</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>DB Lookup Problem</from>
+      <to>DB Lookup Source FK</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>DB Lookup Category FK</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>q7ledw</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_test_problem_category</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>category_bk</name>
+        <field>test_problem_category_bk</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>test_problem_category_pk</name>
+        <rename>test_problem_category_pk</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>640</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>DB Lookup Difficulty FK</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>q7ledw</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_test_problem_difficulty</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>difficulty_bk</name>
+        <field>test_problem_difficulty_bk</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>test_problem_difficulty_pk</name>
+        <rename>test_problem_difficulty_pk</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>DB Lookup Problem</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>q7ledw</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_test_problem</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>problem_bk</name>
+        <field>test_problem_bk</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>test_problem_pk</name>
+        <rename>test_problem_pk</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>multiple_choice</name>
+        <rename>multiple_choice</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>calculator_allowed</name>
+        <rename>calculator_allowed</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>DB Lookup Source FK</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>q7ledw</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_test_problem_source</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>source_bk</name>
+        <field>test_problem_source_bk</field>
+        <condition>&#x3d;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>test_problem_source_pk</name>
+        <rename>test_problem_source_pk</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>640</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
   <step>
     <name>DB Lookup Submission</name>
     <type>DBLookup</type>
@@ -719,8 +941,23 @@
         <update>Y</update>
       </value>
       <value>
-        <name>junk_test_submission_attempt_fk</name>
-        <rename>junk_test_submission_attempt_pk</rename>
+        <name>calculator_allowed</name>
+        <rename>requirescalculator_01</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>successful</name>
+        <rename>successful_01</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>skipped</name>
+        <rename>skipped_01</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>multiple_choice</name>
+        <rename>multiplechoice_01</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -750,7 +987,7 @@
       <schema_name/>
     </partitioning>
     <connection>q7lods</connection>
-    <sql>select attempt.id as attempt_id, attempt.skipped, attempt.successful, qproblem_resp.response, qproblem_resp.secondselapsed, sub.id as sub_id, problem.id as problem_id, problem_cat.id as category_id, problem_diff.id as difficulty_id, problem_src.id as source_id  from &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_attempt attempt&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_rating_submit sub  on sub.id &#x3d; attempt.ratingsubmission_id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.quizzical.gnt_quiz_prob qproblem  on attempt.testproblemid &#x3d; qproblem.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_quiz_problem_response qproblem_resp on qproblem.id &#x3d; qproblem_resp.quizproblemid&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem problem  on qproblem.problemid &#x3d; problem.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_category problem_cat  on problem.category_id &#x3d; problem_cat.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_difficulty problem_diff  on problem.difficulty_id &#x3d; problem_diff.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_source problem_src  on problem.source_id &#x3d; problem_src.id</sql>
+    <sql>select attempt.id as attempt_id, attempt.skipped, attempt.successful, qproblem_resp.response, qproblem_resp.secondselapsed, sub.id as sub_id, problem.multiplechoice, problem.requirescalculator, problem.id as problem_id, problem_cat.id as category_id, problem_diff.id as difficulty_id, problem_src.id as source_id  from &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_attempt attempt&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_ana_cat_rating_submit sub  on sub.id &#x3d; attempt.ratingsubmission_id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.quizzical.gnt_quiz_prob qproblem  on attempt.testproblemid &#x3d; qproblem.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_quiz_problem_response qproblem_resp on qproblem.id &#x3d; qproblem_resp.quizproblemid&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem problem  on qproblem.problemid &#x3d; problem.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_category problem_cat  on problem.category_id &#x3d; problem_cat.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_difficulty problem_diff  on problem.difficulty_id &#x3d; problem_diff.id&#xa;left join &#x24;&#x7b;ODS_Q7L_DB_SCHEMA&#x7d;.gnt_problem_source problem_src  on problem.source_id &#x3d; problem_src.id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -897,16 +1134,30 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-       <formula><field_name>successful_yn</field_name>
-<formula_string>successful &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22;</formula_string>
-<value_type>String</value_type>
+       <formula><field_name>successful_01</field_name>
+<formula_string>successful &#x3d;&#x3d; true &#x3f; 1&#x3a;0</formula_string>
+<value_type>Integer</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <replace_field/>
 </formula>
-       <formula><field_name>skipped_yn</field_name>
-<formula_string>skipped &#x3d;&#x3d; true &#x3f; &#x22;Y&#x22;&#x3a;&#x22;N&#x22;</formula_string>
-<value_type>String</value_type>
+       <formula><field_name>skipped_01</field_name>
+<formula_string>skipped &#x3d;&#x3d; true &#x3f; 1&#x3a;0</formula_string>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>multiplechoice_01</field_name>
+<formula_string>multiplechoice &#x3d;&#x3d; true &#x3f; 1&#x3a;0</formula_string>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>requirescalculator_01</field_name>
+<formula_string>requirescalculator &#x3d;&#x3d; true &#x3f; 1&#x3a;0</formula_string>
+<value_type>Integer</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <replace_field/>
@@ -921,276 +1172,6 @@
     <GUI>
       <xloc>320</xloc>
       <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Problem</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>problem_bk</name>
-        <field>test_problem_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_pk</name>
-        <rename>test_problem_pk</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>multiple_choice</name>
-        <rename>multiple_choice</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>calculator_allowed</name>
-        <rename>calculator_allowed</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Junk Dims</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_junk_test_submission_attempt</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>successful_yn</name>
-        <field>successful</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>skipped_yn</name>
-        <field>skipped</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>multiple_choice</name>
-        <field>multiple_choice</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>calculator_allowed</name>
-        <field>calculator_allowed</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>junk_test_submission_attempt_pk</name>
-        <rename>junk_test_submission_attempt_pk</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Source FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_source</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>source_bk</name>
-        <field>test_problem_source_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_source_pk</name>
-        <rename>test_problem_source_pk</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>640</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Category FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_category</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>category_bk</name>
-        <field>test_problem_category_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_category_pk</name>
-        <rename>test_problem_category_pk</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>640</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-    </GUI>
-    </step>
-
-  <step>
-    <name>DB Lookup Difficulty FK</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>q7ledw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_test_problem_difficulty</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>difficulty_bk</name>
-        <field>test_problem_difficulty_bk</field>
-        <condition>&#x3d;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>test_problem_difficulty_pk</name>
-        <rename>test_problem_difficulty_pk</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>800</xloc>
-      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
     </step>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sharedobjects>
+  <connection>
+    <name>q7ledw</name>
+    <server>&#x24;&#x7b;Q7L_EDW_DB_HOSTNAME&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;Q7L_EDW_DB_NAME&#x7d;</database>
+    <port>&#x24;&#x7b;Q7L_EDW_DB_PORT&#x7d;</port>
+    <username>&#x24;&#x7b;Q7L_EDW_DB_USERNAME&#x7d;</username>
+    <password>Encrypted 6765746d616e66d7ebceaf05c89685bf0aaf64d393bbd2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;Q7L_EDW_DB_PORT&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+
+  <connection>
+    <name>q7lods</name>
+    <server>&#x24;&#x7b;ODS_Q7L_DB_HOSTNAME&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;ODS_Q7L_DB_NAME&#x7d;</database>
+    <port>&#x24;&#x7b;ODS_Q7L_DB_PORT&#x7d;</port>
+    <username>&#x24;&#x7b;ODS_Q7L_DB_USERNAME&#x7d;</username>
+    <password>Encrypted 6765746d616e66d7ebceaf05c89685bf0aaf64d393bbd2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;ODS_Q7L_DB_PORT&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+
+  <connection>
+    <name>AgileBI</name>
+    <server>localhost</server>
+    <type>MONETDB</type>
+    <access>Native</access>
+    <database>pentaho-instaview</database>
+    <port>50000</port>
+    <username>monetdb</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb14a17edb86abd8</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <read_only>true</read_only>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_INFOBRIGHT.characterEncoding</code><attribute>UTF-8</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>50000</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+    </attributes>
+  </connection>
+
+</sharedobjects>
