@@ -49,7 +49,7 @@
       </Level>
       <Level name="Month" visible="true" column="month_number" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never" captionColumn="month_abbreviation">
       </Level>
-      <Level name="Day" visible="true" column="day_in_month" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never" captionColumn="day_in_month">
+      <Level name="Day" visible="true" column="date_value" type="Date" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never" captionColumn="date_value">
         <Property name="DATE_VALUE" column="date_value" type="Date" description="Date Value">
         </Property>
       </Level>
@@ -165,6 +165,20 @@
       </Level>
     </Hierarchy>
   </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="User">
+    <Hierarchy name="User" visible="true" hasAll="true" primaryKey="test_submission_pk" primaryKeyTable="dim_test_submission">
+      <Join leftKey="user_fk" rightKey="user_pk">
+        <Table name="dim_test_submission" schema="public" alias="">
+        </Table>
+        <Table name="dim_user" schema="public" alias="">
+        </Table>
+      </Join>
+      <Level name="Name" visible="true" table="dim_user" column="cfm_user_name" type="String" uniqueMembers="false" captionColumn="cfm_user_name">
+      </Level>
+      <Level name="Email" visible="true" table="dim_user" column="cfm_user_email" type="String" uniqueMembers="true" levelType="Regular" captionColumn="cfm_user_email">
+      </Level>
+    </Hierarchy>
+  </Dimension>
   <Cube name="ProblemAttempt" visible="true" description="problem attempt" cache="true" enabled="true">
     <Table name="fct_test_submission_attempt" schema="public">
     </Table>
@@ -181,6 +195,8 @@
     <DimensionUsage source="Difficulty" name="Difficulty" visible="true" foreignKey="test_problem_difficulty_fk" highCardinality="false">
     </DimensionUsage>
     <DimensionUsage source="Source" name="Source" visible="true" foreignKey="test_problem_source_fk" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="User" name="User" visible="true" foreignKey="test_submission_fk">
     </DimensionUsage>
     <Measure name="Time(s)" column="seconds_elapsed" datatype="Integer" formatString="#" aggregator="avg" description="Elapsed Time" visible="true">
     </Measure>
