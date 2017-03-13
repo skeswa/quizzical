@@ -2,15 +2,8 @@
 .main {
   box-sizing: border-box;
   font-size: 1.6rem;
-  padding: 0 4rem;
   position: relative;
   width: 100%;
-}
-
-.main.dark .quizLengthLabel,
-.main.dark .categoryFocusLabel,
-.main.dark .generationStrategyLabel {
-  color: #fff;
 }
 
 .select {
@@ -37,11 +30,38 @@
   font-weight: 600;
 }
 
+.formErrorWrapper {
+  max-width: 40vw;
+}
+@media (max-width: 720px) {
+  .formErrorWrapper {
+    max-width: 60vw;
+  }
+}
+@media (max-width: 400px) {
+  .formErrorWrapper {
+    max-width: none;
+  }
+}
+
+.quizLengthPagerWrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
 .generationStrategyLabel {
   font-size: 1.6rem;
   margin-bottom: 2rem;
   margin-top: -2rem;
   max-width: 100%;
+}
+
+.generationStrategyGroupWrapper {
+  overflow-y: hidden;
+  transition: height 250ms;
+  width: 100%;
 }
 
 .categorySelectWrapper {

@@ -87,25 +87,18 @@ class QuizGenerationPage extends Component {
     } = this.state
 
     return (
-      <PracticeSkeleton title="Quizzical" subtitle="Choose your quiz">
-        <div className={style.main}>
-          <div className={style.middle}>
-            <QuizGenerationForm
-              ref="generationForm"
-              error={quizGenerationError}
-              loading={quizGenerationInProgress}
-              categories={categories}
-              outsidePopup={true} />
-          </div>
-          <div className={style.bottom}>
-            <RaisedButton
-              label="Start"
-              onClick={::this.onStartClicked}
-              disabled={isDataLoading}
-              labelColor="#754aec"
-              backgroundColor="#ffffff" />
-          </div>
-        </div>
+      <PracticeSkeleton
+        title="Choose Your Quiz"
+        action="Start Now"
+        animated={true}
+        actionDisabled={isDataLoading}
+        animationDelay={100}
+        onActionClicked={this.onStartClicked.bind(this)}>
+        <QuizGenerationForm
+          ref="generationForm"
+          error={quizGenerationError}
+          loading={quizGenerationInProgress}
+          categories={categories} />
       </PracticeSkeleton>
     )
   }

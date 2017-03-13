@@ -10,7 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - quizzical-db-volume:/var/lib/postgresql/data
-      - /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/db_backups:/db_backups
+      - ~/Documents/dev/mazasoft/projects/quizical/quizzical/backend/db_backups:/db_backups
   pentaho-ba-server:
     build:
       context: ./infra/docker/docker-pentaho-ba-ce-7.0

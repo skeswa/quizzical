@@ -4,33 +4,16 @@ import ReactDOM from 'react-dom'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import classNames from 'classnames'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import SelectField from 'material-ui/SelectField'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import React, { Component } from 'react'
 import CategoryCreationForm from 'components/CategoryCreationForm'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
-import style from './style.css'
+import style from './index.css'
 import FormError from 'components/FormError'
 import FormLoader from 'components/FormLoader'
+import QuizLengthPager from 'components/QuizLengthPager'
 
-const DARK_MUI_THEME = getMuiTheme({
-  slider: {
-    trackColor: 'rgba(255, 255, 255, 0.6)',
-    selectionColor: '#ffffff'
-  },
-  radioButton: {
-    labelColor: '#ffffff',
-    borderColor: '#ffffff',
-    checkedColor: '#ffffff',
-  },
-  textField: {
-    floatingLabelColor: '#ffffff',
-    focusColor: '#ffffff',
-    textColor: '#ffffff'
-  }
-});
 const QUIZ_LENGTH_NAMES = [
   'Very Short',
   'Short',
@@ -39,9 +22,10 @@ const QUIZ_LENGTH_NAMES = [
   'Very Long',
   'Full Size'
 ]
-const MIN_QUESTIONS_COUNT = 3
+const MIN_QUESTIONS_COUNT = 10
 const MAX_QUESTIONS_COUNT = 20
 const CATEGORY_SELECT_STYLE = { maxWidth: '100%' }
+const QUIZ_LENGTH_PAGE_STYLE = { transform: 'scale(1.1)' }
 
 const GENERATION_STRATEGY_REALISTIC   = 'realistic'
 const GENERATION_STRATEGY_BY_CATEGORY = 'generate_by_category'
@@ -49,17 +33,18 @@ const GENERATION_STRATEGY_BY_WEAKNESS = 'generate_by_weakness'
 
 class QuizGenerationForm extends Component {
   static propTypes = {
-    error:          React.PropTypes.any,
-    loading:        React.PropTypes.bool.isRequired,
-    categories:     React.PropTypes.array.isRequired,
-    outsidePopup:   React.PropTypes.bool,
+    error:                      React.PropTypes.any,
+    loading:                    React.PropTypes.bool.isRequired,
+    categories:                 React.PropTypes.array.isRequired,
+    imposedGenerationStrategy:  React.PropTypes.string.isRequired,
   }
 
   state = {
-    quizLength:           1,
-    selectedCategoryId:   null,
-    generationStrategy:   GENERATION_STRATEGY_BY_WEAKNESS,
-    categorySelectHeight: 72,
+    selectedLengthIndex:            2 /* Medium is the default */,
+    selectedCategoryId:             null,
+    generationStrategy:             GENERATION_STRATEGY_BY_WEAKNESS,
+    categorySelectHeight:           7.2 /* in rem */,
+    generationStrategyGroupHeight:  7.2 /* in rem */,
   }
 
   componentDidMount() {
@@ -80,26 +65,32 @@ class QuizGenerationForm extends Component {
     }
 
     if ((currentCategories ? currentCategories.length < 1 : true)
-      && nextCategories
-      && nextCategories.length > 0) {
+        && nextCategories
+        && nextCategories.length > 0) {
       // Set the default category.
       this.setState({ selectedCategoryId: nextCategories[0].id })
     }
   }
 
   getJSON = () => {
-    const { quizLength, selectedCategoryId, generationStrategy } = this.state
+    const { imposedGenerationStrategy } = this.props
+    const { selectedLengthIndex, selectedCategoryId, generationStrategy } = this.state
 
     // Turn quiz length into a number of questions.
     const questionCount =
       Math.round(((MAX_QUESTIONS_COUNT - MIN_QUESTIONS_COUNT) *
-      (quizLength / (QUIZ_LENGTH_NAMES.length - 1))) + MIN_QUESTIONS_COUNT)
+      (selectedLengthIndex / (QUIZ_LENGTH_NAMES.length - 1))) + MIN_QUESTIONS_COUNT)
 
-    return {
-      quizSize: questionCount,
-      generatorType: generationStrategy,
-      problemCategoryId: selectedCategoryId,
-    }
+    return Object.assign(
+        { quizSize: questionCount },
+        // If there is an imposed generation strategy, then don't include the
+        // selected category, and use the imposed gen. strat. instead.
+        imposedGenerationStrategy
+            ? { generatorType: imposedGenerationStrategy }
+            : {
+                generatorType: generationStrategy,
+                problemCategoryId: selectedCategoryId,
+              })
   }
 
   scrollToTop() {
@@ -112,12 +103,11 @@ class QuizGenerationForm extends Component {
     this.setState({ selectedCategoryId })
   }
 
-  onQuizLengthChanged(e, quizLength) {
-    this.setState({ quizLength })
+  onSelectedLengthChanged(selectedLengthIndex) {
+    this.setState({ selectedLengthIndex })
   }
 
   onCategorySelectMounted(categorySelect) {
-    debugger
     this.setState({ categorySelectHeight: categorySelect.offsetHeight })
   }
 
@@ -126,7 +116,7 @@ class QuizGenerationForm extends Component {
   }
 
   renderError() {
-    const { error, outsidePopup } = this.props
+    const { error } = this.props
 
     if (error) {
       const message = error.error
@@ -134,10 +124,11 @@ class QuizGenerationForm extends Component {
         : error
 
       return (
-        <FormError
-          title="Failed to create category"
-          message={message}
-          limitHeight={outsidePopup} />
+        <div className={style.formErrorWrapper}>
+          <FormError
+            title="Failed to create category"
+            message={message} />
+        </div>
       )
     }
 
@@ -145,96 +136,84 @@ class QuizGenerationForm extends Component {
   }
 
   render() {
-    const { loading, categories, outsidePopup } = this.props
+    const { loading, categories, imposedGenerationStrategy } = this.props
     const {
-      quizLength,
+      selectedLengthIndex,
       generationStrategy,
       selectedCategoryId,
       categorySelectHeight,
+      generationStrategyGroupHeight,
     } = this.state
 
-    const mainClasses = classNames(style.main, { [style.dark]: outsidePopup })
-    const radioButtonStyle = outsidePopup
-      ? { marginBottom: '1rem' }
-      : undefined
-    const selectFieldStyle = outsidePopup
-      ? { color: '#ffffff' }
-      : undefined
-    const categoryMenuItems = categories.map(category => {
-      return (
+    const categoryMenuItems = categories.map(
+      category =>
         <MenuItem
           key={category.id}
           value={category.id}
-          primaryText={category.name} />
-      )
-    })
+          primaryText={category.name} />)
     const categorySelectWrapperStyle = {
-      height: generationStrategy === GENERATION_STRATEGY_BY_CATEGORY
-        ? `${categorySelectHeight}px`
-        : '0px'
+      height:
+        !imposedGenerationStrategy && generationStrategy === GENERATION_STRATEGY_BY_CATEGORY
+            ? `${categorySelectHeight}rem`
+            : '0'
+    }
+    const generationStrategyGroupWrapperStyle = {
+      height:
+        !imposedGenerationStrategy
+            ? `${generationStrategyGroupHeight}rem`
+            : '0'
     }
 
     return (
-      <MuiThemeProvider muiTheme={outsidePopup ? DARK_MUI_THEME : undefined}>
-        <div className={mainClasses}>
-          <FormLoader visible={loading} fullScreen={outsidePopup} />
-          {this.renderError()}
+      <div className={style.main}>
+        <FormLoader visible={loading} />
 
-          <div className={style.quizLengthLabel}>
-            <div className={style.quizLengthLabelTitle}>Quiz Length:</div>
-            <div className={style.quizLengthLabelValue}>
-              {QUIZ_LENGTH_NAMES[quizLength]}
-            </div>
-          </div>
-          <Slider
-            min={0}
-            max={QUIZ_LENGTH_NAMES.length - 1}
-            step={1}
-            value={quizLength}
-            required={false}
-            onChange={::this.onQuizLengthChanged} />
+        {this.renderError()}
 
-          <div className={style.generationStrategyLabel}>
-            Generation Strategy
-          </div>
-          <RadioButtonGroup
-            name="generation-strategy"
-            onChange={::this.onGenerationStrategyChanged}
-            valueSelected={generationStrategy}>
-            <RadioButton
-              style={radioButtonStyle}
-              value={GENERATION_STRATEGY_BY_CATEGORY}
-              label="Category Focus" />
-            <RadioButton
-              style={radioButtonStyle}
-              value={GENERATION_STRATEGY_REALISTIC}
-              label="Realistic Practice" />
-            <RadioButton
-              style={radioButtonStyle}
-              value={GENERATION_STRATEGY_BY_WEAKNESS}
-              label="Weakness Training" />
-          </RadioButtonGroup>
-
-          <div
-            style={categorySelectWrapperStyle}
-            className={style.categorySelectWrapper}>
-            <SelectField
-              ref="categorySelect"
-              style={CATEGORY_SELECT_STYLE}
-              value={selectedCategoryId}
-              hintText="The category to focus"
-              disabled={categoryMenuItems.length < 1}
-              onChange={::this.onCategoryChanged}
-              fullWidth={true}
-              hintStyle={selectFieldStyle}
-              labelStyle={selectFieldStyle}
-              floatingLabelText="Category to Focus"
-              floatingLabelStyle={selectFieldStyle}>
-              {categoryMenuItems}
-            </SelectField>
-          </div>
+        <div className={style.quizLengthPagerWrapper}>
+          <QuizLengthPager
+            style={QUIZ_LENGTH_PAGE_STYLE}
+            lengths={QUIZ_LENGTH_NAMES}
+            selectedLengthIndex={selectedLengthIndex}
+            onSelectedLengthChanged={::this.onSelectedLengthChanged} />
         </div>
-      </MuiThemeProvider>
+        <div
+          style={generationStrategyGroupWrapperStyle}
+          className={style.generationStrategyGroupWrapper}>
+            <div className={style.generationStrategyLabel}>
+              Generation Strategy
+            </div>
+            <RadioButtonGroup
+              name="generation-strategy"
+              onChange={::this.onGenerationStrategyChanged}
+              valueSelected={generationStrategy}>
+              <RadioButton
+                value={GENERATION_STRATEGY_BY_CATEGORY}
+                label="Category Focus" />
+              <RadioButton
+                value={GENERATION_STRATEGY_REALISTIC}
+                label="Realistic Practice" />
+              <RadioButton
+                value={GENERATION_STRATEGY_BY_WEAKNESS}
+                label="Weakness Training" />
+            </RadioButtonGroup>
+        </div>
+        <div
+          style={categorySelectWrapperStyle}
+          className={style.categorySelectWrapper}>
+          <SelectField
+            ref="categorySelect"
+            style={CATEGORY_SELECT_STYLE}
+            value={selectedCategoryId}
+            hintText="The category to focus"
+            disabled={categoryMenuItems.length < 1}
+            onChange={::this.onCategoryChanged}
+            fullWidth={true}
+            floatingLabelText="Category to Focus">
+            {categoryMenuItems}
+          </SelectField>
+        </div>
+      </div>
     )
   }
 }

@@ -1,0 +1,20 @@
+
+.main {
+  display: flex;
+}
+
+.details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+}
+
+.label {
+  font-size: 1.2rem;
+}
+
+.length {
+  color: #754aec;
+  font-size: 2rem;
+}

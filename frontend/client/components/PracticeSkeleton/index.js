@@ -1,20 +1,80 @@
 
-import React, { Component } from 'react'
+import classNames from 'classnames'
+import RaisedButton from 'material-ui/RaisedButton'
+import React, { Component, PropTypes } from 'react'
 
-import style from './style.css'
+import style from './index.css'
 
-const PracticeSkeleton = props => (
-  <div className={style.main}>
-    <div className={style.header}>
-      <div className={style.title}>{props.title}</div>
-      {
-        props.subtitle
-        ? <div className={style.subtitle}>{props.subtitle}</div>
+const ACTION_LABEL_STYLE = {
+  fontWeight: 500,
+  fontSize: '1.6rem',
+  letterSpacing: '.05rem',
+}
+
+class PracticeSkeleton extends Component {
+  static propTypes = {
+    title:            PropTypes.string,
+    action:           PropTypes.string,
+    animated:         PropTypes.bool,
+    actionDisabled:   PropTypes.bool,
+    animationDelay:   PropTypes.number,
+    onActionClicked:  PropTypes.func,
+  }
+
+  state = {
+    hiddenIfAnimated: true,
+  }
+
+  componentDidMount() {
+    const { animated, animationDelay } = this.props
+
+    if (animated) {
+      setTimeout(
+        () => this.setState({ hiddenIfAnimated: false }),
+        animationDelay ? /* default delay */ 200 : animationDelay)
+    }
+  }
+
+  onActionClicked() {
+    if (this.props.onActionClicked) this.props.onActionClicked()
+  }
+
+  renderFooter(action, actionDisabled) {
+    return action
+        ? <div className={style.cardFooter}>
+            <RaisedButton
+              label={action}
+              primary={true}
+              onClick={this.onActionClicked.bind(this)}
+              disabled={actionDisabled}
+              fullWidth={true}
+              labelStyle={ACTION_LABEL_STYLE} />
+          </div>
         : null
-      }
-    </div>
-    <div className={style.body}>{props.children}</div>
-  </div>
-)
+  }
+
+  render() {
+    const { hiddenIfAnimated } = this.state
+    const { title, action, animated, children, actionDisabled } = this.props
+
+    const cardClassName = classNames(style.card, {
+      [style.card__hidden]: (hiddenIfAnimated && animated),
+    })
+
+    return (
+      <div className={style.main}>
+        <div className={cardClassName}>
+          <div className={style.cardHeader}>
+            <div className={style.cardHeaderIcon}></div>
+            <div className={style.cardHeaderTitle}>{title}</div>
+          </div>
+          <div className={style.cardBody}>{children}</div>
+
+          {this.renderFooter(action, actionDisabled)}
+        </div>
+      </div>
+    )
+  }
+}
 
 export default PracticeSkeleton

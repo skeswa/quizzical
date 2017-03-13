@@ -80,7 +80,7 @@ function renderUI() {
     root,
     () => setTimeout(
       () => root.style.opacity = 1,
-      400 /* Reveal delay. */))
+      100 /* Reveal delay. */))
 }
 
 // Protects <Route>s from unauthenticated users.

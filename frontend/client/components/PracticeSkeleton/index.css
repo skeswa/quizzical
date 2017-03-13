@@ -1,0 +1,60 @@
+
+.main {
+  align-items: center;
+  background-color: #754aec;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.0) 100%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+.card {
+  background: #fff;
+  border-radius: .2rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  padding: 1.6rem;
+  transform: scale(1);
+  transition: transform 500ms cubic-bezier(.4, 0, .2, 1), opacity 500ms;
+}
+.card__hidden {
+  opacity: 0;
+  transform: scale(.8);
+}
+
+.cardHeader {
+  align-items: center;
+  display: flex;
+  margin-bottom: 1.6rem;
+}
+
+.cardHeaderIcon {
+  background: #754aec url(resources/images/q.png) no-repeat;
+  background-position: .7rem .7rem;
+  background-size: 1.4rem auto;
+  border-radius: 50%;
+  height: 2.7rem;
+  margin-right: 1rem;
+  width: 2.7rem;
+}
+
+.cardHeaderTitle {
+  box-sizing: border-box;
+  color: #754aec;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: .05rem;
+  padding-right: 2rem;
+  text-transform: uppercase;
+}
+
+.cardFooter {
+  margin-top: 1.6rem;
+}

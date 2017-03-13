@@ -8,7 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 
-import style from './style.css'
+import style from './index.css'
 import actions from 'actions'
 import FormError from 'components/FormError'
 import PracticeSkeleton from 'components/PracticeSkeleton'
@@ -78,10 +78,12 @@ class LoginPage extends Component {
         : error
 
       return (
-        <FormError
-          title="The credentials you used are incorrect."
-          message={message}
-          limitHeight={true} />
+        <div className={style.formErrorWrapper}>
+          <FormError
+            title="The credentials you used are incorrect."
+            message={message}
+            limitHeight={true} />
+        </div>
       )
     }
 
@@ -90,35 +92,35 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <PracticeSkeleton title="Quizzical" subtitle="Sign In Below">
-        <MuiThemeProvider muiTheme={DARK_MUI_THEME}>
-          <div className={style.main}>
-            <div className={style.middle}>
-              {this.renderError()}
+      <PracticeSkeleton
+        title="Sign In"
+        action="Sign In"
+        animated={true}
+        actionDisabled={this.state.loading}
+        animationDelay={100}
+        onActionClicked={::this.onLoginClicked}>
+        {this.renderError()}
 
-              <TextField
-                onChange={::this.onEmailChanged}
-                disabled={this.state.loading}
-                fullWidth={true}
-                floatingLabelText="Email" />
-              <TextField
-                type="password"
-                onKeyUp={::this.onPasswordKeyUp}
-                onChange={::this.onPasswordChanged}
-                disabled={this.state.loading}
-                fullWidth={true}
-                floatingLabelText="Password" />
-            </div>
-            <div className={style.bottom}>
-              <RaisedButton
-                label="Sign In"
-                onClick={::this.onLoginClicked}
-                disabled={this.state.loading}
-                labelColor="#754aec"
-                backgroundColor="#ffffff" />
-            </div>
-          </div>
-        </MuiThemeProvider>
+        <TextField
+          onChange={::this.onEmailChanged}
+          disabled={this.state.loading}
+          fullWidth={true}
+          floatingLabelText="Email"
+          floatingLabelFixed={true} />
+        <TextField
+          type="password"
+          onKeyUp={::this.onPasswordKeyUp}
+          onChange={::this.onPasswordChanged}
+          disabled={this.state.loading}
+          fullWidth={true}
+          floatingLabelText="Password"
+          floatingLabelFixed={true} />
+
+        <div className={style.forgotPass}>
+          <span>Click here if you </span>
+          <a className={style.forgotPassLink} href="#">forgot your password or email</a>
+          <span>.</span>
+        </div>
       </PracticeSkeleton>
     )
   }

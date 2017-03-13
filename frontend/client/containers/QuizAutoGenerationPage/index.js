@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import style from './style.css'
 import actions from 'actions'
 import PracticeSkeleton from 'components/PracticeSkeleton'
-import QuizAutoGenerationForm from 'components/QuizAutoGenerationForm'
+import QuizGenerationForm from 'components/QuizGenerationForm'
 import { extractErrorFromResultingActions } from 'utils'
 
 const GENERATION_STRATEGY_REALISTIC   = 'realistic'
@@ -102,26 +102,19 @@ class QuizAutoGenerationPage extends Component {
       quizTitle,
     } = this.state
     return (
-      <PracticeSkeleton title="Quizzical" subtitle={quizTitle}>
-        <div className={style.main}>
-          <div className={style.middle}>
-            <QuizAutoGenerationForm
-              ref="generationForm"
-              error={quizGenerationError}
-              loading={quizGenerationInProgress}
-              categories={categories}
-              outsidePopup={true}
-              genStratParam={generationStrategy}  />
-          </div>
-          <div className={style.bottom}>
-            <RaisedButton
-              label="Start"
-              onClick={::this.onStartClicked}
-              disabled={isDataLoading}
-              labelColor="#754aec"
-              backgroundColor="#ffffff" />
-          </div>
-        </div>
+      <PracticeSkeleton
+        title="Choose Your Quiz"
+        action="Start Now"
+        animated={true}
+        actionDisabled={isDataLoading}
+        animationDelay={100}
+        onActionClicked={this.onStartClicked.bind(this)}>
+        <QuizGenerationForm
+          ref="generationForm"
+          error={quizGenerationError}
+          loading={quizGenerationInProgress}
+          categories={categories}
+          imposedGenerationStrategy={generationStrategy}  />
       </PracticeSkeleton>
     )
   }

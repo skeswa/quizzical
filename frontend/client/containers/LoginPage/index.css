@@ -27,3 +27,20 @@
   padding-right: 4rem;
   padding-bottom: 4rem;
 }
+
+.formErrorWrapper {
+  max-width: 40vw;
+}
+
+.forgotPass {
+  color: #888;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  text-align: right;
+}
+
+.forgotPassLink {
+  color: #754aec;
+  text-decoration: none;
+}
