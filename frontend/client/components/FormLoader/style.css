@@ -1,13 +1,15 @@
 
 .main {
   background-color: #fff;
+  border-radius: .2rem;
   bottom: 0;
   display: none;
-  left: -2.4rem;
+  left: 0;
   opacity: 0;
+  overflow: hidden;
   position: absolute;
-  right: -2.4rem;
-  top: -2rem;
+  right: 0;
+  top: 0;
   transition: opacity 250ms ease-in-out;
   z-index: 3;
 }
