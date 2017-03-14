@@ -1,0 +1,53 @@
+
+.main {
+  position: relative;
+}
+
+.main, .circle {
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
+.backgroundRing {
+  stroke: #444;
+}
+.backgroundRing__flashing {
+  animation: flash 1s infinite;
+}
+
+.foregroundRing {
+  stroke: #fff;
+  stroke-dasharray: 0, 138;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  transition: stroke-dasharray 300ms ease-in-out, stroke 300ms ease-in-out;
+}
+.foregroundRing__flashing {
+  animation: flash 1.5s infinite;
+}
+
+.seconds {
+  align-items: center;
+  bottom: 0;
+  color: #fff;
+  display: flex;
+  font-size: 1.7rem;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(1);
+  transition: transform 300ms, color 300ms ease-in-out;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

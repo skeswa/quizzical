@@ -8,9 +8,11 @@ import RaisedButton from 'material-ui/RaisedButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 
-import style from './style.css'
+import style from './index.css'
+import QuizTakerHeader from './header'
 import QuestionPicture from 'components/QuestionPicture'
 import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
+import QuizTakerQuestionPager from './question-pager'
 import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
 const DIALOG_BODY_STYLE = { padding: '0' }
@@ -278,6 +280,7 @@ class QuizTaker extends Component {
   }
 
   render() {
+    const { responses } = this.state
     const { questionIndex, quiz: { questions } } = this.props
     const {
       problem: {
@@ -292,30 +295,50 @@ class QuizTaker extends Component {
 
     return (
       <div className={style.main}>
-        <QuestionPicture
-          questionId={questionId}
-          pictureId={questionPictureId}
-          questionNumber={questionNumber}
-          onPictureLoaded={::this.onQuestionPictureLoaded}
-          requiresCalculator={questionRequiresCalculator} />
-        <div className={style.buttons}>
-          <div className={style.bigButton}>
-            <RaisedButton
-              label="Answer"
-              onClick={::this.onAnswerClicked}
-              fullWidth={true}
-              labelColor="#754aec"
-              backgroundColor="#ffffff" />
+        <div className={style.left}>
+          <QuizTakerQuestionPager
+            questions={questions}
+            responses={responses}
+            currentQuestionIndex={questionIndex} />
+        </div>
+        <div className={style.right}>
+          <div className={style.top}>
+            <QuizTakerHeader
+              questionIndex={questionIndex}
+              questionTotal={questions.length}
+              questionNumberInPage={questionNumber} />
           </div>
-          <div className={style.smallButton}>
-            <RaisedButton
-              icon={skipIcon}
-              style={SKIP_BUTTON_STYLE}
-              onClick={::this.onSkipClicked}
-              labelColor="#ffffff"
-              backgroundColor="#222222" />
+          <div className={style.bottom}>
+            <QuestionPicture
+              questionId={questionId}
+              pictureId={questionPictureId}
+              onPictureLoaded={::this.onQuestionPictureLoaded} />
           </div>
         </div>
+
+
+          {
+            /*
+            <div className={style.buttons}>
+              <div className={style.bigButton}>
+                <RaisedButton
+                  label="Answer"
+                  onClick={::this.onAnswerClicked}
+                  fullWidth={true}
+                  labelColor="#754aec"
+                  backgroundColor="#ffffff" />
+              </div>
+              <div className={style.smallButton}>
+                <RaisedButton
+                  icon={skipIcon}
+                  style={SKIP_BUTTON_STYLE}
+                  onClick={::this.onSkipClicked}
+                  labelColor="#ffffff"
+                  backgroundColor="#222222" />
+              </div>
+            </div>
+            */
+          }
 
         {this.renderAnswerPopup(questionIsMutipleChoice)}
         {this.renderNotificationToast()}

@@ -79,6 +79,7 @@ class QuestionPicture extends Component {
     return (
       <div className={style.main}>
         {this.renderPrompt()}
+
         <img
           src={pictureURL}
           onLoad={::this.onPictureLoaded}

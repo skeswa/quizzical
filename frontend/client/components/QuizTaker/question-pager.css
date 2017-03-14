@@ -1,0 +1,50 @@
+
+.main {
+  display: flex;
+  position: relative;
+}
+
+.questionBoxes {
+  background: #222;
+  box-shadow: 0 0 .5rem rgba(0, 0, 0, .5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.questionBox {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.6rem;
+  justify-content: center;
+  min-height: 5rem;
+  min-width: 6.5rem;
+  transition: opacity 250ms, background 250ms;
+}
+.questionBox:first-child {
+  margin-top: auto;
+}
+.questionBox:last-child {
+  margin-bottom: auto;
+}
+.questionBox__unvisited {
+  opacity: .5;
+}
+.questionBox__unvisited:hover {
+  opacity: .8;
+}
+.questionBox__selected {
+  background: #754aec;
+  opacity: 1;
+}
+
+.questionNumber {
+  color: #fff;
+  margin-right: .5rem;
+}
+
+.answerStatus {
+  transform: translateY(0.3rem);
+}

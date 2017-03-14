@@ -1,4 +1,10 @@
 
+.quizTakerWrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
 .centerer {
   align-items: center;
   box-sizing: border-box;

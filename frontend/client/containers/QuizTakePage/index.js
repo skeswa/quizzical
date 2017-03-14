@@ -5,7 +5,7 @@ import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 
-import style from './style.css'
+import style from './index.css'
 import actions from 'actions'
 import QuizTaker from 'components/QuizTaker'
 import FormError from 'components/FormError'
@@ -173,14 +173,14 @@ class QuizTakePage extends Component {
       `${questionTotal}`
 
     return (
-      <PracticeSkeleton title="Quiz in Progress" subtitle={subtitle}>
+      <div className={style.quizTakerWrapper}>
         <QuizTaker
           quiz={this.getQuiz()}
           questionIndex={currentQuestionIndex}
           onQuizFinished={::this.onQuizFinished}
           onQuizCancelled={::this.onQuizCancelled}
           onQuestionIndexChanged={::this.onQuestionIndexChanged} />
-      </PracticeSkeleton>
+      </div>
     )
   }
 
