@@ -1,6 +1,7 @@
 
 .main {
   background-color: #222;
+  cursor: pointer;
   display: flex;
   flex: 1;
   overflow: hidden;
