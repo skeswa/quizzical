@@ -310,6 +310,7 @@ class QuizTaker extends Component {
           </div>
           <div className={style.bottom}>
             <QuestionPicture
+              style={{ background: '#fff', borderRadius: '.2rem' }}
               questionId={questionId}
               pictureId={questionPictureId}
               onPictureLoaded={::this.onQuestionPictureLoaded} />

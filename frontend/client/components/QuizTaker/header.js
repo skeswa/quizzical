@@ -1,7 +1,7 @@
 
-import FontIcon from 'material-ui/FontIcon';
+import FontIcon from 'material-ui/FontIcon'
 import classNames from 'classnames'
-import IconButton from 'material-ui/IconButton';
+import IconButton from 'material-ui/IconButton'
 import React, { Component, PropTypes } from 'react'
 
 import style from './header.css'
@@ -22,7 +22,7 @@ class QuizTakerHeader extends Component {
     this.setState({ clockSeconds })
   }
 
-  onBackClicked() {
+  onDeleteClicked() {
     // TODO(skeswa): implement this right here.
   }
 
@@ -32,11 +32,13 @@ class QuizTakerHeader extends Component {
 
     return (
       <div className={style.main}>
-        <div className={style.backArrow}>
+        <div className={style.deleteButton}>
           <IconButton
-            onClick={::this.onBackClicked}
-            iconStyle={BACK_ARROW_ICON_STYLE}>
-            <FontIcon className="material-icons">arrow_back</FontIcon>
+            onClick={::this.onDeleteClicked}
+            iconStyle={BACK_ARROW_ICON_STYLE}
+            focusRippleColor="#ffffff"
+            touchRippleColor="#ffffff">
+            <FontIcon className="material-icons">delete</FontIcon>
           </IconButton>
         </div>
         <div className={style.info}>

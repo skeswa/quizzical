@@ -20,6 +20,10 @@
 .right {
   flex-direction: column;
 }
+.bottom {
+  padding: 2rem;
+  padding-top: 0;
+}
 
 .questionPictureWrapper {
   display: flex;

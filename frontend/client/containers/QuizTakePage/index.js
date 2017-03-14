@@ -109,9 +109,7 @@ class QuizTakePage extends Component {
     const subtitle = `Your quiz is ${participle}`
 
     return (
-      <PracticeSkeleton
-        title="Quizzical"
-        subtitle={subtitle}>
+      <div className={style.main}>
         <div className={style.centerer}>
           <div className={style.loader}>
             <RefreshIndicator
@@ -122,7 +120,7 @@ class QuizTakePage extends Component {
               loadingColor="#754aec" />
           </div>
         </div>
-      </PracticeSkeleton>
+      </div>
     )
   }
 

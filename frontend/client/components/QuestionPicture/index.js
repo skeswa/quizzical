@@ -1,7 +1,7 @@
 
 import classNames from 'classnames'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
 import Lightbox from './lightbox'
@@ -11,11 +11,12 @@ const BASE_QUESTION_PICTURE_URL = '/api/problems/pictures'
 
 class QuestionPicture extends Component {
   static propTypes = {
-    questionId:         React.PropTypes.number,
-    pictureId:          React.PropTypes.number.isRequired,
-    questionNumber:     React.PropTypes.number,
-    onPictureLoaded:    React.PropTypes.func,
-    requiresCalculator: React.PropTypes.bool,
+    style:              PropTypes.object,
+    questionId:         PropTypes.number,
+    pictureId:          PropTypes.number.isRequired,
+    questionNumber:     PropTypes.number,
+    onPictureLoaded:    PropTypes.func,
+    requiresCalculator: PropTypes.bool,
   }
 
   state = {
@@ -67,8 +68,8 @@ class QuestionPicture extends Component {
 
   render() {
     const pictureURL = this.getPictureURL()
-    const { prompt, pictureId, questionId } = this.props
     const { pictureLoaded, lightboxVisible } = this.state
+    const { style: _style, prompt, pictureId, questionId } = this.props
 
     const pictureStyle = { backgroundImage: `url(${pictureURL})` }
     const pictureClassName = classNames(style.picture, {
@@ -77,7 +78,7 @@ class QuestionPicture extends Component {
     const pictureLoaderStyle = { opacity: pictureLoaded ? 0 : 1 }
 
     return (
-      <div className={style.main}>
+      <div style={_style} className={style.main}>
         {this.renderPrompt()}
 
         <img

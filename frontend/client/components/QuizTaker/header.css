@@ -7,8 +7,8 @@
   padding: 1.5rem;
 }
 
-.backArrow {
-  transform: scale(1.4);
+.deleteButton {
+  transform: scale(1.6);
 }
 
 .info {
