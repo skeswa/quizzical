@@ -1,8 +1,8 @@
 
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
-import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
+import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
 import actions from 'actions'
@@ -16,13 +16,10 @@ const GENERATION_STRATEGY_BY_WEAKNESS = 'generate_by_weakness'
 
 class QuizAutoGenerationPage extends Component {
   static propTypes = {
-    actions:            React.PropTypes.object.isRequired,
-    categories:         React.PropTypes.array.isRequired,
-    dataShouldBeLoaded: React.PropTypes.bool.isRequired,
-  }
-
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+    history:            PropTypes.object.isRequired,
+    actions:            PropTypes.object.isRequired,
+    categories:         PropTypes.array.isRequired,
+    dataShouldBeLoaded: PropTypes.bool.isRequired,
   }
 
   state = {
@@ -87,7 +84,7 @@ class QuizAutoGenerationPage extends Component {
             quizGenerationDialogVisible:  false,
           })
 
-          this.context.router.push(`/quiz/${resultingAction.payload.id}/take`)
+          this.props.history.push(`/quiz/${resultingAction.payload.id}`)
         }
       })
   }
@@ -108,7 +105,7 @@ class QuizAutoGenerationPage extends Component {
         animated={true}
         actionDisabled={isDataLoading}
         animationDelay={100}
-        onActionClicked={this.onStartClicked.bind(this)}>
+        onActionClicked={::this.onStartClicked}>
         <QuizGenerationForm
           ref="generationForm"
           error={quizGenerationError}
@@ -133,4 +130,10 @@ const reduxify = connect(
       bindActionCreators(actions.category, dispatch))
   }))
 
-export default reduxify(QuizAutoGenerationPage)
+// Connect the quiz auto generation page to the store.
+const QuizAutoGenerationPageWithRedux = reduxify(QuizAutoGenerationPage)
+// Connect the quiz auto generation page to the router so that it can perform
+// history operations.
+const QuizAutoGenerationPageWithReduxWithRouter = withRouter(QuizAutoGenerationPageWithRedux)
+
+export default QuizAutoGenerationPageWithReduxWithRouter

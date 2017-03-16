@@ -8,7 +8,6 @@ import App from 'containers/App'
 
 // Renders the provided component in #root.
 const render = Component => {
-  console.log('render')
   const root = document.getElementById('root')
 
   ReactDOM.render(

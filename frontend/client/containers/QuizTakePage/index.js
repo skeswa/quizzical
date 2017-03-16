@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 
 import style from './index.css'
@@ -14,8 +14,11 @@ import PracticeSkeleton from 'components/PracticeSkeleton'
 import { extractErrorFromResultingActions } from 'utils'
 
 class QuizTakePage extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+  static propTypes = {
+    match:    PropTypes.object.isRequired,
+    quizzes:  PropTypes.object.isRequired,
+    actions:  PropTypes.object.isRequired,
+    history:  PropTypes.object.isRequired,
   }
 
   state = {
@@ -61,13 +64,15 @@ class QuizTakePage extends Component {
 
   getQuiz() {
     const quizId = this.getQuizId()
-    return quizId && this.props.quizzes ? this.props.quizzes[quizId] : null
+    return quizId && this.props.quizzes
+        ? this.props.quizzes[quizId]
+        : null
   }
 
   getQuizId() {
-    return this.props.params
-      ? this.props.params.quizId
-      : null
+    return this.props.match && this.props.match.params
+        ? this.props.match.params.id
+        : null
   }
 
   onQuizFinished(quizSubmission) {
@@ -97,7 +102,7 @@ class QuizTakePage extends Component {
 
   onQuizCancelled() {
     // TODO(skeswa): tell the backend to delete the cancelled quiz.
-    this.context.router.push(`/quiz/start`)
+    this.props.history.push(`/quiz`)
   }
 
   onQuestionIndexChanged(currentQuestionIndex) {
@@ -245,4 +250,10 @@ const reduxify = connect(
       bindActionCreators(actions.quizSubmission, dispatch))
   }))
 
-export default reduxify(QuizTakePage)
+// Connect the quiz take page to the store.
+const QuizTakePageWithRedux = reduxify(QuizTakePage)
+// Connect the quiz take page to the router so that it can perform history
+// operations.
+const QuizTakePageWithReduxWithRouter = withRouter(QuizTakePageWithRedux)
+
+export default QuizTakePageWithReduxWithRouter
