@@ -4,6 +4,11 @@
   display: flex;
   flex: 1;
   max-width: 100%;
+  transform: scale(0);
+  transition: transform 500ms cubic-bezier(.4, 0, .2, 1);
+}
+.main__visible {
+  transform: scale(1);
 }
 
 .left, .right, .top, .bottom {

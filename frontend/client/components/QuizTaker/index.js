@@ -31,6 +31,7 @@ class QuizTaker extends Component {
   }
 
   state = {
+    visible:                      false,
     responses:                    {},
     undoRequested:                false,
     currentAnswer:                null,
@@ -47,6 +48,10 @@ class QuizTaker extends Component {
 
   componentDidMount() {
     this.mounted = true
+
+    setTimeout(
+      () => this.mounted ? this.setState({ visible: true }) : null,
+      300)
   }
 
   componentWillUnmount() {
@@ -280,7 +285,7 @@ class QuizTaker extends Component {
   }
 
   render() {
-    const { responses } = this.state
+    const { visible, responses } = this.state
     const { questionIndex, quiz: { questions } } = this.props
     const {
       problem: {
@@ -292,9 +297,12 @@ class QuizTaker extends Component {
       },
     } = questions[questionIndex]
     const skipIcon = <FontIcon className="material-icons">skip_next</FontIcon>
+    const mainClassName = classNames(style.main, {
+      [style.main__visible]: visible,
+    })
 
     return (
-      <div className={style.main}>
+      <div className={mainClassName}>
         <div className={style.left}>
           <QuizTakerQuestionPager
             questions={questions}
