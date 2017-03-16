@@ -37,13 +37,12 @@
 }
 
 .cardHeaderIcon {
-  background: #754aec url(resources/images/q.png) no-repeat;
-  background-position: .7rem .7rem;
-  background-size: 1.4rem auto;
-  border-radius: 50%;
-  height: 2.7rem;
+  background: url(resources/images/card-header-logo.png) no-repeat;
+  background-position: center center;
+  background-size: contain;
+  height: 2.8rem;
   margin-right: 1rem;
-  width: 2.7rem;
+  width: 2.8rem;
 }
 
 .cardHeaderTitle {

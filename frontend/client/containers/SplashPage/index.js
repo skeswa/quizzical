@@ -1,46 +1,56 @@
 
+import classNames from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
-import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
-import logoURL from 'resources/images/splash-logo.png'
-
-const LABEL_STYLE       = { fontSize: '1.8rem' }
-const BUTTON_STYLE      = { height: '5rem' }
-const TOP_BUTTON_STYLE  = { marginBottom: '1rem' }
+import logoURL from 'resources/images/q.png'
 
 class SplashPage extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  }
+
+  state = {
+    visible: false,
   }
 
   onSignInClicked() {
-    this.context.router.push(`/quiz/start`)
+    this.props.history.push('/quiz')
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ visible: true }), 100)
   }
 
   render() {
+    const { visible } = this.state
+
+    const mainClassName = classNames(
+      style.main, { [style.main__visible]: visible })
+
     return (
-      <div className={style.main}>
+      <div className={mainClassName}>
         <img className={style.logo} src={logoURL} />
-        <div className={style.buttons}>
-          <RaisedButton
-            style={TOP_BUTTON_STYLE}
-            label="Learn More"
-            labelColor="#754aec"
-            labelStyle={LABEL_STYLE}
-            buttonStyle={BUTTON_STYLE}
-            backgroundColor="#ffffff" />
-          <RaisedButton
-            label="Sign In"
-            onClick={::this.onSignInClicked}
-            labelColor="#ffffff"
-            labelStyle={LABEL_STYLE}
-            buttonStyle={BUTTON_STYLE}
-            backgroundColor="#222222" />
+        <div className={style.blurb}>
+          <span className={style.bold}>Quizzical</span> helps you get better at
+          the math in the SAT.
         </div>
+        <RaisedButton
+          style={{ width: '14rem' }}
+          label="Continue"
+          onClick={::this.onSignInClicked}
+          labelColor="#754aec"
+          labelStyle={{ fontSize: '1.8rem' }}
+          backgroundColor="#ffffff" />
       </div>
     )
   }
 }
 
-export default SplashPage
+// Connect the splash page to the router so that it can perform history
+// operations.
+const SplashPageWithRouter = withRouter(SplashPage)
+
+export default SplashPageWithRouter

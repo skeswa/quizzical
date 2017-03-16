@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1486401319000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1489273415000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="com.fasterxml.jackson.core.jackson-annotations"/>
@@ -4959,22 +4959,6 @@
     </requirement>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
-    </requirement>
-  </resource>
-  <resource>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.amdatu.security.authentication.authservice.login.resource"/>
-      <attribute name="type" value="osgi.fragment"/>
-      <attribute name="version" type="Version" value="0.0.0"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="41673ef2f7bb34447c10e01a89a1c5283f60328746c26865b93529335bf501ed"/>
-      <attribute name="url" value="org.amdatu.security.authentication.authservice.login.resource/org.amdatu.security.authentication.authservice.login.resource-0.0.0.jar"/>
-      <attribute name="size" type="Long" value="6146"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-    </capability>
-    <requirement namespace="osgi.wiring.host">
-      <directive name="filter" value="(&amp;(osgi.wiring.host=org.amdatu.security.authentication.authservice.rest)(bundle-version&gt;=0.0.0))"/>
     </requirement>
   </resource>
   <resource>

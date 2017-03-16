@@ -1,22 +1,27 @@
 
 import { createStore, applyMiddleware } from 'redux'
 
+import reducers from '../reducers'
 import { logger, promise, preAction } from '../middleware'
-import rootReducer from '../reducers'
 
-export default function configure(initialState) {
+export default function configure(routerMiddleware) {
+  // Enable redux devtools.
   const create = window.devToolsExtension
     ? window.devToolsExtension()(createStore)
     : createStore
 
+  // Modify the create store function with middleware.
   const createStoreWithMiddleware = applyMiddleware(
     logger,
     preAction,
     promise,
+    routerMiddleware,
   )(create)
 
-  const store = createStoreWithMiddleware(rootReducer, initialState)
+  // Initialize the store.
+  const store = createStoreWithMiddleware(reducers)
 
+  // Custom logic for the hot loader.
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers')
