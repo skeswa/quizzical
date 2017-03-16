@@ -7,6 +7,10 @@ import createHistory from 'history/createBrowserHistory'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 
+/* Routing Helpers */
+import PublicRoute from 'components/PublicRoute'
+import PrivateRoute from 'components/PrivateRoute'
+
 /* App-wide State Management */
 import configureStore from '../../store'
 import { Provider as StoreProvider } from 'react-redux'
@@ -56,19 +60,19 @@ const App = () =>
         <ConnectedRouter history={history}>
           <Switch>
             {/* Admin pages */}
-            <Route exact path="/admin/quizzes" component={QuizzesPage} />
-            <Route exact path="/admin/attempts" component={QuizAttemptsPage} />
-            <Route exact path="/admin/questions" component={QuestionsPage} />
+            <PrivateRoute exact path="/admin/quizzes" component={QuizzesPage} />
+            <PrivateRoute exact path="/admin/attempts" component={QuizAttemptsPage} />
+            <PrivateRoute exact path="/admin/questions" component={QuestionsPage} />
 
             {/* Student pages */}
-            <Route exact path="/quiz" component={QuizAutoGenerationPage} />
-            <Route exact path="/qa/quiz" component={QuizGenerationQAPage} />
-            <Route exact path="/quiz/:id" component={QuizTakePage} />
-            <Route exact path="/quiz/:id/results" component={QuizResultsPage} />
+            <PrivateRoute exact path="/quiz" component={QuizAutoGenerationPage} />
+            <PrivateRoute exact path="/qa/quiz" component={QuizGenerationQAPage} />
+            <PrivateRoute exact path="/quiz/:id" component={QuizTakePage} />
+            <PrivateRoute exact path="/quiz/:id/results" component={QuizResultsPage} />
 
             {/* Misc. pages */}
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/workbench" component={WorkbenchPage} />
+            <PublicRoute exact path="/login" component={LoginPage} />
+            <PrivateRoute exact path="/workbench" component={WorkbenchPage} />
             <Route exact path="/" component={SplashPage} />
             <Route path="" component={NotFoundPage} />
           </Switch>

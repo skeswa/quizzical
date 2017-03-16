@@ -18,6 +18,7 @@ const Session = {
     cachedSession = session
     store.set(SESSION_STORE_KEY, session)
   },
+
   retrieve() {
     if (cachedSession) return cachedSession
 
@@ -33,7 +34,11 @@ const Session = {
 
     cachedSession = session
     return session
-  }
+  },
+
+  exists() {
+    return !!cachedSession || !!store.get(SESSION_STORE_KEY)
+  },
 }
 
 export default Session
