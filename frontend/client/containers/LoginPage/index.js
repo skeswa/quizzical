@@ -1,12 +1,11 @@
 
 import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import RaisedButton from 'material-ui/RaisedButton'
+import { withRouter } from 'react-router'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
+import React, { Component, PropTypes } from 'react'
 
 import style from './index.css'
 import actions from 'actions'
@@ -14,23 +13,16 @@ import FormError from 'components/FormError'
 import PracticeSkeleton from 'components/PracticeSkeleton'
 import { extractErrorFromResultingActions } from 'utils'
 
-const DARK_MUI_THEME = getMuiTheme({
-  textField: {
-    floatingLabelColor: '#ffffff',
-    focusColor: '#ffffff',
-    textColor: '#ffffff',
-  },
-});
-
 class LoginPage extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   state = {
-    error: null,
-    email: null,
-    loading: false,
+    error:    null,
+    email:    null,
+    loading:  false,
     password: null,
   }
 
@@ -49,24 +41,24 @@ class LoginPage extends Component {
   }
 
   onLoginClicked() {
-    const { router } = this.context
     const { email, password } = this.state
-    const { actions, location } = this.props
+    const { actions, location, history } = this.props
 
     this.setState({ loading: true })
-    actions.login(email, password).then(resultingActions => {
-      const error = extractErrorFromResultingActions(resultingActions)
-      if (error) {
-        this.setState({ error, loading: false })
-        return
-      }
-
-     if (location.state && location.state.nextPathname) {
-          router.replace(location.state.nextPathname)
-        } else {
-          router.replace('/quiz/start')
+    actions.login(email, password)
+      .then(resultingActions => {
+        const error = extractErrorFromResultingActions(resultingActions)
+        if (error) {
+          this.setState({ error, loading: false })
+          return
         }
-    })
+
+        if (location.state && location.state.from) {
+          history.replace(location.state.from)
+        } else {
+          history.replace('/quiz')
+        }
+      })
   }
 
   renderError() {
@@ -118,7 +110,9 @@ class LoginPage extends Component {
 
         <div className={style.forgotPass}>
           <span>Click here if you </span>
-          <a className={style.forgotPassLink} href="#">forgot your password or email</a>
+          <a className={style.forgotPassLink} href="#">
+            forgot your password or email
+          </a>
           <span>.</span>
         </div>
       </PracticeSkeleton>
@@ -136,4 +130,10 @@ const reduxify = connect(
       bindActionCreators(actions.auth, dispatch)),
   }))
 
-export default reduxify(LoginPage)
+// Connect the login page to the store.
+const LoginPageWithRedux = reduxify(LoginPage)
+// Connect the login page to the router so that it can perform history
+// operations.
+const LoginPageWithReduxWithRouter = withRouter(LoginPageWithRedux)
+
+export default LoginPageWithReduxWithRouter

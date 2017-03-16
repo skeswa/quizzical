@@ -1,9 +1,10 @@
 
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import { withRouter } from 'react-router'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
-import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
+import React, { Component, PropTypes } from 'react'
 
 import style from './index.css'
 import actions from 'actions'

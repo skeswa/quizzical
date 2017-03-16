@@ -1,6 +1,7 @@
 
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import { withRouter } from 'react-router'
 import { bindActionCreators } from 'redux'
 import React, { Component, PropTypes } from 'react'
 
@@ -134,6 +135,7 @@ const reduxify = connect(
 const QuizAutoGenerationPageWithRedux = reduxify(QuizAutoGenerationPage)
 // Connect the quiz auto generation page to the router so that it can perform
 // history operations.
-const QuizAutoGenerationPageWithReduxWithRouter = withRouter(QuizAutoGenerationPageWithRedux)
+const QuizAutoGenerationPageWithReduxWithRouter =
+    withRouter(QuizAutoGenerationPageWithRedux)
 
 export default QuizAutoGenerationPageWithReduxWithRouter
