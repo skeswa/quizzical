@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions'
 import { normalizeEntity, pluralizeNormalizedEntity } from 'utils/crud'
 
 const baseInitialState = {
-  map:              [],
+  map:              {},
   list:             [],
   loaded:           false,
   pendingRequests:  0,
