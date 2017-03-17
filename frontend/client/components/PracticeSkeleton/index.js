@@ -45,7 +45,7 @@ class PracticeSkeleton extends Component {
             <RaisedButton
               label={action}
               primary={true}
-              onClick={this.onActionClicked.bind(this)}
+              onClick={::this.onActionClicked}
               disabled={actionDisabled}
               fullWidth={true}
               labelStyle={ACTION_LABEL_STYLE} />

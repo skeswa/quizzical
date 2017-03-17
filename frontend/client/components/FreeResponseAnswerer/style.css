@@ -1,13 +1,10 @@
 
 .main {
   background: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
-  border-top: 1px solid #e0e0e0;
   color: #444444;
   display: flex;
   flex: 1;
   font-weight: 500;
-  margin-bottom: 1rem;
   max-height: inherit;
 }
 
@@ -38,7 +35,7 @@
 }
 
 .answerCell {
-  border-right: 1px solid #e0e0e0;
+  border-right: .1rem solid #e0e0e0;
   cursor: default;
   font-size: 2rem;
   height: 6rem;
@@ -52,8 +49,8 @@
   background-color: #f0f0f0;
 }
 .symbolCells {
-  border-bottom: 1px solid #e0e0e0;
-  border-top: 1px solid #e0e0e0;
+  border-bottom: .1rem solid #e0e0e0;
+  border-top: .1rem solid #e0e0e0;
   display: flex;
   flex-direction: column;
 }
@@ -68,11 +65,11 @@
 
 .cell__blank {
   font-size: 1rem;
-  letter-spacing: 0.4px;
+  letter-spacing: .04rem;
   text-transform: uppercase;
 }
 .cell__selected {
-  background: #754aec;
+  background: #444;
   color: #ffffff;
 }
 .cell__disabled {
@@ -84,5 +81,5 @@
     #ffffff 4px);
   color: #888888;
   cursor: default;
-  opacity: 0.75;
+  opacity:.5;
 }

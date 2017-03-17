@@ -1,8 +1,39 @@
 
 .main {
   background: #f0f0f0;
-  border-left: 1px solid #ccc;
+  border-left: .1rem solid #ccc;
   display: flex;
   flex-direction: column;
   width: 20rem;
+}
+
+.answerer {
+  background: #fff;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.answererButtons {
+  background: #fff;
+  border-bottom: .1rem solid #ccc;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.secondaryAnswererButtons {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.secondaryAnswererButton {
+  box-sizing: border-box;
+  flex: 1;
+}
+.secondaryAnswererButton:first-child {
+  padding-right: .5rem;
+}
+.secondaryAnswererButton:last-child {
+  padding-left: .5rem;
 }
