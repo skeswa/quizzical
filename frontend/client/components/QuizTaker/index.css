@@ -3,6 +3,7 @@
   background-color: #222;
   display: flex;
   flex: 1;
+  flex-direction: column;
   max-width: 100%;
   transform: scale(0);
   transition: transform 500ms cubic-bezier(.4, 0, .2, 1);
@@ -11,24 +12,30 @@
   transform: scale(1);
 }
 
-.left, .right, .top, .bottom {
-  box-sizing: border-box;
+.top, .bottomOuter, .bottomInner, .bottomLeft, .bottomMiddle, .bottomRight {
   display: flex;
-  position: relative;
 }
-.right, .bottom {
+.bottomLeft {
+  flex: 0 0;
+}
+.bottomMiddle {
   flex: 1;
 }
-.left {
-  z-index: 3;
+.bottomRight {
+  flex: 0 0;
 }
-.right {
-  flex-direction: column;
-}
-.bottom {
+.bottomOuter {
+  box-sizing: border-box;
+  flex: 1;
   padding: 2rem;
   padding-top: 0;
 }
+.bottomInner {
+  border-radius: .2rem;
+  flex: 1;
+  overflow: hidden;
+}
+
 
 .questionPictureWrapper {
   display: flex;

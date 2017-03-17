@@ -11,6 +11,7 @@ import React, { Component } from 'react'
 import style from './index.css'
 import QuizTakerHeader from './header'
 import QuestionPicture from 'components/QuestionPicture'
+import QuizTakerAnswerPanel from './answer-panel'
 import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
 import QuizTakerQuestionPager from './question-pager'
 import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
@@ -303,25 +304,30 @@ class QuizTaker extends Component {
 
     return (
       <div className={mainClassName}>
-        <div className={style.left}>
-          <QuizTakerQuestionPager
-            questions={questions}
-            responses={responses}
-            currentQuestionIndex={questionIndex} />
+        <div className={style.top}>
+          <QuizTakerHeader
+            questionIndex={questionIndex}
+            questionTotal={questions.length}
+            questionNumberInPage={questionNumber} />
         </div>
-        <div className={style.right}>
-          <div className={style.top}>
-            <QuizTakerHeader
-              questionIndex={questionIndex}
-              questionTotal={questions.length}
-              questionNumberInPage={questionNumber} />
-          </div>
-          <div className={style.bottom}>
-            <QuestionPicture
-              style={{ background: '#fff', borderRadius: '.2rem' }}
-              questionId={questionId}
-              pictureId={questionPictureId}
-              onPictureLoaded={::this.onQuestionPictureLoaded} />
+        <div className={style.bottomOuter}>
+          <div className={style.bottomInner}>
+            <div className={style.bottomLeft}>
+              <QuizTakerQuestionPager
+                questions={questions}
+                responses={responses}
+                currentQuestionIndex={questionIndex} />
+            </div>
+            <div className={style.bottomMiddle}>
+              <QuestionPicture
+                style={{ background: '#fff', flex: '1 0' }}
+                questionId={questionId}
+                pictureId={questionPictureId}
+                onPictureLoaded={::this.onQuestionPictureLoaded} />
+            </div>
+            <div className={style.bottomRight}>
+              <QuizTakerAnswerPanel />
+            </div>
           </div>
         </div>
 

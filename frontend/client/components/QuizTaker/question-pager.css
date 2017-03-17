@@ -1,12 +1,12 @@
 
 .main {
+  background: #f0f0f0;
+  border-right: .1rem solid #ccc;
   display: flex;
-  position: relative;
+  max-width: 6.5rem;
 }
 
 .questionBoxes {
-  background: #222;
-  box-shadow: 0 0 .8rem rgba(0, 0, 0, .75);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -15,19 +15,16 @@
 
 .questionBox {
   align-items: center;
+  border-bottom: .1rem solid #ccc;
+  color: #555;
   cursor: pointer;
   display: flex;
   font-size: 1.6rem;
+  height: 5rem;
   justify-content: center;
-  min-height: 5rem;
-  min-width: 6.5rem;
-  transition: opacity 250ms, background 250ms;
-}
-.questionBox:first-child {
-  margin-top: auto;
-}
-.questionBox:last-child {
-  margin-bottom: auto;
+  position: relative;
+  width: 6.5rem;
+  transition: opacity 250ms, background 250ms, border 250ms;
 }
 .questionBox__unvisited {
   opacity: .5;
@@ -37,11 +34,12 @@
 }
 .questionBox__selected {
   background: #754aec;
+  border-bottom: .1rem solid #754aec;
+  color: #fff;
   opacity: 1;
 }
 
 .questionNumber {
-  color: #fff;
   margin-right: .5rem;
 }
 

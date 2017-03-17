@@ -38,7 +38,7 @@ class QuizTakerHeader extends Component {
             iconStyle={BACK_ARROW_ICON_STYLE}
             focusRippleColor="#ffffff"
             touchRippleColor="#ffffff">
-            <FontIcon className="material-icons">delete</FontIcon>
+            <FontIcon className="material-icons">menu</FontIcon>
           </IconButton>
         </div>
         <div className={style.info}>

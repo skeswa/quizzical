@@ -21,7 +21,7 @@
 
 .left {
   background: #f0f0f0;
-  border-right: 1px solid #cccccc;
+  border-right: 1px solid #ccc;
   flex: 0 0 auto;
   overflow: auto;
   position: relative;

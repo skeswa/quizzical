@@ -5,7 +5,6 @@ const rucksack              = require('rucksack-css')
 const CopyWebpackPlugin     = require('copy-webpack-plugin')
 const HtmlWebpackPlugin     = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const DashboardPlugin       = require('webpack-dashboard/plugin')
 
 module.exports = {
   // The base directory, an absolute path, for resolving entry points and
@@ -24,12 +23,24 @@ module.exports = {
     ],
     // The bundle for libraries that change seldomly.
     vendor: [
+      'classnames',
+      'debug',
+      'element-resize-detector',
+      'fixed-data-table',
+      'flux-standard-action',
+      'lodash',
+      'material-ui',
+      'pluralize',
       'react',
       'react-dom',
       'react-redux',
       'react-router',
+      'react-router-dom',
       'react-router-redux',
+      'react-tap-event-plugin',
       'redux',
+      'redux-actions',
+      'store',
     ],
   },
 
@@ -167,7 +178,6 @@ module.exports = {
         'og-splash.png'),
     }]),
     new webpack.NamedModulesPlugin(),
-    new DashboardPlugin(),
   ],
 
   // Enables source maps.

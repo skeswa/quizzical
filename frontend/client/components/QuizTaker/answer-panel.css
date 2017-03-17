@@ -1,0 +1,8 @@
+
+.main {
+  background: #f0f0f0;
+  border-left: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+}
