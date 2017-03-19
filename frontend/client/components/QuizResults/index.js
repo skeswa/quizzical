@@ -370,7 +370,7 @@ class QuizResults extends Component {
 
       return (
         <div
-          key={ordinal}
+          key={i}
           onClick={this.onSelectedQuestionOrdinalChanged.bind(this, ordinal)}
           className={questionButtonClassNames}>
           <i className={QUESTION_BUTTON_ICON_CLASSNAME}>
