@@ -14,6 +14,7 @@ class QuizTakerAnswerPanel extends Component {
   static propTypes = {
     answer:                   PropTypes.string,
     questionTotal:            PropTypes.number.isRequired,
+    quizFinalized:            PropTypes.bool.isRequired,
     onAnswerChanged:          PropTypes.func.isRequired,
     onAnswerSubmitted:        PropTypes.func.isRequired,
     onQuestionSkipped:        PropTypes.func.isRequired,
@@ -50,10 +51,16 @@ class QuizTakerAnswerPanel extends Component {
     onAnswerSubmitted,
     onQuestionSkipped,
     onQuestionReported,
+    quizFinalized,
   ) {
-    const submitExtraProps = this.isAnswerBlank(questionIsMutipleChoice, answer)
+    const submitButtonDisabled = quizFinalized
+        || this.isAnswerBlank(questionIsMutipleChoice, answer)
+    const submitExtraProps = submitButtonDisabled
         ? {
-            'data-balloon': 'Must provide a valid answer',
+            'data-balloon':
+                !quizFinalized
+                    ? 'Must provide a valid answer'
+                    : 'Change an answer to re-activate this button',
             'data-balloon-pos': 'left',
           }
         : null
@@ -65,7 +72,7 @@ class QuizTakerAnswerPanel extends Component {
             label="Submit Answer"
             primary={true}
             onClick={onAnswerSubmitted}
-            disabled={this.isAnswerBlank(questionIsMutipleChoice, answer)}
+            disabled={submitButtonDisabled}
             fullWidth={true} />
         </div>
         <div className={style.secondaryAnswererButtons}>
@@ -130,6 +137,7 @@ class QuizTakerAnswerPanel extends Component {
   render() {
     const {
       answer,
+      quizFinalized,
       questionTotal,
       onAnswerChanged,
       onAnswerSubmitted,
@@ -138,16 +146,6 @@ class QuizTakerAnswerPanel extends Component {
       onQuestionReported,
       questionIsMutipleChoice,
     } = this.props
-
-    const finishButtonClassName = classNames(style.finishButton, {
-      [style.finishButton__disabled]: questionsAttempted < questionTotal,
-    })
-    const finishButtonExtraProps = questionsAttempted < questionTotal
-        ? {
-            'data-balloon': 'All questions must be attempted',
-            'data-balloon-pos': 'top',
-          }
-        : null
 
     return (
       <div className={style.main}>
@@ -158,7 +156,8 @@ class QuizTakerAnswerPanel extends Component {
             answer,
             onAnswerSubmitted,
             onQuestionSkipped,
-            onQuestionReported)
+            onQuestionReported,
+            quizFinalized)
         }
         {this.renderFinishButton(questionsAttempted, questionTotal)}
       </div>

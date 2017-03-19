@@ -13,6 +13,7 @@ import QuizTakerQuestionPager from './question-pager'
 import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
 const SKIP_BUTTON_STYLE = { width: '3.6rem', minWidth: '1.5rem' }
+const QUESTION_PICTURE_STYLE = { background: '#fff', flex: '1 0' }
 
 class QuizTaker extends Component {
   static propTypes = {
@@ -272,6 +273,7 @@ class QuizTaker extends Component {
       visible,
       responses,
       currentAnswer,
+      quizFinalized,
       questionsAttempted,
       timeCurrentQuestionStarted,
     } = this.state
@@ -321,15 +323,16 @@ class QuizTaker extends Component {
             </div>
             <div className={style.bottomMiddle}>
               <QuestionPicture
-                style={{ background: '#fff', flex: '1 0' }}
-                questionId={questionId}
+                style={QUESTION_PICTURE_STYLE}
                 pictureId={questionPictureId}
+                questionId={questionId}
                 onPictureLoaded={::this.onQuestionPictureLoaded} />
             </div>
             <div className={style.bottomRight}>
               <QuizTakerAnswerPanel
                 answer={currentAnswer}
                 questionTotal={questions.length}
+                quizFinalized={quizFinalized}
                 onAnswerChanged={::this.onAnswerChanged}
                 onAnswerSubmitted={::this.onAnswerSubmitted}
                 onQuestionSkipped={::this.onQuestionSkipped}
