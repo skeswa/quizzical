@@ -19,19 +19,36 @@ class QuizTakerHeader extends Component {
   }
 
   state = { clockSeconds: 0 }
+  mounted = false
+  intervalId = null
+
+  componentDidMount() {
+    this.mounted = true
+    this.intervalId = setInterval(::this.onClockTick, 1000)
+  }
 
   componentWillReceiveProps(nextProps) {
     const nextTimeQuestionStarted = nextProps.timeQuestionStarted
     const currentTimeQuestionStarted = this.props.timeQuestionStarted
 
     if (nextTimeQuestionStarted !== currentTimeQuestionStarted) {
-      this.onClockTick()
+      this.updateClockSeconds(nextTimeQuestionStarted)
     }
   }
 
-  onClockTick() {
-    const { timeQuestionStarted } = this.props
+  componentWillUnmount() {
+    this.mounted = mounted
+  }
 
+  onClockTick() {
+    this.updateClockSeconds(this.props.timeQuestionStarted)
+  }
+
+  onMenuClicked() {
+    // TODO(skeswa): the sidebar menu.
+  }
+
+  updateClockSeconds(timeQuestionStarted) {
     if (!timeQuestionStarted) {
       this.setState({ clockSeconds: 0 })
       return
@@ -40,10 +57,6 @@ class QuizTakerHeader extends Component {
     this.setState({
       clockSeconds: Math.round((Date.now() - timeQuestionStarted) / 1000),
     })
-  }
-
-  onMenuClicked() {
-    // TODO(skeswa): implement this right here.
   }
 
   render() {

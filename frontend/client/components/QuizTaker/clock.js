@@ -15,21 +15,8 @@ const GOOD_TIME_COLOR = {
 
 class QuizTakerClock extends Component {
   static propTypes = {
-    onTick:     PropTypes.func.isRequired,
     seconds:    PropTypes.number.isRequired,
     timeLimit:  PropTypes.number.isRequired,
-  }
-
-  intervalRef = null
-
-  componentDidMount() {
-    this.intervalRef = setInterval(
-        () => this.props.onTick(),
-        1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalRef)
   }
 
   calculateClockColor(cappedSeconds, timeLimit) {

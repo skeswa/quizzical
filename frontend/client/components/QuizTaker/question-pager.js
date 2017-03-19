@@ -7,23 +7,22 @@ import React, { Component, PropTypes } from 'react'
 import style from './question-pager.css'
 import QuizTakerClock from './clock'
 
-const ANSWER_ICON_STYLE = {
+const BASE_ICON_STYLE = {
   color: 'inherit',
   width: '1.6rem',
+  transition: 'none',
+}
+const ANSWER_ICON_STYLE = Object.assign({}, BASE_ICON_STYLE, {
   fontSize: '1.6rem',
-}
-const REPORTED_ICON_STYLE = {
+})
+const REPORTED_ICON_STYLE = Object.assign({}, BASE_ICON_STYLE, {
   left: '-0.1rem',
-  color: 'inherit',
-  width: '1.6rem',
   fontSize: '1.8rem',
-}
-const SKIPPED_ICON_STYLE = {
+})
+const SKIPPED_ICON_STYLE = Object.assign({}, BASE_ICON_STYLE, {
   left: '-0.4rem',
-  color: 'inherit',
-  width: '1.6rem',
   fontSize: '2.5rem',
-}
+})
 
 class QuizTakerQuestionPager extends Component {
   static propTypes = {

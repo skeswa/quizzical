@@ -26,6 +26,7 @@ class QuizTaker extends Component {
   state = {
     visible:                      false,
     responses:                    {},
+    quizFinalized:                false,
     currentAnswer:                null,
     lightboxMounted:              false,
     lightboxVisible:              false,
@@ -40,7 +41,11 @@ class QuizTaker extends Component {
 
     setTimeout(() =>
       this.mounted
-          ? this.setState({ visible: true })
+          ? this.setState(
+              { visible: true },
+              () => this.startNextQuestion(
+                this.props.questionIndex,
+                this.state.responses))
           : null,
       300)
   }
@@ -50,17 +55,30 @@ class QuizTaker extends Component {
     const nextQuestionIndex = nextProps.questionIndex
     const currentQuestionIndex = this.props.questionIndex
 
-    // If the question index changes, set the current answer to whatever
-    // response answer we already have in memory.
-    if (nextQuestionIndex
-        && (nextQuestionIndex !== currentQuestionIndex)
-        && responses[nextQuestionIndex]) {
-      this.setState({ currentAnswer: responses[nextQuestionIndex].answer })
+    if (nextQuestionIndex !== currentQuestionIndex) {
+      // When the index is changed by the parent, advance to the designated
+      // question.
+      this.startNextQuestion(nextQuestionIndex, responses)
     }
   }
 
   componentWillUnmount() {
     this.mounted = false
+  }
+
+  startNextQuestion(nextQuestionIndex, responses) {
+    if (Number.isInteger(nextQuestionIndex)) {
+      const {
+        answer = null,
+        secondsElapsed = 0,
+      } = responses[nextQuestionIndex] || {}
+
+      this.setState({
+        currentAnswer: answer,
+        timeCurrentQuestionStarted:
+            Date.now() - Math.round(secondsElapsed * 1000),
+      })
+    }
   }
 
   composeSubmission() {
@@ -127,7 +145,7 @@ class QuizTaker extends Component {
         : initialIndex
   }
 
-  respondToCurrentQuestion(skip, report) {
+  respondToCurrentQuestion(skip, report, nextQuestionIndex) {
     const {
       responses,
       currentAnswer,
@@ -143,51 +161,69 @@ class QuizTaker extends Component {
       onQuestionIndexChanged,
     } = this.props
 
-    // Figure out where we are headed next.
-    const nextQuestionIndex =
-        this.findNextUnattemptedQuestionIndex(
-            questionIndex,
-            questions,
-            responses)
+    // Figure out where we are headed next if it wasn't specified.
+    const nextQuestionIndexDefined = Number.isInteger(nextQuestionIndex)
+    if (!nextQuestionIndexDefined) {
+      nextQuestionIndex =
+          this.findNextUnattemptedQuestionIndex(
+              questionIndex,
+              questions,
+              responses)
+    }
+
+    // Calculate shanges to common state variables.
+    const onLastQuestion = (questionIndex === nextQuestionIndex)
+    const existingResponse = responses[questionIndex]
+    const shouldSkipQuestion =
+        // Only skip the question if its not the student paging through already
+        // answered questions.
+        skip && !(
+          nextQuestionIndexDefined
+          && existingResponse
+          && existingResponse.answer)
+    const updatedResponses = Object.assign(
+      {},
+      responses,
+      {
+        [questionIndex]: {
+          answer: shouldSkipQuestion ? null : currentAnswer,
+          skipped: shouldSkipQuestion,
+          reported: !!report,
+          secondsElapsed: timeCurrentQuestionStarted !== null
+              ? (Date.now() - timeCurrentQuestionStarted) / 1000
+              : 0,
+        },
+      })
+    const updatedQuestionsAttempted =
+        responses[questionIndex]
+            ? questionsAttempted
+            : questionsAttempted + 1
+
+    if (onLastQuestion) {
+      this.setState({
+        responses: updatedResponses,
+        questionsAttempted: updatedQuestionsAttempted,
+
+        // Assert that the quiz is tentatively finalized since the last question
+        // has a response.
+        quizFinalized: true,
+      })
+      return
+    }
 
     this.setState(
       {
-        responses: Object.assign(
-          {},
-          responses,
-          {
-            [questionIndex]: {
-              answer: skip ? null : currentAnswer,
-              skipped: !!skip,
-              reported: !!report,
-              secondsElapsed: timeCurrentQuestionStarted !== null
-                  ? (Date.now() - timeCurrentQuestionStarted) / 1000
-                  : 0,
-            },
-          }),
-        currentAnswer:
-            questionIndex === nextQuestionIndex
-                // If we aren't calling onQuestionIndexChanged,
-                // then make sure the current answer is maintained internally.
-                ? currentAnswer
-                // Otherwise, set it to null until the question index
-                // is updated by our parent.
-                : null,
-        answerPopupVisible: false,
-        questionsAttempted: responses[questionIndex]
-            ? questionsAttempted
-            : questionsAttempted + 1,
-        timeCurrentQuestionStarted: null,
+        responses: updatedResponses,
+        currentAnswer: null,
+        questionsAttempted: updatedQuestionsAttempted,
       },
-      () => {
-        if (questionIndex !== nextQuestionIndex) {
-          onQuestionIndexChanged(nextQuestionIndex)
-        }
-      })
+      () => onQuestionIndexChanged(nextQuestionIndex))
   }
 
   onAnswerChanged(currentAnswer) {
-    this.setState({ currentAnswer })
+    // Set the current answer, and, since the quiz data now could potentially
+    // change, mark the quiz un-finalized.
+    this.setState({ currentAnswer, quizFinalized: false })
   }
 
   onAnswerSubmitted() {
@@ -200,6 +236,13 @@ class QuizTaker extends Component {
 
   onQuestionReported() {
     this.respondToCurrentQuestion(true /* skip */, true /* report */)
+  }
+
+  onCurrentQuestionIndexChanged(nextQuestionIndex) {
+    this.respondToCurrentQuestion(
+      true /* skip */,
+      false /* report */,
+      nextQuestionIndex)
   }
 
   onQuestionClicked() {
@@ -219,13 +262,8 @@ class QuizTaker extends Component {
   }
 
   onQuestionPictureLoaded() {
-    this.setState({
-      timeCurrentQuestionStarted: Date.now(),
-    })
-  }
-
-  onCurrentQuestionIndexChanged() {
-    // TODO
+    // TODO(skeswa): do some sort of timer discounting here in future. We should
+    // not be penalizing the student for a slow image load time.
   }
 
   render() {
