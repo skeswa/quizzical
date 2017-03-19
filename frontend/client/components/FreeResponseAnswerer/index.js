@@ -1,38 +1,54 @@
 
 import classNames from 'classnames'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-import style from './style.css'
+import style from './index.css'
+import FreeResponseAnswererCell from './cell'
 
-const CELL_TYPE_ANSWER = 'answer'
-const CELL_TYPE_SYMBOL = 'symbol'
-const CELL_TYPE_NUMBER = 'number'
-
-const SYMBOL_CELL_VALUES = [ '', '/', '.' ]
-const NUMBER_CELL_VALUES = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+import {
+  CELL_TYPE_ANSWER,
+  CELL_TYPE_SYMBOL,
+  CELL_TYPE_NUMBER,
+  CELL_VALUE_BLANK,
+  SYMBOL_CELL_VALUES,
+  NUMBER_CELL_VALUES,
+} from './constants'
 
 class FreeResponseAnswerer extends Component {
   static propTypes = {
-    onAnswerChanged: React.PropTypes.func.isRequired
+    answer:           PropTypes.string,
+    onAnswerChanged:  PropTypes.func.isRequired,
   }
 
-  state = {
-    answer: [ '', '', '', '' ],
+  formatAnswer(answer) {
+    const formattedAnswer = [
+      CELL_VALUE_BLANK,
+      CELL_VALUE_BLANK,
+      CELL_VALUE_BLANK,
+      CELL_VALUE_BLANK,
+    ]
+
+    if (!answer) {
+      return formattedAnswer
+    }
+
+    for (let i = 0; i < answer.length && i < formattedAnswer.length; i++) {
+      formattedAnswer[i] = answer[i]
+    }
+
+    return formattedAnswer
   }
 
   onCellSelection(columnIndex, value) {
-    const newAnswer = this.state.answer.slice(0)
-    newAnswer[columnIndex] = value
-
-    this.setState({ answer: newAnswer })
-    this.props.onAnswerChanged(newAnswer.join(''))
+    const answer = this.formatAnswer(this.props.answer)
+    answer[columnIndex] = value
+    this.props.onAnswerChanged(answer.join(''))
   }
 
-  renderColumn(index) {
-    const { answer } = this.state
+  renderColumn(index, answer) {
     const symbolCells = SYMBOL_CELL_VALUES
       .map(value =>
-        <Cell
+        <FreeResponseAnswererCell
           key={value}
           type={CELL_TYPE_SYMBOL}
           value={value}
@@ -41,7 +57,7 @@ class FreeResponseAnswerer extends Component {
           onSelection={::this.onCellSelection} />)
     const numberCells = NUMBER_CELL_VALUES
       .map(value =>
-        <Cell
+        <FreeResponseAnswererCell
           key={value}
           type={CELL_TYPE_NUMBER}
           value={value}
@@ -51,7 +67,7 @@ class FreeResponseAnswerer extends Component {
 
     return (
       <div className={style.column}>
-        <Cell
+        <FreeResponseAnswererCell
           type={CELL_TYPE_ANSWER}
           value={answer[index]}
           column={index} />
@@ -62,58 +78,15 @@ class FreeResponseAnswerer extends Component {
   }
 
   render() {
+    const answer = this.formatAnswer(this.props.answer)
+
     return (
       <div className={style.main}>
         <div className={style.columns}>
-          {this.renderColumn(0)}
-          {this.renderColumn(1)}
-          {this.renderColumn(2)}
-          {this.renderColumn(3)}
-        </div>
-      </div>
-    )
-  }
-}
-
-class Cell extends Component {
-  static propTypes = {
-    type:         React.PropTypes.string.isRequired,
-    value:        React.PropTypes.string.isRequired,
-    column:       React.PropTypes.number.isRequired,
-    selected:     React.PropTypes.bool,
-    onSelection:  React.PropTypes.func,
-  }
-
-  isDisabled(column, value) {
-    return (
-      (((column % 3) === 0) && (value === '/')))
-  }
-
-  onClick(e) {
-    const { type, column, value, selected, onSelection } = this.props
-
-    if (type !== CELL_TYPE_ANSWER && !this.isDisabled(column, value)) {
-      onSelection(column, value)
-    } else {
-      e.preventDefault()
-    }
-  }
-
-  render() {
-    const { type, value, column, selected } = this.props
-    const className = classNames(
-      style.cell,
-      style[`${type}Cell`],
-      {
-        [style.cell__blank]:    !value,
-        [style.cell__disabled]: this.isDisabled(column, value),
-        [style.cell__selected]: selected,
-      })
-
-    return (
-      <div className={className} onClick={::this.onClick}>
-        <div className={style.cellLabel}>
-          { (value || type === CELL_TYPE_ANSWER)  ? value : 'Blank' }
+          {this.renderColumn(0, answer)}
+          {this.renderColumn(1, answer)}
+          {this.renderColumn(2, answer)}
+          {this.renderColumn(3, answer)}
         </div>
       </div>
     )

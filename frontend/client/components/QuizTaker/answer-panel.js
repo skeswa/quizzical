@@ -8,79 +8,92 @@ import style from './answer-panel.css'
 import FreeResponseAnswerer from 'components/FreeResponseAnswerer'
 import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
+const FREE_RESPONSE_BLANK_ANSWER = '    '
+
 class QuizTakerAnswerPanel extends Component {
   static propTypes = {
+    answer:                   PropTypes.string,
+    questionTotal:            PropTypes.number.isRequired,
+    onAnswerChanged:          PropTypes.func.isRequired,
+    onAnswerSubmitted:        PropTypes.func.isRequired,
+    onQuestionSkipped:        PropTypes.func.isRequired,
+    onQuestionReported:       PropTypes.func.isRequired,
+    questionsAttempted:       PropTypes.number.isRequired,
+    questionIsMutipleChoice:  PropTypes.bool.isRequired,
   }
 
-  state = {
-    answer: null,
+  isAnswerBlank(questionIsMutipleChoice, answer) {
+    return (questionIsMutipleChoice && !answer)
+        || (!questionIsMutipleChoice && !answer)
+        || (!questionIsMutipleChoice && answer === FREE_RESPONSE_BLANK_ANSWER)
   }
 
-  onAnswerChanged(answer) {
-    this.setState({ answer })
-  }
-
-  onSubmitAnswerClicked() {
-    // TODO
-  }
-
-  onSkipQuestionClicked() {
-    // TODO
-  }
-
-  onReportQuestionClicked() {
-    // TODO
-  }
-
-  renderAnswerer(questionIsMutipleChoice, answer, skipped) {
+  renderAnswerer(questionIsMutipleChoice, answer, onAnswerChanged) {
     return (
       <div className={style.answerer}>
         {
           questionIsMutipleChoice
               ? <MultipleChoiceAnswerer
                   answer={answer}
-                  skipped={skipped}
-                  onAnswerChanged={::this.onAnswerChanged} />
+                  onAnswerChanged={onAnswerChanged} />
               : <FreeResponseAnswerer
                   answer={answer}
-                  skipped={skipped}
-                  onAnswerChanged={::this.onAnswerChanged} />
+                  onAnswerChanged={onAnswerChanged} />
         }
       </div>
     )
   }
 
-  renderAnswererButtons(answer) {
+  renderAnswererButtons(
+    questionIsMutipleChoice,
+    answer,
+    onAnswerSubmitted,
+    onQuestionSkipped,
+    onQuestionReported,
+  ) {
+    const submitExtraProps = this.isAnswerBlank(questionIsMutipleChoice, answer)
+        ? {
+            'data-balloon': 'Must provide a valid answer',
+            'data-balloon-pos': 'left',
+          }
+        : null
+
     return (
       <div className={style.answererButtons}>
-        <div className={style.primaryAnswererButton}>
+        <div className={style.primaryAnswererButton} {...submitExtraProps}>
           <RaisedButton
             label="Submit Answer"
             primary={true}
-            onClick={::this.onSubmitAnswerClicked}
-            disabled={!answer}
+            onClick={onAnswerSubmitted}
+            disabled={this.isAnswerBlank(questionIsMutipleChoice, answer)}
             fullWidth={true} />
         </div>
         <div className={style.secondaryAnswererButtons}>
-          <div className={style.secondaryAnswererButton}>
+          <div
+            className={style.secondaryAnswererButton}
+            data-balloon="Click to skip this question"
+            data-balloon-pos="left">
             <RaisedButton
               icon={
                 <FontIcon color="#fff" className="material-icons">
                   skip_next
                 </FontIcon>
               }
-              onClick={::this.onSkipQuestionClicked}
+              onClick={onQuestionSkipped}
               fullWidth={true}
               backgroundColor="#444" />
           </div>
-          <div className={style.secondaryAnswererButton}>
+          <div
+            className={style.secondaryAnswererButton}
+            data-balloon="Click to report invalid question"
+            data-balloon-pos="left">
             <RaisedButton
               icon={
                 <FontIcon color="#fff" className="material-icons">
                   report
                 </FontIcon>
               }
-              onClick={::this.onReportQuestionClicked}
+              onClick={onQuestionReported}
               fullWidth={true}
               backgroundColor="#c62828" />
           </div>
@@ -89,21 +102,65 @@ class QuizTakerAnswerPanel extends Component {
     )
   }
 
+  renderFinishButton(questionsAttempted, questionTotal) {
+    const finishButtonClassName = classNames(style.finishButton, {
+      [style.finishButton__disabled]: questionsAttempted < questionTotal,
+    })
+    const finishButtonExtraProps = questionsAttempted < questionTotal
+        ? {
+            'data-balloon': 'All questions must be attempted',
+            'data-balloon-pos': 'left',
+          }
+        : null
+
+    return (
+      <div
+        className={style.finishButtonWrapper}>
+        <div className={finishButtonClassName} {...finishButtonExtraProps}>
+          <div className={style.finishButtonLabel}>Finish Quiz</div>
+          <div className={style.finishButtonSublabel}>
+            {questionsAttempted} / {questionTotal} q's attempted
+          </div>
+          <div className={style.finishButtonOverlay} />
+        </div>
+      </div>
+    )
+  }
+
   render() {
-    const { answer } = this.state
+    const {
+      answer,
+      questionTotal,
+      onAnswerChanged,
+      onAnswerSubmitted,
+      onQuestionSkipped,
+      questionsAttempted,
+      onQuestionReported,
+      questionIsMutipleChoice,
+    } = this.props
+
+    const finishButtonClassName = classNames(style.finishButton, {
+      [style.finishButton__disabled]: questionsAttempted < questionTotal,
+    })
+    const finishButtonExtraProps = questionsAttempted < questionTotal
+        ? {
+            'data-balloon': 'All questions must be attempted',
+            'data-balloon-pos': 'top',
+          }
+        : null
 
     return (
       <div className={style.main}>
-        {this.renderAnswerer(false)}
-        {this.renderAnswererButtons(answer)}
-
-        <div>
-          <RaisedButton
-            label="Finish Quiz"
-            onClick={::this.onSubmitAnswerClicked}
-            disabled={!answer}
-            fullWidth={true} />
-        </div>
+        {this.renderAnswerer(questionIsMutipleChoice, answer, onAnswerChanged)}
+        {
+          this.renderAnswererButtons(
+            questionIsMutipleChoice,
+            answer,
+            onAnswerSubmitted,
+            onQuestionSkipped,
+            onQuestionReported)
+        }
+        {this.renderFinishButton(questionsAttempted, questionTotal)}
       </div>
     )
   }

@@ -11,23 +11,42 @@ const ANSWER_STATUS_ICON_STYLE = { color: 'inherit', fontSize: '1.6rem' }
 
 class QuizTakerQuestionPager extends Component {
   static propTypes = {
-    questions:            PropTypes.array.isRequired,
-    responses:            PropTypes.object.isRequired,
-    currentQuestionIndex: PropTypes.number.isRequired,
+    questions:                      PropTypes.array.isRequired,
+    responses:                      PropTypes.object.isRequired,
+    currentQuestionIndex:           PropTypes.number.isRequired,
+    onCurrentQuestionIndexChanged:  PropTypes.func.isRequired,
+  }
+
+  isSelected(index, questionIndex) {
+    return index === questionIndex
+  }
+
+  isAttempted(index, responses) {
+    return !!responses[index]
+  }
+
+  isAnswered(index, responses) {
+    return responses[index] && responses[index].answer !== null
   }
 
   render() {
-    // const { clockSeconds } = this.state
-    const { questions, responses, currentQuestionIndex } = this.props
+    const {
+      questions,
+      responses,
+      currentQuestionIndex,
+      onCurrentQuestionIndexChanged,
+    } = this.props
 
     const questionBoxes = questions.map((question, i) =>
         <div
           key={i}
+          onClick={onCurrentQuestionIndexChanged}
           className={classNames(style.questionBox, {
-            [style.questionBox__unvisited]:
-                i !== currentQuestionIndex &&
-                (!responses[i] || !responses[i].answer || responses[i].skipped),
-            [style.questionBox__selected]: i === currentQuestionIndex,
+            [style.questionBox__unattempted]:
+                !this.isSelected(i, currentQuestionIndex)
+                    && !this.isAttempted(i, responses),
+            [style.questionBox__selected]:
+                this.isSelected(i, currentQuestionIndex),
           })}>
           <div className={style.questionNumber}>{i + 1}</div>
           <div className={style.answerStatus}>
@@ -35,11 +54,9 @@ class QuizTakerQuestionPager extends Component {
               style={ANSWER_STATUS_ICON_STYLE}
               className="material-icons">
               {
-                responses[i] && responses[i].answer
+                this.isAnswered(i, responses)
                     ? 'chat_bubble'
-                    : responses[i] && responses[i].skipped
-                        ? 'skip_next'
-                        : 'chat_bubble_outline'
+                    : 'chat_bubble_outline'
               }
             </FontIcon>
           </div>

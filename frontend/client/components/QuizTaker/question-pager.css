@@ -26,10 +26,10 @@
   width: 6.5rem;
   transition: opacity 250ms, background 250ms, border 250ms;
 }
-.questionBox__unvisited {
+.questionBox__unattempted {
   opacity: .5;
 }
-.questionBox__unvisited:hover {
+.questionBox__unattempted:hover {
   opacity: .8;
 }
 .questionBox__selected {

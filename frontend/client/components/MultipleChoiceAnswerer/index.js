@@ -1,45 +1,42 @@
 
-import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
+import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
 
-const ANSWERS = [ 'A', 'B', 'C', 'D', 'E' ]
+const CHOICES = [ 'A', 'B', 'C', 'D', 'E' ]
 
 class MultipleChoiceAnswerer extends Component {
   static propTypes = {
-    onAnswerChanged: React.PropTypes.func.isRequired
-  }
-
-  state = {
-    selectedAnswer: null
+    answer:           PropTypes.string,
+    onAnswerChanged:  PropTypes.func.isRequired,
   }
 
   onAnswerChanged(answer) {
     this.props.onAnswerChanged(answer)
-    this.setState({ selectedAnswer: answer })
   }
 
   render() {
+    const { answer } = this.props
+
     return (
       <div className={style.main}>
         {
-          ANSWERS.map((answer, i) => (
+          CHOICES.map((choice, i) => (
             <RaisedButton
-              key={answer}
-              value={answer}
-              label={answer}
+              key={choice}
+              label={choice}
               labelColor={
-                answer === this.state.selectedAnswer
-                ? '#ffffff'
-                : null
+                choice === answer
+                    ? '#ffffff'
+                    : null
               }
               backgroundColor={
-                answer === this.state.selectedAnswer
-                ? '#754aec'
-                : null
+                choice === answer
+                    ? '#754aec'
+                    : null
               }
-              onClick={() => this.onAnswerChanged(answer)}
+              onClick={this.onAnswerChanged.bind(this, choice)}
               fullWidth={true} />
           ))
         }
