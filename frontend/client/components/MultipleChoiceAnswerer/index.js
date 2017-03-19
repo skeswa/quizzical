@@ -26,6 +26,7 @@ class MultipleChoiceAnswerer extends Component {
             <RaisedButton
               key={choice}
               label={choice}
+              style={{ marginBottom: '1rem' }}
               labelColor={
                 choice === answer
                     ? '#ffffff'

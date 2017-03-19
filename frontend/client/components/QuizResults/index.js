@@ -71,7 +71,7 @@ class QuizResults extends Component {
   }
 
   state = {
-    selectedQuestionOrdinal: 0,
+    selectedQuestionOrdinal: 1,
   }
 
   getCounts(responses) {
