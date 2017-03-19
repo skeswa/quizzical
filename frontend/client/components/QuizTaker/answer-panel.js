@@ -29,6 +29,14 @@ class QuizTakerAnswerPanel extends Component {
         || (!questionIsMutipleChoice && answer === FREE_RESPONSE_BLANK_ANSWER)
   }
 
+  onFinishClicked() {
+    const { questionTotal, onQuizFinished, questionsAttempted } = this.props
+
+    if (questionsAttempted >= questionTotal) {
+      onQuizFinished()
+    }
+  }
+
   renderAnswerer(questionIsMutipleChoice, answer, onAnswerChanged) {
     return (
       <div className={style.answerer}>
@@ -123,7 +131,10 @@ class QuizTakerAnswerPanel extends Component {
     return (
       <div
         className={style.finishButtonWrapper}>
-        <div className={finishButtonClassName} {...finishButtonExtraProps}>
+        <div
+          className={finishButtonClassName}
+          onClick={::this.onFinishClicked}
+          {...finishButtonExtraProps}>
           <div className={style.finishButtonLabel}>Finish Quiz</div>
           <div className={style.finishButtonSublabel}>
             {questionsAttempted} / {questionTotal} attempted
@@ -149,7 +160,12 @@ class QuizTakerAnswerPanel extends Component {
 
     return (
       <div className={style.main}>
-        {this.renderAnswerer(questionIsMutipleChoice, answer, onAnswerChanged)}
+        {
+          this.renderAnswerer(
+            questionIsMutipleChoice,
+            answer,
+            onAnswerChanged)
+        }
         {
           this.renderAnswererButtons(
             questionIsMutipleChoice,
@@ -159,7 +175,11 @@ class QuizTakerAnswerPanel extends Component {
             onQuestionReported,
             quizFinalized)
         }
-        {this.renderFinishButton(questionsAttempted, questionTotal)}
+        {
+          this.renderFinishButton(
+            questionsAttempted,
+            questionTotal)
+        }
       </div>
     )
   }

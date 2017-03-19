@@ -268,7 +268,13 @@ class QuizTaker extends Component {
   }
 
   render() {
-    const { questionIndex, quiz: { questions } } = this.props
+    const {
+      quiz: { questions },
+
+      questionIndex,
+      onQuizFinished,
+    } = this.props
+
     const {
       visible,
       responses,
@@ -333,6 +339,7 @@ class QuizTaker extends Component {
                 answer={currentAnswer}
                 questionTotal={questions.length}
                 quizFinalized={quizFinalized}
+                onQuizFinished={onQuizFinished}
                 onAnswerChanged={::this.onAnswerChanged}
                 onAnswerSubmitted={::this.onAnswerSubmitted}
                 onQuestionSkipped={::this.onQuestionSkipped}
