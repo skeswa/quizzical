@@ -221,6 +221,14 @@ class QuizTaker extends Component {
       () => onQuestionIndexChanged(nextQuestionIndex))
   }
 
+  onQuizFinished() {
+    const { onQuizFinished } = this.props
+
+    this.setState({ visible: false }, () => {
+      setTimeout(() => onQuizFinished(this.composeSubmission()), 500)
+    })
+  }
+
   onAnswerChanged(currentAnswer) {
     // Set the current answer, and, since the quiz data now could potentially
     // change, mark the quiz un-finalized.
@@ -268,12 +276,7 @@ class QuizTaker extends Component {
   }
 
   render() {
-    const {
-      quiz: { questions },
-
-      questionIndex,
-      onQuizFinished,
-    } = this.props
+    const { quiz: { questions }, questionIndex } = this.props
 
     const {
       visible,
@@ -339,7 +342,7 @@ class QuizTaker extends Component {
                 answer={currentAnswer}
                 questionTotal={questions.length}
                 quizFinalized={quizFinalized}
-                onQuizFinished={onQuizFinished}
+                onQuizFinished={::this.onQuizFinished}
                 onAnswerChanged={::this.onAnswerChanged}
                 onAnswerSubmitted={::this.onAnswerSubmitted}
                 onQuestionSkipped={::this.onQuestionSkipped}

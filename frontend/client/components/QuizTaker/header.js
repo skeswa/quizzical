@@ -37,7 +37,7 @@ class QuizTakerHeader extends Component {
   }
 
   componentWillUnmount() {
-    this.mounted = mounted
+    this.mounted = false
   }
 
   onClockTick() {
