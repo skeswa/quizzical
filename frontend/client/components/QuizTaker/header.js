@@ -38,10 +38,13 @@ class QuizTakerHeader extends Component {
 
   componentWillUnmount() {
     this.mounted = false
+    clearInterval(this.intervalId)
   }
 
   onClockTick() {
-    this.updateClockSeconds(this.props.timeQuestionStarted)
+    if (this.mounted) {
+      this.updateClockSeconds(this.props.timeQuestionStarted)
+    }
   }
 
   onMenuClicked() {
