@@ -183,19 +183,13 @@ class QuizTakePage extends Component {
   }
 
   renderFinishSplash(quizResults) {
-    const { responses } = quizResults
-    const questionsTotal = responses.length
-    const answeredQuestionTotal = responses
-      .filter(({ skipped }) => !skipped)
-      .length
-    const subtitle = `${answeredQuestionTotal} of ${questionsTotal} ` +
-      `questions answered`
-
     return (
       <PracticeSkeleton
-        title={subtitle}
+        title="Quiz Results"
         action="Start Over"
         animated={true}
+        fullScreen={true}
+        bodyUnpadded={true}
         animationDelay={0}
         onActionClicked={::this.onQuizCancelled}>
         <QuizResults results={quizResults} />

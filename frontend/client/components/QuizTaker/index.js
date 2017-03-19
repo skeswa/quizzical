@@ -225,7 +225,7 @@ class QuizTaker extends Component {
     const { onQuizFinished } = this.props
 
     this.setState({ visible: false }, () => {
-      setTimeout(() => onQuizFinished(this.composeSubmission()), 500)
+      setTimeout(() => onQuizFinished(this.composeSubmission()), 600)
     })
   }
 

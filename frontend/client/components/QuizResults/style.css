@@ -1,6 +1,7 @@
 
 .main {
   background: #ffffff;
+  border-bottom: 1px solid #e4e4e4;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -71,6 +72,7 @@
   align-items: center;
   border-bottom: 1px solid #cccccc;
   color: #555555;
+  cursor: pointer;
   display: flex;
   padding: 1rem 1.4rem;
 }
@@ -92,12 +94,14 @@
 
 .questionButtonIcon {
   font-size: 1.6rem;
+  user-select: none;
 }
 
 .questionButtonNumber {
   font-size: 1.4rem;
   font-weight: 500;
   margin-left: 0.5rem;
+  user-select: none;
 }
 
 .responseDetails {

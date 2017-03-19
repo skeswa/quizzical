@@ -16,14 +16,14 @@ class PracticeSkeleton extends Component {
     title:            PropTypes.string,
     action:           PropTypes.string,
     animated:         PropTypes.bool,
+    fullScreen:        PropTypes.bool,
+    bodyUnpadded:     PropTypes.bool,
     actionDisabled:   PropTypes.bool,
     animationDelay:   PropTypes.number,
     onActionClicked:  PropTypes.func,
   }
 
-  state = {
-    hiddenIfAnimated: true,
-  }
+  state = { hiddenIfAnimated: true }
 
   componentDidMount() {
     const { animated, animationDelay } = this.props
@@ -55,20 +55,35 @@ class PracticeSkeleton extends Component {
 
   render() {
     const { hiddenIfAnimated } = this.state
-    const { title, action, animated, children, actionDisabled } = this.props
+    const {
+      title,
+      action,
+      animated,
+      children,
+      fullScreen,
+      bodyUnpadded,
+      actionDisabled,
+    } = this.props
 
+    const mainClassName = classNames(style.main, {
+      [style.main__centered]: !fullScreen,
+    })
     const cardClassName = classNames(style.card, {
       [style.card__hidden]: (hiddenIfAnimated && animated),
+      [style.card__fullScreen]: fullScreen,
+    })
+    const cardBodyClassName = classNames(style.cardBody, {
+      [style.cardBody__unpadded]: bodyUnpadded,
     })
 
     return (
-      <div className={style.main}>
+      <div className={mainClassName}>
         <div className={cardClassName}>
           <div className={style.cardHeader}>
             <div className={style.cardHeaderIcon}></div>
             <div className={style.cardHeaderTitle}>{title}</div>
           </div>
-          <div className={style.cardBody}>{children}</div>
+          <div className={cardBodyClassName}>{children}</div>
 
           {this.renderFooter(action, actionDisabled)}
         </div>
