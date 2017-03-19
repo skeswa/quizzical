@@ -117,6 +117,7 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 							problemResponse.getResponse(),
 							problemResponse.getSkipped(),
 							attempt.getSuccessful(),
+							problemResponse.getReported(),
 							problemResponse.getSecondsElapsed(),
 							quizProblemId);
 

@@ -147,10 +147,12 @@ class QuizTakePage extends Component {
           animated={true}
           animationDelay={0}
           onActionClicked={::this.onQuizCancelled}>
-          <FormError
-            title={subtitle}
-            message={message}
-            limitHeight={false} />
+          <div className={style.errorWrapper}>
+            <FormError
+              title={subtitle}
+              message={message}
+              limitHeight={false} />
+          </div>
         </PracticeSkeleton>
       )
     }

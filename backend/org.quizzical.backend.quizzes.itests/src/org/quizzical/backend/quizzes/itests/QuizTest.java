@@ -48,7 +48,7 @@ public class QuizTest extends BaseOSGiServiceTest<LogService> {
     	
     	IQuizProblemResponseDAOService svc1 = getService(IQuizProblemResponseDAOService.class,null);
     	Assert.assertNotNull(svc1);
-    	svc1.add(new QuizProblemResponse("1234", null, true, true, 1111, null));
+    	svc1.add(new QuizProblemResponse("1234", null, true, true, false, 1111, null));
     	
     	svc1.findAll();
     }
