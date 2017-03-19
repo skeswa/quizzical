@@ -101,6 +101,9 @@ class QuizTaker extends Component {
     responses,
   ) {
     let firstSkippedIndex = null
+
+    // Find the next acceptable question by finding the next unattempted
+    // question, or, if one does not exist, find the next skipped question.
     for (let i = 0; i < questions.length - 1; i++) {
       const index = (initialIndex + i + 1) % questions.length
       const response = responses[index]
@@ -109,12 +112,19 @@ class QuizTaker extends Component {
         return index
       }
 
-      if (firstSkippedIndex === null && response.skipped) {
+      // Look for both skipped AND nor reported (duh).
+      if (firstSkippedIndex === null
+          && response.skipped
+          && !response.reported) {
         firstSkippedIndex = index
       }
     }
 
-    return firstSkippedIndex
+    // If there weren't any other good questions to visit, just stick to the
+    // current one.
+    return firstSkippedIndex !== null
+        ? firstSkippedIndex
+        : initialIndex
   }
 
   respondToCurrentQuestion(skip, report) {
@@ -133,8 +143,7 @@ class QuizTaker extends Component {
       onQuestionIndexChanged,
     } = this.props
 
-    // TODO(skeswa): handle "this is the last remaining question" case with a
-    // popup instead of assuming they meant to finish the quiz.
+    // Figure out where we are headed next.
     const nextQuestionIndex =
         this.findNextUnattemptedQuestionIndex(
             questionIndex,
@@ -156,7 +165,14 @@ class QuizTaker extends Component {
                   : 0,
             },
           }),
-        currentAnswer: null,
+        currentAnswer:
+            questionIndex === nextQuestionIndex
+                // If we aren't calling onQuestionIndexChanged,
+                // then make sure the current answer is maintained internally.
+                ? currentAnswer
+                // Otherwise, set it to null until the question index
+                // is updated by our parent.
+                : null,
         answerPopupVisible: false,
         questionsAttempted: responses[questionIndex]
             ? questionsAttempted
@@ -164,9 +180,9 @@ class QuizTaker extends Component {
         timeCurrentQuestionStarted: null,
       },
       () => {
-        nextQuestionIndex === null
-            ? onQuizFinished(this.composeSubmission())
-            : onQuestionIndexChanged(nextQuestionIndex)
+        if (questionIndex !== nextQuestionIndex) {
+          onQuestionIndexChanged(nextQuestionIndex)
+        }
       })
   }
 
