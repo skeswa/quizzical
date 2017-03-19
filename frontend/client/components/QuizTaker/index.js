@@ -230,7 +230,13 @@ class QuizTaker extends Component {
 
   render() {
     const { questionIndex, quiz: { questions } } = this.props
-    const { visible, responses, currentAnswer, questionsAttempted } = this.state
+    const {
+      visible,
+      responses,
+      currentAnswer,
+      questionsAttempted,
+      timeCurrentQuestionStarted,
+    } = this.state
 
     const question = questions[questionIndex]
     if (!question) {
@@ -256,9 +262,12 @@ class QuizTaker extends Component {
     return (
       <div className={mainClassName}>
         <div className={style.top}>
+          {/* TODO(skeswa): set the time limit dynamically for different questions */}
           <QuizTakerHeader
             questionIndex={questionIndex}
             questionTotal={questions.length}
+            questionTimeLimit={120}
+            timeQuestionStarted={timeCurrentQuestionStarted}
             questionNumberInPage={questionNumber} />
         </div>
         <div className={style.bottomOuter}>

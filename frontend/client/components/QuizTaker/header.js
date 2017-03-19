@@ -13,28 +13,53 @@ class QuizTakerHeader extends Component {
   static propTypes = {
     questionIndex:        PropTypes.number.isRequired,
     questionTotal:        PropTypes.number.isRequired,
+    questionTimeLimit:    PropTypes.number.isRequired,
+    timeQuestionStarted:  PropTypes.number,
     questionNumberInPage: PropTypes.any.isRequired,
   }
 
   state = { clockSeconds: 0 }
 
-  onClockTick(clockSeconds) {
-    this.setState({ clockSeconds })
+  componentWillReceiveProps(nextProps) {
+    const nextTimeQuestionStarted = nextProps.timeQuestionStarted
+    const currentTimeQuestionStarted = this.props.timeQuestionStarted
+
+    if (nextTimeQuestionStarted !== currentTimeQuestionStarted) {
+      this.onClockTick()
+    }
   }
 
-  onDeleteClicked() {
+  onClockTick() {
+    const { timeQuestionStarted } = this.props
+
+    if (!timeQuestionStarted) {
+      this.setState({ clockSeconds: 0 })
+      return
+    }
+
+    this.setState({
+      clockSeconds: Math.round((Date.now() - timeQuestionStarted) / 1000),
+    })
+  }
+
+  onMenuClicked() {
     // TODO(skeswa): implement this right here.
   }
 
   render() {
     const { clockSeconds } = this.state
-    const { questionIndex, questionTotal, questionNumberInPage } = this.props
+    const {
+      questionIndex,
+      questionTotal,
+      questionTimeLimit,
+      questionNumberInPage,
+    } = this.props
 
     return (
       <div className={style.main}>
-        <div className={style.deleteButton}>
+        <div className={style.menuButton}>
           <IconButton
-            onClick={::this.onDeleteClicked}
+            onClick={::this.onMenuClicked}
             iconStyle={BACK_ARROW_ICON_STYLE}
             focusRippleColor="#ffffff"
             touchRippleColor="#ffffff">
@@ -46,13 +71,16 @@ class QuizTakerHeader extends Component {
             Question {questionIndex + 1} of {questionTotal}
           </div>
           <div className={style.questionInstructions}>
-            Please respond to prompt <span className={style.highlight}>#{questionNumberInPage}</span> below
+            <span>Please respond to prompt </span>
+            <span className={style.highlight}>#{questionNumberInPage}</span>
+            <span> below</span>
           </div>
         </div>
         <div className={style.timer}>
           <QuizTakerClock
             onTick={::this.onClockTick}
-            seconds={clockSeconds} />
+            seconds={clockSeconds}
+            timeLimit={questionTimeLimit} />
         </div>
       </div>
     )
