@@ -119,7 +119,7 @@ class QuizTakerAnswerPanel extends Component {
         <div className={finishButtonClassName} {...finishButtonExtraProps}>
           <div className={style.finishButtonLabel}>Finish Quiz</div>
           <div className={style.finishButtonSublabel}>
-            {questionsAttempted} / {questionTotal} q's attempted
+            {questionsAttempted} / {questionTotal} attempted
           </div>
           <div className={style.finishButtonOverlay} />
         </div>

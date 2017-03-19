@@ -65,9 +65,9 @@
 .finishButtonLabel {
   color: #fff;
   font-size: 2rem;
-  text-transform: uppercase;
   font-weight: 700;
   letter-spacing: .1rem;
+  text-transform: uppercase;
   transition: color 450ms;
   user-select: none;
 }
@@ -77,8 +77,9 @@
 
 .finishButtonSublabel {
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
+  letter-spacing: .05rem;
   text-transform: uppercase;
   transition: color 450ms;
   user-select: none;
