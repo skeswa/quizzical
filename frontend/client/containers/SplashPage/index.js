@@ -35,7 +35,7 @@ class SplashPage extends Component {
         <img className={style.logo} src={logoURL} />
         <div className={style.blurb}>
           <span className={style.bold}>Quizzical</span> helps you get better at
-          the math in the SAT.
+          the math section of the SAT.
         </div>
         <RaisedButton
           style={{ width: '14rem' }}
