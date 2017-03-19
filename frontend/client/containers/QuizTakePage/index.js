@@ -141,24 +141,16 @@ class QuizTakePage extends Component {
       const subtitle = `Failed to ${verb} the quiz`
 
       return (
-        <PracticeSkeleton title="Quizzical" subtitle={subtitle}>
-          <div className={style.errorPage}>
-            <div className={style.centerer}>
-              <div className={style.errorWrapper}>
-                <FormError
-                  title={subtitle}
-                  message={message}
-                  limitHeight={false} />
-              </div>
-            </div>
-            <div className={style.errorPageButtons}>
-              <RaisedButton
-                label="Start Over"
-                onClick={::this.onQuizCancelled}
-                labelColor="#ffffff"
-                backgroundColor="#222222" />
-            </div>
-          </div>
+        <PracticeSkeleton
+          title={subtitle}
+          action="Start Over"
+          animated={true}
+          animationDelay={0}
+          onActionClicked={::this.onQuizCancelled}>
+          <FormError
+            title={subtitle}
+            message={message}
+            limitHeight={false} />
         </PracticeSkeleton>
       )
     }
@@ -199,22 +191,12 @@ class QuizTakePage extends Component {
 
     return (
       <PracticeSkeleton
-        title="Quiz Finished"
-        subtitle={subtitle}>
-        <div className={style.resultsPage}>
-          <div className={style.resultsCardWrapper}>
-            <div className={style.resultsCard}>
-              <QuizResults results={quizResults} />
-            </div>
-          </div>
-          <div className={style.resultsPageButtons}>
-            <RaisedButton
-              label="Start Over"
-              onClick={::this.onQuizCancelled}
-              labelColor="#ffffff"
-              backgroundColor="#222222" />
-          </div>
-        </div>
+        title={subtitle}
+        action="Start Over"
+        animated={true}
+        animationDelay={0}
+        onActionClicked={::this.onQuizCancelled}>
+        <QuizResults results={quizResults} />
       </PracticeSkeleton>
     )
   }

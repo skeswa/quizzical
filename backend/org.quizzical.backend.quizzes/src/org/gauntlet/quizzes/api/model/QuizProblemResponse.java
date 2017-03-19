@@ -17,6 +17,8 @@ public class QuizProblemResponse extends BaseEntity implements Serializable {
 	
 	private Boolean correct;
 	
+	private Boolean reported;
+	
 	private Integer secondsElapsed = 0;
 	
 	private QuizProblem quizProblem;
@@ -30,12 +32,14 @@ public class QuizProblemResponse extends BaseEntity implements Serializable {
 			final String response,
 			final Boolean skipped,
 			final Boolean correct,
+			final Boolean reported,
 			final Integer secondsElapsed,
 			final Long quizProblemId) {
 		this.code = code;
 		this.response = response;
 		this.skipped = skipped;
 		this.correct = correct;
+		this.reported = reported;
 		this.secondsElapsed = secondsElapsed;
 		this.quizProblemId = quizProblemId;
 	}
@@ -62,6 +66,14 @@ public class QuizProblemResponse extends BaseEntity implements Serializable {
 
 	public void setSkipped(Boolean skipped) {
 		this.skipped = skipped;
+	}
+
+	public Boolean getReported() {
+		return reported;
+	}
+
+	public void setReported(Boolean reported) {
+		this.reported = reported;
 	}
 
 	public Integer getSecondsElapsed() {
