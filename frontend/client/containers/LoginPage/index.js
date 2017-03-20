@@ -91,29 +91,31 @@ class LoginPage extends Component {
         actionDisabled={this.state.loading}
         animationDelay={100}
         onActionClicked={::this.onLoginClicked}>
-        {this.renderError()}
+        <div className={style.main}>
+          {this.renderError()}
 
-        <TextField
-          onChange={::this.onEmailChanged}
-          disabled={this.state.loading}
-          fullWidth={true}
-          floatingLabelText="Email"
-          floatingLabelFixed={true} />
-        <TextField
-          type="password"
-          onKeyUp={::this.onPasswordKeyUp}
-          onChange={::this.onPasswordChanged}
-          disabled={this.state.loading}
-          fullWidth={true}
-          floatingLabelText="Password"
-          floatingLabelFixed={true} />
+          <TextField
+            onChange={::this.onEmailChanged}
+            disabled={this.state.loading}
+            fullWidth={true}
+            floatingLabelText="Email"
+            floatingLabelFixed={true} />
+          <TextField
+            type="password"
+            onKeyUp={::this.onPasswordKeyUp}
+            onChange={::this.onPasswordChanged}
+            disabled={this.state.loading}
+            fullWidth={true}
+            floatingLabelText="Password"
+            floatingLabelFixed={true} />
 
-        <div className={style.forgotPass}>
-          <span>Click here if you </span>
-          <a className={style.forgotPassLink} href="#">
-            forgot your password or email
-          </a>
-          <span>.</span>
+          <div className={style.forgotPass}>
+            <span>Click here if you </span>
+            <a className={style.forgotPassLink} href="#">
+              forgot your password or email
+            </a>
+            <span>.</span>
+          </div>
         </div>
       </PracticeSkeleton>
     )

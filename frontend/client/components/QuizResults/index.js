@@ -268,13 +268,13 @@ class QuizResults extends Component {
             <div className={style.responseDetailsStat}>
               <i className={RESPONSE_DETAILS_STAT_ICON_CLASSNAME}>alarm</i>
               <div className={style.responseDetailsStatText}>
-                <span>You took&nbsp;</span>
+                <span>You took </span>
                 <span
                   style={responseDetailsStatHighlightStyle}
                   className={style.responseDetailsStatHighlight}>
                   {duration} seconds
                 </span>
-                <span>, which is&nbsp;</span>
+                <span>, which is </span>
                 <span
                   style={responseDetailsStatHighlightStyle}
                   className={style.responseDetailsStatHighlight}>
@@ -289,7 +289,7 @@ class QuizResults extends Component {
                   outcome === OUTCOME_SKIPPED
                     ? <span>You didn't provide an answer</span>
                     : <span>
-                        <span>You answered&nbsp;</span>
+                        <span>You answered </span>
                         <span className={style.responseDetailsStatHighlight}>
                           {questionRepsonse}
                         </span>
@@ -298,13 +298,13 @@ class QuizResults extends Component {
                 {
                   outcome === OUTCOME_CORRECT
                     ? <span>
-                        <span>, which is&nbsp;</span>
+                        <span>, which is </span>
                         <span className={style.responseDetailsStatHighlight}>
                           correct.
                         </span>
                       </span>
                     : <span>
-                        <span>, but the correct answer is&nbsp;</span>
+                        <span>, but the correct answer is </span>
                         <span className={style.responseDetailsStatHighlight}>
                           {questionAnswer}
                         </span>
@@ -316,7 +316,7 @@ class QuizResults extends Component {
             <div className={style.responseDetailsStat}>
               <i className={RESPONSE_DETAILS_STAT_ICON_CLASSNAME}>equalizer</i>
               <div className={style.responseDetailsStatText}>
-                <span>This question is considered&nbsp;</span>
+                <span>This question is considered </span>
                 <span
                   style={{ color: difficultyColor }}
                   className={style.responseDetailsStatHighlight}>
@@ -330,14 +330,14 @@ class QuizResults extends Component {
                 format_list_numbered
               </i>
               <div className={style.responseDetailsStatText}>
-                <span>You were asked to answer question&nbsp;</span>
+                <span>You were asked to answer question </span>
                 <span className={style.responseDetailsStatHighlight}>
                   {`#${questionNumber}/${problemId}`}
                 </span>
                 {
                   usedCalculator
                     ? <span>
-                        <span>, which&nbsp;</span>
+                        <span>, which </span>
                         <span className={style.responseDetailsStatHighlight}>
                           allows use of your calculator.
                         </span>
