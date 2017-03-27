@@ -49,7 +49,7 @@ const renderRoot = Root => {
     </AppContainer>,
     root,
     // Fade in the root element if it is invisible.
-    () => setTimeout(() => root.style.opacity = 1, 100))
+    () => setTimeout(() => root.style.opacity = 1, 200))
 }
 
 // Enables hot module reloading in dev.

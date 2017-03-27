@@ -18,11 +18,13 @@ class SplashPage extends Component {
   }
 
   onSignInClicked() {
-    this.props.history.push('/quiz')
+    this.setState(
+      { visible: false },
+      () => setTimeout(() => this.props.history.push('/quiz'), 300))
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ visible: true }), 100)
+    setTimeout(() => this.setState({ visible: true }), 200)
   }
 
   render() {
