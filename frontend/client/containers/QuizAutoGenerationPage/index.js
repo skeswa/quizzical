@@ -99,6 +99,7 @@ class QuizAutoGenerationPage extends Component {
       generationStrategy,
       quizTitle,
     } = this.state
+
     return (
       <PracticeSkeleton
         title="Choose Your Quiz"
