@@ -43,7 +43,7 @@
 }
 
 .cardHeaderIcon {
-  background: url(resources/images/card-header-logo.png) no-repeat;
+  background: url(resources/images/logo.png) no-repeat;
   background-position: center center;
   background-size: contain;
   height: 2.8rem;

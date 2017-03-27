@@ -173,7 +173,7 @@ module.exports = {
       'client',
       'resources',
       'images',
-      'card-header-logo.png')),
+      'logo.png')),
     new CopyWebpackPlugin([{
       from: path.join(
         __dirname,

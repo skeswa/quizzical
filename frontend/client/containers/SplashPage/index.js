@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
-import logoURL from 'resources/images/q.png'
+import logoURL from 'resources/images/logo-q.png'
 import splashVideoURL from 'resources/videos/student-taking-test.mp4'
 
 class SplashPage extends Component {
