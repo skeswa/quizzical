@@ -21,8 +21,9 @@ public class RedirectFilter implements Filter{
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.endsWith("favicon.ico")
 				|| pathInfo.endsWith("favicon.png")
-				|| pathInfo.endsWith("bundle.js")
-				|| pathInfo.endsWith("vendor.bundle.js")) {
+				|| pathInfo.endsWith("app.bundle.js")
+				|| pathInfo.endsWith("vendor.bundle.js")
+				|| pathInfo.indexOf("/system/console") >= 0) {
 			chain.doFilter(req, resp);
 		}
 		else if (pathInfo.startsWith("/api")) {
@@ -30,7 +31,7 @@ public class RedirectFilter implements Filter{
 		}
 		else if(pathInfo.indexOf("index.html") < 0) {
 			try {
-				request.getRequestDispatcher("/index.html").forward(req, resp);
+				request.getRequestDispatcher("/").forward(req, resp);
 			} catch (Exception e) {
 			}
 		} else {

@@ -81,7 +81,7 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	@Override
 	public User update(User record) throws ApplicationException {
 		JPAUser entity = JPAEntityUtil.copy(record, JPAUser.class);
-		entity = (JPAUser) super.merge(entity);
+		entity = (JPAUser) super.update(entity);
 		return JPAEntityUtil.copy(entity, User.class);
 	}
 	

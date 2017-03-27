@@ -181,7 +181,7 @@ module.exports = {
   ],
 
   // Enables source maps.
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
 
   // Development server configuration.
   devServer: {
