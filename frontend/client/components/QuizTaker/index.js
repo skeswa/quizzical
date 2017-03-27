@@ -1,6 +1,8 @@
 
 import FontIcon from 'material-ui/FontIcon'
 import classNames from 'classnames'
+import MediaQuery from 'react-responsive'
+import RaisedButton from 'material-ui/RaisedButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component } from 'react'
 
@@ -14,6 +16,11 @@ import MultipleChoiceAnswerer from 'components/MultipleChoiceAnswerer'
 
 const SKIP_BUTTON_STYLE = { width: '3.6rem', minWidth: '1.5rem' }
 const QUESTION_PICTURE_STYLE = { background: '#fff', flex: '1 0' }
+const ANSWER_BUTTON_LABEL_STYLE = {
+  fontWeight: 500,
+  fontSize: '1.4rem',
+  letterSpacing: '.05rem',
+}
 
 class QuizTaker extends Component {
   static propTypes = {
@@ -32,6 +39,7 @@ class QuizTaker extends Component {
     lightboxMounted:              false,
     lightboxVisible:              false,
     questionsAttempted:           0,
+    answerPanelOverlayVisible:    false,
     timeCurrentQuestionStarted:   null,
   }
   mounted   = false
@@ -172,7 +180,7 @@ class QuizTaker extends Component {
               responses)
     }
 
-    // Calculate shanges to common state variables.
+    // Calculate changes to common state variables.
     const onLastQuestion = (questionIndex === nextQuestionIndex)
     const existingResponse = responses[questionIndex]
     const shouldSkipQuestion =
@@ -204,6 +212,7 @@ class QuizTaker extends Component {
       this.setState({
         responses: updatedResponses,
         questionsAttempted: updatedQuestionsAttempted,
+        answerPanelOverlayVisible: false,
 
         // Assert that the quiz is tentatively finalized since the last question
         // has a response.
@@ -217,6 +226,7 @@ class QuizTaker extends Component {
         responses: updatedResponses,
         currentAnswer: null,
         questionsAttempted: updatedQuestionsAttempted,
+        answerPanelOverlayVisible: false,
       },
       () => onQuestionIndexChanged(nextQuestionIndex))
   }
@@ -247,6 +257,10 @@ class QuizTaker extends Component {
     this.respondToCurrentQuestion(true /* skip */, true /* report */)
   }
 
+  onAnswerButtonClicked() {
+    this.setState({ answerPanelOverlayVisible: true })
+  }
+
   onCurrentQuestionIndexChanged(nextQuestionIndex) {
     this.respondToCurrentQuestion(
       true /* skip */,
@@ -270,9 +284,47 @@ class QuizTaker extends Component {
         300))
   }
 
+  onAnswerPanelOverlayDismissal() {
+    this.setState({ answerPanelOverlayVisible: false })
+  }
+
   onQuestionPictureLoaded() {
     // TODO(skeswa): do some sort of timer discounting here in future. We should
     // not be penalizing the student for a slow image load time.
+  }
+
+  renderAnswerPanelOverlay(
+    currentAnswer,
+    questions,
+    quizFinalized,
+    questionsAttempted,
+    questionIsMutipleChoice,
+    answerPanelOverlayVisible,
+  ) {
+    const className = classNames(style.answerPanelOverlay, {
+      [style.answerPanelOverlay__visible]: answerPanelOverlayVisible,
+    })
+
+    return (
+      <div className={className}>
+        <div
+          onClick={::this.onAnswerPanelOverlayDismissal}
+          className={style.answerPanelOverlayBackground} />
+        <div className={style.answerPanelOverlayForeground}>
+          <QuizTakerAnswerPanel
+            answer={currentAnswer}
+            questionTotal={questions.length}
+            quizFinalized={quizFinalized}
+            onQuizFinished={::this.onQuizFinished}
+            onAnswerChanged={::this.onAnswerChanged}
+            onAnswerSubmitted={::this.onAnswerSubmitted}
+            onQuestionSkipped={::this.onQuestionSkipped}
+            onQuestionReported={::this.onQuestionReported}
+            questionsAttempted={questionsAttempted}
+            questionIsMutipleChoice={questionIsMutipleChoice} />
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -284,6 +336,7 @@ class QuizTaker extends Component {
       currentAnswer,
       quizFinalized,
       questionsAttempted,
+      answerPanelOverlayVisible,
       timeCurrentQuestionStarted,
     } = this.state
 
@@ -331,25 +384,53 @@ class QuizTaker extends Component {
                 } />
             </div>
             <div className={style.bottomMiddle}>
+              <div className={style.questionPictureClickPrompt}>
+                Click below to zoom
+              </div>
               <QuestionPicture
                 style={QUESTION_PICTURE_STYLE}
                 pictureId={questionPictureId}
                 questionId={questionId}
                 onPictureLoaded={::this.onQuestionPictureLoaded} />
+
+              <MediaQuery query='(max-width: 600px)'>
+                <div className={style.bottomFooter}>
+                  <RaisedButton
+                    label="Show action panel"
+                    primary={true}
+                    onClick={::this.onAnswerButtonClicked}
+                    fullWidth={true}
+                    labelStyle={ANSWER_BUTTON_LABEL_STYLE} />
+                </div>
+              </MediaQuery>
             </div>
-            <div className={style.bottomRight}>
-              <QuizTakerAnswerPanel
-                answer={currentAnswer}
-                questionTotal={questions.length}
-                quizFinalized={quizFinalized}
-                onQuizFinished={::this.onQuizFinished}
-                onAnswerChanged={::this.onAnswerChanged}
-                onAnswerSubmitted={::this.onAnswerSubmitted}
-                onQuestionSkipped={::this.onQuestionSkipped}
-                onQuestionReported={::this.onQuestionReported}
-                questionsAttempted={questionsAttempted}
-                questionIsMutipleChoice={questionIsMutipleChoice} />
-            </div>
+
+            <MediaQuery query="(min-width: 600px)">
+              <div className={style.bottomRight}>
+                <QuizTakerAnswerPanel
+                  answer={currentAnswer}
+                  questionTotal={questions.length}
+                  quizFinalized={quizFinalized}
+                  onQuizFinished={::this.onQuizFinished}
+                  onAnswerChanged={::this.onAnswerChanged}
+                  onAnswerSubmitted={::this.onAnswerSubmitted}
+                  onQuestionSkipped={::this.onQuestionSkipped}
+                  onQuestionReported={::this.onQuestionReported}
+                  questionsAttempted={questionsAttempted}
+                  questionIsMutipleChoice={questionIsMutipleChoice} />
+              </div>
+            </MediaQuery>
+            <MediaQuery query='(max-width: 600px)'>
+              {
+                this.renderAnswerPanelOverlay(
+                  currentAnswer,
+                  questions,
+                  quizFinalized,
+                  questionsAttempted,
+                  questionIsMutipleChoice,
+                  answerPanelOverlayVisible)
+              }
+            </MediaQuery>
           </div>
         </div>
       </div>

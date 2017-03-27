@@ -15,123 +15,105 @@
 .top, .bottomOuter, .bottomInner, .bottomLeft, .bottomMiddle, .bottomRight {
   display: flex;
 }
+
 .bottomLeft {
   flex: 0 0;
 }
+
 .bottomMiddle {
   flex: 1;
+  position: relative;
 }
+
 .bottomRight {
   flex: 0 0;
 }
+
 .bottomOuter {
   box-sizing: border-box;
   flex: 1;
   padding: 2rem;
   padding-top: 0;
 }
+
 .bottomInner {
   border-radius: .2rem;
   flex: 1;
   overflow: hidden;
-}
-
-
-.questionPictureWrapper {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
   position: relative;
 }
 
-.questionPicture {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  flex: 1;
-  opacity: 0;
-  position: relative;
-  transition: opacity 250ms;
-  z-index: 2;
-}
-.questionPicture__loaded {
-  opacity: 1;
-}
-
-.questionPictureLoadingHelper {
-  left: 0;
-  position: absolute;
-  top: 0;
-  visibility: hidden;
-}
-
-.questionPictureLoader {
-  height: 5rem;
-  position: relative;
-  width: 5rem;
-}
-
-.questionPictureLoaderWrapper {
-  align-items: center;
+.bottomFooter {
   bottom: 0;
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
   left: 0;
+  padding: 1.4rem;
   position: absolute;
   right: 0;
-  top: 0;
-  z-index: 1;
+  z-index: 3; /* Puts this above the picture which has a z-index of 2. */
 }
 
-.questionPrompt {
-  background: #222222;
-  border-bottom-right-radius: 2px;
-  box-shadow: 0 2px 8px #000000;
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 500;
-  left: 0;
-  padding: 1rem;
+.questionPictureClickPrompt {
+  align-items: center;
+  background: rgba(0, 0, 0, .4);
+  border-radius: 1.15rem;
+  color: #fff;
+  display: flex;
+  font-size: 1rem;
+  justify-content: center;
+  left: 50%;
+  letter-spacing: .05rem;
+  margin-left: -7rem; /* This assumes the prompt is ~140px wide. */
+  padding: .5rem 1rem;
+  pointer-events: none;
   position: absolute;
   text-transform: uppercase;
-  top: 0;
-  z-index: 3;
+  top: 1.4rem;
+  z-index: 3; /* Puts this above the picture which has a z-index of 2. */
+}
+@media (min-width: 600px) {
+  .questionPictureClickPrompt {
+    left: 1.4rem;
+    margin-left: 0;
+  }
 }
 
-.withCalculator {
-  color: #946dff;
-  margin-left: 0.4rem;
-}
-
-.buttons {
-  display: flex;
-  padding: 2rem;
-}
-
-.bigButton {
-  box-sizing: border-box;
-  flex: 1;
-  padding-right: 1rem;
-}
-
-.lightbox {
-  display: flex;
-  background: rgba(0, 0, 0, 0.6);
+.answerPanelOverlay {
   bottom: 0;
   left: 0;
-  opacity: 0;
-  position: fixed;
+  pointer-events: none;
+  position: absolute;
   right: 0;
   top: 0;
-  transition: opacity 250ms;
-  z-index: 5;
-}
-.lightbox__visible {
-  opacity: 1;
 }
 
-.lightbox .questionPicture {
-  opacity: 1;
-  z-index: 5;
+.answerPanelOverlayForeground, .answerPanelOverlayBackground {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3; /* Puts both above the picture which has a z-index of 2. */
+}
+
+.answerPanelOverlayBackground {
+  background: #000;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms;
+}
+.answerPanelOverlay__visible .answerPanelOverlayBackground {
+  opacity: .5;
+  pointer-events: auto;
+}
+
+.answerPanelOverlayForeground {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, .3);
+  display: flex;
+  pointer-events: auto;
+  transform: translateX(100%);
+  transition: transform 250ms cubic-bezier(.4, 0, .2, 1);
+}
+.answerPanelOverlay__visible .answerPanelOverlayForeground {
+  transform: translateX(0);
 }

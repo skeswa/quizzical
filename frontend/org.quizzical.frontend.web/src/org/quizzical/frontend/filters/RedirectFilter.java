@@ -17,19 +17,22 @@ public class RedirectFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)resp;
-		
-		String pathInfo = request.getPathInfo();
-		if (pathInfo.endsWith("favicon.ico")
-				|| pathInfo.endsWith("favicon.png")
-				|| pathInfo.endsWith("app.bundle.js")
+		final String pathInfo = request.getPathInfo();
+		if (pathInfo.endsWith(".ico")
+				|| pathInfo.endsWith(".png")
+				|| pathInfo.endsWith(".jpg")
+				|| pathInfo.endsWith(".mp4")
+				|| pathInfo.endsWith("manifest.json")
+				|| pathInfo.endsWith("manifest.webapp")
+				|| pathInfo.endsWith(".bundle.js")
+				|| pathInfo.endsWith(".bundle.js.map")
+				|| pathInfo.endsWith("bundle.js")
 				|| pathInfo.endsWith("vendor.bundle.js")
 				|| pathInfo.indexOf("/system/console") >= 0) {
 			chain.doFilter(req, resp);
-		}
-		else if (pathInfo.startsWith("/api")) {
+		} else if (pathInfo.startsWith("/api")) {
 			chain.doFilter(req, resp);
-		}
-		else if(pathInfo.indexOf("index.html") < 0) {
+		} else if(pathInfo.indexOf("index.html") < 0) {
 			try {
 				request.getRequestDispatcher("/").forward(req, resp);
 			} catch (Exception e) {
@@ -42,9 +45,8 @@ public class RedirectFilter implements Filter{
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	}
-	
+
 	@Override
 	public void destroy() {
 	}
-
 }

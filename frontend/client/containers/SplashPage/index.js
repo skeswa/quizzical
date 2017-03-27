@@ -5,7 +5,8 @@ import { withRouter } from 'react-router'
 import React, { Component, PropTypes } from 'react'
 
 import style from './style.css'
-import logoURL from 'resources/images/q.png'
+import logoURL from 'resources/images/logo-q.png'
+import splashVideoURL from 'resources/videos/student-taking-test.mp4'
 
 class SplashPage extends Component {
   static propTypes = {
@@ -17,11 +18,13 @@ class SplashPage extends Component {
   }
 
   onSignInClicked() {
-    this.props.history.push('/quiz')
+    this.setState(
+      { visible: false },
+      () => setTimeout(() => this.props.history.push('/quiz'), 300))
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ visible: true }), 100)
+    setTimeout(() => this.setState({ visible: true }), 200)
   }
 
   render() {
@@ -32,18 +35,23 @@ class SplashPage extends Component {
 
     return (
       <div className={mainClassName}>
-        <img className={style.logo} src={logoURL} />
-        <div className={style.blurb}>
-          <span className={style.bold}>Quizzical</span> helps you get better at
-          the math section of the SAT.
+        <div className={style.back}>
+          <video className={style.video} src={splashVideoURL} loop autoPlay />
         </div>
-        <RaisedButton
-          style={{ width: '14rem' }}
-          label="Continue"
-          onClick={::this.onSignInClicked}
-          labelColor="#754aec"
-          labelStyle={{ fontSize: '1.8rem' }}
-          backgroundColor="#ffffff" />
+        <div className={style.front}>
+          <img className={style.logo} src={logoURL} />
+          <div className={style.blurb}>
+            <span className={style.bold}>Quizzical</span> helps you get better
+            at the math section of the SAT.
+          </div>
+          <RaisedButton
+            style={{ width: '14rem' }}
+            label="Continue"
+            onClick={::this.onSignInClicked}
+            labelColor="#754aec"
+            labelStyle={{ fontSize: '1.8rem' }}
+            backgroundColor="#ffffff" />
+        </div>
       </div>
     )
   }

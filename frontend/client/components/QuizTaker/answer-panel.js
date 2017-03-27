@@ -116,7 +116,7 @@ class QuizTakerAnswerPanel extends Component {
               }
               onClick={onQuestionReported}
               fullWidth={true}
-              backgroundColor="#c62828" />
+              backgroundColor="#444" />
           </div>
         </div>
       </div>

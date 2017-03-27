@@ -7,6 +7,16 @@
 .formErrorWrapper {
   max-width: 40vw;
 }
+@media (max-width: 720px) {
+  .formErrorWrapper {
+    max-width: 60vw;
+  }
+}
+@media (max-width: 400px) {
+  .formErrorWrapper {
+    max-width: none;
+  }
+}
 
 .forgotPass {
   color: #888;
