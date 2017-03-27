@@ -3,22 +3,19 @@
 import React, { Component } from 'react'
 
 /* Routing */
-import createHistory from 'history/createBrowserHistory'
 import { Route, Switch } from 'react-router-dom'
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux'
 
 /* Routing Helpers */
 import PublicRoute from 'components/PublicRoute'
 import PrivateRoute from 'components/PrivateRoute'
 
-/* App-wide State Management */
-import configureStore from '../../store'
-import { Provider as StoreProvider } from 'react-redux'
+/* State Management */
+import { Provider } from 'react-redux'
 
 /* Component Library */
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 /* App Pages */
 import LoginPage from 'containers/LoginPage'
@@ -33,31 +30,13 @@ import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import QuizAutoGenerationPage from 'containers/QuizAutoGenerationPage'
 import QuizGenerationQAPage from 'containers/QuizGenerationQAPage'
 
-/* Authorization */
-import Session from 'utils/session'
-
 /* Global Styles */
 import style from './index.css'
 
-// Add support for onTouch events.
-injectTapEventPlugin()
-// Create a history of your choosing.
-const history = createHistory()
-// Build the store using router middleware.
-const store = configureStore(routerMiddleware(history))
-// Theme for Material UI.
-const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: '#754aec',
-    primary2Color: '#651FFF',
-    primary3Color: '#BDBDBD',
-  }
-})
-
-const App = () =>
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <StoreProvider store={store}>
-        <ConnectedRouter history={history}>
+const App = props =>
+    <Provider store={props.store}>
+      <MuiThemeProvider muiTheme={props.muiTheme}>
+        <ConnectedRouter history={props.history}>
           <Switch>
             {/* Admin pages */}
             <PrivateRoute exact path="/admin/quizzes" component={QuizzesPage} />
@@ -77,7 +56,7 @@ const App = () =>
             <Route path="" component={NotFoundPage} />
           </Switch>
         </ConnectedRouter>
-      </StoreProvider>
-    </MuiThemeProvider>
+      </MuiThemeProvider>
+    </Provider>
 
 export default App

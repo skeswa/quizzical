@@ -19,8 +19,11 @@ module.exports = {
       'whatwg-fetch',
       'babel-polyfill',
       'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
       './index.js',
     ],
+    /*
     // The bundle for libraries that change seldomly.
     vendor: [
       'classnames',
@@ -30,7 +33,6 @@ module.exports = {
       'flux-standard-action',
       'lodash',
       'material-ui',
-      'pluralize',
       'react',
       'react-dom',
       'react-redux',
@@ -42,6 +44,7 @@ module.exports = {
       'redux-actions',
       'store',
     ],
+    */
   },
 
   // The top-level output key contains set of options instructing webpack on how
@@ -147,10 +150,12 @@ module.exports = {
 
   // A list of webpack plugins.
   plugins: [
+    /*
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: 'vendor.bundle.js',
     }),
+    */
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -178,6 +183,7 @@ module.exports = {
         'og-splash.png'),
     }]),
     new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   // Enables source maps.
@@ -186,7 +192,9 @@ module.exports = {
   // Development server configuration.
   devServer: {
     contentBase: './client',
+    historyApiFallback: true,
     hot: true,
+    port: 3000,
     proxy: {
       '/api/*': {
         target:       'http://gauntlet.dev:8080',
