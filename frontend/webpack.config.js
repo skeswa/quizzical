@@ -75,7 +75,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg)$/,
+        test: /\.(png|svg|jpg|mp4)$/,
         use: [
           {
             loader: 'url-loader',
@@ -173,7 +173,7 @@ module.exports = {
       'client',
       'resources',
       'images',
-      'favicon.png')),
+      'card-header-logo.png')),
     new CopyWebpackPlugin([{
       from: path.join(
         __dirname,
