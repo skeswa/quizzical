@@ -71,6 +71,12 @@
   top: 1.4rem;
   z-index: 3; /* Puts this above the picture which has a z-index of 2. */
 }
+@media (min-width: 600px) {
+  .questionPictureClickPrompt {
+    left: 1.4rem;
+    margin-left: 0;
+  }
+}
 
 .answerPanelOverlay {
   bottom: 0;

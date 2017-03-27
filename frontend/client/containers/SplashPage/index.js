@@ -39,20 +39,18 @@ class SplashPage extends Component {
           <video className={style.video} src={splashVideoURL} loop autoPlay />
         </div>
         <div className={style.front}>
-          <div className={style.left}>
-            <img className={style.logo} src={logoURL} />
-            <div className={style.blurb}>
-              <span className={style.bold}>Quizzical</span> helps you get better
-              at the math section of the SAT.
-            </div>
-            <RaisedButton
-              style={{ width: '14rem' }}
-              label="Continue"
-              onClick={::this.onSignInClicked}
-              labelColor="#754aec"
-              labelStyle={{ fontSize: '1.8rem' }}
-              backgroundColor="#ffffff" />
+          <img className={style.logo} src={logoURL} />
+          <div className={style.blurb}>
+            <span className={style.bold}>Quizzical</span> helps you get better
+            at the math section of the SAT.
           </div>
+          <RaisedButton
+            style={{ width: '14rem' }}
+            label="Continue"
+            onClick={::this.onSignInClicked}
+            labelColor="#754aec"
+            labelStyle={{ fontSize: '1.8rem' }}
+            backgroundColor="#ffffff" />
         </div>
       </div>
     )

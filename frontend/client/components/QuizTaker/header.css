@@ -10,7 +10,7 @@
 .menuButton {
   transform: scale(1.6);
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .menuButton {
     transform: scale(1.4);
   }
@@ -27,20 +27,20 @@
 .currentQuestion {
   font-size: 1.8rem;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .currentQuestion {
     font-size: 1.6rem;
   }
 }
 
 .questionInstructions {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: .04rem;
-  margin-top: .2rem;
+  margin-top: .1rem;
   text-transform: uppercase;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .questionInstructions {
     font-size: 1rem;
   }
@@ -48,9 +48,9 @@
 
 .highlight {
   color: #946dff;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .highlight {
     font-size: 1.2rem;
   }

@@ -19,32 +19,21 @@
   top: 0;
 }
 
-.left {
+.front {
   align-items: center;
   background: rgba(117, 74, 236, .9);
-  bottom: 0;
+  box-sizing: border-box;
   display: flex;
-  flex: 0;
   flex-direction: column;
   justify-content: center;
-  left: 0;
-  padding: 0 2rem;
-  position: absolute;
-  top: 0;
-  width: 25rem;
+  padding: 2rem;
 }
 @media (max-width: 500px) {
-  .left {
+  .front {
     padding: 0 4rem;
-    right: 0;
-    width: auto;
   }
 }
 
-.right {
-  display: flex;
-  flex: 1;
-}
 
 .video {
   height: 100vh;
@@ -60,6 +49,7 @@
   color: #fff;
   font-size: 2.4rem;
   margin-bottom: 3rem;
+  max-width: 40rem;
   text-align: center;
 }
 
