@@ -19,6 +19,7 @@
   color: #555;
   cursor: pointer;
   display: flex;
+  flex-shrink: 0;
   font-size: 1.6rem;
   height: 5rem;
   justify-content: center;

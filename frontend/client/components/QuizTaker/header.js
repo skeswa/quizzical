@@ -87,7 +87,7 @@ class QuizTakerHeader extends Component {
             Question {questionIndex + 1} of {questionTotal}
           </div>
           <div className={style.questionInstructions}>
-            <span>Please respond to prompt </span>
+            <span>Respond to prompt </span>
             <span className={style.highlight}>#{questionNumberInPage}</span>
             <span> below</span>
           </div>

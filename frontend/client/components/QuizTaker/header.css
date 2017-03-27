@@ -10,6 +10,11 @@
 .menuButton {
   transform: scale(1.6);
 }
+@media (max-width: 500px) {
+  .menuButton {
+    transform: scale(1.4);
+  }
+}
 
 .info {
   align-items: center;
@@ -22,6 +27,11 @@
 .currentQuestion {
   font-size: 1.8rem;
 }
+@media (max-width: 500px) {
+  .currentQuestion {
+    font-size: 1.6rem;
+  }
+}
 
 .questionInstructions {
   font-size: 1.2rem;
@@ -30,10 +40,20 @@
   margin-top: .2rem;
   text-transform: uppercase;
 }
+@media (max-width: 500px) {
+  .questionInstructions {
+    font-size: 1rem;
+  }
+}
 
 .highlight {
   color: #946dff;
   font-size: 1.6rem;
+}
+@media (max-width: 500px) {
+  .highlight {
+    font-size: 1.2rem;
+  }
 }
 
 .timer {

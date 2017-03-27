@@ -35,6 +35,7 @@
 }
 @media (max-width: 500px) {
   .left {
+    padding: 0 4rem;
     right: 0;
     width: auto;
   }
