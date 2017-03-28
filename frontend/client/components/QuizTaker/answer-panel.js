@@ -37,6 +37,12 @@ class QuizTakerAnswerPanel extends Component {
     }
   }
 
+  onCancelClicked() {
+    debugger
+    const { onQuizCancelled } = this.props
+    onQuizCancelled()
+  }
+
   renderAnswerer(questionIsMutipleChoice, answer, onAnswerChanged) {
     return (
       <div className={style.answerer}>
@@ -145,6 +151,26 @@ class QuizTakerAnswerPanel extends Component {
     )
   }
 
+  renderCancelButton() {
+    const cancelButtonClassName = classNames(style.cancelButton, {
+      [style.cancelButton__disabled]: false,
+    })
+    const cancelButtonExtraProps = null
+
+    return (
+      <div
+        className={style.cancelButtonWrapper}>
+        <div
+          className={cancelButtonClassName}
+          onClick={::this.onCancelClicked}
+          {...cancelButtonExtraProps}>
+          <div className={style.cancelButtonLabel}>Cancel</div>
+          <div className={style.cancelButtonOverlay} />
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const {
       answer,
@@ -179,6 +205,9 @@ class QuizTakerAnswerPanel extends Component {
           this.renderFinishButton(
             questionsAttempted,
             questionTotal)
+        }
+        {
+          this.renderCancelButton()
         }
       </div>
     )

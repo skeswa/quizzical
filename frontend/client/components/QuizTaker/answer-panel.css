@@ -104,3 +104,71 @@
 .finishButton.finishButton__disabled:hover .finishButtonOverlay {
   opacity: 0;
 }
+
+.cancelButtonWrapper {
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.cancelButton {
+  align-items: center;
+  background: #c62828;
+  border-radius: .2rem;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0 .1rem .6rem, rgba(0, 0, 0, 0.117647) 0 .1rem .4rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  transition: background 450ms;
+}
+.cancelButton__disabled {
+  background: #e5e5e5;
+  box-shadow: none;
+  cursor: default;
+}
+
+.cancelButtonLabel {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  transition: color 450ms;
+  user-select: none;
+}
+.cancelButton__disabled .cancelButtonLabel {
+  color: rgba(0, 0, 0, .298039);
+}
+
+.cancelButtonSublabel {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: .05rem;
+  text-transform: uppercase;
+  transition: color 450ms;
+  user-select: none;
+}
+.cancelButton__disabled .cancelButtonSublabel {
+  color: rgba(0, 0, 0, .298039);
+}
+
+.cancelButtonOverlay {
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 450ms;
+}
+.cancelButton:hover .cancelButtonOverlay {
+  opacity: .4;
+}
+.cancelButton.cancelButton__disabled:hover .cancelButtonOverlay {
+  opacity: 0;
+}

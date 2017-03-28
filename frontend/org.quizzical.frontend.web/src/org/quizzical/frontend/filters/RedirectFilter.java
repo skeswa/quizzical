@@ -17,7 +17,6 @@ public class RedirectFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)resp;
-
 		final String pathInfo = request.getPathInfo();
 		if (pathInfo.endsWith(".ico")
 				|| pathInfo.endsWith(".png")
@@ -28,13 +27,14 @@ public class RedirectFilter implements Filter{
 				|| pathInfo.endsWith(".bundle.js")
 				|| pathInfo.endsWith(".bundle.js.map")
 				|| pathInfo.endsWith("bundle.js")
-				|| pathInfo.endsWith("vendor.bundle.js")) {
+				|| pathInfo.endsWith("vendor.bundle.js")
+				|| pathInfo.indexOf("/system/console") >= 0) {
 			chain.doFilter(req, resp);
 		} else if (pathInfo.startsWith("/api")) {
 			chain.doFilter(req, resp);
 		} else if(pathInfo.indexOf("index.html") < 0) {
 			try {
-				request.getRequestDispatcher("/index.html").forward(req, resp);
+				request.getRequestDispatcher("/").forward(req, resp);
 			} catch (Exception e) {
 			}
 		} else {
@@ -49,5 +49,4 @@ public class RedirectFilter implements Filter{
 	@Override
 	public void destroy() {
 	}
-
 }

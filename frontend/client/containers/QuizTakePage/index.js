@@ -102,8 +102,28 @@ class QuizTakePage extends Component {
   }
 
   onQuizCancelled() {
-    // TODO(skeswa): tell the backend to delete the cancelled quiz.
-    this.props.history.push(`/quiz`)
+    this.setState({
+      quizFinished: true,
+      isDataLoading: true,
+      loadingError: null,
+    })
+    
+    // Cancel the quiz.
+    this.props.actions.deleteQuizSubmission(quizSubmission)
+      .then(resultingActions => {
+        const error = extractErrorFromResultingActions(resultingActions)
+        if (error) {
+          this.setState({
+            loadingError:   error,
+            isDataLoading:  false,
+          })
+        } else {
+          this.setState({
+            isDataLoading: false,
+          })
+          this.props.history.push(`/quiz`)
+        }
+      })
   }
 
   onQuestionIndexChanged(currentQuestionIndex) {
