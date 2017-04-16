@@ -97,7 +97,7 @@ class QuizTakerHeader extends Component {
         </div>
         <div className={style.timer}>
           <QuizTakerClock
-            onTick={his.onClockTick}
+            onTick={this.onClockTick}
             seconds={clockSeconds}
             timeLimit={questionTimeLimit} />
         </div>
