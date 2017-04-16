@@ -42,4 +42,4 @@
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
   org.ops4j.pax.logging.DefaultServiceLog.level=TRACE,\
-  org.osgi.service.http.port=8080
+  org.osgi.service.http.port=3000

@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -23,6 +24,7 @@ class FreeResponseAnswererCell extends Component {
       (((column % 3) === 0) && (value === '/')))
   }
 
+  @autobind
   onClick(e) {
     const { type, column, value, selected, onSelection } = this.props
 
@@ -48,7 +50,7 @@ class FreeResponseAnswererCell extends Component {
       })
 
     return (
-      <div className={className} onClick={::this.onClick}>
+      <div className={className} onClick={this.onClick}>
         <div className={style.cellLabel}>{cellIsBlank ? 'Blank' : value}</div>
       </div>
     )

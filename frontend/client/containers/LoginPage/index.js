@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -26,20 +27,24 @@ class LoginPage extends Component {
     password: null,
   }
 
+  @autobind
   onPasswordKeyUp(e) {
     if (e.keyCode === 13) {
       this.onLoginClicked()
     }
   }
 
+  @autobind
   onEmailChanged(e, email) {
     this.setState({ email })
   }
 
+  @autobind
   onPasswordChanged(e, password) {
     this.setState({ password })
   }
 
+  @autobind
   onLoginClicked() {
     const { email, password } = this.state
     const { actions, location, history } = this.props
@@ -90,20 +95,20 @@ class LoginPage extends Component {
         animated={true}
         actionDisabled={this.state.loading}
         animationDelay={100}
-        onActionClicked={::this.onLoginClicked}>
+        onActionClicked={this.onLoginClicked}>
         <div className={style.main}>
           {this.renderError()}
 
           <TextField
-            onChange={::this.onEmailChanged}
+            onChange={this.onEmailChanged}
             disabled={this.state.loading}
             fullWidth={true}
             floatingLabelText="Email"
             floatingLabelFixed={true} />
           <TextField
             type="password"
-            onKeyUp={::this.onPasswordKeyUp}
-            onChange={::this.onPasswordChanged}
+            onKeyUp={this.onPasswordKeyUp}
+            onChange={this.onPasswordChanged}
             disabled={this.state.loading}
             fullWidth={true}
             floatingLabelText="Password"

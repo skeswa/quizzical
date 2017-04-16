@@ -1,5 +1,6 @@
 
 import Dialog from 'material-ui/Dialog'
+import autobind from 'autobind-decorator'
 import ReactDOM from 'react-dom'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
@@ -37,7 +38,7 @@ class QuestionTable extends Component {
           clearTimeout(ref)
         }
 
-        ref = setTimeout(::this.onResize, tableResizeDelay)
+        ref = setTimeout(this.onResize, tableResizeDelay)
       })
 
       // Keep the erd for unsubscription.
@@ -52,6 +53,7 @@ class QuestionTable extends Component {
     }
   }
 
+  @autobind
   onResize() {
     this.onResizeWithCallback(undefined)
   }
@@ -67,6 +69,7 @@ class QuestionTable extends Component {
     )
   }
 
+  @autobind
   onLightboxOpened(lightboxImageURL) {
     this.setState({
       lightboxImageURL,
@@ -74,6 +77,7 @@ class QuestionTable extends Component {
     })
   }
 
+  @autobind
   onLightboxClosed() {
     this.setState({
       lightboxVisible:  false,
@@ -90,7 +94,7 @@ class QuestionTable extends Component {
         bodyStyle={{ padding: '0' }}
         contentStyle={{ width: '50%', minWidth: '0', maxWidth: 'none', maxHeight: '80%' }}
         overlayStyle={{ paddingTop: '0' }}
-        onRequestClose={::this.onLightboxClosed}>
+        onRequestClose={this.onLightboxClosed}>
         <img
           src={lightboxImageURL}
           className={style.lightboxPicture} />
@@ -196,7 +200,7 @@ class QuestionTable extends Component {
           cell={
             <TableQuestionPicturesCell
               data={questions}
-              handler={::this.onLightboxOpened} />
+              handler={this.onLightboxOpened} />
           } />
           <Column
               columnKey="id"

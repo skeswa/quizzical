@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import React, { Component } from 'react'
 
@@ -60,6 +61,7 @@ class Lightbox extends Component {
     }
   }
 
+  @autobind
   onClick() {
     const { onDismissal } = this.props
 
@@ -79,7 +81,7 @@ class Lightbox extends Component {
     const pictureStyle = { backgroundImage: `url(${pictureURL})` }
 
     return (
-      <div className={className} onClick={::this.onClick}>
+      <div className={className} onClick={this.onClick}>
         <div style={pictureStyle} className={style.picture} />
       </div>
     )

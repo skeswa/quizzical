@@ -1,5 +1,6 @@
 
 import Dialog from 'material-ui/Dialog'
+import autobind from 'autobind-decorator'
 import FontIcon from 'material-ui/FontIcon'
 import MenuItem from 'material-ui/MenuItem'
 import classNames from 'classnames'
@@ -77,19 +78,23 @@ class QuizAttempts extends Component {
     })
   }
 
+  @autobind
   onItemClicked() {
     // TODO(skeswa): activate any selection events that may exist.
   }
 
+  @autobind
   onSwitchToGridClicked() {
     this.setState({ gridVisible: true })
   }
 
+  @autobind
   onSwitchToTableClicked() {
     // TODO(skeswa): enable this.
     // this.setState({ gridVisible: false })
   }
 
+  @autobind
   onCreateQuizAttemptClicked() {
     this.setState({
       quizGenerationError:      null,
@@ -113,6 +118,7 @@ class QuizAttempts extends Component {
       })
   }
 
+  @autobind
   onCancelQuizAttemptClicked() {
     this.setState({ quizGenerationDialogVisible: false })
   }
@@ -131,12 +137,12 @@ class QuizAttempts extends Component {
         label="Cancel"
         primary={true}
         disabled={isDataLoading}
-        onTouchTap={::this.onCancelQuizAttemptClicked} />,
+        onTouchTap={this.onCancelQuizAttemptClicked} />,
       <RaisedButton
         label="Create"
         primary={true}
         disabled={isDataLoading}
-        onTouchTap={::this.onCreateQuizAttemptClicked} />
+        onTouchTap={this.onCreateQuizAttemptClicked} />
     ]
 
     return (
@@ -144,7 +150,7 @@ class QuizAttempts extends Component {
         title="Describe Your Quiz"
         actions={dialogActions}
         open={quizGenerationDialogVisible}
-        onRequestClose={::this.onCancelQuizAttemptClicked}
+        onRequestClose={this.onCancelQuizAttemptClicked}
         autoScrollBodyContent={true}>
         <QuizGenerationForm
           ref="generationForm"
@@ -187,10 +193,10 @@ class QuizAttempts extends Component {
           <ListButtons
             disabled={isDataLoading}
             switchToGrid={!gridVisible}
-            onCreateClicked={::this.onOpenCreateClicked}
-            onRefreshClicked={::this.onRefreshListClicked}
-            onSwitchToGridClicked={::this.onSwitchToGridClicked}
-            onSwitchToTableClicked={::this.onSwitchToTableClicked} />
+            onCreateClicked={this.onOpenCreateClicked}
+            onRefreshClicked={this.onRefreshListClicked}
+            onSwitchToGridClicked={this.onSwitchToGridClicked}
+            onSwitchToTableClicked={this.onSwitchToTableClicked} />
         </div>
 
         {this.renderCreationDialog()}

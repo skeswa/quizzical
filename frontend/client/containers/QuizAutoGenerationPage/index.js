@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router'
@@ -65,6 +66,7 @@ class QuizAutoGenerationPage extends Component {
       })
   }
 
+  @autobind
   onStartClicked() {
     this.setState({
       quizGenerationError:      null,
@@ -107,7 +109,7 @@ class QuizAutoGenerationPage extends Component {
         animated={true}
         actionDisabled={isDataLoading}
         animationDelay={100}
-        onActionClicked={::this.onStartClicked}>
+        onActionClicked={this.onStartClicked}>
         <QuizGenerationForm
           ref="generationForm"
           error={quizGenerationError}

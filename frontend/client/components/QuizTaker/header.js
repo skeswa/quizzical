@@ -1,5 +1,6 @@
 
 import FontIcon from 'material-ui/FontIcon'
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import IconButton from 'material-ui/IconButton'
 import React, { Component, PropTypes } from 'react'
@@ -24,7 +25,7 @@ class QuizTakerHeader extends Component {
 
   componentDidMount() {
     this.mounted = true
-    this.intervalId = setInterval(::this.onClockTick, 1000)
+    this.intervalId = setInterval(this.onClockTick, 1000)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,12 +42,14 @@ class QuizTakerHeader extends Component {
     clearInterval(this.intervalId)
   }
 
+  @autobind
   onClockTick() {
     if (this.mounted) {
       this.updateClockSeconds(this.props.timeQuestionStarted)
     }
   }
 
+  @autobind
   onMenuClicked() {
     // TODO(skeswa): the sidebar menu.
   }
@@ -75,7 +78,7 @@ class QuizTakerHeader extends Component {
       <div className={style.main}>
         <div className={style.menuButton}>
           <IconButton
-            onClick={::this.onMenuClicked}
+            onClick={this.onMenuClicked}
             iconStyle={BACK_ARROW_ICON_STYLE}
             focusRippleColor="#ffffff"
             touchRippleColor="#ffffff">
@@ -94,7 +97,7 @@ class QuizTakerHeader extends Component {
         </div>
         <div className={style.timer}>
           <QuizTakerClock
-            onTick={::this.onClockTick}
+            onTick={his.onClockTick}
             seconds={clockSeconds}
             timeLimit={questionTimeLimit} />
         </div>

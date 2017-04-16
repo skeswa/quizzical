@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import React, { Component } from 'react'
 
 import style from './style.css'
@@ -6,6 +7,7 @@ import style from './style.css'
 class QuizAttemptGridItem extends Component {
   state = {}
 
+  @autobind
   onClick() {
     window.alert('CLIKY TIME')
   }
@@ -13,7 +15,7 @@ class QuizAttemptGridItem extends Component {
   render() {
     return (
       <div className={style.wrapper}>
-        <div className={style.main} onClick={::this.onClick}>
+        <div className={style.main} onClick={this.onClick}>
           HELLO PLS, THIS IS ATTEMPT THING
         </div>
       </div>

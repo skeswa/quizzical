@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router'
@@ -76,6 +77,7 @@ class QuizTakePage extends Component {
         : null
   }
 
+  @autobind
   onQuizFinished(quizSubmission) {
     this.setState({
       quizFinished: true,
@@ -101,6 +103,7 @@ class QuizTakePage extends Component {
       })
   }
 
+  @autobind
   onQuizCancelled() {
     this.setState({
       quizFinished: true,
@@ -126,6 +129,7 @@ class QuizTakePage extends Component {
       })
   }
 
+  @autobind
   onQuestionIndexChanged(currentQuestionIndex) {
     this.setState({ currentQuestionIndex })
   }
@@ -166,7 +170,7 @@ class QuizTakePage extends Component {
           action="Start Over"
           animated={true}
           animationDelay={0}
-          onActionClicked={::this.onQuizCancelled}>
+          onActionClicked={this.onQuizCancelled}>
           <div className={style.errorWrapper}>
             <FormError
               title={subtitle}
@@ -195,9 +199,9 @@ class QuizTakePage extends Component {
         <QuizTaker
           quiz={this.getQuiz()}
           questionIndex={currentQuestionIndex}
-          onQuizFinished={::this.onQuizFinished}
-          onQuizCancelled={::this.onQuizCancelled}
-          onQuestionIndexChanged={::this.onQuestionIndexChanged} />
+          onQuizFinished={this.onQuizFinished}
+          onQuizCancelled={this.onQuizCancelled}
+          onQuestionIndexChanged={this.onQuestionIndexChanged} />
       </div>
     )
   }
@@ -211,7 +215,7 @@ class QuizTakePage extends Component {
         fullScreen={true}
         bodyUnpadded={true}
         animationDelay={0}
-        onActionClicked={::this.onQuizCancelled}>
+        onActionClicked={this.onQuizCancelled}>
         <QuizResults results={quizResults} />
       </PracticeSkeleton>
     )

@@ -1,5 +1,6 @@
 
 import Dialog from 'material-ui/Dialog'
+import autobind from 'autobind-decorator'
 import React, { Component } from 'react'
 
 import style from './style.css'
@@ -14,10 +15,12 @@ class QuestionGridItem extends Component {
     lightboxVisible: false,
   }
 
+  @autobind
   onClick() {
     this.setState({ lightboxVisible: true })
   }
 
+  @autobind
   onLightboxClosed() {
     this.setState({ lightboxVisible: false })
   }
@@ -31,7 +34,7 @@ class QuestionGridItem extends Component {
         bodyStyle={{ padding: '0' }}
         contentStyle={{ width: '50%', minWidth: '0', maxWidth: 'none', maxHeight: '80%' }}
         overlayStyle={{ paddingTop: '0' }}
-        onRequestClose={::this.onLightboxClosed}>
+        onRequestClose={this.onLightboxClosed}>
         <img
           src={questionPictureURL}
           className={style.lightboxPicture} />
@@ -69,7 +72,7 @@ class QuestionGridItem extends Component {
 
     return (
       <div className={style.wrapper}>
-        <div className={style.main} onClick={::this.onClick} >
+        <div className={style.main} onClick={this.onClick}>
           <div
             style={{ backgroundImage: `url(${questionPictureURL})`}}
             className={style.picture} />

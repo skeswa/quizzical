@@ -1,5 +1,6 @@
 
 import ReactDOM from 'react-dom'
+import autobind from 'autobind-decorator'
 import TextField from 'material-ui/TextField'
 import React, { Component } from 'react'
 
@@ -24,10 +25,12 @@ class CategoryCreationForm extends Component {
     }
   }
 
+  @autobind
   onCodeChanged(e) {
     this.setState({ code: e.target.value })
   }
 
+  @autobind
   onNameChanged(e) {
     this.setState({ name: e.target.value })
   }
@@ -72,13 +75,13 @@ class CategoryCreationForm extends Component {
         <TextField
           value={code}
           hintText="e.g. lineq"
-          onChange={::this.onCodeChanged}
+          onChange={this.onCodeChanged}
           fullWidth={true}
           floatingLabelText="Code" />
         <TextField
           value={name}
           hintText="e.g. Linear Equations"
-          onChange={::this.onNameChanged}
+          onChange={this.onNameChanged}
           fullWidth={true}
           floatingLabelText="Name" />
       </div>

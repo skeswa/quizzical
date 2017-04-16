@@ -1,5 +1,6 @@
 
 import FontIcon from 'material-ui/FontIcon'
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component, PropTypes } from 'react'
@@ -29,6 +30,7 @@ class QuizTakerAnswerPanel extends Component {
         || (!questionIsMutipleChoice && answer === FREE_RESPONSE_BLANK_ANSWER)
   }
 
+  @autobind
   onFinishClicked() {
     const { questionTotal, onQuizFinished, questionsAttempted } = this.props
 
@@ -37,6 +39,7 @@ class QuizTakerAnswerPanel extends Component {
     }
   }
 
+  @autobind
   onCancelClicked() {
     debugger
     const { onQuizCancelled } = this.props
@@ -139,7 +142,7 @@ class QuizTakerAnswerPanel extends Component {
         className={style.finishButtonWrapper}>
         <div
           className={finishButtonClassName}
-          onClick={::this.onFinishClicked}
+          onClick={this.onFinishClicked}
           {...finishButtonExtraProps}>
           <div className={style.finishButtonLabel}>Finish Quiz</div>
           <div className={style.finishButtonSublabel}>
@@ -162,7 +165,7 @@ class QuizTakerAnswerPanel extends Component {
         className={style.cancelButtonWrapper}>
         <div
           className={cancelButtonClassName}
-          onClick={::this.onCancelClicked}
+          onClick={this.onCancelClicked}
           {...cancelButtonExtraProps}>
           <div className={style.cancelButtonLabel}>Cancel</div>
           <div className={style.cancelButtonOverlay} />

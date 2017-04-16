@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import React, { Component, PropTypes } from 'react'
@@ -30,6 +31,7 @@ class QuestionPicture extends Component {
     return `${BASE_QUESTION_PICTURE_URL}/${pictureId}.png`
   }
 
+  @autobind
   onPictureLoaded() {
     const { onPictureLoaded } = this.props
 
@@ -37,10 +39,12 @@ class QuestionPicture extends Component {
     if (onPictureLoaded) onPictureLoaded()
   }
 
+  @autobind
   onPictureClicked() {
     this.setState({ lightboxVisible: true })
   }
 
+  @autobind
   onLightboxDismissal() {
     this.setState({ lightboxVisible: false })
   }
@@ -83,7 +87,7 @@ class QuestionPicture extends Component {
 
         <img
           src={pictureURL}
-          onLoad={::this.onPictureLoaded}
+          onLoad={this.onPictureLoaded}
           className={style.pictureLoadingHelper} />
         <div className={style.pictureLoaderWrapper}>
           <div style={pictureLoaderStyle} className={style.pictureLoader}>
@@ -97,12 +101,12 @@ class QuestionPicture extends Component {
         </div>
         <div
           style={pictureStyle}
-          onClick={::this.onPictureClicked}
+          onClick={this.onPictureClicked}
           className={pictureClassName} />
         <Lightbox
           visible={lightboxVisible}
           pictureURL={pictureURL}
-          onDismissal={::this.onLightboxDismissal} />
+          onDismissal={this.onLightboxDismissal} />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 
 import Slider from 'material-ui/Slider'
+import autobind from 'autobind-decorator'
 import ReactDOM from 'react-dom'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
@@ -99,18 +100,22 @@ class QuizGenerationForm extends Component {
     parentNode.scrollTop = 0
   }
 
+  @autobind
   onCategoryChanged(e, i, selectedCategoryId) {
     this.setState({ selectedCategoryId })
   }
 
+  @autobind
   onSelectedLengthChanged(selectedLengthIndex) {
     this.setState({ selectedLengthIndex })
   }
 
+  @autobind
   onCategorySelectMounted(categorySelect) {
     this.setState({ categorySelectHeight: categorySelect.offsetHeight })
   }
 
+  @autobind
   onGenerationStrategyChanged(e, generationStrategy) {
     this.setState({ generationStrategy })
   }
@@ -175,7 +180,7 @@ class QuizGenerationForm extends Component {
             style={QUIZ_LENGTH_PAGE_STYLE}
             lengths={QUIZ_LENGTH_NAMES}
             selectedLengthIndex={selectedLengthIndex}
-            onSelectedLengthChanged={::this.onSelectedLengthChanged} />
+            onSelectedLengthChanged={this.onSelectedLengthChanged} />
         </div>
         <div
           style={generationStrategyGroupWrapperStyle}
@@ -185,7 +190,7 @@ class QuizGenerationForm extends Component {
             </div>
             <RadioButtonGroup
               name="generation-strategy"
-              onChange={::this.onGenerationStrategyChanged}
+              onChange={this.onGenerationStrategyChanged}
               valueSelected={generationStrategy}>
               <RadioButton
                 value={GENERATION_STRATEGY_BY_CATEGORY}
@@ -207,7 +212,7 @@ class QuizGenerationForm extends Component {
             value={selectedCategoryId}
             hintText="The category to focus"
             disabled={categoryMenuItems.length < 1}
-            onChange={::this.onCategoryChanged}
+            onChange={this.onCategoryChanged}
             fullWidth={true}
             floatingLabelText="Category to Focus">
             {categoryMenuItems}

@@ -1,4 +1,5 @@
 
+const path            = require('path')
 const webpack         = require('webpack')
 const rucksack        = require('rucksack-css')
 const baseConfig      = require('./webpack.shared.config')
@@ -14,6 +15,7 @@ module.exports = Object.assign({}, baseConfig, {
       './index.js',
     ],
     vendor: [
+      'autobind-decorator',
       'classnames',
       'debug',
       'element-resize-detector',
@@ -33,6 +35,13 @@ module.exports = Object.assign({}, baseConfig, {
       'store',
     ],
   },
+
+  // The top-level output key contains set of options instructing webpack on how
+  // and where it should output your bundles, assets and anything else you
+  // bundle or load with webpack.
+  output: Object.assign({}, baseConfig.output, {
+    path: path.join(__dirname, '..', 'org.quizzical.frontend.web', 'static'),
+  }),
 
   // These options determine how the different types of modules within a project
   // will be treated.

@@ -1,5 +1,6 @@
 
 import ReactDOM from 'react-dom'
+import autobind from 'autobind-decorator'
 import TextField from 'material-ui/TextField'
 import React, { Component } from 'react'
 
@@ -25,14 +26,17 @@ class DifficultyCreationForm extends Component {
     }
   }
 
+  @autobind
   onCodeChanged(e) {
     this.setState({ code: e.target.value })
   }
 
+  @autobind
   onNameChanged(e) {
     this.setState({ name: e.target.value })
   }
 
+  @autobind
   onColorChanged(e) {
     this.setState({ color: e.target.value })
   }
@@ -77,19 +81,19 @@ class DifficultyCreationForm extends Component {
         <TextField
           value={code}
           hintText="e.g. medium"
-          onChange={::this.onCodeChanged}
+          onChange={this.onCodeChanged}
           fullWidth={true}
           floatingLabelText="Code" />
         <TextField
           value={name}
           hintText="e.g. Medium"
-          onChange={::this.onNameChanged}
+          onChange={this.onNameChanged}
           fullWidth={true}
           floatingLabelText="Name" />
         <TextField
           value={color}
           hintText="e.g. #ff0000"
-          onChange={::this.onColorChanged}
+          onChange={this.onColorChanged}
           fullWidth={true}
           floatingLabelText="Color" />
       </div>

@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
 import React, { Component } from 'react'
@@ -24,10 +25,12 @@ class SourceCreationForm extends Component {
     }
   }
 
+  @autobind
   onCodeChanged(e) {
     this.setState({ code: e.target.value })
   }
 
+  @autobind
   onNameChanged(e) {
     this.setState({ name: e.target.value })
   }
@@ -72,13 +75,13 @@ class SourceCreationForm extends Component {
         <TextField
           value={code}
           hintText="e.g. barron"
-          onChange={::this.onCodeChanged}
+          onChange={this.onCodeChanged}
           fullWidth={true}
           floatingLabelText="Code" />
         <TextField
           value={name}
           hintText="e.g. Barron's SAT Prep"
-          onChange={::this.onNameChanged}
+          onChange={this.onNameChanged}
           fullWidth={true}
           floatingLabelText="Name" />
       </div>

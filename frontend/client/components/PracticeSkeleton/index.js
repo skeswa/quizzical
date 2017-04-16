@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component, PropTypes } from 'react'
@@ -16,7 +17,7 @@ class PracticeSkeleton extends Component {
     title:            PropTypes.string,
     action:           PropTypes.string,
     animated:         PropTypes.bool,
-    fullScreen:        PropTypes.bool,
+    fullScreen:       PropTypes.bool,
     bodyUnpadded:     PropTypes.bool,
     actionDisabled:   PropTypes.bool,
     animationDelay:   PropTypes.number,
@@ -35,6 +36,7 @@ class PracticeSkeleton extends Component {
     }
   }
 
+  @autobind
   onActionClicked() {
     if (this.props.onActionClicked) this.props.onActionClicked()
   }
@@ -45,7 +47,7 @@ class PracticeSkeleton extends Component {
             <RaisedButton
               label={action}
               primary={true}
-              onClick={::this.onActionClicked}
+              onClick={this.onActionClicked}
               disabled={actionDisabled}
               fullWidth={true}
               labelStyle={ACTION_LABEL_STYLE} />

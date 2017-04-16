@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router'
@@ -17,6 +18,7 @@ class SplashPage extends Component {
     visible: false,
   }
 
+  @autobind
   onSignInClicked() {
     this.setState(
       { visible: false },
@@ -47,7 +49,7 @@ class SplashPage extends Component {
           <RaisedButton
             style={{ width: '14rem' }}
             label="Continue"
-            onClick={::this.onSignInClicked}
+            onClick={this.onSignInClicked}
             labelColor="#754aec"
             labelStyle={{ fontSize: '1.8rem' }}
             backgroundColor="#ffffff" />

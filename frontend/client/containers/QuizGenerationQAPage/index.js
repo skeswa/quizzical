@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import React, { Component } from 'react'
@@ -77,6 +78,7 @@ class QuizGenerationQAPage extends Component {
       })
   }
 
+  @autobind
   onStartClicked() {
     this.setState({
       quizGenerationError:      null,
@@ -128,7 +130,7 @@ class QuizGenerationQAPage extends Component {
           <div className={style.bottom}>
             <RaisedButton
               label="Start"
-              onClick={::this.onStartClicked}
+              onClick={this.onStartClicked}
               disabled={isDataLoading&&isSourceDataLoading}
               labelColor="#754aec"
               backgroundColor="#ffffff" />

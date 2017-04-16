@@ -173,7 +173,7 @@ class QuizResults extends Component {
   }
 
   sortResponsesByOrdinal(responses) {
-    return responses.slice(0).sort(::this.compareResponsesByOrdinal)
+    return responses.slice(0).sort(this.compareResponsesByOrdinal)
   }
 
   getDurationDescription(duration, usedCalculator) {

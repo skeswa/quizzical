@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
@@ -68,12 +69,13 @@ class QuizResultsPage extends Component {
       : null
   }
 
-
+  @autobind
   onQuizCancelled() {
     // TODO(skeswa): tell the backend to delete the cancelled quiz.
     this.context.router.push(`/quiz/start`)
   }
 
+  @autobind
   onQuestionIndexChanged(currentQuestionIndex) {
     this.setState({ currentQuestionIndex })
   }
@@ -124,7 +126,7 @@ class QuizResultsPage extends Component {
             <div className={style.errorPageButtons}>
               <RaisedButton
                 label="Start Over"
-                onClick={::this.onQuizCancelled}
+                onClick={this.onQuizCancelled}
                 labelColor="#ffffff"
                 backgroundColor="#222222" />
             </div>
@@ -159,7 +161,7 @@ class QuizResultsPage extends Component {
           <div className={style.resultsPageButtons}>
             <RaisedButton
               label="Start Over"
-              onClick={::this.onQuizCancelled}
+              onClick={this.onQuizCancelled}
               labelColor="#ffffff"
               backgroundColor="#222222" />
           </div>

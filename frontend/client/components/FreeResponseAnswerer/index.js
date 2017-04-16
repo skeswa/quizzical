@@ -1,4 +1,5 @@
 
+import autobind from 'autobind-decorator'
 import classNames from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -39,6 +40,7 @@ class FreeResponseAnswerer extends Component {
     return formattedAnswer
   }
 
+  @autobind
   onCellSelection(columnIndex, value) {
     const answer = this.formatAnswer(this.props.answer)
     answer[columnIndex] = value
@@ -54,7 +56,7 @@ class FreeResponseAnswerer extends Component {
           value={value}
           column={index}
           selected={value === answer[index]}
-          onSelection={::this.onCellSelection} />)
+          onSelection={this.onCellSelection} />)
     const numberCells = NUMBER_CELL_VALUES
       .map(value =>
         <FreeResponseAnswererCell
@@ -63,7 +65,7 @@ class FreeResponseAnswerer extends Component {
           value={value}
           column={index}
           selected={value === answer[index]}
-          onSelection={::this.onCellSelection} />)
+          onSelection={this.onCellSelection} />)
 
     return (
       <div className={style.column}>

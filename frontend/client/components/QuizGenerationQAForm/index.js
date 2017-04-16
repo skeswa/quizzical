@@ -1,5 +1,6 @@
 
 import Slider from 'material-ui/Slider'
+import autobind from 'autobind-decorator'
 import ReactDOM from 'react-dom'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
@@ -142,29 +143,34 @@ class QuizGenerationQAForm extends Component {
     parentNode.scrollTop = 0
   }
 
+  @autobind
   onCategoryChanged(e, i, selectedCategoryId) {
     this.setState({ selectedCategoryId })
   }
 
+  @autobind
   onSourceChanged(e, i, selectedSourceId) {
     this.setState({ selectedSourceId })
   }
 
+  @autobind
   onQuizLengthChanged(e, quizLength) {
     this.setState({ quizLength })
   }
 
+  @autobind
   onCategorySelectMounted(categorySelect) {
     debugger
     this.setState({ categorySelectHeight: categorySelect.offsetHeight })
   }
 
+  @autobind
   onSourceSelectMounted(sourceSelect) {
     debugger
     this.setState({ sourceSelectHeight: sourceSelect.offsetHeight })
   }
 
-
+  @autobind
   onGenerationStrategyChanged(e, generationStrategy) {
     this.setState({ generationStrategy })
   }
@@ -270,7 +276,7 @@ class QuizGenerationQAForm extends Component {
               step={1}
               value={quizLength}
               required={false}
-              onChange={::this.onQuizLengthChanged} />
+              onChange={this.onQuizLengthChanged} />
           </div>
           <div
             style={generationStrategyGroupWrapperStyle}
@@ -280,7 +286,7 @@ class QuizGenerationQAForm extends Component {
               </div>
               <RadioButtonGroup
                 name="generation-strategy"
-                onChange={::this.onGenerationStrategyChanged}
+                onChange={this.onGenerationStrategyChanged}
                 valueSelected={generationStrategy}>
                 <RadioButton
                   style={radioButtonStyle}
@@ -301,7 +307,7 @@ class QuizGenerationQAForm extends Component {
               value={selectedCategoryId}
               hintText="The category to focus"
               disabled={categoryMenuItems.length < 1}
-              onChange={::this.onCategoryChanged}
+              onChange={this.onCategoryChanged}
               fullWidth={true}
               hintStyle={selectFieldStyle}
               labelStyle={selectFieldStyle}
@@ -319,7 +325,7 @@ class QuizGenerationQAForm extends Component {
               value={selectedSourceId}
               hintText="The source to focus"
               disabled={sourceMenuItems.length < 1}
-              onChange={::this.onSourceChanged}
+              onChange={this.onSourceChanged}
               fullWidth={true}
               hintStyle={selectFieldStyle}
               labelStyle={selectFieldStyle}
