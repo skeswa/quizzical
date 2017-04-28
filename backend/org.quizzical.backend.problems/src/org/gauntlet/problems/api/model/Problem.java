@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Problem extends BaseEntity implements Serializable {
 	private String answer;
 	
+	private Boolean answerInRange;
+	
 	private ProblemSource source;
 	
 	private ProblemCategory category;
@@ -26,6 +28,9 @@ public class Problem extends BaseEntity implements Serializable {
 	private boolean multipleChoice = true;
 	
 	private Boolean requiresCalculator;
+	
+	private Boolean requiresFixing;
+
 	
 	public Problem() {
 		super.setCode(Long.toString(System.currentTimeMillis()));
@@ -109,6 +114,23 @@ public class Problem extends BaseEntity implements Serializable {
 
 	public void setRequiresCalculator(Boolean requiresCalculator) {
 		this.requiresCalculator = requiresCalculator;
+	}
+	
+	public Boolean getRequiresFixing() {
+		return requiresFixing;
+	}
+
+	public void setRequiresFixing(Boolean requiresFixing) {
+		this.requiresFixing = requiresFixing;
+	}
+	
+
+	public Boolean getAnswerInRange() {
+		return answerInRange;
+	}
+
+	public void setAnswerInRange(Boolean answerInRange) {
+		this.answerInRange = answerInRange;
 	}
 
 	public Problem(String answer, ProblemSource source, ProblemCategory category, Integer sourcePageNumber,

@@ -104,15 +104,15 @@ class QuizTakePage extends Component {
   }
 
   @autobind
-  onQuizCancelled() {
+  onQuizCancelled(quizSubmission) {
     this.setState({
       quizFinished: true,
       isDataLoading: true,
       loadingError: null,
     })
-    
+
     // Cancel the quiz.
-    this.props.actions.deleteQuizSubmission(quizSubmission)
+    this.props.actions.deleteQuizSubmission(quizSubmission.quizId)
       .then(resultingActions => {
         const error = extractErrorFromResultingActions(resultingActions)
         if (error) {

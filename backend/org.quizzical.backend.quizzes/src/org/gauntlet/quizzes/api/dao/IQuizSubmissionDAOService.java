@@ -11,6 +11,8 @@ import org.quizzical.backend.security.authorization.api.model.user.User;
 public interface IQuizSubmissionDAOService extends IBaseService {
 	public List<QuizSubmission> findAll(User user, int start, int end) throws ApplicationException;
 	
+	public List<QuizSubmission> findAll(User user) throws ApplicationException;
+	
 	public long countAll() throws ApplicationException;
 	
 	public QuizSubmission add(QuizSubmission record) throws ApplicationException;

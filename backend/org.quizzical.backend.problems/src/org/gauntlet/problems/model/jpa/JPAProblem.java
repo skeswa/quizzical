@@ -24,6 +24,8 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 
 	private String answer;
 	
+	private Boolean answerInRange;
+	
 	@ManyToOne(targetEntity = JPAProblemSource.class)
 	@JoinColumn
 	private JPAProblemSource source;
@@ -51,7 +53,9 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 	private boolean multipleChoice = true;
 	
 	private Boolean requiresCalculator;
-
+	
+	private Boolean requiresFixing;
+	
 	public String getAnswer() {
 		return answer;
 	}
@@ -130,7 +134,21 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 
 	public void setRequiresCalculator(Boolean requiresCalculator) {
 		this.requiresCalculator = requiresCalculator;
+	}
+
+	public Boolean getRequiresFixing() {
+		return requiresFixing;
+	}
+
+	public void setRequiresFixing(Boolean requiresFixing) {
+		this.requiresFixing = requiresFixing;
+	}
+
+	public Boolean getAnswerInRange() {
+		return answerInRange;
+	}
+
+	public void setAnswerInRange(Boolean answerInRange) {
+		this.answerInRange = answerInRange;
 	} 
-	
-	
 }

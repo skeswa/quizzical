@@ -29,7 +29,7 @@ public class JPAQuiz extends JPABaseEntity implements Serializable {
     @Column(name = "userId")
     protected Long userId;
     
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = JPAQuizType.class)
+	@ManyToOne(targetEntity = JPAQuizType.class)
 	@JoinColumn
 	private JPAQuizType quizType;
 	

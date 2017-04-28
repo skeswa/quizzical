@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
+import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
@@ -34,6 +35,7 @@ public class QuizSubmissionResource {
 	@SuppressWarnings("unused")
 	private volatile LogService logger;
 	private volatile IQuizSubmissionDAOService quizSubmissionDAOService;
+	private volatile IQuizDAOService quizDAOService;
 	private volatile IJWTTokenService tokenService;
 	
 	@GET
@@ -76,7 +78,7 @@ public class QuizSubmissionResource {
 
 	@DELETE
 	@Path("{id}")
-	public void delete(@PathParam("id") long id) throws NoSuchModelException, ApplicationException {
-		quizSubmissionDAOService.delete(id);
+	public void delete(@PathParam("id") long quizId) throws NoSuchModelException, ApplicationException {
+		quizDAOService.delete(quizId);
 	}
 }

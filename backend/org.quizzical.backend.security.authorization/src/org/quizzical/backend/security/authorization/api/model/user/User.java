@@ -74,6 +74,7 @@ public class User extends BaseEntity{
 	private long columnBitmask;
 	private String prictureUrl;
 	private String mobileNumber;
+	private Boolean readyForReset;
 	
 	public User() {
 		super();
@@ -522,6 +523,13 @@ public class User extends BaseEntity{
 		this.makeNextRunOnCategory = makeNextRunOnCategory;
 	}
 
+	public Boolean getReadyForReset() {
+		return readyForReset;
+	}
+
+	public void setReadyForReset(Boolean readyForReset) {
+		this.readyForReset = readyForReset;
+	}
 
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)

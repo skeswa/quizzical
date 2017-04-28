@@ -201,6 +201,29 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	}
 	
 	@Override 
+	public List<Quiz> findByUser(User user) throws ApplicationException {
+		List<Quiz> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuiz> query = builder.createQuery(JPAQuiz.class);
+			Root<JPAQuiz> rootEntity = query.from(JPAQuiz.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//userId
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),p));
+			pes.put(p, user.getId());
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}
+	
+	@Override 
 	public int countByQuizTypeCode(User user, String typeCode) throws ApplicationException {
 		int count = 0;
 		try {

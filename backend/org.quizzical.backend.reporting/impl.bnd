@@ -3,5 +3,6 @@ Include-Resource: email_templates=resource/email_templates
 Private-Package: \
 	org.quizzical.backend.reporting.analytics.impl,\
 	org.quizzical.backend.reporting.impl.osgi,\
-	org.quizzical.backend.reporting.email
+	org.quizzical.backend.reporting.email,\
+	org.quizzical.backend.reporting.admin.impl
 Bundle-Activator: org.quizzical.backend.reporting.impl.osgi.Activator

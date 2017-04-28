@@ -197,6 +197,11 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				tua.addRating(rating);
 			}
 			testUserAnalyticsDAOService.provide(tua);
+			
+			if (user.getReadyForReset()) {
+				user.setReadyForReset(false);
+				userService.update(user);
+			}
 		}
 	}
 
@@ -208,7 +213,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		if (problem.isMultipleChoice()) {
 			return problemResponse.getResponse().trim().equalsIgnoreCase(problem.getAnswer());
 		}
-		else {//Single answer
+		else {
+			//Single or  answer in range
 			Double respDblValue = null;
 			Double answerDblValue = null;
 			final FractionFormat ff = new FractionFormat();
@@ -225,20 +231,62 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 					throw e1;
 				}
 			}
-			try {
-				Fraction answer = ff.parse(problem.getAnswer().trim());
-				answerDblValue = answer.doubleValue();
-			}
-			catch(ParseException e) {
-				//Maybe it's answer in double format
+
+			
+			//Range answer
+			if (problem.getAnswerInRange() != null && problem.getAnswerInRange()) {
+				final String[] luAnswers = problem.getAnswer().split(";");
+				Double lowerAnswer = null;
+				Double upperAnswer = null;
+				
+				//lower
 				try {
-					answerDblValue = Double.valueOf(problem.getAnswer().trim());
-				} catch (NumberFormatException e1) {
-					e.printStackTrace();
-					throw e1;
+					Fraction answer = ff.parse(luAnswers[0].trim());
+					lowerAnswer = answer.doubleValue();
 				}
+				catch(ParseException e) {
+					//Maybe it's answer in double format
+					try {
+						lowerAnswer = Double.valueOf(luAnswers[0].trim());
+					} catch (NumberFormatException e1) {
+						e.printStackTrace();
+						throw e1;
+					}
+				}
+
+				//upper
+				try {
+					Fraction answer = ff.parse(luAnswers[1].trim());
+					upperAnswer = answer.doubleValue();
+				}
+				catch(ParseException e) {
+					//Maybe it's answer in double format
+					try {
+						upperAnswer = Double.valueOf(luAnswers[1].trim());
+					} catch (NumberFormatException e1) {
+						e.printStackTrace();
+						throw e1;
+					}
+				}
+				return round(respDblValue,2) >= round(lowerAnswer,2) && round(respDblValue,2) <= round(upperAnswer,2);
 			}
-			return round(respDblValue,2) == round(answerDblValue,2);
+			//One value answer
+			else {
+				try {
+					Fraction answer = ff.parse(problem.getAnswer().trim());
+					answerDblValue = answer.doubleValue();
+				}
+				catch(ParseException e) {
+					//Maybe it's answer in double format
+					try {
+						answerDblValue = Double.valueOf(problem.getAnswer().trim());
+					} catch (NumberFormatException e1) {
+						e.printStackTrace();
+						throw e1;
+					}
+				}
+				return round(respDblValue,2) == round(answerDblValue,2);
+			}
 		}
 	}
 	

@@ -31,6 +31,7 @@ import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
+import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
@@ -95,6 +96,22 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
 			
 			List<JPABaseEntity> resultList = super.findAll(JPAQuizSubmission.class,start,end);
+			result = JPAEntityUtil.copy(resultList, QuizSubmission.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
+	public List<QuizSubmission> findAll(User user) throws ApplicationException {
+		List<QuizSubmission> result = new ArrayList<>();
+		try {
+			Set<AttrPair> attrs = new HashSet<>();
+			attrs.add(new AttrPair(Long.class, "userId", user.getId()));
+			
+			List<JPABaseEntity> resultList = super.findAll(JPAQuizSubmission.class);
 			result = JPAEntityUtil.copy(resultList, QuizSubmission.class);
 		}
 		catch (Exception e) {
@@ -258,6 +275,11 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 	@Override
 	public QuizSubmission delete(Long id) throws ApplicationException, NoSuchModelException {
 		JPAQuizSubmission jpaEntity = (JPAQuizSubmission) super.findByPrimaryKey(JPAQuizSubmission.class, id);
+		
+		//Delete Quiz 
+		super.remove(jpaEntity.getQuiz());
+		
+		//Delete Submission
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, QuizSubmission.class);
 	}
@@ -282,7 +304,29 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 
 	@Override
 	public QuizSubmission submit(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException {
-		boolean ensureBaline = user.getAdmin() || user.getQa();
+		boolean ensureBaline = user.getReadyForReset() || user.getAdmin() || user.getQa();
+		
+		//-- Filter reported problems
+		final List<Long> reportedQuizProblemsIds = quizSubmission.getResponses()
+				.stream()
+				.filter(pr -> {
+					return pr.getReported() != null && pr.getReported();
+				})	
+				.map(pr -> {
+					return pr.getQuizProblemId();
+				})		
+				.collect(Collectors.toList());
+		
+		//-- Purge of faulty problems
+		final List<QuizProblemResponse> nonReportedResponses = quizSubmission.getResponses()
+				.stream()
+				.filter(pr -> {
+					return pr.getReported() != null || !pr.getReported();
+				})		
+				.collect(Collectors.toList());
+		quizSubmission.setResponses(nonReportedResponses);
+		
+		//-- Score quiz
 		quizSubmission = scoringService.score(user, quizSubmission,ensureBaline);
     	
     	//--Persist
@@ -302,6 +346,10 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
        	if (!(user.getAdmin() || user.getQa()) && user.isActive())
        		reportStatsViaEmail(user);
        	
+       	//--Report faulty problems
+       	if (!reportedQuizProblemsIds.isEmpty())
+       		reportFaultyProblems(reportedQuizProblemsIds);
+       	
     	return quizSubmission;
 	}
 	
@@ -318,6 +366,42 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
             Event reportGeneratedEvent = new Event("org/quizzical/backend/reporting/SEND_DAILY_REPORT", properties);
 
             eventAdmin.sendEvent(reportGeneratedEvent);
+        }
+    }
+    
+    public void reportFaultyProblems(final List<Long> qpIds)
+    {
+    	//-- Update problems first
+    	qpIds
+    		.stream()
+    		.forEach(qpid -> {
+	    		JPAQuizProblemResponse jpaEntity = null;
+				try {
+					final JPAQuizProblem jpaQuizProblem = (JPAQuizProblem) super.findByPrimaryKey(JPAQuizProblem.class, qpid);
+					final Problem problem = (Problem) problemService.getByPrimary(jpaQuizProblem.getProblemId());
+					problem.setRequiresFixing(true);
+					problemService.update(problem);
+				} 
+				catch (NoSuchModelException e) {
+					throw new IllegalArgumentException("Failed to find quiz problem for provided quiz problem id "+qpid, e);					
+				}
+				catch (final ApplicationException e) {
+					throw new RuntimeException(e);
+				}
+	    	});
+    	
+    	//-- send report
+    	ServiceReference ref = ctx.getServiceReference(EventAdmin.class.getName());
+        if (ref != null)
+        {
+            EventAdmin eventAdmin = (EventAdmin) ctx.getService(ref);
+
+            Dictionary properties = new Hashtable();
+            properties.put("qpids", qpIds);
+
+            Event problemsReportedEvent = new Event("org/quizzical/backend/reporting/REPORT_FAULTY_PROBLEMS", properties);
+
+            eventAdmin.sendEvent(problemsReportedEvent);
         }
     }
 	

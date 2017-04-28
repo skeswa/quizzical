@@ -15,6 +15,8 @@ public interface IQuizDAOService extends IBaseService {
 	
 	public List<Quiz> findAll(User user, int start, int end) throws ApplicationException;	
 	
+	public List<Quiz> findByUser(User user) throws ApplicationException;
+	
 	public long countAll() throws ApplicationException;
 	
 	public long countAll(User user) throws ApplicationException;

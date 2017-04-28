@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.felix.service.command.Descriptor;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
+import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "apicupdate","qpicupdate","addcatlesson","showcat","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
+    public final static String[] FUNCTIONS = new String[] { "apicupdate","qpicupdate","addcatlesson","showcat","showcats","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
 
     @Descriptor("Adds lesson to problem category")
     public static String addcatlesson(@Descriptor("Category Id") Long categoryId, @Descriptor("Lesson Id") Long lessonId) throws Exception {
@@ -33,6 +34,16 @@ public class ProblemCommands {
     	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
         return svc.getProblemCategoryByCode(code).toString();
     }   
+    
+    @Descriptor("Shows a problem categories")
+    public static void showcats() throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+        List<ProblemCategory> cats = svc.findAllProblemCategories(0, 100);
+        cats.stream()
+        	.forEach(cat -> {
+        		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
+        	});
+    }  
     
     @Descriptor("Updates problem answer")
     public static void answer(@Descriptor("Unique problem ID") Long id,

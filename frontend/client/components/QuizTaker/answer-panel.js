@@ -41,7 +41,6 @@ class QuizTakerAnswerPanel extends Component {
 
   @autobind
   onCancelClicked() {
-    debugger
     const { onQuizCancelled } = this.props
     onQuizCancelled()
   }

@@ -239,6 +239,14 @@ class QuizTaker extends Component {
     })
   }
 
+  onQuizCancelled() {
+    const { onQuizCancelled } = this.props
+
+    this.setState({ visible: false }, () => {
+      setTimeout(() => onQuizCancelled(this.composeSubmission()), 600)
+    })
+  }
+
   onAnswerChanged(currentAnswer) {
     // Set the current answer, and, since the quiz data now could potentially
     // change, mark the quiz un-finalized.
@@ -316,6 +324,7 @@ class QuizTaker extends Component {
             questionTotal={questions.length}
             quizFinalized={quizFinalized}
             onQuizFinished={::this.onQuizFinished}
+            onQuizCancelled={::this.onQuizCancelled}
             onAnswerChanged={::this.onAnswerChanged}
             onAnswerSubmitted={::this.onAnswerSubmitted}
             onQuestionSkipped={::this.onQuestionSkipped}
@@ -412,6 +421,7 @@ class QuizTaker extends Component {
                   questionTotal={questions.length}
                   quizFinalized={quizFinalized}
                   onQuizFinished={::this.onQuizFinished}
+                  onQuizCancelled={::this.onQuizCancelled}
                   onAnswerChanged={::this.onAnswerChanged}
                   onAnswerSubmitted={::this.onAnswerSubmitted}
                   onQuestionSkipped={::this.onQuestionSkipped}

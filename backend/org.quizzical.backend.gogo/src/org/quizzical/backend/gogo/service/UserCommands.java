@@ -1,8 +1,12 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
+import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
+import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
+import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 import org.quizzical.backend.scheduler.api.IQuizTakerReminderService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
@@ -16,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate", "activate","showactive","lru","category","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset", "activate","showactive","lru","category","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -154,5 +158,51 @@ public class UserCommands {
     	List<QuizSubmission> subs = qsvc.findQuizSubmissionsMadeToday(user);
     		
        	return String.format("Found %d submissions: %s",subs.size(),subs.toString());
+    }
+    
+    
+    @Descriptor("Reset user")
+    public static String reset(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    	
+    	//Delete UA's
+    	ITestUserAnalyticsDAOService uasvc = (ITestUserAnalyticsDAOService)createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
+    	final String code_ = String.format("User(%d) analytics", user.getId());
+		TestUserAnalytics tua = uasvc.getByCode(code_);
+		uasvc.delete(tua.getId());
+		
+		//Delete submissions
+		IQuizSubmissionDAOService qssvc = (IQuizSubmissionDAOService)createServiceFromServiceType(IQuizSubmissionDAOService.class);
+		List<QuizSubmission> subs = qssvc.findAll(user);
+		subs.stream()
+			.forEach(s -> {
+				try {
+					qssvc.delete(s.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+		
+		
+    	//Delete any remaining quizzes
+		IQuizDAOService qsvc = (IQuizDAOService)createServiceFromServiceType(IQuizDAOService.class);
+		List<Quiz> qs = qsvc.findByUser(user);
+		qs.stream()
+			.forEach(q -> {
+				try {
+					qsvc.delete(q.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+			});
+		
+		//Mark as ready to baseline
+		user.setReadyForReset(true);
+		svc.update(user);
+    		
+       	return String.format("User reset for %s was successful",userId);
     }
 }
