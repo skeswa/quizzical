@@ -277,7 +277,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		JPAQuizSubmission jpaEntity = (JPAQuizSubmission) super.findByPrimaryKey(JPAQuizSubmission.class, id);
 		
 		//Delete Quiz 
-		super.remove(jpaEntity.getQuiz());
+		//super.remove(jpaEntity.getQuiz());
 		
 		//Delete Submission
 		super.remove(jpaEntity);

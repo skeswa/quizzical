@@ -211,34 +211,38 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	private JPATestUserAnalytics toJPAEntity(TestUserAnalytics record) {
 		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getUserId(),record.getCode(),record.getName());
 		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(recordCopy, JPATestUserAnalytics.class);
-    	final List<JPATestCategoryRating> ratings = record.getRatings()
-    		.stream()
-    		.map(rating -> {
-				final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName());
-				JPATestCategoryRating jpaRatingRecord = JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
-		    	final Set<JPATestCategoryRatingSubmission> submissionEnties = rating.getRatingSubmissions()
-		        		.stream()
-		        		.map(submission -> {
-		        			JPATestCategoryRatingSubmission submissionEntity = new JPATestCategoryRatingSubmission(submission.getDateAttempted());
-		        			List<JPATestCategoryAttempt> attemptEntities = submission.getAttempts().stream()
-		        					.map(a -> {
-		        						JPATestCategoryAttempt attempt = new JPATestCategoryAttempt(a);
-		        						attempt.setRatingSubmission(submissionEntity);
-		        						return attempt;
-		        					}).collect(Collectors.toList());
-		        			submissionEntity.setAttempts(attemptEntities);
-		        			submissionEntity.setRating(jpaRatingRecord);
-		    				return submissionEntity;
-		    	    	})
-		        		.collect(Collectors.toSet());
-		    	jpaRatingRecord.setSubmissions(submissionEnties);
-		    	jpaRatingRecord.calculateScore();
-		    	jpaRatingRecord.setAnalytics(jpaTestUserAnalytics);
-				return jpaRatingRecord;
-	    	})
-    		.collect(Collectors.toList());
-    	
-    	jpaTestUserAnalytics.getRatings().addAll(ratings);
+    	try {
+			final List<JPATestCategoryRating> ratings = record.getRatings()
+				.stream()
+				.map(rating -> {
+					final TestCategoryRating ratingRecordCopy = new TestCategoryRating(rating.getRating(), rating.getLastAttemptTestId(),rating.getDateOfLastAttempt(), rating.getCategoryId(), rating.getName());
+					JPATestCategoryRating jpaRatingRecord = JPAEntityUtil.copy(ratingRecordCopy, JPATestCategoryRating.class);
+			    	final Set<JPATestCategoryRatingSubmission> submissionEnties = rating.getRatingSubmissions()
+			        		.stream()
+			        		.map(submission -> {
+			        			JPATestCategoryRatingSubmission submissionEntity = new JPATestCategoryRatingSubmission(submission.getDateAttempted());
+			        			List<JPATestCategoryAttempt> attemptEntities = submission.getAttempts().stream()
+			        					.map(a -> {
+			        						JPATestCategoryAttempt attempt = new JPATestCategoryAttempt(a);
+			        						attempt.setRatingSubmission(submissionEntity);
+			        						return attempt;
+			        					}).collect(Collectors.toList());
+			        			submissionEntity.setAttempts(attemptEntities);
+			        			submissionEntity.setRating(jpaRatingRecord);
+			    				return submissionEntity;
+			    	    	})
+			        		.collect(Collectors.toSet());
+			    	jpaRatingRecord.setSubmissions(submissionEnties);
+			    	jpaRatingRecord.calculateScore();
+			    	jpaRatingRecord.setAnalytics(jpaTestUserAnalytics);
+					return jpaRatingRecord;
+				})
+				.collect(Collectors.toList());
+			
+			jpaTestUserAnalytics.getRatings().addAll(ratings);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return jpaTestUserAnalytics;
 	}

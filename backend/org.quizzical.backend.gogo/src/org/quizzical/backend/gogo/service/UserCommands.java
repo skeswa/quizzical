@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset", "activate","showactive","lru","category","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","reset2cat","activate","showactive","lru","category","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -160,6 +160,12 @@ public class UserCommands {
        	return String.format("Found %d submissions: %s",subs.size(),subs.toString());
     }
     
+    @Descriptor("Reset user")
+    public static String reset2cat(@Descriptor("Email address as userid") String userId, @Descriptor("Category id") Long categoryId) throws Exception {
+    	category(userId, categoryId);
+    	return reset(userId);
+    }
+    
     
     @Descriptor("Reset user")
     public static String reset(@Descriptor("Email address as userid") String userId) throws Exception {
@@ -172,7 +178,8 @@ public class UserCommands {
     	ITestUserAnalyticsDAOService uasvc = (ITestUserAnalyticsDAOService)createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
     	final String code_ = String.format("User(%d) analytics", user.getId());
 		TestUserAnalytics tua = uasvc.getByCode(code_);
-		uasvc.delete(tua.getId());
+		if (tua != null)
+			uasvc.delete(tua.getId());
 		
 		//Delete submissions
 		IQuizSubmissionDAOService qssvc = (IQuizSubmissionDAOService)createServiceFromServiceType(IQuizSubmissionDAOService.class);

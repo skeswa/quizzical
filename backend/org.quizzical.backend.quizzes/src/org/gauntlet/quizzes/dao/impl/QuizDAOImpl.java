@@ -216,11 +216,11 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 			pes.put(p, user.getId());
 			
 			resultList = findWithDynamicQueryAndParams(query,pes);
+			return JPAEntityUtil.copy(resultList, Quiz.class);
 		}
 		catch (Exception e) {
 			throw processException(e);
 		}
-		return resultList;		
 	}
 	
 	@Override 

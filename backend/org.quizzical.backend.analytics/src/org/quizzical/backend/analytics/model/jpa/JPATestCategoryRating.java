@@ -155,7 +155,9 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 			System.out.println(String.format("Calculated submission %s with score %d",s.getDateAttempted().toString(),sscore));
 			return sscore;
 		}).sum();
-		int avrgScore = (int)(new Fraction(sumOfScores,getSubmissions().size()).doubleValue());
+		int avrgScore = 0;
+		if (getSubmissions().size()>0)
+			avrgScore = (int)(new Fraction(sumOfScores,getSubmissions().size()).doubleValue());
 		setRating(avrgScore);
 		
 		//Total correct attempts
@@ -165,20 +167,25 @@ public class JPATestCategoryRating extends JPABaseEntity implements Serializable
 		setTotalAttemptsCorrect(sumOfCorrectAttempts);
 		
 		//Last submission stats
-		Date dateOfLastAttempt = getSubmissions().stream().map(s -> s.getDateAttempted()).max(Date::compareTo).get();
-		setDateOfLastAttempt(dateOfLastAttempt);
-		
-		final JPATestCategoryRatingSubmission  recentSubmmission = getSubmissions()
-			    .stream()
-			    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
-			    .findFirst().get();
-		setLastAttemptTestId(recentSubmmission.getTestId());
-		
-		setLastAttemptCorrect(recentSubmmission.getCorrectCount());
-		setLastAttemptTotal(recentSubmmission.getAttempts().size());
-		setLastAttemptRating(recentSubmmission.getSubmissionScore());
-		
-		return getRating();
+		if (getSubmissions().size() > 0) {
+			Date dateOfLastAttempt = getSubmissions().stream().map(s -> s.getDateAttempted()).max(Date::compareTo).get();
+			setDateOfLastAttempt(dateOfLastAttempt);
+			
+			final JPATestCategoryRatingSubmission  recentSubmmission = getSubmissions()
+				    .stream()
+				    .filter(p -> p.getDateAttempted() == dateOfLastAttempt)
+				    .findFirst().get();
+			setLastAttemptTestId(recentSubmmission.getTestId());
+			
+			setLastAttemptCorrect(recentSubmmission.getCorrectCount());
+			setLastAttemptTotal(recentSubmmission.getAttempts().size());
+			setLastAttemptRating(recentSubmmission.getSubmissionScore());
+			
+			return getRating();
+		}
+		else {
+			return 0;
+		}
 	}
 }
 
