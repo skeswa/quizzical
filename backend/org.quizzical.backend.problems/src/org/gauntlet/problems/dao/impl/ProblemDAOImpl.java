@@ -131,7 +131,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 
 	@Override
 	public Problem provide(Problem record)
-			  throws ApplicationException {
+			  throws ApplicationException, NoSuchModelException {
 		Problem existingProblem = getByCode(record.getCode());
 		if (Validator.isNull(existingProblem))
 		{
@@ -141,15 +141,32 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		}
 		else {
 			System.out.println(String.format("Updating problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
-			return update(record);
+			existingProblem = update(existingProblem);
 		}
 
 		return existingProblem;
 	}
 	
 	@Override
-	public Problem update(Problem record) throws ApplicationException {
-		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAProblem.class));
+	public Problem update(Problem record) throws ApplicationException, NoSuchModelException {
+		JPAProblem prblm = (JPAProblem) super.findByPrimaryKey(JPAProblem.class,record.getId());
+
+		prblm.setSource((JPAProblemSource) super.findByPrimaryKey(JPAProblemSource.class,record.getSource().getId()));
+		prblm.setSourcePageNumber(record.getSourcePageNumber());
+		prblm.setSourceIndexWithinPage(record.getSourceIndexWithinPage());
+		prblm.setCategory((JPAProblemCategory)super.findByPrimaryKey(JPAProblemCategory.class,record.getCategory().getId()));
+		prblm.setDifficulty((JPAProblemDifficulty)super.findByPrimaryKey(JPAProblemDifficulty.class,record.getDifficulty().getId()));
+		prblm.setRequiresCalculator(record.getRequiresCalculator());
+		prblm.setMultipleChoice(record.isMultipleChoice());
+		prblm.setAnswerInRange(record.getAnswerInRange());
+		prblm.setAnswer(record.getAnswer());
+		
+		
+		updateProblemPicture(record.getQuestionPicture());
+		updateProblemPicture(record.getAnswerPicture());
+		
+		
+		JPABaseEntity res = super.update(prblm);
 		Problem dto = JPAEntityUtil.copy(res, Problem.class);
 		return dto;	
 	}	

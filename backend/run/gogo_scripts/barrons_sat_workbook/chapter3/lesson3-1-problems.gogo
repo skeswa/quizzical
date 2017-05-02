@@ -1,0 +1,63 @@
+#==Diff's
+#101-Easy
+#351-Medium
+#352-Hard
+
+#==Sources
+#72451-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-1
+
+#==Categories
+#954-Passport to Advanced Math/Quadratics
+#1751-Additional Topics in Math/Imaginary Numbers
+#1752-Additional Topics in Math/Geometry
+#1753-Additional Topics in Math/Trigonometry
+#1754-Passport to Advanced Math/Functions
+##51-Heart of Algebra/Linear Equations
+#401-Heart of Algebra/Systems of Linear Equations
+#402-Heart of Algebra/Inequalities
+#651-Problem Solving and Data Analysis/Rates, Ratios, Proportions, and Percentages
+#652-Problem Solving and Data Analysis/Scatterplots
+#952-Problem Solving and Data Analysis/Statistics and Probability
+#953-Passport to Advanced Math/Exponents
+#25601-ADVANCED TECHNIQUES FOR POLYNOMIALS AND RATIONAL EQUATIONS
+
+# Questions
+# Page: 88
+# Source: 72451
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add 72451 88 1 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q1.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a1.png" B
+prblm:add 72451 88 2 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q2.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a2.png" A
+prblm:add 72451 88 3 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q3.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a3.png" D
+prblm:add 72451 88 4 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q4.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a4.png" D
+prblm:add 72451 88 5 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q5.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a5.png" C
+prblm:add 72451 88 6 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q6.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a6.png" A
+prblm:add 72451 88 7 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q7.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a7.png" B
+prblm:add 72451 88 8 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q8.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a8.png" B
+prblm:add 72451 88 9 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q9.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a9.png" C
+prblm:add 72451 88 10 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q10.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a10.png" A
+prblm:add 72451 88 11 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q11.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a11.png" A
+prblm:add 72451 88 12 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q12.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a12.png" C
+prblm:add 72451 88 13 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q13.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a13.png" C
+prblm:add 72451 88 14 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q14.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a14.png" C
+prblm:add 72451 88 15 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q15.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a15.png" A
+prblm:add 72451 88 16 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q16.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a16.png" B
+prblm:add 72451 88 17 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q17.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a17.png" B
+prblm:add 72451 88 18 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q18.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a18.png" C
+prblm:add 72451 88 19 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q19.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a19.png" A
+prblm:add 72451 88 20 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q20.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a20.png" D
+prblm:add 72451 88 21 51 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q21.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a21.png" A
+prblm:add 72451 88 22 51 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q22.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a22.png" 2
+prblm:add 72451 88 23 51 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q23.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a23.png" 707
+prblm:add 72451 88 24 51 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q24.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a24.png" 32
+prblm:add 72451 88 25 51 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/q25.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/a25.png" 4
+

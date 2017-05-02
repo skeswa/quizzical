@@ -97,7 +97,7 @@ public class ProblemsResource {
 	@POST
 	@Path("{problemId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateProblem(@Context HttpServletRequest request, Problem problem) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException {
+	public void updateProblem(@Context HttpServletRequest request, Problem problem) throws ApplicationException, JsonParseException, JsonMappingException, IOException, IllegalAccessException, NoSuchModelException {
 		final User user = tokenService.extractUser(request);
 		if (!user.getAdmin())
 			throw new IllegalAccessException("Admin Role required");

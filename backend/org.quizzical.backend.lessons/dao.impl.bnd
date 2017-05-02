@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.lessons.dao.impl,\
+	org.gauntlet.lessons.dao.impl.osgi	
+Bundle-Activator: org.gauntlet.lessons.dao.impl.osgi.Activator

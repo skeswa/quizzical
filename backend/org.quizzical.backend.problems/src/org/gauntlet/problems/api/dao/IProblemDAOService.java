@@ -23,9 +23,9 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public long countAll() throws ApplicationException;
 	
-	public Problem provide(Problem record) throws ApplicationException;
+	public Problem provide(Problem record) throws ApplicationException, NoSuchModelException;
 	
-	public Problem update(Problem record) throws ApplicationException;
+	public Problem update(Problem record) throws ApplicationException, NoSuchModelException;
 	
 	public Problem delete(Long id) throws ApplicationException, NoSuchModelException;
 	

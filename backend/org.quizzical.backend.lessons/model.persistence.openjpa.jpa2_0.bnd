@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0.${tstamp}
+Gnt-Module: gnt_lesson
+Meta-Persistence: META-INF/persistence.xml
+Include-Resource: META-INF/persistence.xml=resources/jpa/quizzes-persistence-openjpa.xml
+Private-Package: org.gauntlet.lessons.model.jpa.osgi
+Bundle-Activator: org.gauntlet.lessons.model.jpa.osgi.Activator
+Export-Package: org.gauntlet.lessons.model.jpa

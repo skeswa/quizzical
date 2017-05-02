@@ -83,8 +83,8 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 				Constants.QUIZ_TYPE_WEAKNESS_NAME));
 		final Date quizDateTime = Calendar.getInstance().getTime();
 		final String quizCode = String.format(
-				"Weakness on [%s] topics at %s on %s",
-				performanceCategoryCodes,
+				"Weakness on [%d] topics at %s on %s",
+				performanceCategoryCodes.size(),
 				timeFormat.format(quizDateTime),
 				dateFormat.format(quizDateTime));
 		

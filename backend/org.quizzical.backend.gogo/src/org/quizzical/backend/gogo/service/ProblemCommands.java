@@ -7,6 +7,7 @@ import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
+import org.gauntlet.problems.api.model.ProblemSource;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
@@ -19,13 +20,22 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "apicupdate","qpicupdate","addcatlesson","showcat","showcats","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
+    public final static String[] FUNCTIONS = new String[] { "showdiffs","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
 
+    //-- Category
     @Descriptor("Adds lesson to problem category")
     public static String addcatlesson(@Descriptor("Category Id") Long categoryId, @Descriptor("Lesson Id") Long lessonId) throws Exception {
         CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
         IProblemDAOService svc = (IProblemDAOService)cmd.get();
         svc.addProblemCategoryLesson(categoryId, lessonId);
+        return "Added cat lesson successfully!";
+    }
+    
+    @Descriptor("Adds new problem category")
+    public static String addcat(@Descriptor("Category name") String catName) throws Exception {
+        CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
+        IProblemDAOService svc = (IProblemDAOService)cmd.get();
+        svc.provideProblemCategory(catName);
         return "Added cat lesson successfully!";
     }
     
@@ -44,6 +54,90 @@ public class ProblemCommands {
         		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
         	});
     }  
+    
+    
+    //-- Source
+    @Descriptor("Adds new problem source")
+    public static String addsource(@Descriptor("Source name") String sourceName) throws Exception {
+        CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
+        IProblemDAOService svc = (IProblemDAOService)cmd.get();
+        svc.provideProblemSource(sourceName);
+        return "Added problem source successfully!";
+    }
+    
+    @Descriptor("Shows a problem sources")
+    public static void showsources() throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+        List<ProblemSource> cats = svc.findAllProblemSources(0, 100);
+        cats.stream()
+        	.forEach(cat -> {
+        		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
+        	});
+    }  
+    
+    //-- Difficulty
+    @Descriptor("Shows a problem difficulties")
+    public static void showdiffs() throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+        List<ProblemDifficulty> cats = svc.findAllProblemDifficulties(0, 100);
+        cats.stream()
+        	.forEach(cat -> {
+        		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
+        	});
+    }  
+        
+    
+    //--
+    @Descriptor("Adds new problem")
+    public static String add(@Descriptor("Source ID") Long sourceId,
+    		@Descriptor("Source Page") Integer sourcePage,
+    		@Descriptor("Index in Page") Integer indexInPage,
+    		@Descriptor("Category ID") Long categoryId,
+    		@Descriptor("Difficulty ID") Long difficultyId,
+    		@Descriptor("Calculator Allowed?") Boolean calcAllowed,
+    		@Descriptor("MultipleChoice?") Boolean multipleChoice,
+    		@Descriptor("Path to Q image") String qPicPath,
+    		@Descriptor("Path to A image") String aPicPath,
+    		@Descriptor("Answer") String answer) throws Exception {
+    	IProblemDAOService psvc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+    	
+    	FileInputStream fis = null;
+    	byte[] qcontent = null;
+    	byte[] acontent = null;
+    	ProblemPicture qpic = null;
+    	ProblemPicture apic = null;
+		try {
+			File f = new File(qPicPath);
+			fis = new FileInputStream(f);
+			qcontent = IOUtils.toByteArray(fis);
+			String code = Long.toString(System.currentTimeMillis()) + f.getName();
+			qpic = new ProblemPicture(code, code, qcontent, "image/png", f.length());
+			
+			fis = new FileInputStream(new File(aPicPath));
+			acontent = IOUtils.toByteArray(fis);
+			code = Long.toString(System.currentTimeMillis()) + f.getName();
+			apic = new ProblemPicture(code, code, acontent, "image/png", f.length());
+		} finally {
+			if (fis != null)
+				fis.close();
+		}
+		
+		Problem newProblem = new Problem(answer, 
+    			psvc.getProblemSourceByPrimary(sourceId), 
+    			psvc.getProblemCategoryByPrimary(categoryId), 
+    			sourcePage, 
+    			indexInPage, 
+    			psvc.getProblemDifficultyByPrimary(difficultyId), 
+    			apic, 
+    			qpic, 
+    			multipleChoice, 
+    			calcAllowed);
+    	
+    	newProblem = psvc.provide(newProblem);
+    	
+    	return newProblem.getCode();
+    }   
+    
     
     @Descriptor("Updates problem answer")
     public static void answer(@Descriptor("Unique problem ID") Long id,
