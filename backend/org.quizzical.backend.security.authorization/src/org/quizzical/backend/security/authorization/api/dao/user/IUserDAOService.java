@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 
@@ -14,6 +15,8 @@ public interface IUserDAOService {
 	public List<User> getAll() throws ApplicationException;
 	
 	public User getByEmail(String email) throws ApplicationException;
+	
+	public User getByPrimaryKey(Long userPk) throws ApplicationException, NoSuchModelException;
 	
 	public User getByCode(String code) throws ApplicationException;	
 

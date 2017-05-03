@@ -37,6 +37,7 @@
 		<class>org.gauntlet.lessons.model.jpa.JPALesson</class>
 		<class>org.gauntlet.lessons.model.jpa.JPALessonProblem</class>
 		<class>org.gauntlet.lessons.model.jpa.JPAUserLesson</class>
+		<class>org.gauntlet.lessons.model.jpa.JPAUserLessonPlan</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

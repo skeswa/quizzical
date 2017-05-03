@@ -127,6 +127,10 @@
 	org.quizzical.backend.problems.rest;version=latest,\
 	org.quizzical.backend.data.defaults.mt;version=latest,\
 	,\
+	org.quizzical.backend.lessons.api;version=latest,\
+	org.quizzical.backend.lessons.dao.impl;version=latest,\
+	org.quizzical.backend.lessons.model.persistence.openjpa.jpa2_0;version=latest,\
+	,\
 	org.quizzical.backend.quizzes.api;version=latest,\
 	org.quizzical.backend.quizzes.dao.impl;version=latest,\
 	org.quizzical.backend.quizzes.model.persistence.openjpa.jpa2_0;version=latest,\

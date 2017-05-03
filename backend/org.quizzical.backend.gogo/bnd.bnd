@@ -21,7 +21,8 @@ Bundle-Version: 1.0.0.${tstamp}
 	org.quizzical.backend.security.authorization.api;version=latest,\
 	org.quizzical.backend.analytics.api;version=latest,\
 	org.quizzical.backend.sms.api;version=latest,\
-	org.quizzical.backend.scheduler.api;version=latest
+	org.quizzical.backend.scheduler.api;version=latest,\
+	org.quizzical.backend.lessons.api;version=latest
 DynamicImport-Package: *
 Private-Package: \
 	org.quizzical.backend.gogo.collection,\

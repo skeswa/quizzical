@@ -1,14 +1,20 @@
 package org.gauntlet.lessons.api.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
 import org.gauntlet.quizzes.api.model.Quiz;
-import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public class UserLesson extends BaseEntity implements Serializable {
 	private Long userId;
+	
+	private Date dateStarted;
+	
+	private Date lastDateVisited;
+	
+	private Boolean lessonFinished;
 
 	private Lesson lesson;
 	
@@ -39,14 +45,40 @@ public class UserLesson extends BaseEntity implements Serializable {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
+	
+	public Date getDateStarted() {
+		return dateStarted;
+	}
+
+	public void setDateStarted(Date dateStarted) {
+		this.dateStarted = dateStarted;
+	}
+
+	public Date getLastDateVisited() {
+		return lastDateVisited;
+	}
+
+	public void setLastDateVisited(Date lastDateVisited) {
+		this.lastDateVisited = lastDateVisited;
+	}
+
+	public Boolean getLessonFinished() {
+		return lessonFinished;
+	}
+
+	public void setLessonFinished(Boolean lessonFinished) {
+		this.lessonFinished = lessonFinished;
+	}
 
 	public UserLesson() {
 	}
 	
-	public UserLesson(String name, String code, Lesson lesson, Quiz quiz) {
-		this.name = name;
-		this.code = code;
+	public UserLesson(Long userId, Lesson lesson, Quiz quiz) {
+		this.code = String.format("%s-%d", lesson.getCode(), userId);
+		this.name = lesson.getName();
 		this.quiz = quiz;
 		this.lesson = lesson;
 	}
+	
+	
 }

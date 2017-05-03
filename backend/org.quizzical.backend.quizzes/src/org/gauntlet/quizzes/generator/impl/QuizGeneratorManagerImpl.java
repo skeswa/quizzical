@@ -56,7 +56,9 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		ServiceReference generatorRef = references.get(params.getGeneratorType());		
 		
 		//Check if next quiz is a practice test
-		if (user.getMakeNextRunAPracticeTest())
+		if (Constants.GENERATOR_TYPE_BY_SOURCE.equals(params.getGeneratorType()))
+			generatorRef = references.get(Constants.GENERATOR_TYPE_BY_SOURCE);
+		else if (user.getMakeNextRunAPracticeTest())
 			generatorRef = references.get(Constants.GENERATOR_TYPE_PRACTICE_TEST);
 		else if (user.getMakeNextRunLeastRecentlyPractice())
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);

@@ -141,7 +141,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		}
 		else {
 			System.out.println(String.format("Updating problem %s_%d_%d",record.getSource(),record.getSourcePageNumber(),record.getSourceIndexWithinPage()));
-			existingProblem = update(existingProblem);
+			record.setId(existingProblem.getId());
+			existingProblem = update(record);
 		}
 
 		return existingProblem;
@@ -161,10 +162,12 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		prblm.setAnswerInRange(record.getAnswerInRange());
 		prblm.setAnswer(record.getAnswer());
 		
+		JPAProblemPicture pic = (JPAProblemPicture) super.findByPrimaryKey(JPAProblemPicture.class,prblm.getQuestionPicture().getId());
+		pic.setPicture(record.getQuestionPicture().getPicture());
+		super.update(pic);
 		
-		updateProblemPicture(record.getQuestionPicture());
-		updateProblemPicture(record.getAnswerPicture());
-		
+		prblm.getQuestionPicture().setPicture(record.getQuestionPicture().getPicture());
+		prblm.getAnswerPicture().setPicture(record.getAnswerPicture().getPicture());
 		
 		JPABaseEntity res = super.update(prblm);
 		Problem dto = JPAEntityUtil.copy(res, Problem.class);

@@ -10,6 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.velocity.app.VelocityEngine;
 import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
@@ -52,9 +53,14 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 	@Override
 	public List<User> getAllActiveUsers() throws ApplicationException {
 		List<JPABaseEntity> jpaEntities = super.findAllWithAttribute(JPAUser.class, Boolean.class,"active", true);
-		return JPAEntityUtil.copy(jpaEntities, User.class);	}
+		return JPAEntityUtil.copy(jpaEntities, User.class);	
+	}
 	
-
+	@Override
+	public User getByPrimaryKey(Long userPk) throws ApplicationException, NoSuchModelException {
+		JPABaseEntity user = super.findByPrimaryKey(JPAUser.class, userPk);
+		return JPAEntityUtil.copy(user, User.class);	
+	}
 	
 	@Override
 	public User add(User record) throws ApplicationException {
@@ -205,4 +211,5 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 			throw new ApplicationException(e);
 		}
 	}
+
 }

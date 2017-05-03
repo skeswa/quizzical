@@ -31,9 +31,11 @@ import org.gauntlet.lessons.api.model.Constants;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.LessonProblem;
 import org.gauntlet.lessons.api.model.UserLesson;
+import org.gauntlet.lessons.api.model.UserLessonPlan;
 import org.gauntlet.lessons.model.jpa.JPALesson;
 import org.gauntlet.lessons.model.jpa.JPALessonProblem;
 import org.gauntlet.lessons.model.jpa.JPAUserLesson;
+import org.gauntlet.lessons.model.jpa.JPAUserLessonPlan;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
@@ -100,18 +102,6 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return res;
 	}	
 	
-	@Override
-	public long countAll(User user) throws ApplicationException {
-		long res = 0;
-		try {
-			res = super.countWithAttribute(JPALesson.class,Long.class,"userId",user.getId());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		return res;
-	}	
-	
 	
 	
 	@Override
@@ -127,7 +117,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	}
 
 	@Override
-	public Lesson provide(User user, Lesson record)
+	public Lesson provide(Lesson record)
 			  throws ApplicationException {
 		Lesson recordEntity = getByCode(record.getCode());
 		if (Validator.isNull(recordEntity))
@@ -215,6 +205,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return recordEntity;	
 	}
 	
+	
 	@Override
 	public UserLesson updateUserLesson(UserLesson record) throws ApplicationException {
 		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAUserLesson.class));
@@ -268,5 +259,127 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		JPALessonProblem jpaEntity = (JPALessonProblem) super.findByPrimaryKey(JPALessonProblem.class, id);
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, LessonProblem.class);
+	}
+	
+	//UserLessonPlan
+	@Override 
+	public List<UserLessonPlan> findAllUserLessonPlans(User user) throws ApplicationException {
+		try {
+			List<JPAUserLessonPlan> resultList =  (List<JPAUserLessonPlan>) super.findWithAttribute(JPAUserLessonPlan.class, Long.class,"userId", user.getId());
+			return JPAEntityUtil.copy(resultList, UserLessonPlan.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+	
+	@Override 
+	public List<UserLessonPlan> findAllUserLessonPlans() throws ApplicationException {
+		try {
+			List<JPABaseEntity> resultList =  super.findAll(JPAUserLessonPlan.class);
+			return JPAEntityUtil.copy(resultList, UserLessonPlan.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+	
+	@Override
+	public long countAllUserLessonPlans(User user) throws ApplicationException {
+		long res = 0;
+		try {
+			res = super.countWithAttribute(JPAUserLessonPlan.class,Long.class,"userId",user.getId());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
 	}	
+	
+	@Override
+	public UserLessonPlan getUserLessonPlanByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findByPrimaryKey(JPAUserLessonPlan.class, pk);
+		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);
+	}
+	
+	@Override 
+	public UserLessonPlan provideUserLessonPlan(UserLessonPlan record) throws ApplicationException {
+		UserLessonPlan recordEntity = getUserLessonPlanByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
+		{
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAUserLessonPlan.class));
+			recordEntity = JPAEntityUtil.copy(res, UserLessonPlan.class);
+		}
+
+		return recordEntity;	
+	}
+	
+	@Override 
+	public UserLesson provideLessonAsCurrentToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException {
+		JPAUserLessonPlan planEntity = (JPAUserLessonPlan) super.findByPrimaryKey(JPAUserLessonPlan.class, planPk);
+		
+		JPAUserLesson ulEntity = (JPAUserLesson) super.add(JPAEntityUtil.copy(userLesson, JPAUserLesson.class));
+		ulEntity.setPlan(planEntity);
+
+		planEntity.setCurrentLesson(ulEntity);
+		
+		
+		return JPAEntityUtil.copy(planEntity.getCurrentLesson(), UserLesson.class);	
+	}
+
+	@Override 
+	public UserLesson provideLessonAsUpcomingToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException {
+		JPAUserLessonPlan planEntity = (JPAUserLessonPlan) super.findByPrimaryKey(JPAUserLessonPlan.class, planPk);
+		JPAUserLesson ulEntity = (JPAUserLesson) super.add(JPAEntityUtil.copy(userLesson, JPAUserLesson.class));
+
+		planEntity.getUpcomingLessons().add(ulEntity);
+		
+		updateUserLessonPlan_(planEntity);
+		
+		return JPAEntityUtil.copy(planEntity.getCurrentLesson(), UserLesson.class);	
+	}	
+	
+	@Override
+	public UserLessonPlan updateUserLessonPlan(UserLessonPlan record) throws ApplicationException {
+		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAUserLessonPlan.class));
+		UserLessonPlan dto = JPAEntityUtil.copy(res, UserLessonPlan.class);
+		return dto;	
+	}	
+	
+	public JPAUserLessonPlan updateUserLessonPlan_(JPAUserLessonPlan record) throws ApplicationException {
+		return (JPAUserLessonPlan) super.update(record);
+	}	
+	
+	public UserLessonPlan getUserLessonPlanByCode(String code) throws ApplicationException{
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);		
+	}
+	
+	public UserLessonPlan getUserLessonPlanByName(String name) throws ApplicationException{
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, String.class,"name", name);
+		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);		
+	}
+	
+	@Override
+	public UserLessonPlan getUserLessonPlanByUserPk(Long userPk) throws ApplicationException{
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, Long.class,"userId", userPk);
+		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);		
+	}
+	
+	
+	public UserLessonPlan deleteUserLessonPlan(Long id) throws ApplicationException, NoSuchModelException {
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findByPrimaryKey(JPAUserLessonPlan.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);
+	}	
+	
+	@Override
+	public void resetUserLessonPlan(User user) throws ApplicationException, NoSuchModelException  {
+		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, Long.class,"userId", user.getId());
+		
+		jpaEntity.setCurrentLesson(null);
+		jpaEntity.getUpcomingLessons().clear();
+		
+		super.update(jpaEntity);
+	}
 }

@@ -2,6 +2,8 @@ package org.gauntlet.lessons.model.jpa;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -11,13 +13,11 @@ import javax.persistence.Table;
 
 import org.gauntlet.core.model.Constants;
 import org.gauntlet.core.model.JPABaseEntity;
-import org.gauntlet.lessons.api.model.Lesson;
-import org.gauntlet.quizzes.api.model.Quiz;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
-	+"user_lesson")
+	+"lessonusr")
 public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = -5512318597731923379L;
 
@@ -26,10 +26,11 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	private Long quizId;
 	
 	@ManyToOne(targetEntity = JPALesson.class)
-	@JoinColumn
 	private JPALesson lesson;
 	
-	
+	@ManyToOne(targetEntity = JPAUserLessonPlan.class)
+	@JoinColumn
+	private JPAUserLessonPlan plan;	
 
 	public JPAUserLesson() {
 		super();
@@ -66,6 +67,13 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	public void setLesson(JPALesson lesson) {
 		this.lesson = lesson;
 	}
-	
+
+	public JPAUserLessonPlan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(JPAUserLessonPlan plan) {
+		this.plan = plan;
+	}
 }
 

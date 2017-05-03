@@ -7,6 +7,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.UserLesson;
+import org.gauntlet.lessons.api.model.UserLessonPlan;
 import org.gauntlet.lessons.api.model.LessonProblem;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -18,9 +19,7 @@ public interface ILessonsDAOService extends IBaseService {
 	
 	public long countAll() throws ApplicationException;
 	
-	public long countAll(User user) throws ApplicationException;
-	
-	public Lesson provide(User user, Lesson record) throws ApplicationException;
+	public Lesson provide(Lesson record) throws ApplicationException;
 	
 	public Lesson update(Lesson record) throws ApplicationException;
 	
@@ -53,4 +52,28 @@ public interface ILessonsDAOService extends IBaseService {
 	
 	public LessonProblem deleteLessonProblem(Long id) throws ApplicationException, NoSuchModelException;
 	
+	// UserLessonPlans
+	public List<UserLessonPlan> findAllUserLessonPlans(User user) throws ApplicationException;
+	
+	public long countAllUserLessonPlans(User user) throws ApplicationException;
+	
+	public UserLessonPlan provideUserLessonPlan(UserLessonPlan record) throws ApplicationException;
+	
+	public UserLessonPlan updateUserLessonPlan(UserLessonPlan record) throws ApplicationException;
+	
+	public UserLessonPlan getUserLessonPlanByPrimary(Long pk) throws ApplicationException, NoSuchModelException;
+
+	public UserLessonPlan getUserLessonPlanByCode(String code) throws ApplicationException;
+
+	public UserLessonPlan getUserLessonPlanByName(String name) throws ApplicationException;
+
+	public List<UserLessonPlan> findAllUserLessonPlans() throws ApplicationException;
+
+	public UserLessonPlan getUserLessonPlanByUserPk(Long userPk) throws ApplicationException;
+
+	public UserLesson provideLessonAsCurrentToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException;
+	
+	public UserLesson provideLessonAsUpcomingToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException;
+
+	public void resetUserLessonPlan(User user) throws ApplicationException, NoSuchModelException;
 }
