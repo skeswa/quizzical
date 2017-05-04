@@ -30,15 +30,22 @@ import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.Constants;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.LessonProblem;
+import org.gauntlet.lessons.api.model.LessonStatus;
+import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
 import org.gauntlet.lessons.model.jpa.JPALesson;
 import org.gauntlet.lessons.model.jpa.JPALessonProblem;
+import org.gauntlet.lessons.model.jpa.JPALessonStatus;
+import org.gauntlet.lessons.model.jpa.JPALessonType;
 import org.gauntlet.lessons.model.jpa.JPAUserLesson;
 import org.gauntlet.lessons.model.jpa.JPAUserLessonPlan;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
+import org.gauntlet.quizzes.api.model.QuizType;
+import org.gauntlet.quizzes.model.jpa.JPAQuiz;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
+import org.gauntlet.quizzes.model.jpa.JPAQuizType;
 
 
 @SuppressWarnings("restriction")
@@ -260,6 +267,294 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, LessonProblem.class);
 	}
+	
+	//LessonType
+	@Override 
+	public int countByLessonTypeCode(User user, String typeCode) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<String> p = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("lessonType").get("code"),p));
+			pes.put(p, typeCode);
+			
+			//userId
+			ParameterExpression<Long> pl = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),pl));
+			pes.put(pl, user.getId());
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public List<UserLesson>  findAllUserLessonsByLessonType(User user, Long typeId) throws ApplicationException {
+		List<UserLesson> result = new ArrayList<>();
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("lessonType").get("id"),p));
+			pes.put(p, typeId);
+			
+			//userId
+			ParameterExpression<Long> pl = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),pl));
+			pes.put(pl, user.getId());
+			
+			List resultList = super.findWithDynamicQueryAndParams(query,pes);
+			result = JPAEntityUtil.copy(resultList, UserLesson.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}	
+	
+	@Override 
+	public int countByLessonType(Long typeId) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("lessonType").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, typeId);
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public List<LessonType> findAllLessonTypes(int start, int end) throws ApplicationException {
+		List<LessonType> result = new ArrayList<>();
+		try {
+			List<JPABaseEntity> resultList = super.findAll(JPALessonType.class,start,end);
+			result = JPAEntityUtil.copy(resultList, LessonType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
+	public long countAllLessonTypes() throws ApplicationException {
+		long res = 0;
+		try {
+			res = super.countAll(JPALessonType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}	
+	
+	@Override
+	public LessonType getLessonTypeByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
+		JPALessonType jpaEntity = (JPALessonType) super.findByPrimaryKey(JPALessonType.class, pk);
+		return JPAEntityUtil.copy(jpaEntity, LessonType.class);
+	}
+	
+	@Override 
+	public LessonType provideLessonType(LessonType record) throws ApplicationException {
+		LessonType recordEntity = getLessonTypeByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
+		{
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPALessonType.class));
+			recordEntity = JPAEntityUtil.copy(res, LessonType.class);
+		}
+
+		return recordEntity;	
+	}
+	
+	public LessonType updateLessonType(JPALessonType record) throws ApplicationException {
+		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPALessonType.class));
+		LessonType dto = JPAEntityUtil.copy(res, LessonType.class);
+		return dto;	
+	}	
+	
+	public LessonType getLessonTypeByCode(String code) throws ApplicationException{
+		JPALessonType jpaEntity = (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, LessonType.class);		
+	}
+	
+	public LessonType getLessonTypeByName(String code) throws ApplicationException{
+		JPALessonType jpaEntity = (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"name", code);
+		return JPAEntityUtil.copy(jpaEntity, LessonType.class);		
+	}
+	
+	public LessonType deleteLessonType(Long id) throws ApplicationException, NoSuchModelException {
+		JPALessonType jpaEntity = (JPALessonType) super.findByPrimaryKey(JPALessonType.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, LessonType.class);
+	}	
+	
+	//LessonStatus
+	@Override 
+	public int countByLessonStatusCode(User user, String statusCode) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<String> p = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("lessonStatus").get("code"),p));
+			pes.put(p, statusCode);
+			
+			//userId
+			ParameterExpression<Long> pl = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),pl));
+			pes.put(pl, user.getId());
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public int countByLessonStatus(Long typeId) throws ApplicationException {
+		int count = 0;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.gt(rootEntity.get("lessonStatus").get("id"),p));
+			query.select(rootEntity);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, typeId);
+			
+			count = countWithDynamicQueryAndParams(query,pes);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public List<UserLesson>  findAllUserLessonsByLessonStatus(User user, Long statusId) throws ApplicationException {
+		List<UserLesson> result = new ArrayList<>();
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> query = builder.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = query.from(JPAUserLesson.class);
+			
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("lessonStatus").get("id"),p));
+			pes.put(p, statusId);
+			
+			//userId
+			ParameterExpression<Long> pl = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("userId"),pl));
+			pes.put(pl, user.getId());
+			
+			List resultList = super.findWithDynamicQueryAndParams(query,pes);
+			result = JPAEntityUtil.copy(resultList, UserLesson.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}	
+	
+	@Override 
+	public List<LessonStatus> findAllLessonStatuses(int start, int end) throws ApplicationException {
+		List<LessonStatus> result = new ArrayList<>();
+		try {
+			List<JPABaseEntity> resultList = super.findAll(JPALessonStatus.class,start,end);
+			result = JPAEntityUtil.copy(resultList, LessonStatus.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
+	public long countAllLessonStatuses() throws ApplicationException {
+		long res = 0;
+		try {
+			res = super.countAll(JPALessonStatus.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}	
+	
+	@Override
+	public LessonStatus getLessonStatusByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
+		JPALessonStatus jpaEntity = (JPALessonStatus) super.findByPrimaryKey(JPALessonStatus.class, pk);
+		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);
+	}
+	
+	@Override 
+	public LessonStatus provideLessonStatus(LessonStatus record) throws ApplicationException {
+		LessonStatus recordEntity = getLessonStatusByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
+		{
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPALessonStatus.class));
+			recordEntity = JPAEntityUtil.copy(res, LessonStatus.class);
+		}
+
+		return recordEntity;	
+	}
+	
+	public LessonStatus updateLessonStatus(JPALessonStatus record) throws ApplicationException {
+		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPALessonStatus.class));
+		LessonStatus dto = JPAEntityUtil.copy(res, LessonStatus.class);
+		return dto;	
+	}	
+	
+	public LessonStatus getLessonStatusByCode(String code) throws ApplicationException{
+		JPALessonStatus jpaEntity = (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);		
+	}
+	
+	public LessonStatus getLessonStatusByName(String code) throws ApplicationException{
+		JPALessonStatus jpaEntity = (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"name", code);
+		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);		
+	}
+	
+	public LessonStatus deleteLessonStatus(Long id) throws ApplicationException, NoSuchModelException {
+		JPALessonStatus jpaEntity = (JPALessonStatus) super.findByPrimaryKey(JPALessonStatus.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);
+	}	
 	
 	//UserLessonPlan
 	@Override 

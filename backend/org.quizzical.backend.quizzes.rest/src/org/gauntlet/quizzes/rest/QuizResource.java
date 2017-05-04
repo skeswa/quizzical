@@ -1,6 +1,7 @@
 package org.gauntlet.quizzes.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +46,14 @@ public class QuizResource  {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Quiz> get(@Context HttpServletRequest request, @PathParam("id") Long id, @QueryParam("type") long quizType, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
-		List<Quiz> res  = quizService.findByQuizType(user,quizType,start,end);
+		List<Quiz> res  = quizService.findAll(user,start,end);
 		for (Quiz quiz : res) {
+			quiz.setQuestions(new ArrayList<QuizProblem>());
 			List<QuizProblem> qproblems = quiz.getQuestions();
-			for (QuizProblem qproblem : qproblems) {
+/*			for (QuizProblem qproblem : qproblems) {
 				Problem problem = problemService.getByPrimary(qproblem.getProblemId());
 				qproblem.setProblem(problem);
-			}
+			}*/
 		}
 		return res;
     }

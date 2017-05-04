@@ -2,8 +2,6 @@ package org.gauntlet.lessons.model.jpa;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -24,6 +22,14 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	private Long userId;
 	
 	private Long quizId;
+	
+	@ManyToOne(targetEntity = JPALessonType.class)
+	@JoinColumn
+	private JPALessonType lessonType;
+	
+	@ManyToOne(targetEntity = JPALessonStatus.class)
+	@JoinColumn
+	private JPALessonStatus lessonStatus;	
 	
 	@ManyToOne(targetEntity = JPALesson.class)
 	private JPALesson lesson;
@@ -74,6 +80,22 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 
 	public void setPlan(JPAUserLessonPlan plan) {
 		this.plan = plan;
+	}
+
+	public JPALessonType getLessonType() {
+		return lessonType;
+	}
+
+	public void setLessonType(JPALessonType lessonType) {
+		this.lessonType = lessonType;
+	}
+
+	public JPALessonStatus getLessonStatus() {
+		return lessonStatus;
+	}
+
+	public void setLessonStatus(JPALessonStatus lessonStatus) {
+		this.lessonStatus = lessonStatus;
 	}
 }
 

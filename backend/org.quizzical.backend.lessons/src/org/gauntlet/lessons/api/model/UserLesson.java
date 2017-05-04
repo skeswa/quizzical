@@ -10,6 +10,8 @@ import org.gauntlet.quizzes.api.model.Quiz;
 public class UserLesson extends BaseEntity implements Serializable {
 	private Long userId;
 	
+	private Long quizId;
+	
 	private Date dateStarted;
 	
 	private Date lastDateVisited;
@@ -70,12 +72,21 @@ public class UserLesson extends BaseEntity implements Serializable {
 		this.lessonFinished = lessonFinished;
 	}
 
+	public Long getQuizId() {
+		return quizId;
+	}
+
+	public void setQuizId(Long quizId) {
+		this.quizId = quizId;
+	}
+
 	public UserLesson() {
 	}
 	
 	public UserLesson(Long userId, Lesson lesson, Quiz quiz) {
 		this.code = String.format("%s-%d", lesson.getCode(), userId);
 		this.name = lesson.getName();
+		this.quizId = quiz.getId();
 		this.quiz = quiz;
 		this.lesson = lesson;
 	}

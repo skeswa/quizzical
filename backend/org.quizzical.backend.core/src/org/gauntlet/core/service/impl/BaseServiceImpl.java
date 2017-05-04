@@ -1,6 +1,8 @@
 package org.gauntlet.core.service.impl;
 
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -468,8 +470,11 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}
 
 	public ApplicationException processException(Exception e) {
-		e.printStackTrace();
-		return new ApplicationException(e);
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		String stacktrace = sw.toString();
+		System.out.println(e.getMessage());
+		return new ApplicationException(stacktrace);
 	}
 
 	@SuppressWarnings("unused")
