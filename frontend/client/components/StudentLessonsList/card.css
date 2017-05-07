@@ -1,0 +1,42 @@
+
+.main {
+  background: #fff;
+  border-radius: .2rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  padding: 1.6rem 0;
+}
+
+.info, .actions {
+  display: flex;
+  padding: 1.6rem;
+}
+
+.info {
+  flex-direction: column;
+}
+
+.actions {
+  border-top: 1px solid rgba(0, 0, 0, .2);
+  justify-content: flex-end;
+}
+
+.action {
+  margin-left: 1rem;
+}
+
+.label {
+  color: #754aec;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .04rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 2.4rem;
+}
