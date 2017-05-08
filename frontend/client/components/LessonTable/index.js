@@ -10,7 +10,7 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 import style from './style.css'
 import TableTextCell from 'components/TableTextCell'
 import { Table, Column, Cell } from 'components/Table'
-import TableLessonPicturesCell from 'components/TableLessonPicturesCell'
+import TableLessonPicturesCell from 'components/TableLessonActionsCell'
 import TableHeaderCell, { SortTypes } from 'components/TableHeaderCell'
 import { formatDateCreated, pictureNameToBackgroundURL } from 'utils'
 
@@ -119,31 +119,31 @@ class LessonTable extends Component {
         width={width}
         height={height}>
         <Column
-          columnKey="category"
-          header={<TableHeaderCell title="Category" />}
+          columnKey="lessonType"
+          header={<TableHeaderCell title="Type" />}
           width={255}
           cell={
             <TableTextCell
-              data={questions}
-              serializer={category => category.name} />
+              data={lessons}
+              serializer={lessonType => lessonType.name} />
           } />
         <Column
-          columnKey="difficulty"
-          header={<TableHeaderCell title="Difficulty" />}
+          columnKey="lessonStatus"
+          header={<TableHeaderCell title="Status" />}
           width={115}
           cell={
             <TableTextCell
-              data={questions}
-              serializer={difficulty => difficulty.name} />
+              data={lessons}
+              serializer={lessonStatus => lessonStatus.name} />
           } />
         <Column
-          columnKey="requiresCalculator"
-          header={<TableHeaderCell title="Requires Calculator" />}
+          columnKey="lessonFinished"
+          header={<TableHeaderCell title="Complete?" />}
           width={155}
           cell={
             <TableTextCell
               data={questions}
-              serializer={requiresCalculator => requiresCalculator ? 'Yes' : 'No'} />
+              serializer={lessonFinished => requiresCalculator ? 'Yes' : 'No'} />
           } />
         <Column
           columnKey="dateCreated"
@@ -154,54 +154,22 @@ class LessonTable extends Component {
               data={questions}
               serializer={dateCreated => formatDateCreated(dateCreated)} />
           } />
-        <Column
-          columnKey="multipleChoice"
-          header={<TableHeaderCell title="Lesson Type" />}
-          width={135}
-          cell={
-            <TableTextCell
-              data={questions}
-              serializer={multipleChoice => multipleChoice ? 'Multiple Choice' : 'Numeric Answer'} />
-          } />
-        <Column
-          columnKey="source"
-          header={<TableHeaderCell title="Source" />}
-          width={155}
-          cell={
-            <TableTextCell
-              data={questions}
-              serializer={source => source.name} />
-          } />
-        <Column
-          columnKey="sourcePageNumber"
-          header={<TableHeaderCell title="Source Page" />}
-          width={115}
-          cell={
-            <TableTextCell data={questions} />
-          } />
-        <Column
-          columnKey="sourceIndexWithinPage"
-          header={<TableHeaderCell title="Index in Page" />}
-          width={90}
-          cell={
-            <TableTextCell data={questions} />
-          } />
-        <Column
-            columnKey="answer"
-            header={<TableHeaderCell title="Answer" />}
-            width={155}
+          <Column
+              columnKey="name"
+              header={<TableHeaderCell title="Name" />}
+              width={90}
+              cell={
+                <TableTextCell data={lessons} />
+              } />
+          <Column
+            columnKey="pictures"
+            header={<TableHeaderCell title="Pictures" />}
+            width={125}
             cell={
-              <TableTextCell data={questions} />
+              <TableLessonPicturesCell
+                data={questions}
+                handler={this.onLightboxOpened} />
             } />
-        <Column
-          columnKey="pictures"
-          header={<TableHeaderCell title="Pictures" />}
-          width={125}
-          cell={
-            <TableLessonPicturesCell
-              data={questions}
-              handler={this.onLightboxOpened} />
-          } />
           <Column
               columnKey="id"
               header={<TableHeaderCell title="ID" />}

@@ -1,5 +1,15 @@
-
 import services from 'services/user-lesson'
-import { createCrudActions } from './helpers/crud'
+import { createAction } from 'redux-actions'
 
-export default createCrudActions('user-lesson', services)
+const UserLessonActions = {
+  currentlesson: createAction(
+    `get current user lesson`,
+    services.current,
+    preAction),
+  upcominglessons: createAction(
+    `get upcoming user lessons`,
+    services.upcoming,
+    preAction),
+}
+
+export default UserLessonActions

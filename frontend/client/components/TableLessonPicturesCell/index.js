@@ -11,11 +11,11 @@ function bindHandler(handler, pictureURL) {
   return () => handler(pictureURL)
 }
 
-const TableLessonActionsCell = props => {
+const TableLessonPicturesCell = props => {
   const { data, handler, rowIndex, ...otherProps } = props
   const {
-    lessonContentId: { contentItemId: lessonContentId },
-    quizId: { id: lessonQuizId },
+    answerPicture: { id: answerPictureId },
+    questionPicture: { id: questionPictureId },
   } = data[rowIndex]
 
   const answerPictureURL    = pictureIdToBackgroundURL(answerPictureId)
@@ -43,4 +43,4 @@ const TableLessonActionsCell = props => {
   )
 }
 
-export default TableLessonActionsCell
+export default TableLessonPicturesCell

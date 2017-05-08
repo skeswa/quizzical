@@ -10,6 +10,7 @@ import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.rest.UserLessonResource;
 import org.gauntlet.quizzes.rest.LessonStatusResource;
 import org.gauntlet.quizzes.rest.LessonTypeResource;
+import org.gauntlet.quizzes.rest.UserLessonPlanResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.contentrepository.api.dao.IContentItemDAOService;
@@ -48,6 +49,15 @@ public class Activator extends DependencyActivatorBase {
 		manager.add(createComponent()
 				.setInterface(Object.class.getName(), serviceProperties)
 				.setImplementation(LessonStatusResource.class)
+				.add(createServiceDependency().setService(ILessonsDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(IJWTTokenService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(LogService.class)
+						.setRequired(false)));
+		manager.add(createComponent()
+				.setInterface(Object.class.getName(), serviceProperties)
+				.setImplementation(UserLessonPlanResource.class)
 				.add(createServiceDependency().setService(ILessonsDAOService.class)
 						.setRequired(true))
 				.add(createServiceDependency().setService(IJWTTokenService.class)

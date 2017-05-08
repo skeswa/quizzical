@@ -34,51 +34,24 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@Path("user/lesson")
-public class UserLessonResource  {
+@Path("user/lessonplans")
+public class UserLessonPlanResource  {
     private ObjectMapper mapper = new ObjectMapper();
 	
 	private volatile LogService logger;
 	private volatile ILessonsDAOService lessonService;
 	private volatile IContentItemDAOService contentService;
-	private volatile IQuizDAOService quizService;
 	private volatile IJWTTokenService tokenService;
+
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Path("upcomings") 
-    public List<UserLesson> getUpcoming(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+	@Path("{id}")
+    public UserLessonPlan get(@Context HttpServletRequest request, @PathParam("id") Long id) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
 		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
-		List<UserLesson> res  = lessonPlan.getUpcomingLessons();
-		res.stream()
-			.forEach(ul -> {
-				Quiz quiz;
-				try {
-					quiz = quizService.getByPrimary(ul.getQuizId());
-					quiz.setQuestions(null);
-					ul.setQuiz(quiz);
-					ul.getLesson().setQuestions(null);
-					
-					ContentItem ci = contentService.getByPrimary(ul.getLesson().getContentItemId());
-					ul.getLesson().setContentItemId(ci.getId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-		return res;
-    }
-	
-	@GET
-    @Produces(MediaType.APPLICATION_JSON)
-	@Path("currents/{id}") 
-    public UserLesson get(@PathParam("id") Long id) throws ApplicationException, NoSuchModelException {
-		UserLesson lesson = lessonService.getUserLessonByPrimary(id);
-		Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
-		quiz.setQuestions(null);
-		lesson.setQuiz(quiz);
-		lesson.getLesson().setQuestions(null);
-		return lesson;
+		lessonPlan.getCurrentLesson().getLesson().setQuestions(null);
+		lessonPlan.setUpcomingLessons(null);
+		return lessonPlan;
     }
 }

@@ -1,4 +1,15 @@
+import Network from 'utils/network'
+import Session from 'utils/session'
 
-import { crudService } from './helpers/crud'
 
-export default crudService('user-lesson')
+
+const UserLessonService = {
+  current() {
+    return Network.get('/api/user/lesson/current')
+  },
+  upcoming() {
+    return Network.get('/api/user/lesson/upcoming')
+  }
+}
+
+export default UserLessonService
