@@ -29,7 +29,8 @@ public class LessonCommands {
     @Descriptor("Creates lesson from problems whose source id is sourceId")
     public static String create(@Descriptor("Lesson name") String lessonName, 
     							@Descriptor("Source Id") Long sourceId,
-    							@Descriptor("Category Id") Long categoryId) throws Exception {
+    							@Descriptor("Category Id") Long categoryId,
+    							@Descriptor("Content Id") Long contentItemId) throws Exception {
     	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
     	final ProblemSource ps = svc.getProblemSourceByPrimary(sourceId);
     	List<Problem> probs = svc.findAllBySource(sourceId);
@@ -40,7 +41,7 @@ public class LessonCommands {
     			})
     			.collect(Collectors.toList());
     	
-    	Lesson lesson = new Lesson(lessonName, ps.getCode(), categoryId, questions);
+    	Lesson lesson = new Lesson(lessonName, ps.getCode(), categoryId, contentItemId, questions);
     	
     	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
     	lesson = lsvc.provide(lesson);

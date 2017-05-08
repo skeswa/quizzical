@@ -1,6 +1,7 @@
 package org.gauntlet.lessons.model.jpa;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -22,6 +23,12 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	private Long userId;
 	
 	private Long quizId;
+	
+	private Date dateStarted;
+	
+	private Date lastDateVisited;
+	
+	private Boolean lessonFinished = false;
 	
 	@ManyToOne(targetEntity = JPALessonType.class)
 	@JoinColumn
@@ -96,6 +103,30 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 
 	public void setLessonStatus(JPALessonStatus lessonStatus) {
 		this.lessonStatus = lessonStatus;
+	}
+
+	public Date getDateStarted() {
+		return dateStarted;
+	}
+
+	public void setDateStarted(Date dateStarted) {
+		this.dateStarted = dateStarted;
+	}
+
+	public Date getLastDateVisited() {
+		return lastDateVisited;
+	}
+
+	public void setLastDateVisited(Date lastDateVisited) {
+		this.lastDateVisited = lastDateVisited;
+	}
+
+	public Boolean getLessonFinished() {
+		return lessonFinished;
+	}
+
+	public void setLessonFinished(Boolean lessonFinished) {
+		this.lessonFinished = lessonFinished;
 	}
 }
 

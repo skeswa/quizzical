@@ -23,21 +23,20 @@ class Lessons extends Component {
     actions:            React.PropTypes.object.isRequired,
     sources:            React.PropTypes.array.isRequired,
     lessons:            React.PropTypes.array.isRequired,
-    categories:         React.PropTypes.array.isRequired,
-    difficulties:       React.PropTypes.array.isRequired,
+    lessonStatuses:     React.PropTypes.array.isRequired,
+    lessonTypes:        React.PropTypes.array.isRequired,
     dataShouldBeLoaded: React.PropTypes.bool.isRequired,
   }
 
   state = {
-    gridVisible:                    true,
-    loadingError:                   null,
-    isDataLoading:                  false,
-    categoryFilterId:               null,
-    difficultyFilterId:             null,
-    sourceFilterId:                 null,
-    questionCreationError:          null,
-    questionCreationInProgress:     false,
-    questionCreationDialogVisible:  false,
+    loadingError:                 null,
+    isDataLoading:                false,
+    statusFilterId:               null,
+    typeFilterId:                 null,
+    sourceFilterId:               null,
+    lessonCreationError:          null,
+    lessonCreationInProgress:     false,
+    lessonCreationDialogVisible:  false,
   }
 
   componentWillMount() {
@@ -49,10 +48,9 @@ class Lessons extends Component {
 
   loadData() {
     const {
-      loadSources,
-      loadLessons,
-      loadCategories,
-      loadDifficulties,
+      loadUserLessons,
+      loadLessonStatuses,
+      loadLessonTypes
     } = this.props.actions
 
     // Indicate loading.
@@ -61,10 +59,9 @@ class Lessons extends Component {
     // Re-load everything.
     Promise
       .all([
-        loadSources(),
-        loadLessons(),
-        loadCategories(),
-        loadDifficulties(),
+        loadUserLessons(),
+        loadLessonStatuses(),
+        loadLessonTypes(),
       ])
       .then(resultingActions => {
         const error = extractErrorFromResultingActions(resultingActions)
@@ -85,8 +82,8 @@ class Lessons extends Component {
 
   onOpenCreateClicked() {
     this.setState({
-      questionCreationError: null,
-      questionCreationDialogVisible: true,
+      lessonCreationError: null,
+      lessonCreationDialogVisible: true,
     })
   }
 
@@ -104,8 +101,8 @@ class Lessons extends Component {
 
   onCreateLessonClicked() {
     this.setState({
-      questionCreationError:      null,
-      questionCreationInProgress: true,
+      lessonCreationError:      null,
+      lessonCreationInProgress: true,
     })
 
     const formData = this.refs.creationForm.getFormData()
@@ -113,111 +110,52 @@ class Lessons extends Component {
       .then(resultingAction => {
         if (resultingAction.error) {
           this.setState({
-            questionCreationError:      resultingAction.payload,
-            questionCreationInProgress: false,
+            lessonCreationError:      resultingAction.payload,
+            lessonCreationInProgress: false,
           })
         } else {
           this.setState({
-            questionCreationInProgress:     false,
-            questionCreationDialogVisible:  false,
+            lessonCreationInProgress:     false,
+            lessonCreationDialogVisible:  false,
           })
         }
       })
   }
 
   onCancelLessonClicked() {
-    this.setState({ questionCreationDialogVisible: false })
+    this.setState({ lessonCreationDialogVisible: false })
   }
 
-  onCategoryFilterIdChanged(e, i, value) {
-    this.setState({ categoryFilterId: value })
+  onStatusFilterIdChanged(e, i, value) {
+    this.setState({ statusFilterId: value })
   }
 
-  onDifficultyFilterIdChanged(e, i, value) {
-    this.setState({ difficultyFilterId: value })
+  onTypeFilterIdChanged(e, i, value) {
+    this.setState({ typeFilterId: value })
   }
 
-  onSourceFilterIdChanged(e, i, value) {
-    this.setState({ sourceFilterId: value })
-  }
-
-  renderCreationDialog() {
-    const {
-      actions,
-      sources,
-      categories,
-      difficulties,
-    } = this.props
-    const {
-      isDataLoading,
-      questionCreationError,
-      questionCreationInProgress,
-      questionCreationDialogVisible,
-    } = this.state
-
-    const dialogActions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        disabled={isDataLoading}
-        onTouchTap={::this.onCancelLessonClicked} />,
-      <RaisedButton
-        label="Create"
-        primary={true}
-        disabled={isDataLoading}
-        onTouchTap={::this.onCreateLessonClicked} />
-    ]
-
-    return (
-      <Dialog
-        title="Create New Lesson"
-        actions={dialogActions}
-        open={questionCreationDialogVisible}
-        onRequestClose={::this.onCancelLessonClicked}
-        autoScrollBodyContent={true}>
-        <LessonCreationForm
-          ref="creationForm"
-          error={questionCreationError}
-          loading={questionCreationInProgress}
-          sources={sources}
-          categories={categories}
-          difficulties={difficulties}
-          createSource={actions.createSource}
-          createCategory={actions.createCategory}
-          createDifficulty={actions.createDifficulty} />
-      </Dialog>
-    )
-  }
 
   render() {
-    const { sources, lessons, categories, difficulties } = this.props
+    const { lessons, statuses, types } = this.props
     const {
       gridVisible,
       loadingError,
       isDataLoading,
-      categoryFilterId,
-      difficultyFilterId,
-      sourceFilterId
+      statusFilterId,
+      typeFilterId
     } = this.state
 
     const filteredLessons = lessons
-      .filter(question => {
-        if (categoryFilterId !== null) {
-          return question.category.id === categoryFilterId
+      .filter(lesson => {
+        if (statusFilterId !== null) {
+          return lesson.lessonStatus.id === statusFilterId
         }
 
         return true
       })
-      .filter(question => {
-        if (difficultyFilterId !== null) {
-          return question.difficulty.id === difficultyFilterId
-        }
-
-        return true
-      })
-      .filter(question => {
-        if (sourceFilterId !== null) {
-          return question.source.id === sourceFilterId
+      .filter(lesson => {
+        if (typeFilterId !== null) {
+          return lesson.type.id === typeFilterId
         }
 
         return true
@@ -226,36 +164,25 @@ class Lessons extends Component {
     let content = null
     if (loadingError) {
       content = <ListError error={loadingError} />
-    } else if (isDataLoading) {
-      content = <ListLoader />
     } else if (filteredLessons.length < 1) {
       content = <ListEmpty />
-    } else if (gridVisible) {
-      content = <LessonGrid lessons={filteredLessons} />
     } else {
       content = <LessonTable lessons={filteredLessons} />
     }
 
-    const categoryMenuItems = categories
-      .map(category => (
+    const statusMenuItems = statuses
+      .map(status => (
         <MenuItem
-          key={category.id}
-          value={category.id}
-          primaryText={category.name} />
+          key={status.id}
+          value={status.id}
+          primaryText={status.name} />
       ))
-    const difficultyMenuItems = difficulties
-      .map(difficulty => (
+    const typeMenuItems = types
+      .map(type => (
         <MenuItem
-          key={difficulty.id}
-          value={difficulty.id}
-          primaryText={difficulty.name} />
-      ))
-    const sourceMenuItems = sources
-      .map(source => (
-        <MenuItem
-          key={source.id}
-          value={source.id}
-          primaryText={source.name} />
+          key={type.id}
+          value={type.id}
+          primaryText={type.name} />
       ))
     const allFilterMenuItem = (
       <MenuItem
@@ -264,23 +191,17 @@ class Lessons extends Component {
         primaryText="All" />
     )
 
-    categoryMenuItems.unshift(
+    statusMenuItems.unshift(
       <MenuItem
         key="all"
         value={null}
-        primaryText="All Categories" />
+        primaryText="All Statuses" />
     )
-    difficultyMenuItems.unshift(
+    typeMenuItems.unshift(
       <MenuItem
         key="all"
         value={null}
-        primaryText="All Difficulties" />
-    )
-    sourceMenuItems.unshift(
-      <MenuItem
-        key="all"
-        value={null}
-        primaryText="All Sources" />
+        primaryText="All Types" />
     )
     return (
       <div className={style.main}>
@@ -290,25 +211,18 @@ class Lessons extends Component {
               className="material-icons"
               color="#ffffff">filter_list</FontIcon>
             <SelectField
-              value={categoryFilterId}
-              onChange={::this.onCategoryFilterIdChanged}
+              value={statusFilterId}
+              onChange={::this.onStatusFilterIdChanged}
               className={style.filterSelect}
               labelStyle={{ color: '#fff' }}>
-              {categoryMenuItems}
+              {statusMenuItems}
             </SelectField>
             <SelectField
-              value={difficultyFilterId}
-              onChange={::this.onDifficultyFilterIdChanged}
+              value={typeFilterId}
+              onChange={::this.onTypeFilterIdChanged}
               className={style.filterSelect}
               labelStyle={{ color: '#fff' }}>
-              {difficultyMenuItems}
-            </SelectField>
-            <SelectField
-              value={sourceFilterId}
-              onChange={::this.onSourceFilterIdChanged}
-              className={style.filterSelect}
-              labelStyle={{ color: '#fff' }}>
-              {sourceMenuItems}
+              {typeMenuItems}
             </SelectField>
           </div>
         </div>
@@ -316,14 +230,8 @@ class Lessons extends Component {
         <div className={style.buttons}>
           <ListButtons
             disabled={isDataLoading}
-            switchToGrid={!gridVisible}
-            onCreateClicked={::this.onOpenCreateClicked}
-            onRefreshClicked={::this.onRefreshListClicked}
-            onSwitchToGridClicked={::this.onSwitchToGridClicked}
-            onSwitchToTableClicked={::this.onSwitchToTableClicked} />
+            onRefreshClicked={::this.onRefreshListClicked} />
         </div>
-
-        {this.renderCreationDialog()}
       </div>
     )
   }

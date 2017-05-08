@@ -10,14 +10,14 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 import style from './style.css'
 import TableTextCell from 'components/TableTextCell'
 import { Table, Column, Cell } from 'components/Table'
-import TableQuestionPicturesCell from 'components/TableQuestionPicturesCell'
+import TableLessonPicturesCell from 'components/TableLessonPicturesCell'
 import TableHeaderCell, { SortTypes } from 'components/TableHeaderCell'
 import { formatDateCreated, pictureNameToBackgroundURL } from 'utils'
 
 // 16.667 * 5 = 5 frames.
 const tableResizeDelay = 16.667 * 5
 
-class QuestionTable extends Component {
+class LessonTable extends Component {
   state = {
     erd:              null,
     width:            null,
@@ -156,7 +156,7 @@ class QuestionTable extends Component {
           } />
         <Column
           columnKey="multipleChoice"
-          header={<TableHeaderCell title="Question Type" />}
+          header={<TableHeaderCell title="Lesson Type" />}
           width={135}
           cell={
             <TableTextCell
@@ -198,7 +198,7 @@ class QuestionTable extends Component {
           header={<TableHeaderCell title="Pictures" />}
           width={125}
           cell={
-            <TableQuestionPicturesCell
+            <TableLessonPicturesCell
               data={questions}
               handler={this.onLightboxOpened} />
           } />
@@ -226,4 +226,4 @@ class QuestionTable extends Component {
   }
 }
 
-export default QuestionTable
+export default LessonTable

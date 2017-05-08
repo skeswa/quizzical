@@ -29,6 +29,7 @@ import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import QuizAutoGenerationPage from 'containers/QuizAutoGenerationPage'
 import QuizGenerationQAPage from 'containers/QuizGenerationQAPage'
+import LessonsPage from 'containers/LessonsPage'
 
 /* Global Styles */
 import style from './index.css'
@@ -44,6 +45,7 @@ const App = props =>
             <PrivateRoute exact path="/admin/questions" component={QuestionsPage} />
 
             {/* Student pages */}
+            <PrivateRoute exact path="/userlessons" component={LessonsPage} />
             <PrivateRoute exact path="/quiz" component={QuizAutoGenerationPage} />
             <PrivateRoute exact path="/qa/quiz" component={QuizGenerationQAPage} />
             <PrivateRoute exact path="/quiz/:id" component={QuizTakePage} />

@@ -10,6 +10,9 @@ import quizSubmission from './quiz-submission'
 import quizGeneration from './quiz-generation'
 import quiz from './quiz'
 import source from './source'
+import userLesson from './user-lesson'
+import lessonStatus from './lesson-status'
+import lessonType from './lesson-type'
 
 export default combineReducers({
   auth,
@@ -21,4 +24,7 @@ export default combineReducers({
   quiz,
   routing,
   source,
+  userLesson,
+  lessonStatus,
+  lessonType,
 })

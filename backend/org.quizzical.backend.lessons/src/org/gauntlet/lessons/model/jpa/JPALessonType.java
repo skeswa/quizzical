@@ -12,7 +12,7 @@ import org.gauntlet.core.model.JPABaseEntity;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name=Constants.Q7L_TABLE_NAME_PREFIX+Constants.Q7L_TABLE_NAME_SEPARATOR
-	+"lesson_type")
+	+"lessontp")
 public class JPALessonType extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 8713500420291620146L;
 

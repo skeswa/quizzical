@@ -25,18 +25,21 @@ import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
+import org.quizzical.backend.contentrepository.api.dao.IContentItemDAOService;
+import org.quizzical.backend.contentrepository.api.model.ContentItem;
 import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@Path("lessons")
+@Path("user/lessons")
 public class UserLessonResource  {
     private ObjectMapper mapper = new ObjectMapper();
 	
 	private volatile LogService logger;
 	private volatile ILessonsDAOService lessonService;
+	private volatile IContentItemDAOService contentService;
 	private volatile IQuizDAOService quizService;
 	private volatile IJWTTokenService tokenService;
 	
@@ -53,6 +56,9 @@ public class UserLessonResource  {
 					quiz.setQuestions(null);
 					ul.setQuiz(quiz);
 					ul.getLesson().setQuestions(null);
+					
+					ContentItem ci = contentService.getByPrimary(ul.getLesson().getContentItemId());
+					ul.getLesson().setContentItemId(ci.getId());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

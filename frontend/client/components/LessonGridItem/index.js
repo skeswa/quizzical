@@ -10,7 +10,7 @@ import {
   pictureIdToBackgroundURL,
 } from 'utils'
 
-class QuestionGridItem extends Component {
+class LessonGridItem extends Component {
   state = {
     lightboxVisible: false,
   }
@@ -25,7 +25,7 @@ class QuestionGridItem extends Component {
     this.setState({ lightboxVisible: false })
   }
 
-  renderLightbox(questionPictureURL) {
+  renderLightbox(lessonPictureURL) {
     const { lightboxVisible } = this.state
 
     return (
@@ -36,7 +36,7 @@ class QuestionGridItem extends Component {
         overlayStyle={{ paddingTop: '0' }}
         onRequestClose={this.onLightboxClosed}>
         <img
-          src={questionPictureURL}
+          src={lessonPictureURL}
           className={style.lightboxPicture} />
       </Dialog>
     )
@@ -45,26 +45,23 @@ class QuestionGridItem extends Component {
   render() {
     const {
       onClick,
-      question: {
-        id: questionId,
-        category: { name: questionCategoryName },
-        difficulty: {
-          name: questionDifficultyName,
-          color: questionDifficultyColor,
-        },
-        dateCreated: questionDateCreated,
-        multipleChoice: isQuestionMultipleChoice,
-        questionPicture: { id: questionPictureId },
+      lesson: {
+        id: lessonId,
+        lessonStatus: { name: lessonStatusName },
+        lessonType: { name: lessonTypeName },
+        dateCreated: lessonDateCreated,
+        lessonFinished: isLessonFinished,
+        quiz: { id: lessonQuizId },
       }
     } = this.props
 
-    const questionType            = isQuestionMultipleChoice
-      ? 'multiple choice'
-      : 'numeric answer'
-    const difficultyBgColor       = questionDifficultyColor
-    const questionPictureURL      = pictureIdToBackgroundURL(questionPictureId)
+    const lessonType            = isLessonFinished
+      ? 'finished'
+      : 'scheduled'
+    const difficultyBgColor       = '#89f442'
+    const lessonPictureURL      = pictureIdToBackgroundURL(lessonPictureId)
     const difficultyTextColor     = textColorForBackground(difficultyBgColor)
-    const formattedDateCreated    = timeSince(questionDateCreated)
+    const formattedDateCreated    = timeSince(lessonDateCreated)
     const difficultyColorStyle    = {
       color:            difficultyTextColor,
       backgroundColor:  difficultyBgColor,
@@ -74,26 +71,26 @@ class QuestionGridItem extends Component {
       <div className={style.wrapper}>
         <div className={style.main} onClick={this.onClick}>
           <div
-            style={{ backgroundImage: `url(${questionPictureURL})`}}
+            style={{ backgroundImage: `url(${lessonPictureURL})`}}
             className={style.picture} />
           <div
             style={difficultyColorStyle}
             className={style.difficultyColorBar} />
           <div className={style.info}>
-            <div className={style.category}>{questionCategoryName}</div>
+            <div className={style.category}>{lessonCategoryName}</div>
             <div />
             <div
               className={style.difficulty}
-              style={difficultyColorStyle}>{questionDifficultyName}</div>
-            <div className={style.questionType}>{questionType}</div>
+              style={difficultyColorStyle}>{lessonDifficultyName}</div>
+            <div className={style.lessonType}>{lessonType}</div>
             <div className={style.dateCreated}>Created {formattedDateCreated} ago.</div>
           </div>
         </div>
 
-        {this.renderLightbox(questionPictureURL)}
+        {this.renderLightbox(lessonPictureURL)}
       </div>
     )
   }
 }
 
-export default QuestionGridItem
+export default LessonGridItem

@@ -36,7 +36,14 @@
 #8.      String   Path to Q image
 #9.      String   Path to A image
 #10.     String   Answer
-lssn:create "Lesson 3-1" 72451 51
+lssn:create "Lesson 3-1" 72451 51 75151
+lssn:create "Lesson 3-2" 73001 401 75152
+
+# Add lesson pdf's
+#75151-1494009361351Lesson 3-1 Some Math Facts
+addpdf "Lesson 3-1 Some Math Facts" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/lesson3-1.pdf"
+#75152-1494009398085Lesson 3-2 Solving Linear Equastions
+addpdf "Lesson 3-2 Solving Linear Equastions" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/lesson3-1.pdf"
 
 #mduduzi.keswa@gmail.com Plan
 addplan mduduzi.keswa@gmail.com admin@q7l.io q7ladmin

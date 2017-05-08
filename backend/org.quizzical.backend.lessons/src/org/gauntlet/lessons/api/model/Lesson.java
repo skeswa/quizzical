@@ -7,6 +7,8 @@ import org.gauntlet.core.model.BaseEntity;
 
 public class Lesson extends BaseEntity implements Serializable {
 	private Long categoryId;
+	
+	private Long contentItemId;
 
 	private List<LessonProblem> questions;
 
@@ -26,13 +28,22 @@ public class Lesson extends BaseEntity implements Serializable {
 		this.categoryId = categoryId;
 	}
 
+	public Long getContentItemId() {
+		return contentItemId;
+	}
+
+	public void setContentItemId(Long contentItemId) {
+		this.contentItemId = contentItemId;
+	}
+
 	public Lesson() {
 	}
 	
-	public Lesson(String name, String code, Long categoryId, List<LessonProblem> questions) {
+	public Lesson(String name, String code, Long categoryId, Long contentItemId, List<LessonProblem> questions) {
 		this.name = name;
 		this.code = code;
 		this.categoryId = categoryId;
+		this.contentItemId = contentItemId;
 		this.questions = questions;
 	}
 }

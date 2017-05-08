@@ -174,7 +174,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	@Override 
 	public List<UserLesson> findAllUserLessons(User user) throws ApplicationException {
 		try {
-			List<JPAUserLesson> resultList =  (List<JPAUserLesson>) super.findWithAttribute(JPAUserLesson.class, Long.class,"userId", user.getId());
+			List<JPABaseEntity> resultList = super.findAllWithAttribute(JPAUserLesson.class, Long.class,"userId", user.getId());
 			return JPAEntityUtil.copy(resultList, UserLesson.class);
 		}
 		catch (Exception e) {
@@ -397,8 +397,12 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	}	
 	
 	public LessonType getLessonTypeByCode(String code) throws ApplicationException{
-		JPALessonType jpaEntity = (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"code", code);
+		JPALessonType jpaEntity = getLessonTypeByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, LessonType.class);		
+	}
+	
+	private JPALessonType getLessonTypeByCode_(String code) throws ApplicationException{
+		return (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"code", code);
 	}
 	
 	public LessonType getLessonTypeByName(String code) throws ApplicationException{
@@ -541,8 +545,12 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	}	
 	
 	public LessonStatus getLessonStatusByCode(String code) throws ApplicationException{
-		JPALessonStatus jpaEntity = (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"code", code);
+		JPALessonStatus jpaEntity = getLessonStatusByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);		
+	}
+	
+	public JPALessonStatus getLessonStatusByCode_(String code) throws ApplicationException{
+		return (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"code", code);
 	}
 	
 	public LessonStatus getLessonStatusByName(String code) throws ApplicationException{
@@ -615,6 +623,10 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		
 		JPAUserLesson ulEntity = (JPAUserLesson) super.add(JPAEntityUtil.copy(userLesson, JPAUserLesson.class));
 		ulEntity.setPlan(planEntity);
+		
+		ulEntity.setLessonFinished(false);
+		ulEntity.setLessonType(getLessonTypeByCode_(org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_CURRENT));
+		ulEntity.setLessonStatus(getLessonStatusByCode_(org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_NEW));
 
 		planEntity.setCurrentLesson(ulEntity);
 		
@@ -673,6 +685,16 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, Long.class,"userId", user.getId());
 		
 		jpaEntity.setCurrentLesson(null);
+		jpaEntity.getUpcomingLessons().stream()
+			.forEach(l -> {
+				try {
+					l.setPlan(null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+		
 		jpaEntity.getUpcomingLessons().clear();
 		
 		super.update(jpaEntity);

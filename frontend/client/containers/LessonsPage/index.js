@@ -5,16 +5,16 @@ import { bindActionCreators } from 'redux'
 
 import style from './style.css'
 import actions from 'actions'
-import Questions from 'components/Questions'
+import Lessons from 'components/Lessons'
 import AdminSkeleton from 'components/AdminSkeleton'
 
-const QuestionsPage = (props, context) => {
+const LessonsPage = (props, context) => {
   return (
     <AdminSkeleton>
-      <Questions
+      <Lessons
         actions={props.actions}
         sources={props.sources}
-        questions={props.questions}
+        lessons={props.userLessons}
         categories={props.categories}
         difficulties={props.difficulties}
         dataShouldBeLoaded={props.dataShouldBeLoaded} />
@@ -25,12 +25,12 @@ const QuestionsPage = (props, context) => {
 const reduxify = connect(
   (state, props) => ({
     sources:            state.source.list,
-    questions:          state.question.list,
+    userLessons:        state.userLesson.list,
     categories:         state.category.list,
     difficulties:       state.difficulty.list,
     dataShouldBeLoaded: (
       !state.source.loaded ||
-      !state.question.loaded ||
+      !state.userLesson.loaded ||
       !state.category.loaded ||
       !state.difficulty.loaded
     ),
@@ -39,11 +39,11 @@ const reduxify = connect(
     actions: Object.assign(
       {},
       bindActionCreators(actions.source, dispatch),
-      bindActionCreators(actions.question, dispatch),
+      bindActionCreators(actions.userLesson, dispatch),
       bindActionCreators(actions.category, dispatch),
       bindActionCreators(actions.difficulty, dispatch),
     )
   })
 )
 
-export default reduxify(QuestionsPage)
+export default reduxify(LessonsPage)

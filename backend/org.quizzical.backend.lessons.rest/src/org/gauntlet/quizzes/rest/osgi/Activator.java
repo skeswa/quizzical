@@ -12,6 +12,7 @@ import org.gauntlet.quizzes.rest.LessonStatusResource;
 import org.gauntlet.quizzes.rest.LessonTypeResource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.contentrepository.api.dao.IContentItemDAOService;
 import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
 
 public class Activator extends DependencyActivatorBase {
@@ -29,6 +30,8 @@ public class Activator extends DependencyActivatorBase {
 						.setRequired(true))
 				.add(createServiceDependency().setService(IJWTTokenService.class)
 						.setRequired(true))
+				.add(createServiceDependency().setService(IContentItemDAOService.class)
+						.setRequired(true))				
 				.add(createServiceDependency().setService(LogService.class)
 						.setRequired(false)));
 		

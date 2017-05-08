@@ -1,4 +1,4 @@
 
 import { crudService } from './helpers/crud'
 
-export default crudService('lesson')
+export default crudService('user-lesson')

@@ -19,7 +19,7 @@ import org.gauntlet.lessons.api.model.LessonType;
 import org.osgi.service.log.LogService;
 
 
-@Path("lessontypes")
+@Path("lesson/types")
 public class LessonTypeResource  {
 	private volatile LogService logger;
 	private volatile ILessonsDAOService lessonService;

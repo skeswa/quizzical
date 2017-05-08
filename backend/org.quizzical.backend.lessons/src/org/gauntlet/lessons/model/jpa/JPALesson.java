@@ -30,6 +30,10 @@ public class JPALesson extends JPABaseEntity implements Serializable {
 	@Basic
     @Column(name = "categoryId")
     protected Long categoryId;
+	
+	@Basic
+    @Column(name = "contentItemId")
+    protected Long contentItemId;
     
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="lesson")
 	private Set<JPALessonProblem> questions = new java.util.HashSet<JPALessonProblem>();
@@ -57,5 +61,13 @@ public class JPALesson extends JPABaseEntity implements Serializable {
 
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public Long getContentItemId() {
+		return contentItemId;
+	}
+
+	public void setContentItemId(Long contentItemId) {
+		this.contentItemId = contentItemId;
 	}
 }

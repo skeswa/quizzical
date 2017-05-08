@@ -24,7 +24,7 @@ public class JPAUserLessonPlan extends JPABaseEntity implements Serializable {
 
 	private Long userId;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="plan")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER, mappedBy="plan")
 	private Set<JPAUserLesson> upcomingLessons = new java.util.HashSet<JPAUserLesson>();
 	
 	@OneToOne
