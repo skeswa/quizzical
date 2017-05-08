@@ -23,24 +23,28 @@ class StudentLessonsList extends Component {
 
     return (
       <div className={style.main}>
-        <div className={style.heading}>Current Lessons</div>
-        <div className={style.cards}>
-          <StudentLessonCard
-              lesson={currentLesson}
-              onLessonStartRequested={this.onLessonStartRequested}
-              onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
-        </div>
-        <div className={style.heading}>Upcoming Lessons</div>
-        <div className={style.cards}>
-        {
-          upcomingLessons.map(lesson => (
+        <div className={style.section}>
+          <div className={style.heading}>Current Lessons</div>
+          <div className={style.cards}>
             <StudentLessonCard
-                key={lesson.id}
-                lesson={lesson}
+                lesson={currentLesson}
                 onLessonStartRequested={this.onLessonStartRequested}
                 onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
-          ))
-        }
+          </div>
+        </div>
+        <div className={style.section}>
+          <div className={style.heading}>Upcoming Lessons</div>
+          <div className={style.cards}>
+          {
+            upcomingLessons.map(lesson => (
+              <StudentLessonCard
+                  key={lesson.id}
+                  lesson={lesson}
+                  onLessonStartRequested={this.onLessonStartRequested}
+                  onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
+            ))
+          }
+          </div>
         </div>
       </div>
     )
