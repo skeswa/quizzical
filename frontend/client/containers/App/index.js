@@ -30,6 +30,7 @@ import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import StudentLessonsPage from 'containers/StudentLessonsPage'
 import QuizAutoGenerationPage from 'containers/QuizAutoGenerationPage'
 import QuizGenerationQAPage from 'containers/QuizGenerationQAPage'
+import LessonsPage from 'containers/LessonsPage'
 
 /* Global Styles */
 import style from './index.css'

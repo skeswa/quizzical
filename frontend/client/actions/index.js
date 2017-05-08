@@ -7,6 +7,9 @@ import quizSubmission from './quiz-submission'
 import quizgeneration from './quiz-generation'
 import quiz from './quiz'
 import source from './source'
+import userLesson from './user-lesson'
+import lessonStatus from './lesson-status'
+import lessonType from './lesson-type'
 
 export default {
   auth,
@@ -17,4 +20,7 @@ export default {
   quizgeneration,
   quiz,
   source,
+  userLesson,
+  lessonStatus,
+  lessonType,
 }

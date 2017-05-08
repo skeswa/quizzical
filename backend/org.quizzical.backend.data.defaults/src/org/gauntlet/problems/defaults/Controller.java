@@ -1,5 +1,8 @@
 package org.gauntlet.problems.defaults;
 
+import org.gauntlet.lessons.api.dao.ILessonsDAOService;
+import org.gauntlet.lessons.api.model.LessonStatus;
+import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
@@ -16,6 +19,7 @@ public class Controller {
 	private volatile IProblemDAOService problemService;
 	private volatile IQuizDAOService quizService;
 	private volatile IUserDAOService userService;
+	private volatile ILessonsDAOService lessonService;
 	
 	private volatile ITestDesignTemplateDAOService testDesignService;
 	private volatile ITestDesignTemplateContentTypeDAOService contentTypeService;
@@ -35,6 +39,31 @@ public class Controller {
 		 * Misc
 		 * 
 		 */
+		//-- Lesson related
+		LessonType lt = new LessonType(
+					org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_CURRENT, 
+					org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_CURRENT);
+		lessonService.provideLessonType(lt);
+
+		lt = new LessonType(
+				org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_SCHEDULED, 
+				org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_SCHEDULED);
+		lessonService.provideLessonType(lt);
+		
+		LessonStatus ls = new LessonStatus(
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_NEW, 
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_NEW);
+		lessonService.provideLessonStatus(ls);
+	
+		ls = new LessonStatus(
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_STARTED, 
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_STARTED);
+		lessonService.provideLessonStatus(ls);
+		
+		ls = new LessonStatus(
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_FINISHED, 
+				org.gauntlet.lessons.api.model.Constants.LESSON_STATUS_FINISHED);
+		lessonService.provideLessonStatus(ls);
 		
 		//-- Quiz related
 		QuizType qt = new QuizType(Constants.QUIZ_TYPE_GENERATED_CODE, Constants.QUIZ_TYPE_GENERATED_NAME);

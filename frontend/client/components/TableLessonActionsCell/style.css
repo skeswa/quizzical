@@ -1,0 +1,11 @@
+
+.main {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+}

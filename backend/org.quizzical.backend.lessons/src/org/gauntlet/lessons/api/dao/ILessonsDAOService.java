@@ -8,7 +8,10 @@ import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
+import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.lessons.api.model.LessonProblem;
+import org.gauntlet.lessons.api.model.LessonStatus;
+import org.gauntlet.lessons.api.model.LessonType;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface ILessonsDAOService extends IBaseService {
@@ -51,6 +54,48 @@ public interface ILessonsDAOService extends IBaseService {
 	public LessonProblem provideLessonProblem(LessonProblem record) throws ApplicationException;
 	
 	public LessonProblem deleteLessonProblem(Long id) throws ApplicationException, NoSuchModelException;
+	
+	//LessonType
+	public List<LessonType> findAllLessonTypes(int start, int end) throws ApplicationException;
+	
+	public long countAllLessonTypes() throws ApplicationException;
+	
+	public int countByLessonType(Long typeId) throws ApplicationException;
+	
+	public int countByLessonTypeCode(User user, String typeCode) throws ApplicationException;
+	
+	public List<UserLesson>  findAllUserLessonsByLessonType(User user, Long typeId) throws ApplicationException;
+	
+	public LessonType getLessonTypeByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
+	
+	public LessonType provideLessonType(LessonType record) throws ApplicationException;
+	
+	public LessonType getLessonTypeByCode(String code) throws ApplicationException;
+	
+	public LessonType getLessonTypeByName(String name) throws ApplicationException;
+	
+	public LessonType deleteLessonType(Long id) throws ApplicationException, NoSuchModelException;
+	
+	//LessonStatus
+	public List<LessonStatus> findAllLessonStatuses(int start, int end) throws ApplicationException;
+	
+	public long countAllLessonStatuses() throws ApplicationException;
+	
+	public int countByLessonStatusCode(User user, String statusCode) throws ApplicationException;
+	
+	public int countByLessonStatus(Long statusId) throws ApplicationException;
+	
+	public List<UserLesson>  findAllUserLessonsByLessonStatus(User user, Long statusId) throws ApplicationException;
+	
+	public LessonStatus getLessonStatusByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
+	
+	public LessonStatus provideLessonStatus(LessonStatus record) throws ApplicationException;
+	
+	public LessonStatus getLessonStatusByCode(String code) throws ApplicationException;
+	
+	public LessonStatus getLessonStatusByName(String name) throws ApplicationException;
+	
+	public LessonStatus deleteLessonStatus(Long id) throws ApplicationException, NoSuchModelException;	
 	
 	// UserLessonPlans
 	public List<UserLessonPlan> findAllUserLessonPlans(User user) throws ApplicationException;

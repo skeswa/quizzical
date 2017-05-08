@@ -1,9 +1,8 @@
 package org.gauntlet.lessons.model.jpa;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -24,6 +23,20 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	private Long userId;
 	
 	private Long quizId;
+	
+	private Date dateStarted;
+	
+	private Date lastDateVisited;
+	
+	private Boolean lessonFinished = false;
+	
+	@ManyToOne(targetEntity = JPALessonType.class)
+	@JoinColumn
+	private JPALessonType lessonType;
+	
+	@ManyToOne(targetEntity = JPALessonStatus.class)
+	@JoinColumn
+	private JPALessonStatus lessonStatus;	
 	
 	@ManyToOne(targetEntity = JPALesson.class)
 	private JPALesson lesson;
@@ -74,6 +87,46 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 
 	public void setPlan(JPAUserLessonPlan plan) {
 		this.plan = plan;
+	}
+
+	public JPALessonType getLessonType() {
+		return lessonType;
+	}
+
+	public void setLessonType(JPALessonType lessonType) {
+		this.lessonType = lessonType;
+	}
+
+	public JPALessonStatus getLessonStatus() {
+		return lessonStatus;
+	}
+
+	public void setLessonStatus(JPALessonStatus lessonStatus) {
+		this.lessonStatus = lessonStatus;
+	}
+
+	public Date getDateStarted() {
+		return dateStarted;
+	}
+
+	public void setDateStarted(Date dateStarted) {
+		this.dateStarted = dateStarted;
+	}
+
+	public Date getLastDateVisited() {
+		return lastDateVisited;
+	}
+
+	public void setLastDateVisited(Date lastDateVisited) {
+		this.lastDateVisited = lastDateVisited;
+	}
+
+	public Boolean getLessonFinished() {
+		return lessonFinished;
+	}
+
+	public void setLessonFinished(Boolean lessonFinished) {
+		this.lessonFinished = lessonFinished;
 	}
 }
 

@@ -2,6 +2,7 @@ package org.gauntlet.problems.defaults.osgi;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
+import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.defaults.Controller;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
@@ -24,6 +25,8 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(IUserDAOService.class)
 						.setRequired(true))				
 				.add(createServiceDependency().setService(IQuizDAOService.class)
+						.setRequired(true))
+				.add(createServiceDependency().setService(ILessonsDAOService.class)
 						.setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateDAOService.class)
 						.setRequired(true))
