@@ -46,7 +46,7 @@ public class UserLessonResource  {
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Path("upcomings") 
+	@Path("upcoming") 
     public List<UserLesson> getUpcoming(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
 		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
@@ -72,9 +72,12 @@ public class UserLessonResource  {
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Path("currents/{id}") 
-    public UserLesson get(@PathParam("id") Long id) throws ApplicationException, NoSuchModelException {
-		UserLesson lesson = lessonService.getUserLessonByPrimary(id);
+	@Path("current") 
+    public UserLesson getCurrent(@Context HttpServletRequest request) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
+		UserLesson lesson = lessonPlan.getCurrentLesson();
+		
 		Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
 		quiz.setQuestions(null);
 		lesson.setQuiz(quiz);

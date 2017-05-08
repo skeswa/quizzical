@@ -31,8 +31,8 @@ class StudentLessonsPage extends Component {
 
   loadData() {
     const {
-      loadUserLessonCurrent,
-      loadUserLessonUpcomings,
+      loadCurrentLesson,
+      loadUpcomingLessons,
     } = this.props.actions
 
     // Indicate loading.
@@ -41,8 +41,8 @@ class StudentLessonsPage extends Component {
     // Re-load everything.
     Promise
       .all([
-        loadUserLessonCurrent(),
-        loadUserLessonUpcomings(),
+        loadCurrentLesson(),
+        loadUpcomingLessons(),
       ])
       .then(resultingActions => {
         const error = extractErrorFromResultingActions(resultingActions)
@@ -74,18 +74,17 @@ class StudentLessonsPage extends Component {
 
 const reduxify = connect(
   (state, props) => ({
-    currentUserLesson:     state.currentLesson,
-    upcomingUserLessons:   state.upcomingLessons,
+    currentUserLesson:     state.userLesson.currentLesson,
+    upcomingUserLessons:   state.userLesson.upcomingLessons,
     dataShouldBeLoaded: (
-      !state.currentLessonLoaded   ||
-      !state.upcomingLessonsLoaded
+      !state.userLesson.currentLessonLoaded   ||
+      !state.userLesson.upcomingLessonsLoaded
     ),
   }),
   (dispatch, props) => ({
     actions: Object.assign(
       {},
-      bindActionCreators(actions.currentlesson, dispatch),
-      bindActionCreators(actions.upcominglessons, dispatch))
+      bindActionCreators(actions.userLesson, dispatch)),
   }))
 
 
