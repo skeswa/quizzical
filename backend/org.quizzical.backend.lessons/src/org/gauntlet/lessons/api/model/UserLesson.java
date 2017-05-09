@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.gauntlet.core.model.BaseEntity;
-import org.gauntlet.lessons.model.jpa.JPALessonStatus;
-import org.gauntlet.lessons.model.jpa.JPALessonType;
 import org.gauntlet.quizzes.api.model.Quiz;
 
 public class UserLesson extends BaseEntity implements Serializable {
@@ -17,11 +17,22 @@ public class UserLesson extends BaseEntity implements Serializable {
 	
 	private Long quizId;
 	
+	private Long quizSubmissionId;
+	
 	private Date dateStarted;
 	
 	private Date lastDateVisited;
 	
 	private Boolean lessonFinished;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateLessonFinished;
+	
+	private Integer quizScore;
+	
+	private Integer skippedProblems;
+	
+	private Integer totalProblems;
 	
 	private LessonType lessonType;
 	
@@ -104,6 +115,38 @@ public class UserLesson extends BaseEntity implements Serializable {
 	public void setLessonStatus(LessonStatus lessonStatus) {
 		this.lessonStatus = lessonStatus;
 	}
+	
+	public Long getQuizSubmissionId() {
+		return quizSubmissionId;
+	}
+
+	public void setQuizSubmissionId(Long quizSubmissionId) {
+		this.quizSubmissionId = quizSubmissionId;
+	}
+
+	public Date getDateLessonFinished() {
+		return dateLessonFinished;
+	}
+
+	public void setDateLessonFinished(Date dateLessonFinished) {
+		this.dateLessonFinished = dateLessonFinished;
+	}
+	
+	public Integer getSkippedProblems() {
+		return skippedProblems;
+	}
+
+	public void setSkippedProblems(Integer skippedProblems) {
+		this.skippedProblems = skippedProblems;
+	}
+
+	public Integer getTotalProblems() {
+		return totalProblems;
+	}
+
+	public void setTotalProblems(Integer totalProblems) {
+		this.totalProblems = totalProblems;
+	}
 
 	public UserLesson() {
 	}
@@ -116,6 +159,4 @@ public class UserLesson extends BaseEntity implements Serializable {
 		this.quiz = quiz;
 		this.lesson = lesson;
 	}
-	
-	
 }

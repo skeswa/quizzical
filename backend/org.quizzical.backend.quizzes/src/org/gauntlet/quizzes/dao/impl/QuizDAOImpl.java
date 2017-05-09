@@ -132,6 +132,15 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 		if (Validator.isNull(recordEntity))
 		{
 			JPAQuiz copiedEntity = JPAEntityUtil.copy(record, JPAQuiz.class);
+			if (record.getQuizType() != null) {
+				JPAQuizType qt = null;
+				try {
+					qt = getQuizTypeByPrimary_(record.getQuizType().getId());
+				} catch (NoSuchModelException e) {
+					throw new ApplicationException(e);
+				}
+				copiedEntity.setQuizType(qt);
+			}
 			copiedEntity.getQuestions().stream()
 				.forEach(qp -> {
 					qp.setQuiz(copiedEntity);
@@ -154,8 +163,17 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	@Override
 	public Quiz delete(Long id) throws ApplicationException, NoSuchModelException {
 		JPAQuiz jpaEntity = (JPAQuiz) super.findByPrimaryKey(JPAQuiz.class, id);
-		super.remove(jpaEntity);
+		
+		//Only remove quiz if not linked to a lesson
+		if (!isLessonType(jpaEntity)) {
+			super.remove(jpaEntity);
+		}
+		
 		return JPAEntityUtil.copy(jpaEntity, Quiz.class);
+	}
+
+	private boolean isLessonType(JPAQuiz jpaEntity) {
+		return jpaEntity.getQuizType() != null && jpaEntity.getQuizType().getCode().equals(Constants.QUIZ_TYPE_LESSON_CODE);
 	}
 	
 	@Override
@@ -307,8 +325,12 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	
 	@Override
 	public QuizType getQuizTypeByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
-		JPAQuizType jpaEntity = (JPAQuizType) super.findByPrimaryKey(JPAQuizType.class, pk);
+		JPAQuizType jpaEntity = getQuizTypeByPrimary_(pk);
 		return JPAEntityUtil.copy(jpaEntity, QuizType.class);
+	}
+	
+	public JPAQuizType getQuizTypeByPrimary_(Long pk) throws ApplicationException, NoSuchModelException {
+		return (JPAQuizType) super.findByPrimaryKey(JPAQuizType.class, pk);
 	}
 	
 	@Override 

@@ -46,7 +46,6 @@ const App = props =>
             <PrivateRoute exact path="/admin/questions" component={QuestionsPage} />
 
             {/* Student pages */}
-            <PrivateRoute exact path="/lessons" component={StudentLessonsPage} />
             <PrivateRoute exact path="/quiz" component={QuizAutoGenerationPage} />
             <PrivateRoute exact path="/qa/quiz" component={QuizGenerationQAPage} />
             <PrivateRoute exact path="/quiz/:id" component={QuizTakePage} />
@@ -55,7 +54,7 @@ const App = props =>
             {/* Misc. pages */}
             <PublicRoute exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/workbench" component={WorkbenchPage} />
-            <Route exact path="/" component={SplashPage} />
+            <PrivateRoute exact path="/" component={StudentLessonsPage} />
             <Route path="" component={NotFoundPage} />
           </Switch>
         </ConnectedRouter>

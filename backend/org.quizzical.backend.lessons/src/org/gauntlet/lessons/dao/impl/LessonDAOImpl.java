@@ -1,9 +1,13 @@
 package org.gauntlet.lessons.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +16,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.amdatu.jta.Transactional;
+import org.apache.commons.math.fraction.Fraction;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
@@ -19,6 +24,7 @@ import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
+import org.gauntlet.lessons.api.model.Constants;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.LessonProblem;
 import org.gauntlet.lessons.api.model.LessonStatus;
@@ -31,6 +37,8 @@ import org.gauntlet.lessons.model.jpa.JPALessonStatus;
 import org.gauntlet.lessons.model.jpa.JPALessonType;
 import org.gauntlet.lessons.model.jpa.JPAUserLesson;
 import org.gauntlet.lessons.model.jpa.JPAUserLessonPlan;
+import org.gauntlet.quizzes.api.model.QuizProblemResponse;
+import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -235,6 +243,17 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return result;
 	}
 	
+	@Override 
+	public UserLesson findUserLessonByQuizId(Long quizId) throws ApplicationException {
+		try {
+			JPABaseEntity result = super.findWithAttribute(JPAUserLesson.class, Long.class,"quizId", quizId);
+			return JPAEntityUtil.copy(result, UserLesson.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+	
 	@Override
 	public long countAllUserLessons(User user) throws ApplicationException {
 		long res = 0;
@@ -249,8 +268,12 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	
 	@Override
 	public UserLesson getUserLessonByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
-		JPAUserLesson jpaEntity = (JPAUserLesson) super.findByPrimaryKey(JPAUserLesson.class, pk);
+		JPAUserLesson jpaEntity = getUserLessonByPrimary_(pk);
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);
+	}
+	
+	public JPAUserLesson getUserLessonByPrimary_(Long pk) throws ApplicationException, NoSuchModelException {
+		return (JPAUserLesson) super.findByPrimaryKey(JPAUserLesson.class, pk);
 	}
 	
 	@Override 
@@ -291,6 +314,40 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);
 	}	
+	
+
+	@Override
+	public void markUserLessonAsComplete(UserLesson ul, QuizSubmission qs) throws ApplicationException {
+		try {
+			JPAUserLesson ulEntity = getUserLessonByPrimary_(ul.getId());
+			ulEntity.setDateLessonFinished(new Date());
+			ulEntity.setLessonFinished(true);
+			ulEntity.setQuizSubmissionId(qs.getId());
+			
+			ulEntity.setLessonStatus(getLessonStatusByCode_(Constants.LESSON_STATUS_FINISHED));
+			
+			final List<QuizProblemResponse> correctQps = qs.getResponses().stream()
+				.filter(qp -> {
+					return qp.getCorrect() != null && qp.getCorrect();
+				})
+				.collect(Collectors.toList());
+			
+			final List<QuizProblemResponse> skippedQps = qs.getResponses().stream()
+					.filter(qp -> {
+						return qp.getSkipped()!= null && qp.getSkipped();
+					})
+					.collect(Collectors.toList());
+			
+			int score = (int)(new Fraction(correctQps.size(), qs.getResponses().size()).doubleValue()*100);
+			ulEntity.setQuizScore(score);
+			ulEntity.setSkippedProblems(skippedQps.size());
+			ulEntity.setTotalProblems(qs.getResponses().size());
+			
+			super.update(ulEntity);
+		} catch (NoSuchModelException e) {
+			throw new ApplicationException(e);
+		}
+	}
 
 	@Override
 	public void createDefaults() throws ApplicationException {

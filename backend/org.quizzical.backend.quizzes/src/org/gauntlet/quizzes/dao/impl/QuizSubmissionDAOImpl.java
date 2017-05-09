@@ -37,6 +37,7 @@ import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizScoringService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
+import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
@@ -342,6 +343,9 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
         		.collect(Collectors.toList());
        	quizSubmission.setResponses(correctedResponses);
        	
+       	//--Send Quiz Submitted event
+       	sendQuizSubmittedEvent(user, quizSubmission);
+       	
        	//--Email report
        	if (!(user.getAdmin() || user.getQa()) && user.isActive())
        		reportStatsViaEmail(user);
@@ -352,6 +356,24 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
        	
     	return quizSubmission;
 	}
+	
+    public void sendQuizSubmittedEvent(User user, QuizSubmission quizSubmission)
+    {
+        ServiceReference ref = ctx.getServiceReference(EventAdmin.class.getName());
+        if (ref != null)
+        {
+            EventAdmin eventAdmin = (EventAdmin) ctx.getService(ref);
+
+            Dictionary properties = new Hashtable();
+            properties.put("userid", user.getEmailAddress());
+            properties.put("quizId", quizSubmission.getQuizId());
+            properties.put("quizSubmissionId", quizSubmission.getId());
+
+            Event reportGeneratedEvent = new Event(Constants.EVENT_TOPIC_QUIZ_SUBMITTED, properties);
+
+            eventAdmin.sendEvent(reportGeneratedEvent);
+        }
+    }
 	
     public void reportStatsViaEmail(User user)
     {

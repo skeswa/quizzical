@@ -111,6 +111,7 @@ public class LessonCommands {
     	//Generate a Quiz from Lesson
     	QuizGenerationParameters params = new QuizGenerationParameters();
     	params.setGeneratorType(Constants.GENERATOR_TYPE_BY_SOURCE);
+    	params.setQuizType(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LESSON_CODE);
     	params.setProblemSourceId(p.getSource().getId());
     	Quiz quiz = gSvc.generate(user, params);
     	

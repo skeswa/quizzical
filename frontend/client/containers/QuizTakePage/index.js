@@ -124,7 +124,7 @@ class QuizTakePage extends Component {
           this.setState({
             isDataLoading: false,
           })
-          this.props.history.push(`/quiz`)
+          this.props.history.push(`/`)
         }
       })
   }

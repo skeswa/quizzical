@@ -110,6 +110,11 @@ public class ByProblemSourceGeneratorImpl implements IQuizGeneratorService {
 		quiz.setQuizType(quizType);
 		quiz.setQuestions(unorderedQuizProblems);
 		
+		if (params.getQuizType() != null) {
+			QuizType qt = quizDAOService.getQuizTypeByCode(params.getQuizType());
+			quiz.setQuizType(qt);
+		}
+		
 		final Quiz persistedQuiz = quizDAOService.provide(user, quiz);
 		persistedQuiz.getQuestions()
 			.stream()

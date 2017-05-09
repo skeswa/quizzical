@@ -68,6 +68,9 @@ public class Controller {
 		//-- Quiz related
 		QuizType qt = new QuizType(Constants.QUIZ_TYPE_GENERATED_CODE, Constants.QUIZ_TYPE_GENERATED_NAME);
 		quizService.provideQuizType(qt);
+		
+		qt = new QuizType(Constants.QUIZ_TYPE_LESSON_CODE, Constants.QUIZ_TYPE_LESSON_NAME);
+		quizService.provideQuizType(qt);
 
 		qt = new QuizType(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE, Constants.QUIZ_TYPE_DIAGNOSTIC_NAME);
 		quizService.provideQuizType(qt);

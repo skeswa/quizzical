@@ -76,14 +76,20 @@ public class UserLessonResource  {
     @Produces(MediaType.APPLICATION_JSON)
 	@Path("current") 
     public UserLesson getCurrent(@Context HttpServletRequest request) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
-		final User user = tokenService.extractUser(request);
-		final LessonType lt = lessonService.getLessonTypeByCode(Constants.LESSON_TYPE_CURRENT);
-		UserLesson lesson = lessonService.findUserLessonByType(user,lt.getId());
-		
-		Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
-		quiz.setQuestions(null);
-		lesson.setQuiz(quiz);
-		lesson.getLesson().setQuestions(null);
+		UserLesson lesson = null;
+		try {
+			final User user = tokenService.extractUser(request);
+			final LessonType lt = lessonService.getLessonTypeByCode(Constants.LESSON_TYPE_CURRENT);
+			lesson = lessonService.findUserLessonByType(user,lt.getId());
+			
+			Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
+			quiz.setQuestions(null);
+			lesson.setQuiz(quiz);
+			lesson.getLesson().setQuestions(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return lesson;
     }
 }

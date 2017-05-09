@@ -1,0 +1,5 @@
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package: \
+	org.gauntlet.lessons.service.impl.osgi,\
+	org.gauntlet.lessons.service.impl
+Bundle-Activator: org.gauntlet.lessons.service.impl.osgi.Activator

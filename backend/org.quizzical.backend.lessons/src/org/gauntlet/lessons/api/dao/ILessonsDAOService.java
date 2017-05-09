@@ -8,6 +8,7 @@ import org.gauntlet.core.api.service.IBaseService;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
+import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.lessons.api.model.LessonProblem;
 import org.gauntlet.lessons.api.model.LessonStatus;
@@ -52,6 +53,10 @@ public interface ILessonsDAOService extends IBaseService {
 	public UserLesson findUserLessonByType(User user, Long typeId) throws ApplicationException;
 	
 	public List<UserLesson> findAllUserLessonsByType(User user, Long typeId) throws ApplicationException;
+
+	public UserLesson findUserLessonByQuizId(Long quizId) throws ApplicationException;
+	
+	public void markUserLessonAsComplete(UserLesson ul, QuizSubmission qs) throws ApplicationException;
 
 
 	//LesssonProblem
@@ -125,4 +130,6 @@ public interface ILessonsDAOService extends IBaseService {
 	public UserLesson provideLessonAsUpcomingToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException;
 
 	public void resetUserLessonPlan(User user) throws ApplicationException, NoSuchModelException;
+
+
 }

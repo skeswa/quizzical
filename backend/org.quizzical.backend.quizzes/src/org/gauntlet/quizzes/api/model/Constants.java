@@ -1,5 +1,11 @@
 package org.gauntlet.quizzes.api.model;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
 
 public interface Constants {
 	public static final String GNT_MODULE = "quiz";
@@ -29,4 +35,10 @@ public interface Constants {
 	
 	public static final String QUIZ_TYPE_CATEGORY_CODE = "Category";
 	public static final String QUIZ_TYPE_CATEGORY_NAME = "By Category Quiz";
+	
+	public static final String QUIZ_TYPE_LESSON_CODE = "Lesson";
+	public static final String QUIZ_TYPE_LESSON_NAME = "By Lesson Quiz";
+	
+	//Quiz Event Topics
+	public static final String EVENT_TOPIC_QUIZ_SUBMITTED = "org/quizzical/backend/quizzes/QUIZ_SUBMITTED";
 }

@@ -1,12 +1,11 @@
 package org.gauntlet.quizzes.generator.api.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.gauntlet.core.model.BaseEntity;
 
 public class QuizGenerationParameters extends BaseEntity implements Serializable {
+	private String quizType;
 	
 	private String generatorType;
 	
@@ -49,6 +48,14 @@ public class QuizGenerationParameters extends BaseEntity implements Serializable
 
 	public void setGeneratorType(String generatorType) {
 		this.generatorType = generatorType;
+	}
+
+	public String getQuizType() {
+		return quizType;
+	}
+
+	public void setQuizType(String quizType) {
+		this.quizType = quizType;
 	}
 }
 
