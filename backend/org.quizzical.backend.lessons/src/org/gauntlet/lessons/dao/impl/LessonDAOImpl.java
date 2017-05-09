@@ -1,18 +1,11 @@
 package org.gauntlet.lessons.dao.impl;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
@@ -24,10 +17,8 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
-import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
-import org.gauntlet.lessons.api.model.Constants;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.LessonProblem;
 import org.gauntlet.lessons.api.model.LessonStatus;
@@ -42,10 +33,6 @@ import org.gauntlet.lessons.model.jpa.JPAUserLesson;
 import org.gauntlet.lessons.model.jpa.JPAUserLessonPlan;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
-import org.gauntlet.quizzes.api.model.QuizType;
-import org.gauntlet.quizzes.model.jpa.JPAQuiz;
-import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
-import org.gauntlet.quizzes.model.jpa.JPAQuizType;
 
 
 @SuppressWarnings("restriction")
@@ -182,6 +169,72 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		}
 	}
 	
+	@Override 
+	public List<UserLesson> findAllUserLessonsByType(User user, Long typeId) throws ApplicationException {
+		List<UserLesson> result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pType = builder.parameter(Long.class);
+			
+			ParameterExpression<Long> pUser = builder.parameter(Long.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> cq = qb.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = cq.from(JPAUserLesson.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("userId"),pUser),
+					builder.equal(rootEntity.get("lessonType").get("id"),pType)
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pType, typeId);
+			typedQuery.setParameter(pUser, user.getId());
+			
+			
+			List<JPAUserLesson> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, UserLesson.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
+	@Override 
+	public UserLesson findUserLessonByType(User user, Long typeId) throws ApplicationException {
+		UserLesson result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pType = builder.parameter(Long.class);
+			
+			ParameterExpression<Long> pUser = builder.parameter(Long.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAUserLesson> cq = qb.createQuery(JPAUserLesson.class);
+			Root<JPAUserLesson> rootEntity = cq.from(JPAUserLesson.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("userId"),pUser),
+					builder.equal(rootEntity.get("lessonType").get("id"),pType)
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pType, typeId);
+			typedQuery.setParameter(pUser, user.getId());
+			
+			
+			JPAUserLesson resultList = (JPAUserLesson) typedQuery.getSingleResult();
+			result = JPAEntityUtil.copy(resultList, UserLesson.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public long countAllUserLessons(User user) throws ApplicationException {
 		long res = 0;
@@ -220,11 +273,13 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return dto;	
 	}	
 	
+	@Override
 	public UserLesson getUserLessonByCode(String code) throws ApplicationException{
 		JPAUserLesson jpaEntity = (JPAUserLesson) super.findWithAttribute(JPAUserLesson.class, String.class,"code", code);
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);		
 	}
 	
+	@Override
 	public UserLesson getUserLessonByName(String name) throws ApplicationException{
 		JPAUserLesson jpaEntity = (JPAUserLesson) super.findWithAttribute(JPAUserLesson.class, String.class,"name", name);
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);		
@@ -262,6 +317,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 	
 
 	
+	@Override
 	public LessonProblem deleteLessonProblem(Long id) throws ApplicationException, NoSuchModelException {
 		JPALessonProblem jpaEntity = (JPALessonProblem) super.findByPrimaryKey(JPALessonProblem.class, id);
 		super.remove(jpaEntity);
@@ -396,6 +452,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return dto;	
 	}	
 	
+	@Override
 	public LessonType getLessonTypeByCode(String code) throws ApplicationException{
 		JPALessonType jpaEntity = getLessonTypeByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, LessonType.class);		
@@ -405,11 +462,13 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"code", code);
 	}
 	
+	@Override
 	public LessonType getLessonTypeByName(String code) throws ApplicationException{
 		JPALessonType jpaEntity = (JPALessonType) super.findWithAttribute(JPALessonType.class, String.class,"name", code);
 		return JPAEntityUtil.copy(jpaEntity, LessonType.class);		
 	}
 	
+	@Override
 	public LessonType deleteLessonType(Long id) throws ApplicationException, NoSuchModelException {
 		JPALessonType jpaEntity = (JPALessonType) super.findByPrimaryKey(JPALessonType.class, id);
 		super.remove(jpaEntity);
@@ -544,6 +603,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return dto;	
 	}	
 	
+	@Override
 	public LessonStatus getLessonStatusByCode(String code) throws ApplicationException{
 		JPALessonStatus jpaEntity = getLessonStatusByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);		
@@ -553,11 +613,13 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"code", code);
 	}
 	
+	@Override
 	public LessonStatus getLessonStatusByName(String code) throws ApplicationException{
 		JPALessonStatus jpaEntity = (JPALessonStatus) super.findWithAttribute(JPALessonStatus.class, String.class,"name", code);
 		return JPAEntityUtil.copy(jpaEntity, LessonStatus.class);		
 	}
 	
+	@Override
 	public LessonStatus deleteLessonStatus(Long id) throws ApplicationException, NoSuchModelException {
 		JPALessonStatus jpaEntity = (JPALessonStatus) super.findByPrimaryKey(JPALessonStatus.class, id);
 		super.remove(jpaEntity);
@@ -657,11 +719,13 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return (JPAUserLessonPlan) super.update(record);
 	}	
 	
+	@Override
 	public UserLessonPlan getUserLessonPlanByCode(String code) throws ApplicationException{
 		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, String.class,"code", code);
 		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);		
 	}
 	
+	@Override
 	public UserLessonPlan getUserLessonPlanByName(String name) throws ApplicationException{
 		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, String.class,"name", name);
 		return JPAEntityUtil.copy(jpaEntity, UserLessonPlan.class);		

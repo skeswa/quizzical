@@ -25,9 +25,7 @@ const LessonReducer = handleActions(
       }
 
       return Object.assign({}, state, {
-        currentLesson: action.payload && action.payload.id
-          ? Object.assign({}, state.map, { [action.payload.id]: action.payload })
-          : state.map,
+        currentLesson: action.payload || {},
         currentLessonLoaded: true,
         pendingRequests: decrementedPendingRequests(state),
       })

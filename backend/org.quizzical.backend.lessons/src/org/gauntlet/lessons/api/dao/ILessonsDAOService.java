@@ -48,6 +48,10 @@ public interface ILessonsDAOService extends IBaseService {
 	public UserLesson getUserLessonByCode(String code) throws ApplicationException;
 
 	public UserLesson getUserLessonByName(String name) throws ApplicationException;
+	
+	public UserLesson findUserLessonByType(User user, Long typeId) throws ApplicationException;
+	
+	public List<UserLesson> findAllUserLessonsByType(User user, Long typeId) throws ApplicationException;
 
 
 	//LesssonProblem

@@ -5,13 +5,12 @@ import React from 'react'
 import style from './card.css'
 
 const StudentLessonCard = ({
-  lesson: { id, chapter, name, section, started },
+  lesson: { id, chapter, name, section, started, lesson, quiz },
   onLessonStartRequested,
   onLessonQuizStartRequested,
 }) => (
   <div className={style.main}>
     <div className={style.info}>
-      <div className={style.label}>Lesson {chapter}-{section}</div>
       <div className={style.title}>{name}</div>
     </div>
     <div className={style.actions}>
@@ -22,13 +21,13 @@ const StudentLessonCard = ({
                   ? 'Resume Lesson'
                   : 'Start Lesson'
             }
-            onClick={() => onLessonStartRequested(id)}
+            onClick={() => onLessonStartRequested(lesson.contentItemId,name)}
             primary={true} />
       </div>
       <div className={style.action}>
         <FlatButton
             label="Skip to quiz"
-            onClick={() => onLessonQuizStartRequested(id)} />
+            onClick={() => onLessonQuizStartRequested(quiz.id)} />
       </div>
     </div>
   </div>

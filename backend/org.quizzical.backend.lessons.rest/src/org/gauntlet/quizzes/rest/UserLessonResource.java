@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
+import org.gauntlet.lessons.api.model.Constants;
+import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -49,8 +51,8 @@ public class UserLessonResource  {
 	@Path("upcoming") 
     public List<UserLesson> getUpcoming(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
-		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
-		List<UserLesson> res  = lessonPlan.getUpcomingLessons();
+		final LessonType lt = lessonService.getLessonTypeByCode(Constants.LESSON_TYPE_SCHEDULED);
+		List<UserLesson> res  = lessonService.findAllUserLessonsByType(user,lt.getId());
 		res.stream()
 			.forEach(ul -> {
 				Quiz quiz;
@@ -75,8 +77,8 @@ public class UserLessonResource  {
 	@Path("current") 
     public UserLesson getCurrent(@Context HttpServletRequest request) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
-		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
-		UserLesson lesson = lessonPlan.getCurrentLesson();
+		final LessonType lt = lessonService.getLessonTypeByCode(Constants.LESSON_TYPE_CURRENT);
+		UserLesson lesson = lessonService.findUserLessonByType(user,lt.getId());
 		
 		Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
 		quiz.setQuestions(null);

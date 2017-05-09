@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react'
-
+import autobind from 'autobind-decorator'
 import StudentLessonCard from './card.js'
 import style from './index.css'
 
@@ -10,12 +10,21 @@ class StudentLessonsList extends Component {
     upcomingLessons: PropTypes.array.isRequired,
   }
 
-  onLessonStartRequested(lessonId) {
-    console.log(`onLessonStartRequested('${lessonId}')`)
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
   }
 
-  onLessonQuizStartRequested(lessonId) {
-    console.log(`onLessonQuizStartRequested('${lessonId}')`)
+  @autobind
+  onLessonStartRequested(contentItemId, lessonTitle) {
+    const newWindow = window.open();
+    newWindow.location.href = `/api/content/id/${contentItemId}/${lessonTitle}`;
+    console.log(`onLessonStartRequested('${contentItemId},${lessonTitle}')`)
+  }
+
+  @autobind
+  onLessonQuizStartRequested(quizId) {
+    this.context.router.history.push(`/quiz/${quizId}`)
+    console.log(`onLessonQuizStartRequested('${quizId}')`)
   }
 
   render() {
@@ -24,9 +33,10 @@ class StudentLessonsList extends Component {
     return (
       <div className={style.main}>
         <div className={style.section}>
-          <div className={style.heading}>Current Lessons</div>
+          <div className={style.heading}>Current Lesson</div>
           <div className={style.cards}>
             <StudentLessonCard
+                key={currentLesson.id}
                 lesson={currentLesson}
                 onLessonStartRequested={this.onLessonStartRequested}
                 onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
