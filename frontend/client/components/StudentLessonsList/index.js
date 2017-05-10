@@ -6,8 +6,9 @@ import style from './index.css'
 
 class StudentLessonsList extends Component {
   static propTypes = {
-    currentLesson: PropTypes.object.isRequired,
+    currentLesson:   PropTypes.object.isRequired,
     upcomingLessons: PropTypes.array.isRequired,
+    finishedLessons: PropTypes.array.isRequired,
   }
 
   static contextTypes = {
@@ -28,7 +29,7 @@ class StudentLessonsList extends Component {
   }
 
   render() {
-    const { currentLesson, upcomingLessons } = this.props
+    const { currentLesson, upcomingLessons, finishedLessons } = this.props
 
     return (
       <div className={style.main}>
@@ -47,6 +48,20 @@ class StudentLessonsList extends Component {
           <div className={style.cards}>
           {
             upcomingLessons.map(lesson => (
+              <StudentLessonCard
+                  key={lesson.id}
+                  lesson={lesson}
+                  onLessonStartRequested={this.onLessonStartRequested}
+                  onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
+            ))
+          }
+          </div>
+        </div>
+        <div className={style.section}>
+          <div className={style.heading}>Finished Lessons</div>
+          <div className={style.cards}>
+          {
+            finishedLessons.map(lesson => (
               <StudentLessonCard
                   key={lesson.id}
                   lesson={lesson}

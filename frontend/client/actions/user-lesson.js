@@ -8,6 +8,9 @@ const UserLessonActions = {
   loadUpcomingLessons: createAction(
     `get upcoming user lessons`,
     services.upcoming),
+  loadFinishedLessons: createAction(
+    `get finished user lessons`,
+    services.finished),    
 }
 
 export default UserLessonActions

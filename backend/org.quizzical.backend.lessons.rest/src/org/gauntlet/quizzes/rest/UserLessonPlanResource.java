@@ -51,7 +51,7 @@ public class UserLessonPlanResource  {
 		final User user = tokenService.extractUser(request);
 		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
 		lessonPlan.getCurrentLesson().getLesson().setQuestions(null);
-		lessonPlan.setUpcomingLessons(null);
+		lessonPlan.setLessons(null);
 		return lessonPlan;
     }
 }

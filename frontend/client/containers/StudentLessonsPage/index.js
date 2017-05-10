@@ -17,7 +17,7 @@ const fakeData = {
   ],
 }
 
-class StudentLessonsPage extends Component {
+  class StudentLessonsPage extends Component {
 
   state = {
     loadingError:             null,
@@ -33,6 +33,7 @@ class StudentLessonsPage extends Component {
     const {
       loadCurrentLesson,
       loadUpcomingLessons,
+      loadFinishedLessons,
     } = this.props.actions
 
     // Indicate loading.
@@ -43,6 +44,7 @@ class StudentLessonsPage extends Component {
       .all([
         loadCurrentLesson(),
         loadUpcomingLessons(),
+        loadFinishedLessons(),
       ])
       .then(resultingActions => {
         const error = extractErrorFromResultingActions(resultingActions)
@@ -58,15 +60,22 @@ class StudentLessonsPage extends Component {
   }
 
   render() {
-    const { actions, currentUserLesson, upcomingUserLessons} = this.props
+    const {
+      actions,
+      currentUserLesson,
+      upcomingUserLessons,
+      finishedUserLessons,
+    } = this.props
+
     const {
       isDataLoading
     } = this.state
 
     return (
-      <StudentLessonsList
+        <StudentLessonsList
         currentLesson={currentUserLesson}
-        upcomingLessons={upcomingUserLessons} />
+        upcomingLessons={upcomingUserLessons}
+        finishedLessons={finishedUserLessons} />
     )
   }
 }
@@ -76,9 +85,11 @@ const reduxify = connect(
   (state, props) => ({
     currentUserLesson:     state.userLesson.currentLesson,
     upcomingUserLessons:   state.userLesson.upcomingLessons,
+    finishedUserLessons:   state.userLesson.upcomingLessons,
     dataShouldBeLoaded: (
       !state.userLesson.currentLessonLoaded   ||
-      !state.userLesson.upcomingLessonsLoaded
+      !state.userLesson.upcomingLessonsLoaded ||
+      !state.userLesson.finishedLessonsLoaded
     ),
   }),
   (dispatch, props) => ({

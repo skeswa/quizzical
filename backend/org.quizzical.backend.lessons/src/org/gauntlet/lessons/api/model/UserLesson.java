@@ -2,13 +2,6 @@ package org.gauntlet.lessons.api.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.gauntlet.core.model.BaseEntity;
 import org.gauntlet.quizzes.api.model.Quiz;
 
@@ -25,7 +18,6 @@ public class UserLesson extends BaseEntity implements Serializable {
 	
 	private Boolean lessonFinished;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLessonFinished;
 	
 	private Integer quizScore;

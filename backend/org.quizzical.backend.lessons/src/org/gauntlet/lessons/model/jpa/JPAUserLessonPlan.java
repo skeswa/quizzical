@@ -25,7 +25,7 @@ public class JPAUserLessonPlan extends JPABaseEntity implements Serializable {
 	private Long userId;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER, mappedBy="plan")
-	private Set<JPAUserLesson> upcomingLessons = new java.util.HashSet<JPAUserLesson>();
+	private Set<JPAUserLesson> lessons = new java.util.HashSet<JPAUserLesson>();
 	
 	@OneToOne
 	private JPAUserLesson currentLesson;
@@ -50,12 +50,13 @@ public class JPAUserLessonPlan extends JPABaseEntity implements Serializable {
 		this.userId = userId;
 	}
 
-	public Set<JPAUserLesson> getUpcomingLessons() {
-		return upcomingLessons;
+
+	public Set<JPAUserLesson> getLessons() {
+		return lessons;
 	}
 
-	public void setUpcomingLessons(Set<JPAUserLesson> upcomingLessons) {
-		this.upcomingLessons = upcomingLessons;
+	public void setLessons(Set<JPAUserLesson> lessons) {
+		this.lessons = lessons;
 	}
 
 	public JPAUserLesson getCurrentLesson() {

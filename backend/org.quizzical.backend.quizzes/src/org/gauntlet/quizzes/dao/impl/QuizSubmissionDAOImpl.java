@@ -366,7 +366,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 
             Dictionary properties = new Hashtable();
             properties.put("userid", user.getEmailAddress());
-            properties.put("quizId", quizSubmission.getQuizId());
+            properties.put("quizId", quizSubmission.getQuiz().getId());
             properties.put("quizSubmissionId", quizSubmission.getId());
 
             Event reportGeneratedEvent = new Event(Constants.EVENT_TOPIC_QUIZ_SUBMITTED, properties);

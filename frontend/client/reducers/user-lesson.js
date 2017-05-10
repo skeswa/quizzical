@@ -12,6 +12,8 @@ const initialState = {
   currentLessonLoaded:    false,
   upcomingLessons:        [],
   upcomingLessonsLoaded:  false,
+  finishedLessons:        [],
+  finishedLessonsLoaded:  false,
   pendingRequests:        0,
 }
 
@@ -40,6 +42,19 @@ const LessonReducer = handleActions(
       return Object.assign({}, state, {
         upcomingLessons: action.payload || [],
         upcomingLessonsLoaded: true,
+        pendingRequests: decrementedPendingRequests(state),
+      })
+    },
+    'get finished user lessons': function(state, action) {
+      if (action.error) {
+        return Object.assign({}, state, {
+          pendingRequests: decrementedPendingRequests(state),
+        })
+      }
+
+      return Object.assign({}, state, {
+        finishedLessons: action.payload || [],
+        finishedLessonsLoaded: true,
         pendingRequests: decrementedPendingRequests(state),
       })
     },

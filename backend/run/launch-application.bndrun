@@ -129,6 +129,7 @@
 	,\
 	org.quizzical.backend.lessons.api;version=latest,\
 	org.quizzical.backend.lessons.dao.impl;version=latest,\
+	org.quizzical.backend.lessons.service.impl;version=latest,\
 	org.quizzical.backend.lessons.model.persistence.openjpa.jpa2_0;version=latest,\
 	org.quizzical.backend.lessons.rest;version=latest,\
 	,\

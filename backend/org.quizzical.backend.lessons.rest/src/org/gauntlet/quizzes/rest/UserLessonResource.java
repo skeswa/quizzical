@@ -19,6 +19,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.Constants;
+import org.gauntlet.lessons.api.model.LessonStatus;
 import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
@@ -91,5 +92,31 @@ public class UserLessonResource  {
 			e.printStackTrace();
 		}
 		return lesson;
+    }
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	@Path("finished") 
+    public List<UserLesson> getFinished(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		final LessonStatus ls = lessonService.getLessonStatusByCode(Constants.LESSON_STATUS_FINISHED);
+		List<UserLesson> res  = lessonService.findAllUserLessonsByLessonStatus(user,ls.getId());
+		res.stream()
+			.forEach(ul -> {
+				Quiz quiz;
+				try {
+					quiz = quizService.getByPrimary(ul.getQuizId());
+					quiz.setQuestions(null);
+					ul.setQuiz(quiz);
+					ul.getLesson().setQuestions(null);
+					
+					ContentItem ci = contentService.getByPrimary(ul.getLesson().getContentItemId());
+					ul.getLesson().setContentItemId(ci.getId());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+		return res;
     }
 }

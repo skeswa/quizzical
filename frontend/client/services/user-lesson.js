@@ -9,6 +9,9 @@ const UserLessonService = {
   },
   upcoming() {
     return Network.get('/api/user/lesson/upcoming')
+  },
+  finished() {
+    return Network.get('/api/user/lesson/finished')
   }
 }
 

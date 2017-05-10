@@ -10,7 +10,7 @@ public class UserLessonPlan extends BaseEntity implements Serializable {
 
 	private UserLesson currentLesson;
 	
-	private List<UserLesson> upcomingLessons;
+	private List<UserLesson> lessons;
 	
 	public Long getUserId() {
 		return userId;
@@ -36,12 +36,12 @@ public class UserLessonPlan extends BaseEntity implements Serializable {
 		this.currentLesson = currentLesson;
 	}
 	
-	public UserLessonPlan(String name, String code, Long userId, UserLesson currentLesson, List<UserLesson> upcomingLessons) {
+	public UserLessonPlan(String name, String code, Long userId, UserLesson currentLesson, List<UserLesson> lessons) {
 		this.name = name;
 		this.code = code;
 		this.userId = userId;
 		this.currentLesson = currentLesson;
-		this.upcomingLessons = upcomingLessons;
+		this.lessons = lessons;
 	}
 
 	public UserLesson getCurrentLesson() {
@@ -52,11 +52,11 @@ public class UserLessonPlan extends BaseEntity implements Serializable {
 		this.currentLesson = currentLesson;
 	}
 
-	public List<UserLesson> getUpcomingLessons() {
-		return upcomingLessons;
+	public List<UserLesson> getLessons() {
+		return lessons;
 	}
 
-	public void setUpcomingLessons(List<UserLesson> upcomingLessons) {
-		this.upcomingLessons = upcomingLessons;
+	public void setLessons(List<UserLesson> lessons) {
+		this.lessons = lessons;
 	}
 }

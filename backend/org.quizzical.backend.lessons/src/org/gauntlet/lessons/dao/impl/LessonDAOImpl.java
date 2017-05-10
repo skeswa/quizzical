@@ -324,6 +324,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 			ulEntity.setLessonFinished(true);
 			ulEntity.setQuizSubmissionId(qs.getId());
 			
+			ulEntity.setLessonType(null);
 			ulEntity.setLessonStatus(getLessonStatusByCode_(Constants.LESSON_STATUS_FINISHED));
 			
 			final List<QuizProblemResponse> correctQps = qs.getResponses().stream()
@@ -758,7 +759,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		JPAUserLessonPlan planEntity = (JPAUserLessonPlan) super.findByPrimaryKey(JPAUserLessonPlan.class, planPk);
 		JPAUserLesson ulEntity = (JPAUserLesson) super.add(JPAEntityUtil.copy(userLesson, JPAUserLesson.class));
 
-		planEntity.getUpcomingLessons().add(ulEntity);
+		planEntity.getLessons().add(ulEntity);
 		
 		updateUserLessonPlan_(planEntity);
 		
@@ -806,7 +807,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		JPAUserLessonPlan jpaEntity = (JPAUserLessonPlan) super.findWithAttribute(JPAUserLessonPlan.class, Long.class,"userId", user.getId());
 		
 		jpaEntity.setCurrentLesson(null);
-		jpaEntity.getUpcomingLessons().stream()
+		jpaEntity.getLessons().stream()
 			.forEach(l -> {
 				try {
 					l.setPlan(null);
@@ -816,7 +817,7 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 				}
 			});
 		
-		jpaEntity.getUpcomingLessons().clear();
+		jpaEntity.getLessons().clear();
 		
 		super.update(jpaEntity);
 	}
