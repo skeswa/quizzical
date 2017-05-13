@@ -29,6 +29,8 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public Problem delete(Long id) throws ApplicationException, NoSuchModelException;
 	
+	public void deleteAllBySourceId(Long sourceId) throws ApplicationException;
+	
 	public Problem getByPrimary(Long pk) throws ApplicationException, NoSuchModelException;
 
 	public Problem getByCode(String code) throws ApplicationException;
@@ -122,5 +124,4 @@ public interface IProblemDAOService extends IBaseService {
 
 	List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
 			throws ApplicationException;
-	
 }

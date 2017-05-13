@@ -1,4 +1,5 @@
 #Params
+lessonPdfFilename = "lesson5-2.pdf"
 lessonTitle = "Lesson 5-2: Advanced Algebraic Exponents"
 lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-2"
 sourceIdParam = (prblm:addsource "Barrons_MathWorkbookForNewTheNewSAT_Lesson5-2")
@@ -50,8 +51,8 @@ prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${categoryIdParam} ${difficulty
 prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${categoryIdParam} ${difficultyIdParam} true true "${lessondir}/q25.png" "${lessondir}/a25.png" 6
 #
 prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${categoryIdParam} ${difficultyIdParam} true true "${lessondir}/q26.png" "${lessondir}/a26.png" 3/7
-# Add lesson pdf
-lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson5-2.pdf")
+ # Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/${lessonPdfFilename}")
 # Add lesson
 #create - Creates lesson from problems whose source id is sourceId
 #   scope: lssn
@@ -60,7 +61,11 @@ lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson5-2.pdf
 #      Long   Source Id
 #      Long   Category Id
 #      Long   Content Id
-lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${categoryIdParam} ${lessonPDFContentId})
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
 # Test
-addlesson ${lessonTempltId} mduduzi.keswa@gmail.com
+lssn:addlesson ${lessonTempltId} mduduzi.keswa@gmail.com
+
+
+
+
 

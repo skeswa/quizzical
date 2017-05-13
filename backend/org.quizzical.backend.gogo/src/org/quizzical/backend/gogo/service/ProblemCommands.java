@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "showdiffs","adddiff","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
+    public final static String[] FUNCTIONS = new String[] { "showdiffs","adddiff","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del","delbysrc"};
 
     //-- Category
     @Descriptor("Adds lesson to problem category")
@@ -283,4 +283,18 @@ public class ProblemCommands {
         return "Deleted problem successfully!";
     }
     
+    @Descriptor("Deletes problem ")
+    public static String delbysrc(@Descriptor("Source ID") Long sourceId, @Descriptor("Admin userId") String adminUserId, @Descriptor("Admin password") String adminPassword) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+    	try {
+			uSvc.getUserByEmailAndPassword(adminUserId, adminPassword);
+		} catch (Exception e) {
+			return "Admin creds invalid.";
+		}
+    	
+    	IProblemDAOService pSvc  = (IProblemDAOService) createServiceFromServiceType(IProblemDAOService.class);
+    	pSvc.deleteAllBySourceId(sourceId);
+        
+        return "Deleted problems successfully!";
+    }
 }

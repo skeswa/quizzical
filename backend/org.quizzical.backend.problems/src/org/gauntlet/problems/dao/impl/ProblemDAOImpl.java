@@ -182,6 +182,19 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override
+	public void deleteAllBySourceId(Long sourceId) throws ApplicationException {
+		List<Problem> rs = findAllBySource(sourceId);
+		rs.stream()
+			.forEach(p -> {
+				try {
+					delete(p.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+	}
+	
+	@Override
 	public Problem getByCode(String code) throws ApplicationException {
 		JPAProblem jpaEntity = (JPAProblem) super.findWithAttribute(JPAProblem.class, String.class,"code", code);
 		return JPAEntityUtil.copy(jpaEntity, Problem.class);

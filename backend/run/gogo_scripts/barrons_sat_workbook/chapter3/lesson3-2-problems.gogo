@@ -1,18 +1,13 @@
-#==Diff's
-#101-Easy
-#351-Medium
-#352-Hard
-
-#==Source
-#73001-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2
-
-#==Category
-#401-Heart of Algebra/Systems of Linear Equations
-
-
+#Params
+lessonTitle = "Lesson 3-2: Solving Linear Equations"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2"
+sourceIdParam = (prblm:addsource "Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2")
+sourcePageParam = 96
+categoryIdParam = (prblm:addcat  "Heart of Algebra/Systems of Linear Equations")
+difficultyIdParam = (prblm:adddiff "Medium")
 # Questions
-# Page: 96
-# Source: 73001
+# Page: 88
+# Source: 78401
 # Parameters:
 #1.      Long   Source ID
 #2.      Integer   Source Page
@@ -24,43 +19,61 @@
 #8.      String   Path to Q image
 #9.      String   Path to A image
 #10.     String   Answer
-prblm:add 73001 96 1 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q1.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a1.png" A
-prblm:add 73001 96 2 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q2.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a2.png" D
-prblm:add 73001 96 3 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q3.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a3.png" C
-prblm:add 73001 96 4 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q4.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a4.png" D
-prblm:add 73001 96 5 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q5.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a5.png" B
-prblm:add 73001 96 6 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q6.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a6.png" A
-prblm:add 73001 96 7 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q7.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a7.png" A
-prblm:add 73001 96 8 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q8.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a8.png" B
-prblm:add 73001 96 9 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q9.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a9.png" D
-prblm:add 73001 96 10 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q10.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a10.png" C 
-prblm:add 73001 96 11 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q11.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a11.png" A
-prblm:add 73001 96 12 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q12.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a12.png" D
-prblm:add 73001 96 13 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q13.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a13.png" D
-prblm:add 73001 96 14 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q14.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a14.png" C
-prblm:add 73001 96 15 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q15.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a15.png" B
-prblm:add 73001 96 16 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q16.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a16.png" A
-prblm:add 73001 96 17 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q17.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a17.png" B
-prblm:add 73001 96 18 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q18.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a18.png" B
-prblm:add 73001 96 19 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q19.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a19.png" C
-prblm:add 73001 96 20 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q20.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a20.png" B
-prblm:add 73001 96 21 401 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q21.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a21.png" A
-# SingleAnswer
-prblm:add 73001 96 22 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q22.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a22.png" 5/4
-prblm:add 73001 96 23 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q23.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a23.png" 4
-prblm:add 73001 96 24 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q24.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a24.png" 7/10
-prblm:add 73001 96 25 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q25.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a25.png" 42
-prblm:add 73001 96 26 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q26.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a26.png" 36
-prblm:add 73001 96 27 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q27.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a27.png" 7/2
-prblm:add 73001 96 28 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q28.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a28.png" 15/7
-prblm:add 73001 96 29 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q29.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a29.png" 17.5
-prblm:add 73001 96 30 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q30.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a30.png" 6
-prblm:add 73001 96 31 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q31.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a31.png" 6000
-prblm:add 73001 96 32 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q32.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a32.png" 41
-prblm:add 73001 96 33 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q33.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a33.png" 4
-prblm:add 73001 96 34 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q34.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a34.png" 19/6
-prblm:add 73001 96 35 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q35.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a35.png" 23.5
-prblm:add 73001 96 36 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q36.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a36.png" 3.59
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/a1.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/a2.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/a3.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q4.png" "${lessondir}/a4.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q5.png" "${lessondir}/a5.png" B
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q6.png" "${lessondir}/a6.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q7.png" "${lessondir}/a7.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q8.png" "${lessondir}/a8.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q9.png" "${lessondir}/a9.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q10.png" "${lessondir}/a10.png" C  
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q11.png" "${lessondir}/a11.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q12.png" "${lessondir}/a12.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q13.png" "${lessondir}/a13.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q14.png" "${lessondir}/a14.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q15.png" "${lessondir}/a15.png" B
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q16.png" "${lessondir}/a16.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q17.png" "${lessondir}/a17.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q18.png" "${lessondir}/a18.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q19.png" "${lessondir}/a19.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q20.png" "${lessondir}/a20.png" B
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${categoryIdParam} ${difficultyIdParam} false true "${lessondir}/q21.png" "${lessondir}/a21.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q22.png" "${lessondir}/a22.png" 5/4
+prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q23.png" "${lessondir}/a23.png" 4
+prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q24.png" "${lessondir}/a24.png" 7/10
+prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q25.png" "${lessondir}/a25.png" 42
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q26.png" "${lessondir}/a26.png" 36
+prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q27.png" "${lessondir}/a27.png" 7/2
+prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q28.png" "${lessondir}/a28.png" 15/7
+prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q29.png" "${lessondir}/a29.png" 17.5
+prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q30.png" "${lessondir}/a30.png" 6
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 31 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q31.png" "${lessondir}/a31.png" 6000
+prblm:add ${sourceIdParam} ${sourcePageParam} 32 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q32.png" "${lessondir}/a32.png" 41
+prblm:add ${sourceIdParam} ${sourcePageParam} 33 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q33.png" "${lessondir}/a33.png" 4
+prblm:add ${sourceIdParam} ${sourcePageParam} 34 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q34.png" "${lessondir}/a34.png" 19/6
+prblm:add ${sourceIdParam} ${sourcePageParam} 35 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q35.png" "${lessondir}/a35.png" 23.5
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${categoryIdParam} ${difficultyIdParam} false false "${lessondir}/q36.png" "${lessondir}/a36.png" 3.59
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson3-2.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+# Test
+lssn:addlesson ${lessonTempltId} mduduzi.keswa@gmail.com
 
-# Create lesson
-lssn:create "Lesson 3-2: Solving Linear Equations" 73001 401 75152
+
