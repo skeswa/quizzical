@@ -52,12 +52,15 @@ public interface ILessonsDAOService extends IBaseService {
 	
 	public UserLesson findUserLessonByType(User user, Long typeId) throws ApplicationException;
 	
+	public List<UserLesson> findAllUserLessonsByStatus(User user, Long statusId) throws ApplicationException;
+	
 	public List<UserLesson> findAllUserLessonsByType(User user, Long typeId) throws ApplicationException;
 
 	public UserLesson findUserLessonByQuizId(Long quizId) throws ApplicationException;
 	
 	public void markUserLessonAsComplete(UserLesson ul, QuizSubmission qs) throws ApplicationException;
 
+	public void pickNextUserLesson(Long userId) throws ApplicationException;
 
 	//LesssonProblem
 	public LessonProblem provideLessonProblem(LessonProblem record) throws ApplicationException;
@@ -130,6 +133,4 @@ public interface ILessonsDAOService extends IBaseService {
 	public UserLesson provideLessonAsUpcomingToPlan(UserLesson userLesson, Long planPk) throws ApplicationException, NoSuchModelException;
 
 	public void resetUserLessonPlan(User user) throws ApplicationException, NoSuchModelException;
-
-
 }

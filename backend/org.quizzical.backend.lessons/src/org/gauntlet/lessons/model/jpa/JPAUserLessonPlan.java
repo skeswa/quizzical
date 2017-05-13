@@ -27,9 +27,6 @@ public class JPAUserLessonPlan extends JPABaseEntity implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER, mappedBy="plan")
 	private Set<JPAUserLesson> lessons = new java.util.HashSet<JPAUserLesson>();
 	
-	@OneToOne
-	private JPAUserLesson currentLesson;
-	
 
 	public JPAUserLessonPlan() {
 		super();
@@ -57,14 +54,6 @@ public class JPAUserLessonPlan extends JPABaseEntity implements Serializable {
 
 	public void setLessons(Set<JPAUserLesson> lessons) {
 		this.lessons = lessons;
-	}
-
-	public JPAUserLesson getCurrentLesson() {
-		return currentLesson;
-	}
-
-	public void setCurrentLesson(JPAUserLesson currentLesson) {
-		this.currentLesson = currentLesson;
 	}
 }
 

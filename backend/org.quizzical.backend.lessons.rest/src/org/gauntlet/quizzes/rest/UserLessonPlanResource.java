@@ -50,7 +50,6 @@ public class UserLessonPlanResource  {
     public UserLessonPlan get(@Context HttpServletRequest request, @PathParam("id") Long id) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
 		UserLessonPlan lessonPlan = lessonService.getUserLessonPlanByUserPk(user.getId());
-		lessonPlan.getCurrentLesson().getLesson().setQuestions(null);
 		lessonPlan.setLessons(null);
 		return lessonPlan;
     }

@@ -26,6 +26,8 @@ public class UserLesson extends BaseEntity implements Serializable {
 	
 	private Integer totalProblems;
 	
+	private Integer lessonOrder;
+	
 	private LessonType lessonType;
 	
 	private LessonStatus lessonStatus;	
@@ -140,6 +142,14 @@ public class UserLesson extends BaseEntity implements Serializable {
 		this.totalProblems = totalProblems;
 	}
 
+	public Integer getLessonOrder() {
+		return lessonOrder;
+	}
+
+	public void setLessonOrder(Integer lessonOrder) {
+		this.lessonOrder = lessonOrder;
+	}
+	
 	public UserLesson() {
 	}
 	

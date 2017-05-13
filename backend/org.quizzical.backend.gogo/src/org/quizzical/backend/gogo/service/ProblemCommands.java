@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "showdiffs","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
+    public final static String[] FUNCTIONS = new String[] { "showdiffs","adddiff","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del"};
 
     //-- Category
     @Descriptor("Adds lesson to problem category")
@@ -32,11 +32,10 @@ public class ProblemCommands {
     }
     
     @Descriptor("Adds new problem category")
-    public static String addcat(@Descriptor("Category name") String catName) throws Exception {
+    public static Long addcat(@Descriptor("Category name") String catName) throws Exception {
         CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
         IProblemDAOService svc = (IProblemDAOService)cmd.get();
-        svc.provideProblemCategory(catName);
-        return "Added cat lesson successfully!";
+        return svc.provideProblemCategory(catName).getId();
     }
     
     @Descriptor("Shows a problem category by code")
@@ -58,11 +57,10 @@ public class ProblemCommands {
     
     //-- Source
     @Descriptor("Adds new problem source")
-    public static String addsource(@Descriptor("Source name") String sourceName) throws Exception {
+    public static Long addsource(@Descriptor("Source name") String sourceName) throws Exception {
         CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
         IProblemDAOService svc = (IProblemDAOService)cmd.get();
-        svc.provideProblemSource(sourceName);
-        return "Added problem source successfully!";
+        return svc.provideProblemSource(sourceName).getId();
     }
     
     @Descriptor("Shows a problem sources")
@@ -76,6 +74,13 @@ public class ProblemCommands {
     }  
     
     //-- Difficulty
+    @Descriptor("Adds new problem difficulty")
+    public static Long adddiff(@Descriptor("Difficulty name") String diffName) throws Exception {
+        CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
+        IProblemDAOService svc = (IProblemDAOService)cmd.get();
+        return svc.provideProblemDifficulty(diffName).getId();
+    }
+    
     @Descriptor("Shows a problem difficulties")
     public static void showdiffs() throws Exception {
     	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);

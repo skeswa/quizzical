@@ -45,6 +45,8 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 	
 	private Integer totalProblems;
 	
+	private Integer lessonOrder;
+	
 	@ManyToOne(targetEntity = JPALessonType.class)
 	@JoinColumn
 	private JPALessonType lessonType;
@@ -182,6 +184,14 @@ public class JPAUserLesson extends JPABaseEntity implements Serializable {
 
 	public void setTotalProblems(Integer totalProblems) {
 		this.totalProblems = totalProblems;
+	}
+
+	public Integer getLessonOrder() {
+		return lessonOrder;
+	}
+
+	public void setLessonOrder(Integer lessonOrder) {
+		this.lessonOrder = lessonOrder;
 	}
 }
 

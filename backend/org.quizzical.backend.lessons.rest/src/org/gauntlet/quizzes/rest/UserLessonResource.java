@@ -83,6 +83,9 @@ public class UserLessonResource  {
 			final LessonType lt = lessonService.getLessonTypeByCode(Constants.LESSON_TYPE_CURRENT);
 			lesson = lessonService.findUserLessonByType(user,lt.getId());
 			
+			if (lesson == null)
+				return lesson;
+			
 			Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
 			quiz.setQuestions(null);
 			lesson.setQuiz(quiz);
@@ -100,7 +103,7 @@ public class UserLessonResource  {
     public List<UserLesson> getFinished(@Context HttpServletRequest request, @QueryParam("start") int start, @QueryParam("end") int end ) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
 		final User user = tokenService.extractUser(request);
 		final LessonStatus ls = lessonService.getLessonStatusByCode(Constants.LESSON_STATUS_FINISHED);
-		List<UserLesson> res  = lessonService.findAllUserLessonsByLessonStatus(user,ls.getId());
+		List<UserLesson> res  = lessonService.findAllUserLessonsByStatus(user,ls.getId());
 		res.stream()
 			.forEach(ul -> {
 				Quiz quiz;

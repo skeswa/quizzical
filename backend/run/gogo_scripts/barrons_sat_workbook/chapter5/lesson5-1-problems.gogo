@@ -1,0 +1,74 @@
+#==Diff's
+#101-Easy
+#351-Medium
+#352-Hard
+
+#==Source
+#78401-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-1
+
+#==Category
+#953-Passport to Advanced Math/Exponents
+
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add 78401 267 1 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q1.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a1.png" B
+prblm:add 78401 267 2 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q2.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a2.png" A
+prblm:add 78401 267 3 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q3.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a3.png" A
+prblm:add 78401 267 4 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q4.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a4.png" D
+prblm:add 78401 267 5 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q5.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a5.png" C
+#
+prblm:add 78401 267 6 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q6.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a6.png" B
+prblm:add 78401 267 7 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q7.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a7.png" D
+prblm:add 78401 267 8 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q8.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a8.png" C
+prblm:add 78401 267 9 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q9.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a9.png" C
+prblm:add 78401 267 10 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q10.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a10.png" C 
+#
+prblm:add 78401 267 11 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q11.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a11.png" C
+prblm:add 78401 267 12 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q12.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a12.png" D
+prblm:add 78401 267 13 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q13.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a13.png" B
+prblm:add 78401 267 14 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q14.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a14.png" C
+prblm:add 78401 267 15 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q15.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a15.png" A
+#
+prblm:add 78401 267 16 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q16.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a16.png" A
+prblm:add 78401 267 17 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q17.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a17.png" 5
+prblm:add 78401 267 18 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q18.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a18.png" 16
+prblm:add 78401 267 19 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q19.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a19.png" 27/2
+prblm:add 78401 267 20 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q20.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a20.png" 1/6
+#
+prblm:add 78401 267 21 953 351 false true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q21.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a21.png" 3/10
+prblm:add 78401 267 22 953 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q22.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a22.png" 1/4
+prblm:add 78401 267 23 953 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q23.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a23.png" 32/3
+prblm:add 78401 267 24 953 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q24.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a24.png" 5/2
+prblm:add 78401 267 25 953 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q25.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a25.png" 7/6
+#
+prblm:add 78401 267 26 953 351 true true "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/q26.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/a26.png" 2.25
+
+# Add lesson pdf
+addpdf "Lesson 5-1 Rational Exponents" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter5-Passport-to-Advanced-Math/5-1/lesson5-1.pdf"
+#CI 78601-1494627332890Lesson 5-1 Rational Exponents created successfully
+
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lssn:create "Lesson 5-1: Rational Exponents" 78401 953 78601
+# 78701-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-1
+# Test
+addlesson 78701 mduduzi.keswa@gmail.com
+

@@ -33,16 +33,20 @@ class StudentLessonsList extends Component {
 
     return (
       <div className={style.main}>
-        <div className={style.section}>
-          <div className={style.heading}>Current Lesson</div>
-          <div className={style.cards}>
-            <StudentLessonCard
-                key={currentLesson.id}
-                lesson={currentLesson}
-                onLessonStartRequested={this.onLessonStartRequested}
-                onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
-          </div>
-        </div>
+         {currentLesson.id ?
+           <div className={style.section}>
+           <div className={style.heading}>Current Lesson</div>
+            <div className={style.cards}>
+              <StudentLessonCard
+                  key={currentLesson.id}
+                  lesson={currentLesson}
+                  onLessonStartRequested={this.onLessonStartRequested}
+                  onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
+            </div>
+            </div> :
+            <div className={style.heading}>No Current Lesson</div>
+        }
+
         <div className={style.section}>
           <div className={style.heading}>Upcoming Lessons</div>
           <div className={style.cards}>

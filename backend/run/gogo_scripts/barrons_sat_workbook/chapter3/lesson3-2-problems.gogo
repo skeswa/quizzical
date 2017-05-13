@@ -3,23 +3,12 @@
 #351-Medium
 #352-Hard
 
-#==Sources
+#==Source
 #73001-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2
 
-#==Categories
-#954-Passport to Advanced Math/Quadratics
-#1751-Additional Topics in Math/Imaginary Numbers
-#1752-Additional Topics in Math/Geometry
-#1753-Additional Topics in Math/Trigonometry
-#1754-Passport to Advanced Math/Functions
-##51-Heart of Algebra/Linear Equations
+#==Category
 #401-Heart of Algebra/Systems of Linear Equations
-#402-Heart of Algebra/Inequalities
-#651-Problem Solving and Data Analysis/Rates, Ratios, Proportions, and Percentages
-#652-Problem Solving and Data Analysis/Scatterplots
-#952-Problem Solving and Data Analysis/Statistics and Probability
-#953-Passport to Advanced Math/Exponents
-#25601-ADVANCED TECHNIQUES FOR POLYNOMIALS AND RATIONAL EQUATIONS
+
 
 # Questions
 # Page: 96
@@ -73,3 +62,5 @@ prblm:add 73001 96 34 401 351 false false "/Users/mduduzikeswa/Documents/Persona
 prblm:add 73001 96 35 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q35.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a35.png" 23.5
 prblm:add 73001 96 36 401 351 false false "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/q36.png" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-2/a36.png" 3.59
 
+# Create lesson
+lssn:create "Lesson 3-2: Solving Linear Equations" 73001 401 75152

@@ -36,8 +36,8 @@
 #8.      String   Path to Q image
 #9.      String   Path to A image
 #10.     String   Answer
-lssn:create "Lesson 3-1" 72451 51 75151
-lssn:create "Lesson 3-2" 73001 401 75152
+lssn:create "Lesson 3-1: Beginning Facts" 72451 51 75151
+lssn:create "Lesson 3-2: Solving Linear Equations" 73001 401 75152
 
 # Add lesson pdf's
 #75151-1494009361351Lesson 3-1 Some Math Facts
@@ -51,6 +51,9 @@ lssn:listplans
 #73451-[M Lesson Plan]-[mduduzi.keswa@gmail.com]
 lssn:list
 #73551-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-1
-addlesson 73551 mduduzi.keswa@gmail.com
+#76751-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2
+addlesson 80851 mduduzi.keswa@gmail.com
+addlesson 80852 mduduzi.keswa@gmail.com
+addlesson 80853 mduduzi.keswa@gmail.com
 #resetplan mduduzi.keswa@gmail.com
 

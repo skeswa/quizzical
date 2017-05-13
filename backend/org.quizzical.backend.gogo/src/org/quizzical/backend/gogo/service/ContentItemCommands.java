@@ -22,7 +22,7 @@ public class ContentItemCommands {
     }
     
     @Descriptor("Add a content item")
-    public static String addpdf(@Descriptor("Unique content item name") String name, 
+    public static Long addpdf(@Descriptor("Unique content item name") String name, 
     						@Descriptor("Unique content item filePath") String filePath) throws Exception {
     	IContentItemDAOService svc = (IContentItemDAOService)createServiceFromServiceType(IContentItemDAOService.class);
         
@@ -46,6 +46,6 @@ public class ContentItemCommands {
 				fis.close();
 		}
 		
-		return String.format("CI %d-%s created successfully",ci.getId(),ci.getCode());
+		return ci.getId();
     }
 }

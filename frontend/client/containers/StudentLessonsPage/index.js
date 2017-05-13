@@ -85,7 +85,7 @@ const reduxify = connect(
   (state, props) => ({
     currentUserLesson:     state.userLesson.currentLesson,
     upcomingUserLessons:   state.userLesson.upcomingLessons,
-    finishedUserLessons:   state.userLesson.upcomingLessons,
+    finishedUserLessons:   state.userLesson.finishedLessons,
     dataShouldBeLoaded: (
       !state.userLesson.currentLessonLoaded   ||
       !state.userLesson.upcomingLessonsLoaded ||

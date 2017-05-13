@@ -4,6 +4,7 @@ import org.apache.felix.service.command.Descriptor;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.Lesson;
 import org.gauntlet.lessons.api.model.LessonProblem;
+import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.lessons.api.model.UserLessonPlan;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -23,14 +24,14 @@ import java.util.stream.Collectors;
 
 public class LessonCommands {
     public final static String SCOPE = "lssn";
-    public final static String[] FUNCTIONS = new String[] { "create","del","list","addplan","resetplan","listplans","addlesson"};
+    public final static String[] FUNCTIONS = new String[] { "create","del","list","addplan","resetplan","listplans","addlesson","schedulenext"};
 
     //-- Lesson
     @Descriptor("Creates lesson from problems whose source id is sourceId")
-    public static String create(@Descriptor("Lesson name") String lessonName, 
+    public static Long create(@Descriptor("Lesson name") String lessonName, 
     							@Descriptor("Source Id") Long sourceId,
-    							@Descriptor("Category Id") Long categoryId,
-    							@Descriptor("Content Id") Long contentItemId) throws Exception {
+    							@Descriptor("Content Id") Long contentItemId,
+    							@Descriptor("Category Id") Long categoryId) throws Exception {
     	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
     	final ProblemSource ps = svc.getProblemSourceByPrimary(sourceId);
     	List<Problem> probs = svc.findAllBySource(sourceId);
@@ -46,7 +47,30 @@ public class LessonCommands {
     	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
     	lesson = lsvc.provide(lesson);
 
-    	return "Added lesson successfully!";
+    	return lesson.getId();
+    }
+    
+    @Descriptor("Schedule next lesson for user")
+    public static String schedulenext(@Descriptor("User name") String userId) throws Exception {
+    	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+
+    	User user = uSvc.getByEmail(userId);
+    	lsvc.pickNextUserLesson(user.getId());
+    	;
+
+    	return "Updated lesson successfully!";
+    }
+    
+    @Descriptor("Schedule lesson as first in order")
+    public static String scheduleindex(@Descriptor("Source Id") Long lessonId,
+    		@Descriptor("Source Id") Integer order) throws Exception {
+    	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+    	UserLesson ul = lsvc.getUserLessonByPrimary(lessonId);
+    	ul.setLessonOrder(order);
+    	lsvc.updateUserLesson(ul);
+
+    	return "Updated lesson successfully!";
     }
     
     @Descriptor("List lessons")
@@ -116,8 +140,9 @@ public class LessonCommands {
     	Quiz quiz = gSvc.generate(user, params);
     	
     	//Create UserLesson
+    	LessonType clt = lsvc.getLessonTypeByCode(org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_CURRENT);
     	UserLesson ul = new UserLesson(user.getId(),lesson, quiz);
-    	if (plan.getCurrentLesson() == null) {
+    	if (lsvc.findUserLessonByType(user, clt.getId()) == null) {
     		ul = lsvc.provideLessonAsCurrentToPlan(ul, plan.getId());
     	}
     	else {
@@ -144,7 +169,7 @@ public class LessonCommands {
         	});
     } 
     
-    @Descriptor("Resets user lesson plan")
+    @Descriptor("Resets user lesson plan - creates new if missing")
     public static String resetplan(@Descriptor("UserId ID") String targetUserId) throws Exception {
     	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
     	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
@@ -152,8 +177,18 @@ public class LessonCommands {
     	User user = uSvc.getByEmail(targetUserId);
     	UserLessonPlan plan = lsvc.getUserLessonPlanByUserPk(user.getId());
     	
-    	lsvc.resetUserLessonPlan(user);
+    	if (plan != null) {
+	    	lsvc.resetUserLessonPlan(user);
+	    	
+	    	return String.format("LessonPlan for user %s reset successfully!",user.getFirstName());
+    	}
+    	else {
+        	String code = String.format("%s Lesson Plan", user.getFirstName());
+        	plan = new UserLessonPlan(code, code, user.getId());
+        	plan = lsvc.provideUserLessonPlan(plan);
+        	
+            return String.format("New Plan %s created successfully!",plan.getCode());
+    	}
     	
-    	return String.format("LessonPlan for user %s deleted successfully!",user.getFirstName());
     } 
 }

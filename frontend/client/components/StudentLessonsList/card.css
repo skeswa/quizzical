@@ -38,5 +38,30 @@
 }
 
 .title {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
+}
+
+.lessonStatIcon {
+  color: #444444;
+  font-size: 1.8rem;
+  margin-top: 0.1rem;
+}
+
+.lessonStatText {
+  color: #444444;
+  font-size: 1.4rem;
+  padding-left: 0.8rem;
+}
+
+.lessonStat {
+  align-items: flex-start;
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+.lessonStat:last-child {
+  margin-bottom: 0;
+}
+
+.lessonStatHighlight {
+  font-weight: 500;
 }

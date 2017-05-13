@@ -8,8 +8,6 @@ import org.gauntlet.core.model.BaseEntity;
 public class UserLessonPlan extends BaseEntity implements Serializable {
 	private Long userId;
 
-	private UserLesson currentLesson;
-	
 	private List<UserLesson> lessons;
 	
 	public Long getUserId() {
@@ -28,28 +26,13 @@ public class UserLessonPlan extends BaseEntity implements Serializable {
 		this.code = code;
 		this.userId = userId;
 	}
+
 	
-	public UserLessonPlan(String name, String code, Long userId, UserLesson currentLesson) {
+	public UserLessonPlan(String name, String code, Long userId, List<UserLesson> lessons) {
 		this.name = name;
 		this.code = code;
 		this.userId = userId;
-		this.currentLesson = currentLesson;
-	}
-	
-	public UserLessonPlan(String name, String code, Long userId, UserLesson currentLesson, List<UserLesson> lessons) {
-		this.name = name;
-		this.code = code;
-		this.userId = userId;
-		this.currentLesson = currentLesson;
 		this.lessons = lessons;
-	}
-
-	public UserLesson getCurrentLesson() {
-		return currentLesson;
-	}
-
-	public void setCurrentLesson(UserLesson currentLesson) {
-		this.currentLesson = currentLesson;
 	}
 
 	public List<UserLesson> getLessons() {

@@ -24,6 +24,7 @@ public class LessonEventHandlerImpl implements EventHandler {
 			UserLesson ul = lessonService.findUserLessonByQuizId(qId);
 			QuizSubmission qs = quizSubmissionService.getByPrimary(qsId);
 			lessonService.markUserLessonAsComplete(ul,qs);
+			lessonService.pickNextUserLesson(ul.getUserId());
 		} catch (ApplicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
