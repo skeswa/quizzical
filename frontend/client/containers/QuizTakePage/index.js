@@ -112,21 +112,23 @@ class QuizTakePage extends Component {
     })
 
     // Cancel the quiz.
-    this.props.actions.deleteQuizSubmission(quizSubmission.quizId)
-      .then(resultingActions => {
-        const error = extractErrorFromResultingActions(resultingActions)
-        if (error) {
-          this.setState({
-            loadingError:   error,
-            isDataLoading:  false,
-          })
-        } else {
-          this.setState({
-            isDataLoading: false,
-          })
-          this.props.history.push(`/`)
-        }
-      })
+    if (quizSubmission) {
+      this.props.actions.deleteQuizSubmission(quizSubmission.quizId)
+        .then(resultingActions => {
+          const error = extractErrorFromResultingActions(resultingActions)
+          if (error) {
+            this.setState({
+              loadingError:   error,
+              isDataLoading:  false,
+            })
+          } else {
+            this.setState({
+              isDataLoading: false,
+            })
+            this.props.history.push(`/`)
+          }
+        })
+    }
   }
 
   @autobind

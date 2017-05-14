@@ -72,7 +72,7 @@ class QuizResultsPage extends Component {
   @autobind
   onQuizCancelled() {
     // TODO(skeswa): tell the backend to delete the cancelled quiz.
-    this.context.router.push(`/quiz`)
+    this.context.router.push(`/`)
   }
 
   @autobind

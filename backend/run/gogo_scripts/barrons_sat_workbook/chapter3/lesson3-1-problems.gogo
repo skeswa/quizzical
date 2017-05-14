@@ -59,6 +59,4 @@ lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson3-1.pdf
 #      Long   Category Id
 #      Long   Content Id
 lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
-# Test
-lssn:addlesson ${lessonTempltId} mduduzi.keswa@gmail.com
 

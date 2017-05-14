@@ -1,59 +1,41 @@
-#==Diff's
-#101-Easy
-#351-Medium
-#352-Hard
-
-#==Sources
+#
 #72451-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-1
 #73001-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2
+#78401-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-1
+#81251-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-2
+#84101-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-3
+#85201-Barrons_MathWorkbookForNewTheNewSAT_Lesson5-5
+prblm:delbysrc 72451 admin@q7l.io q7ladmin
+prblm:delbysrc 73001 admin@q7l.io q7ladmin
+prblm:delbysrc 78401 admin@q7l.io q7ladmin
+prblm:delbysrc 81251 admin@q7l.io q7ladmin
+prblm:delbysrc 84101 admin@q7l.io q7ladmin
+prblm:delbysrc 85201 admin@q7l.io q7ladmin
 
-#==Categories
-#954-Passport to Advanced Math/Quadratics
-#1751-Additional Topics in Math/Imaginary Numbers
-#1752-Additional Topics in Math/Geometry
-#1753-Additional Topics in Math/Trigonometry
-#1754-Passport to Advanced Math/Functions
-##51-Heart of Algebra/Linear Equations
-#401-Heart of Algebra/Systems of Linear Equations
-#402-Heart of Algebra/Inequalities
-#651-Problem Solving and Data Analysis/Rates, Ratios, Proportions, and Percentages
-#652-Problem Solving and Data Analysis/Scatterplots
-#952-Problem Solving and Data Analysis/Statistics and Probability
-#953-Passport to Advanced Math/Exponents
-#25601-ADVANCED TECHNIQUES FOR POLYNOMIALS AND RATIONAL EQUATIONS
-
-# Questions
-# Page: 96
-# Source: 73001
-# Parameters:
-#1.      Long   Source ID
-#2.      Integer   Source Page
-#3.      Integer   Index in Page
-#4.      Long   Category ID
-#5.      Long   Difficulty ID
-#6.      Boolean   Calculator Allowed?
-#7.      Boolean   MultipleChoice?
-#8.      String   Path to Q image
-#9.      String   Path to A image
-#10.     String   Answer
-lssn:create "Lesson 3-1: Beginning Facts" 72451 51 75151
-lssn:create "Lesson 3-2: Solving Linear Equations" 73001 401 75152
-
-# Add lesson pdf's
-#75151-1494009361351Lesson 3-1 Some Math Facts
-addpdf "Lesson 3-1 Some Math Facts" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/lesson3-1.pdf"
-#75152-1494009398085Lesson 3-2 Solving Linear Equastions
-addpdf "Lesson 3-2 Solving Linear Equastions" "/Users/mduduzikeswa/Documents/Personal/Mandi/MathWorkbookForNewTheNewSAT/Chapter3-Heart-Of-Algebra/3-1/lesson3-1.pdf"
-
-#mduduzi.keswa@gmail.com Plan
-addplan mduduzi.keswa@gmail.com admin@q7l.io q7ladmin
-lssn:listplans
-#73451-[M Lesson Plan]-[mduduzi.keswa@gmail.com]
-lssn:list
-#73551-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-1
-#76751-Barrons_MathWorkbookForNewTheNewSAT_Lesson3-2
-addlesson 80851 mduduzi.keswa@gmail.com
-addlesson 80852 mduduzi.keswa@gmail.com
-addlesson 80853 mduduzi.keswa@gmail.com
-#resetplan mduduzi.keswa@gmail.com
-
+#
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter3/lesson3-1-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter3/lesson3-2-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-1-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-2-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-3-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-4-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-5-problems.gogo
+source /Users/mduduzikeswa/Documents/dev/mazasoft/projects/quizical/quizzical/backend/run/gogo_scripts/barrons_sat_workbook/chapter5/lesson5-6-problems.gogo
+#
+resetplan mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 3-1: Beginning Facts")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 3-2: Solving Linear Equations")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-2: Advanced Algebraic Exponents")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-3: Complex Numbers")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-4: Completing the square")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
+addlesson ${lessonid} mduduzi.keswa@gmail.com

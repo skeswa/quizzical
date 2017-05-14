@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class LessonCommands {
     public final static String SCOPE = "lssn";
-    public final static String[] FUNCTIONS = new String[] { "create","del","list","addplan","resetplan","listplans","addlesson","schedulenext"};
+    public final static String[] FUNCTIONS = new String[] { "create","del","list","addplan","resetplan","listplans","addlesson","schedulenext","getid"};
 
     //-- Lesson
     @Descriptor("Creates lesson from problems whose source id is sourceId")
@@ -46,6 +46,14 @@ public class LessonCommands {
     	
     	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
     	lesson = lsvc.provide(lesson);
+
+    	return lesson.getId();
+    }
+    
+    @Descriptor("Get lesson lesson id from lesson name")
+    public static Long getid(@Descriptor("Lesson name") String lessonName) throws Exception {
+    	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+    	Lesson lesson = lsvc.getByName(lessonName);
 
     	return lesson.getId();
     }
