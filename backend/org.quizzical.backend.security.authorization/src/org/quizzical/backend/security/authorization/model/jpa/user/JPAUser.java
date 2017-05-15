@@ -21,6 +21,7 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	
 	private Boolean admin = false;
 	private Boolean qa = false;
+	private Boolean requiresDiagnosticTest = true;
 	private Boolean makeNextRunAPracticeTest = false;
 	private Boolean makeNextRunLeastRecentlyPractice = false;
 	private Boolean makeNextRunPracticeSkippedOrIncorrect = false;
@@ -525,6 +526,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 			return false;
 		else
 			return readyForReset;
+	}
+	
+	public Boolean getRequiresDiagnosticTest() {
+		return requiresDiagnosticTest;
+	}
+
+	public void setRequiresDiagnosticTest(Boolean requiresDiagnosticTest) {
+		this.requiresDiagnosticTest = requiresDiagnosticTest;
 	}
 
 	public void setReadyForReset(Boolean readyForReset) {

@@ -1,0 +1,14 @@
+resetplan mandisakeswa999@gmail.com
+usr:requiresNoDiagnostic mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-2: Advanced Algebraic Exponents")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-3: Complex Numbers")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-4: Completing the square")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
+addlesson ${lessonid} mandisakeswa999@gmail.com

@@ -40,6 +40,8 @@ public interface ILessonsDAOService extends IBaseService {
 	
 	public long countAllUserLessons(User user) throws ApplicationException;
 	
+	public UserLesson deleteUserLesson(Long id) throws ApplicationException, NoSuchModelException;
+	
 	public UserLesson provideUserLesson(UserLesson record) throws ApplicationException;
 	
 	public UserLesson updateUserLesson(UserLesson record) throws ApplicationException;

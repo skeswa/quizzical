@@ -7,6 +7,7 @@ import org.gauntlet.core.model.BaseEntity;
 public class User extends BaseEntity{
 	private Boolean admin = false;
 	private Boolean qa = false;
+	private Boolean requiresDiagnosticTest = true;
 	private Boolean makeNextRunAPracticeTest = false;
 	private Boolean makeNextRunLeastRecentlyPractice = false;
 	private Boolean makeNextRunPracticeSkippedOrIncorrect = false;
@@ -530,6 +531,17 @@ public class User extends BaseEntity{
 	public void setReadyForReset(Boolean readyForReset) {
 		this.readyForReset = readyForReset;
 	}
+
+	
+	public Boolean getRequiresDiagnosticTest() {
+		return requiresDiagnosticTest;
+	}
+
+
+	public void setRequiresDiagnosticTest(Boolean requiresDiagnosticTest) {
+		this.requiresDiagnosticTest = requiresDiagnosticTest;
+	}
+
 
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)

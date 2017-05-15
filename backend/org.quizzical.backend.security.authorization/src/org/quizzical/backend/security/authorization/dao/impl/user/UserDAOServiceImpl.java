@@ -107,6 +107,13 @@ public class UserDAOServiceImpl extends BaseServiceImpl implements IUserDAOServi
 		return update(usr);		
 	}
 	
+	@Override
+	public User requiresNoDiagnostic(User record) throws ApplicationException {
+		User usr = getByEmail(record.getEmailAddress());
+		usr.setRequiresDiagnosticTest(false);
+		return update(usr);		
+	}
+	
 	public User deactivate(User record) throws ApplicationException {
 		User usr = getByEmail(record.getEmailAddress());
 		usr.setActive(false);

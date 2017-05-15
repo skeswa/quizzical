@@ -1,0 +1,17 @@
+resetplan mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 3-1: Beginning Facts")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 3-2: Solving Linear Equations")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-2: Advanced Algebraic Exponents")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-3: Complex Numbers")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-4: Completing the square")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
+addlesson ${lessonid} mduduzi.keswa@gmail.com

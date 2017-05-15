@@ -110,25 +110,58 @@ class QuizTakePage extends Component {
       isDataLoading: true,
       loadingError: null,
     })
-
+    this.props.history.push(`/`)
     // Cancel the quiz.
-    if (quizSubmission) {
-      this.props.actions.deleteQuizSubmission(quizSubmission.quizId)
-        .then(resultingActions => {
-          const error = extractErrorFromResultingActions(resultingActions)
-          if (error) {
-            this.setState({
-              loadingError:   error,
-              isDataLoading:  false,
-            })
-          } else {
-            this.setState({
-              isDataLoading: false,
-            })
-            this.props.history.push(`/`)
-          }
-        })
-    }
+    //if (quizSubmission) {
+    //  this.props.actions.deleteQuizSubmission(quizSubmission.quizId)
+    //    .then(resultingActions => {
+    //      const error = extractErrorFromResultingActions(resultingActions)
+    //      if (error) {
+    //        this.setState({
+    //          loadingError:   error,
+    //          isDataLoading:  false,
+    //        })
+    //      } else {
+    //        this.setState({
+    //          isDataLoading: false,
+    //        })
+    //        this.props.history.push(`/`)
+    //      }
+    //    })
+    //}
+  }
+
+  @autobind
+  onGoHome() {
+    //ToDo: There's gotta be a better way
+    const {
+      loadCurrentLesson,
+      loadUpcomingLessons,
+      loadFinishedLessons,
+    } = this.props.actions
+
+    // Indicate loading.
+    this.setState({ isDataLoading: true, loadingError: null })
+
+    // Re-load everything.
+    Promise
+      .all([
+        loadCurrentLesson(),
+        loadUpcomingLessons(),
+        loadFinishedLessons(),
+      ])
+      .then(resultingActions => {
+        const error = extractErrorFromResultingActions(resultingActions)
+        if (error) {
+          this.setState({
+            loadingError:   error,
+            isDataLoading:  false,
+          })
+        } else {
+          this.setState({ isDataLoading: false })
+          this.props.history.push(`/`)
+        }
+      })
   }
 
   @autobind
@@ -212,12 +245,12 @@ class QuizTakePage extends Component {
     return (
       <PracticeSkeleton
         title="Quiz Results"
-        action="Start Over"
+        action="Go Home"
         animated={true}
         fullScreen={true}
         bodyUnpadded={true}
         animationDelay={0}
-        onActionClicked={this.onQuizCancelled}>
+        onActionClicked={this.onGoHome}>
         <QuizResults results={quizResults} />
       </PracticeSkeleton>
     )
@@ -252,7 +285,8 @@ const reduxify = connect(
     actions: Object.assign(
       {},
       bindActionCreators(actions.quiz, dispatch),
-      bindActionCreators(actions.quizSubmission, dispatch))
+      bindActionCreators(actions.quizSubmission, dispatch),
+      bindActionCreators(actions.userLesson, dispatch))
   }))
 
 // Connect the quiz take page to the store.

@@ -359,13 +359,14 @@ public class LessonDAOImpl extends BaseServiceImpl implements ILessonsDAOService
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);		
 	}
 	
-	
+	@Override
 	public UserLesson deleteUserLesson(Long id) throws ApplicationException, NoSuchModelException {
 		JPAUserLesson jpaEntity = (JPAUserLesson) super.findByPrimaryKey(JPAUserLesson.class, id);
 		super.remove(jpaEntity);
 		return JPAEntityUtil.copy(jpaEntity, UserLesson.class);
 	}	
 	
+
 
 	@Override
 	public void markUserLessonAsComplete(UserLesson ul, QuizSubmission qs) throws ApplicationException {

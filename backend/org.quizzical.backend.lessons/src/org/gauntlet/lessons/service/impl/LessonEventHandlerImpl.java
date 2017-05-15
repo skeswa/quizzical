@@ -17,18 +17,14 @@ public class LessonEventHandlerImpl implements EventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		Long qId = (Long) event.getProperty("quizId");
-		Long qsId = (Long) event.getProperty("quizSubmissionId");
+		QuizSubmission qs = (QuizSubmission) event.getProperty("quizSubmission");
 		
 		//- Mark UserLesson as finished
 		try {
 			UserLesson ul = lessonService.findUserLessonByQuizId(qId);
-			QuizSubmission qs = quizSubmissionService.getByPrimary(qsId);
 			lessonService.markUserLessonAsComplete(ul,qs);
 			lessonService.pickNextUserLesson(ul.getUserId());
 		} catch (ApplicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

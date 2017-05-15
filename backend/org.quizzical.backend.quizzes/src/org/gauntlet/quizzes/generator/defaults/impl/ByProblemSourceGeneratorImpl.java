@@ -1,10 +1,7 @@
 package org.gauntlet.quizzes.generator.defaults.impl;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,23 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
-import org.gauntlet.problems.api.model.ProblemCategory;
-import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemSource;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
-import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
-import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateDAOService;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplate;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
-import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -126,9 +114,9 @@ public class ByProblemSourceGeneratorImpl implements IQuizGeneratorService {
 		Collections.sort(persistedQuiz.getQuestions(), new Comparator<QuizProblem>() {
 			@Override
 			public int compare(QuizProblem o1, QuizProblem o2) {
-				if  (o1.getOrdinal() < o2.getOrdinal())
+				if  (o1.getProblem().getSourceIndexWithinPage() < o2.getProblem().getSourceIndexWithinPage())
 					return -1;
-				else if (o1.getOrdinal() > o2.getOrdinal())
+				else if (o1.getProblem().getSourceIndexWithinPage() > o2.getProblem().getSourceIndexWithinPage())
 					return  1;
 				else 
 					return 0;//they must be the same

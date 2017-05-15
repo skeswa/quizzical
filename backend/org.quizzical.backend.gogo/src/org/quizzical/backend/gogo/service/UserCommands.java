@@ -1,6 +1,8 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
+import org.gauntlet.lessons.api.dao.ILessonsDAOService;
+import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","reset2cat","activate","showactive","lru","category","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","requiresNoDiagnostic","reset2cat","activate","showactive","lru","category","ptest","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -57,6 +59,19 @@ public class UserCommands {
        	user = svc.activate(user);
        	return "User ("+user.getFirstName()+") activated";
     } 
+    
+    @Descriptor("Disable user diagnostic requirement")
+    public static String requiresNoDiagnostic(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user = svc.requiresNoDiagnostic(user);
+       	return "User ("+user.getFirstName()+") set to require no diagnostic";
+    } 
+    
+    
     
     @Descriptor("Deactivate user")
     public static String deactivate(@Descriptor("Email address as userid") String userId) throws Exception {
@@ -181,6 +196,18 @@ public class UserCommands {
 		if (tua != null)
 			uasvc.delete(tua.getId());
 		
+		//Delete user lessons
+		ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+		List<UserLesson> lsns = lsvc.findAllUserLessons(user);
+		lsns.stream()
+		.forEach(l -> {
+			try {
+				lsvc.deleteUserLesson(l.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}				
+		});	
+		
 		//Delete submissions
 		IQuizSubmissionDAOService qssvc = (IQuizSubmissionDAOService)createServiceFromServiceType(IQuizSubmissionDAOService.class);
 		List<QuizSubmission> subs = qssvc.findAll(user);
@@ -192,7 +219,6 @@ public class UserCommands {
 					e.printStackTrace();
 				}
 			});
-		
 		
     	//Delete any remaining quizzes
 		IQuizDAOService qsvc = (IQuizDAOService)createServiceFromServiceType(IQuizDAOService.class);

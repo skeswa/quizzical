@@ -76,6 +76,39 @@ class QuizResultsPage extends Component {
   }
 
   @autobind
+  onGoHome() {
+    //ToDo: There's gotta be a better way
+    const {
+      loadCurrentLesson,
+      loadUpcomingLessons,
+      loadFinishedLessons,
+    } = this.props.actions
+
+    // Indicate loading.
+    this.setState({ isDataLoading: true, loadingError: null })
+
+    // Re-load everything.
+    Promise
+      .all([
+        loadCurrentLesson(),
+        loadUpcomingLessons(),
+        loadFinishedLessons(),
+      ])
+      .then(resultingActions => {
+        const error = extractErrorFromResultingActions(resultingActions)
+        if (error) {
+          this.setState({
+            loadingError:   error,
+            isDataLoading:  false,
+          })
+        } else {
+          this.setState({ isDataLoading: false })
+          this.context.router.push(`/`)
+        }
+      })
+  }
+
+  @autobind
   onQuestionIndexChanged(currentQuestionIndex) {
     this.setState({ currentQuestionIndex })
   }
@@ -125,8 +158,8 @@ class QuizResultsPage extends Component {
             </div>
             <div className={style.errorPageButtons}>
               <RaisedButton
-                label="Start Over"
-                onClick={this.onQuizCancelled}
+                label="Go Home"
+                onClick={this.onGoHome}
                 labelColor="#ffffff"
                 backgroundColor="#222222" />
             </div>
@@ -160,8 +193,8 @@ class QuizResultsPage extends Component {
           </div>
           <div className={style.resultsPageButtons}>
             <RaisedButton
-              label="Start Over"
-              onClick={this.onQuizCancelled}
+              label="Go Home"
+              onClick={this.onGoHome}
               labelColor="#ffffff"
               backgroundColor="#222222" />
           </div>
@@ -198,7 +231,8 @@ const reduxify = connect(
     actions: Object.assign(
       {},
       bindActionCreators(actions.quiz, dispatch),
-      bindActionCreators(actions.quizSubmission, dispatch))
+      bindActionCreators(actions.quizSubmission, dispatch),
+      bindActionCreators(actions.userLesson, dispatch)),
   }))
 
 export default reduxify(QuizResultsPage)

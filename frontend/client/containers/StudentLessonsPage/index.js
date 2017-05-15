@@ -25,6 +25,9 @@ const fakeData = {
   }
 
 
+  componentWillReceiveProps() {
+    if (this.props.dataShouldBeLoaded) this.loadData()
+  }
   componentWillMount() {
     if (this.props.dataShouldBeLoaded) this.loadData()
   }

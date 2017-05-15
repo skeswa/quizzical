@@ -150,6 +150,7 @@ public class LessonCommands {
     	//Create UserLesson
     	LessonType clt = lsvc.getLessonTypeByCode(org.gauntlet.lessons.api.model.Constants.LESSON_TYPE_CURRENT);
     	UserLesson ul = new UserLesson(user.getId(),lesson, quiz);
+    	ul.setTotalProblems(quiz.getQuestions().size());
     	if (lsvc.findUserLessonByType(user, clt.getId()) == null) {
     		ul = lsvc.provideLessonAsCurrentToPlan(ul, plan.getId());
     	}
