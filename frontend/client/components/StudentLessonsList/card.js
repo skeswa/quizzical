@@ -20,11 +20,13 @@ const StudentLessonCard = ({
     quizScore,
     lessonOrder,
     totalProblems,
-    dateLessonFinished
+    dateLessonFinished,
+    quizSubmissionId
   }
   ,
   onLessonStartRequested,
   onLessonQuizStartRequested,
+  onLessonQuizReview,
 }) => (
   <div className={style.main}>
     <div className={style.info}>
@@ -94,9 +96,19 @@ const StudentLessonCard = ({
               onClick={() => onLessonQuizStartRequested(quiz.id)} />
         </div>
     </div>
-
-  }
-
+    }
+    {lessonFinished === true ?
+      <div className={style.actions}>
+        <div className={style.action}>
+          <FlatButton
+              label={'Review Quiz'}
+              onClick={() => onLessonQuizReview(quiz.id)}
+              primary={true} />
+        </div>
+      </div>
+      :
+      <span></span>
+    }
   </div>
 )
 

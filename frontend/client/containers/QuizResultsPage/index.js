@@ -64,9 +64,9 @@ class QuizResultsPage extends Component {
   }
 
   getQuizId() {
-    return this.props.params
-      ? this.props.params.quizId
-      : null
+    return this.props.match && this.props.match.params
+        ? this.props.match.params.id
+        : null
   }
 
   @autobind

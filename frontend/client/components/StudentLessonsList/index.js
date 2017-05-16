@@ -28,6 +28,12 @@ class StudentLessonsList extends Component {
     console.log(`onLessonQuizStartRequested('${quizId}')`)
   }
 
+  @autobind
+  onLessonQuizReview(quizId) {
+    this.context.router.history.push(`/quiz/${quizId}/results`)
+    console.log(`onLessonQuizReview('${quizId}')`)
+  }
+
   render() {
     const { currentLesson, upcomingLessons, finishedLessons } = this.props
 
@@ -70,7 +76,8 @@ class StudentLessonsList extends Component {
                   key={lesson.id}
                   lesson={lesson}
                   onLessonStartRequested={this.onLessonStartRequested}
-                  onLessonQuizStartRequested={this.onLessonQuizStartRequested} />
+                  onLessonQuizStartRequested={this.onLessonQuizStartRequested}
+                  onLessonQuizReview={this.onLessonQuizReview} />
             ))
           }
           </div>

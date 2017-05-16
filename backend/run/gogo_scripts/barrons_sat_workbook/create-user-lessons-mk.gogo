@@ -1,7 +1,14 @@
 resetplan mduduzi.keswa@gmail.com
-lessonid = (lssn:getid "Lesson 3-1: Beginning Facts")
+usr:requiresNoDiagnostic mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 4-4: Converting Units of Measurement")
 addlesson ${lessonid} mduduzi.keswa@gmail.com
-lessonid = (lssn:getid "Lesson 3-2: Solving Linear Equations")
+lessonid = (lssn:getid "Lesson 4-5: Linear and Exponential Functions")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 4-6: Graphs and Tables")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 4-7: Scatterplots and Sampling")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 4-8: Summerizing Data Using Statistics")
 addlesson ${lessonid} mduduzi.keswa@gmail.com
 lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
 addlesson ${lessonid} mduduzi.keswa@gmail.com

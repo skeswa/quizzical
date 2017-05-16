@@ -1,5 +1,15 @@
 resetplan mandisakeswa999@gmail.com
 usr:requiresNoDiagnostic mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 4-4: Converting Units of Measurement")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 4-5: Linear and Exponential Functions")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 4-6: Graphs and Tables")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 4-7: Scatterplots and Sampling")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 4-8: Summerizing Data Using Statistics")
+addlesson ${lessonid} mandisakeswa999@gmail.com
 lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
 addlesson ${lessonid} mandisakeswa999@gmail.com
 lessonid = (lssn:getid "Lesson 5-2: Advanced Algebraic Exponents")
