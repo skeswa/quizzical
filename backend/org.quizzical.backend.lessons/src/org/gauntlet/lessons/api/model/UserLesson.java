@@ -150,6 +150,14 @@ public class UserLesson extends BaseEntity implements Serializable {
 		this.lessonOrder = lessonOrder;
 	}
 	
+	public Integer getQuizScore() {
+		return quizScore;
+	}
+
+	public void setQuizScore(Integer quizScore) {
+		this.quizScore = quizScore;
+	}
+
 	public UserLesson() {
 	}
 	

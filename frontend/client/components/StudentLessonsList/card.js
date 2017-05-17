@@ -19,6 +19,8 @@ const StudentLessonCard = ({
     skippedProblems,
     quizScore,
     lessonOrder,
+    lessonStatus,
+    lessonType,
     totalProblems,
     dateLessonFinished,
     quizSubmissionId
@@ -70,7 +72,7 @@ const StudentLessonCard = ({
           <span>Your score was </span>
           <span
             className={style.lessonStatHighlight}>
-            {!quizScore ? 0 : quizScore}
+            {quizScore}
           </span>
           <span> and you skipped </span>
           <span
@@ -82,16 +84,15 @@ const StudentLessonCard = ({
       <div className={style.actions}>
         <div className={style.action}>
           <FlatButton
-              label={
-                started
-                    ? 'Resume Lesson'
-                    : 'Start Lesson'
-              }
+              label={'View Lesson'}
               onClick={() => onLessonStartRequested(lesson.contentItemId,name)}
               primary={true} />
         </div>
         <div className={style.action}>
           <FlatButton
+              disabled={
+                lessonType.code === 'Scheduled'
+              }
               label="Start/Resume Quiz"
               onClick={() => onLessonQuizStartRequested(quiz.id)} />
         </div>
@@ -99,6 +100,12 @@ const StudentLessonCard = ({
     }
     {lessonFinished === true ?
       <div className={style.actions}>
+        <div className={style.action}>
+          <FlatButton
+              label={'View Lesson'}
+              onClick={() => onLessonStartRequested(lesson.contentItemId,name)}
+              primary={true} />
+        </div>
         <div className={style.action}>
           <FlatButton
               label={'Review Quiz'}

@@ -182,24 +182,26 @@ class QuizResultsPage extends Component {
       `questions answered`
 
     return (
-      <PracticeSkeleton
-        title="Quiz Finished"
-        subtitle={subtitle}>
-        <div className={style.resultsPage}>
-          <div className={style.resultsCardWrapper}>
-            <div className={style.resultsCard}>
-              <QuizResults results={quizResults} />
+      <div className={style.quizResultsWrapper}>
+        <PracticeSkeleton
+          title="Quiz Finished"
+          subtitle={subtitle}>
+          <div className={style.resultsPage}>
+            <div className={style.resultsCardWrapper}>
+              <div className={style.resultsCard}>
+                <QuizResults results={quizResults} />
+              </div>
+            </div>
+            <div className={style.resultsPageButtons}>
+              <RaisedButton
+                label="Go Home"
+                onClick={this.onGoHome}
+                labelColor="#ffffff"
+                backgroundColor="#222222" />
             </div>
           </div>
-          <div className={style.resultsPageButtons}>
-            <RaisedButton
-              label="Go Home"
-              onClick={this.onGoHome}
-              labelColor="#ffffff"
-              backgroundColor="#222222" />
-          </div>
-        </div>
-      </PracticeSkeleton>
+        </PracticeSkeleton>
+      </div>
     )
   }
 
