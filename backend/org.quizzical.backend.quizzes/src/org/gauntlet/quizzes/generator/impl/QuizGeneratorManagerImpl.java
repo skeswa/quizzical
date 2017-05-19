@@ -70,6 +70,8 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		}
 		else if (user.getMakeNextRunUnpracticed())
 			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_UNPRACTICED_CODE);
+		else if (user.getQa())
+			generatorRef = references.get(Constants.GENERATOR_TYPE_QA_CHECK);
 		
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
 		

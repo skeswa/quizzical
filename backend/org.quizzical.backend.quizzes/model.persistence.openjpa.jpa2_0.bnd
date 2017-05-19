@@ -2,6 +2,7 @@ Bundle-Version: 1.0.0.${tstamp}
 Gnt-Module: gnt_quiz
 Meta-Persistence: META-INF/persistence.xml
 Include-Resource: META-INF/persistence.xml=resources/jpa/quizzes-persistence-openjpa.xml
-Private-Package: org.gauntlet.quizzes.model.jpa.osgi
+Private-Package: \
+	org.gauntlet.quizzes.model.jpa.osgi
 Bundle-Activator: org.gauntlet.quizzes.model.jpa.osgi.Activator
 Export-Package: org.gauntlet.quizzes.model.jpa

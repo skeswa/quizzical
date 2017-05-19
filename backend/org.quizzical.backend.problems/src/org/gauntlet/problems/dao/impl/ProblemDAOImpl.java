@@ -125,8 +125,12 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	
 	@Override
 	public Problem getByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
-		JPAProblem jpaEntity = (JPAProblem) super.findByPrimaryKey(JPAProblem.class, pk);
+		JPAProblem jpaEntity = getByPrimary_(pk);
 		return JPAEntityUtil.copy(jpaEntity, Problem.class);
+	}
+	
+	public JPAProblem getByPrimary_(Long pk) throws ApplicationException, NoSuchModelException {
+		return  (JPAProblem) super.findByPrimaryKey(JPAProblem.class, pk);
 	}
 
 	@Override
@@ -173,6 +177,13 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		Problem dto = JPAEntityUtil.copy(res, Problem.class);
 		return dto;	
 	}	
+	
+	@Override
+	public void markAsQAed(Problem problem) throws ApplicationException, NoSuchModelException {
+		JPAProblem problemEntity = getByPrimary_(problem.getId());
+		problemEntity.setQaEd(true);
+		super.update(problemEntity);
+	}
 	
 	@Override
 	public Problem delete(Long id) throws ApplicationException, NoSuchModelException {
@@ -586,6 +597,38 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		
 		return result;
 	}
+	
+	@Override
+	public List<Problem> getAllNonQAedProblems( Integer limit )
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			
+			ParameterExpression<Boolean> pQaEd = builder.parameter(Boolean.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.notEqual(rootEntity.get("qaEd"),pQaEd));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pQaEd, true);
+			
+			typedQuery.setFirstResult(0);
+			typedQuery.setMaxResults(limit);
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;		
+	}
+	
 	
 	//ProblemDifficulty
 	@Override 

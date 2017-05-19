@@ -56,6 +56,8 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 	
 	private Boolean requiresFixing;
 	
+	private Boolean qaEd = false;
+	
 	public String getAnswer() {
 		return answer;
 	}
@@ -150,5 +152,13 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 
 	public void setAnswerInRange(Boolean answerInRange) {
 		this.answerInRange = answerInRange;
+	}
+
+	public Boolean getQaEd() {
+		return qaEd;
+	}
+
+	public void setQaEd(Boolean qaEd) {
+		this.qaEd = qaEd;
 	} 
 }

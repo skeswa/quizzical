@@ -71,6 +71,22 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}		
 	
 	@SuppressWarnings("rawtypes")
+	public JPABaseEntity findOneWithDynamicQueryAndParams(CriteriaQuery dynamicQuery, Map<ParameterExpression,Object> paramMap)
+		throws ApplicationException {
+		try {
+			TypedQuery typedQuery = getEm().createQuery(dynamicQuery);
+			for (ParameterExpression pe : paramMap.keySet()) {
+				typedQuery.setParameter(pe, paramMap.get(pe));
+			}
+			return (JPABaseEntity) typedQuery.getSingleResult();
+				
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public int countWithDynamicQueryAndParams(CriteriaQuery dynamicQuery, Map<ParameterExpression,Object> paramMap)
 		throws ApplicationException {
 		int res = 0;

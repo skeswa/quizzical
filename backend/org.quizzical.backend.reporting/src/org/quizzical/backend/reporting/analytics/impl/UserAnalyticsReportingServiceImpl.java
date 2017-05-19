@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.mail.EmailException;
 import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemCategoryLesson;
@@ -119,16 +120,20 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 	@Override
 	public void handleEvent(Event event) {
 		if (config.getHandleEmailResultsEvent()) {
-	        String userId = (String) event.getProperty(EVENT_TOPIC_PROP_USERID);
+	        Long userPk = (Long) event.getProperty(EVENT_TOPIC_PROP_USERID);
 	        try {
+	        	User user = userService.getByPrimaryKey(userPk);
 	        	if (config.getBcc() != null && !config.getBcc().isEmpty())
-	        		emailDailyReport(userId,config.getBcc());
+	        		emailDailyReport(user.getEmailAddress(),config.getBcc());
 	        	else
-	        		emailDailyReport(userId,Collections.emptyList());
+	        		emailDailyReport(user.getEmailAddress(),Collections.emptyList());
 			} catch (ApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchModelException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

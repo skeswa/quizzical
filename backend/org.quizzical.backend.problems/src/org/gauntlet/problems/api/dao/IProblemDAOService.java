@@ -58,6 +58,17 @@ public interface IProblemDAOService extends IBaseService {
 	public List<Problem> findByCategoryNotInIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
 			throws ApplicationException;
 	
+	List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
+			throws ApplicationException;
+
+	List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
+			throws ApplicationException;
+	
+	public List<Problem> getAllNonQAedProblems( Integer limit )
+			throws ApplicationException;
+	
+	public void markAsQAed(Problem problem) throws ApplicationException, NoSuchModelException;
+	
 	//ProblemDifficulty
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException;
 	
@@ -118,10 +129,4 @@ public interface IProblemDAOService extends IBaseService {
 	public ProblemPicture getProblemPictureByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
 
 	ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
-
-	List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
-			throws ApplicationException;
-
-	List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
-			throws ApplicationException;
 }

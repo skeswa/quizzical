@@ -184,11 +184,16 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		tua = testUserAnalyticsDAOService.getByCode(code_);
 		if (tua == null) {
 			tua = new TestUserAnalytics( user.getId(), code_, code_);
+			tua = testUserAnalyticsDAOService.provide(tua);
 			//Baseline across all categories
-			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
-			TestCategoryRating rating = null;
-			int cnt = 1;
-			for (TestDesignTemplateContentSubType subType : subTypes) {
+		}
+		
+		final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
+		TestCategoryRating rating = null;
+		int cnt = 1;
+		for (TestDesignTemplateContentSubType subType : subTypes) {
+			rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
+			if (rating == null) {
 				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
 				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
 				rating.setRating(0);
@@ -196,12 +201,14 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				rating.setRatingSubmissions(Collections.emptyList());
 				tua.addRating(rating);
 			}
-			testUserAnalyticsDAOService.provide(tua);
-			
-			if (user.getReadyForReset()) {
-				user.setReadyForReset(false);
-				userService.update(user);
-			}
+		}
+		
+		testUserAnalyticsDAOService.update(tua);
+		
+		
+		if (user.getReadyForReset()) {
+			user.setReadyForReset(false);
+			userService.update(user);
 		}
 	}
 

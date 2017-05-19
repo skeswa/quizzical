@@ -36,6 +36,8 @@ public interface IUserDAOService {
 	
 	public User requiresNoDiagnostic(User record) throws ApplicationException;
 	
+	public User requiresDiagnostic(User user) throws ApplicationException;
+	
 	public User provide(User record) throws Exception;
 
 	public List<User> getAllActiveUsers() throws ApplicationException;
@@ -49,5 +51,6 @@ public interface IUserDAOService {
 
 	void addUser(String userId, String firstName, String newPassword, List<String> bccEmails)
 			throws ApplicationException, EmailException;
+
 
 }

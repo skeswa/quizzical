@@ -16,7 +16,7 @@ export function crudService(entity, extender) {
       return Network.get(`${endpoint}/${id}`)
     },
 
-    getAll(offset = 0, limit = 500) {
+    getAll(offset = 0, limit = 1000) {
       return Network.get(`${endpoint}?start=${offset}&end=${offset + limit}`)
     },
 

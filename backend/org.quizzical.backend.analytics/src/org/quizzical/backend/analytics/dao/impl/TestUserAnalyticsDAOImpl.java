@@ -2,6 +2,7 @@ package org.quizzical.backend.analytics.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
+import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.osgi.service.log.LogService;
@@ -282,6 +284,36 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	@Override
 	public void createDefaults() throws ApplicationException, Exception {
 	}
+	
+	//-- Rating
+	@Override
+	public TestCategoryRating getCategoryRatingByName(Long analyticsId, String name) throws ApplicationException {
+		TestCategoryRating result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
+			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//user
+			ParameterExpression<Long> analyticsIdParam = builder.parameter(Long.class);
+			ParameterExpression<String> nameParam = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("analytics").get("id"),analyticsIdParam),
+					builder.equal(rootEntity.get("name"),nameParam))
+					);
+			pes.put(analyticsIdParam, analyticsId);
+			pes.put(nameParam, name);
+			
+			result = JPAEntityUtil.copy(findOneWithDynamicQueryAndParams(query,pes), TestCategoryRating.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+
 	
 	//-- Misc
 	@Override

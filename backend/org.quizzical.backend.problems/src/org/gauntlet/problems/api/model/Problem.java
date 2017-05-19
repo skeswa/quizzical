@@ -31,6 +31,7 @@ public class Problem extends BaseEntity implements Serializable {
 	
 	private Boolean requiresFixing;
 
+	private Boolean qaEd;
 	
 	public Problem() {
 		super.setCode(Long.toString(System.currentTimeMillis()));
@@ -131,6 +132,14 @@ public class Problem extends BaseEntity implements Serializable {
 
 	public void setAnswerInRange(Boolean answerInRange) {
 		this.answerInRange = answerInRange;
+	}
+
+	public Boolean getQaEd() {
+		return qaEd;
+	}
+
+	public void setQaEd(Boolean qaEd) {
+		this.qaEd = qaEd;
 	}
 
 	public Problem(String answer, ProblemSource source, ProblemCategory category, Integer sourcePageNumber,

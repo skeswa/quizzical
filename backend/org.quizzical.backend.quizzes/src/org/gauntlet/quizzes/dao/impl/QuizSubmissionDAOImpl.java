@@ -328,7 +328,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		quizSubmission.setResponses(nonReportedResponses);
 		
 		//-- Score quiz
-		quizSubmission = scoringService.score(user, quizSubmission,ensureBaline);
+		quizSubmission = scoringService.score(user, quizSubmission,true);
     	
     	//--Persist
     	quizSubmission = add(quizSubmission);
@@ -343,12 +343,17 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
         		.collect(Collectors.toList());
        	quizSubmission.setResponses(correctedResponses);
        	
+       	//- Mark as QA'd if applies
+       	if (user.getQa()) {
+       		markProblemsAsQAed(quizSubmission);
+       	}
+       	
        	//--Send Quiz Submitted event
        	sendQuizSubmittedEvent(user, quizSubmission);
        	
        	//--Email report
-       	if (!(user.getAdmin() || user.getQa()) && user.isActive())
-       		reportStatsViaEmail(user);
+       	//if (!(user.getAdmin() || user.getQa()) && user.isActive())
+       	//	reportStatsViaEmail(user);
        	
        	//--Report faulty problems
        	if (!reportedQuizProblemsIds.isEmpty())
@@ -357,7 +362,22 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
     	return quizSubmission;
 	}
 	
-    public void sendQuizSubmittedEvent(User user, QuizSubmission quizSubmission)
+    private void markProblemsAsQAed(QuizSubmission quizSubmission) {
+       quizSubmission.getResponses()
+        		.stream()
+        		.forEach(problemResponse -> {
+    				try {
+						final Problem problem = problemService.getByPrimary(problemResponse.getQuizProblem().getProblemId());
+						if (problemResponse.getCorrect() != null && problemResponse.getCorrect())
+							problemService.markAsQAed(problem);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    	    	});
+	}
+
+	public void sendQuizSubmittedEvent(User user, QuizSubmission quizSubmission)
     {
         ServiceReference ref = ctx.getServiceReference(EventAdmin.class.getName());
         if (ref != null)
