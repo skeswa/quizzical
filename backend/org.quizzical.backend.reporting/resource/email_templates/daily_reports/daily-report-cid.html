@@ -86,6 +86,29 @@ body {
 
 <body>
 Hello ${firstName} - so here's how you're doing so far...<br><br>
+  <b>Not started</b><br>
+  <br>
+  <div class="table">
+   <div class="row header">
+    <div class="cell">Category</div>
+    <div class="cell">Avg Score</div>
+    <div class="cell">Date Last Quizzed</div>
+    <div class="cell">Last Performance</div>
+    <div class="cell">Lessons</div>
+   </div>
+   #foreach( $rating in $notStartedRatings )
+   <div class="row">
+    <div class="cell">$rating.getName()</div>
+    <div class="cell">
+     $rating.getRating()%
+    </div>
+    <div class="cell doccell"></div>
+    <div class="cell"></div>
+    <div class="cell doccell"></div>
+   </div>
+   #end
+  </div>
+  
   <b>Needs Work</b><br>
   <br>
   <div class="table">

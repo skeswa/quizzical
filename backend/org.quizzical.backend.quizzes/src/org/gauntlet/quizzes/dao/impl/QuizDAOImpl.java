@@ -381,6 +381,8 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException {
 		if (user.getRequiresDiagnosticTest() != null && !user.getRequiresDiagnosticTest())
 			return true;
+		else if (user.getMakeNextRunAPracticeTest()!= null && user.getMakeNextRunAPracticeTest())
+			return false;
 		
 		final int count =countByQuizTypeCode(user, Constants.QUIZ_TYPE_GENERATED_CODE);
 		return count > 0;

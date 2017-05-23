@@ -376,6 +376,7 @@ class QuizTaker extends Component {
           {/* TODO(skeswa): set the time limit dynamically for different questions */}
           <QuizTakerHeader
             questionIndex={questionIndex}
+            questionId={questionId}
             questionTotal={questions.length}
             questionTimeLimit={120}
             timeQuestionStarted={timeCurrentQuestionStarted}

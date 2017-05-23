@@ -1,5 +1,5 @@
 -buildpath: \
-	osgi.core,\
+	osgi.core;version=6.0.0,\
 	osgi.cmpn,\
 	osgi.enterprise,\
 	org.apache.felix.dependencymanager;version=4.1,\

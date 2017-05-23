@@ -12,6 +12,7 @@ const BACK_ARROW_ICON_STYLE = { color: '#fff', fontSize: '2rem' }
 
 class QuizTakerHeader extends Component {
   static propTypes = {
+    questionId:           PropTypes.number.isRequired,
     questionIndex:        PropTypes.number.isRequired,
     questionTotal:        PropTypes.number.isRequired,
     questionTimeLimit:    PropTypes.number.isRequired,
@@ -68,6 +69,7 @@ class QuizTakerHeader extends Component {
   render() {
     const { clockSeconds } = this.state
     const {
+      questionId,
       questionIndex,
       questionTotal,
       questionTimeLimit,
@@ -91,7 +93,9 @@ class QuizTakerHeader extends Component {
           </div>
           <div className={style.questionInstructions}>
             <span>Respond to prompt </span>
-            <span className={style.highlight}>#{questionNumberInPage}</span>
+            <span className={style.highlight}>
+              #{questionNumberInPage}/#{questionId}
+            </span>
             <span> below</span>
           </div>
         </div>

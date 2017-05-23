@@ -39,6 +39,7 @@
 		<class>org.gauntlet.quizzes.model.jpa.JPAQuizProblemResponse</class>
 		<class>org.gauntlet.quizzes.model.jpa.JPAQuizSubmission</class>
 		<class>org.gauntlet.quizzes.model.jpa.JPAQuizType</class>
+		
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

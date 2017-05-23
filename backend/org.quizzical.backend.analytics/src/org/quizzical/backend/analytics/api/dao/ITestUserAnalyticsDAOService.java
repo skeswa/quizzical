@@ -7,6 +7,7 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
+import org.quizzical.backend.analytics.model.jpa.JPATestCategoryRating;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface ITestUserAnalyticsDAOService {
@@ -35,4 +36,7 @@ public interface ITestUserAnalyticsDAOService {
 			Integer endRatingCutoffIncl) throws ApplicationException;
 
 	void truncate() throws ApplicationException;
+
+	//--
+	public TestCategoryRating getCategoryRatingByName(Long analyticsId, String code) throws ApplicationException;
 }

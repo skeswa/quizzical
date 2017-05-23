@@ -22,3 +22,15 @@ lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
 addlesson ${lessonid} mandisakeswa999@gmail.com
 lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
 addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-1: Basic Geometry Facts")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-2: Area of plane figures")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-3: Circles and their equations")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-4: Solid Figures")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-5: Basic Trogonometry")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Lesson 6-6: The Unit Circle")
+addlesson ${lessonid} mandisakeswa999@gmail.com

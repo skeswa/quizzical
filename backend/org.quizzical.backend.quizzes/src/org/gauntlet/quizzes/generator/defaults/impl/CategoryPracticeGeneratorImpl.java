@@ -70,9 +70,9 @@ public class CategoryPracticeGeneratorImpl implements IQuizGeneratorService {
 			List<Problem> problems;
 			
 			final List<Long> userProblemIds = quizProblemService.getAllUserProblemIds(user);
-			problems = problemDAOService.findByCategoryNotInIn(params.getProblemCategoryId(), userProblemIds, 0, params.getQuizSize());  
+			problems = problemDAOService.findByCategoryNotIn(params.getProblemCategoryId(), userProblemIds, 0, params.getQuizSize());  
 			if (problems.size() < params.getQuizSize()) {
-				final List<Problem> newProblems = problemDAOService.findByCategoryNotInIn(params.getProblemCategoryId(), new ArrayList<Long>(), 0, params.getQuizSize()); 
+				final List<Problem> newProblems = problemDAOService.findByCategoryNotIn(params.getProblemCategoryId(), new ArrayList<Long>(), 0, params.getQuizSize()); 
 				newProblems.stream()
 					.forEach(prblm -> {
 						if (problems.size() < params.getQuizSize() && !problems.contains(prblm))

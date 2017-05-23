@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","requiresNoDiagnostic","reset2cat","activate","showactive","lru","category","ptest","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","requiresNoDiagnostic","requiresDiagnostic","reset2cat","activate","showactive","lru","category","ptest","baseline","sori"};
 
     
     @Descriptor("Creates a new user")
@@ -69,6 +69,17 @@ public class UserCommands {
     		
        	user = svc.requiresNoDiagnostic(user);
        	return "User ("+user.getFirstName()+") set to require no diagnostic";
+    } 
+    
+    @Descriptor("Enable user diagnostic requirement")
+    public static String requiresDiagnostic(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    		
+       	user = svc.requiresDiagnostic(user);
+       	return "User ("+user.getFirstName()+") set to require diagnostic";
     } 
     
     
@@ -237,5 +248,19 @@ public class UserCommands {
 		svc.update(user);
     		
        	return String.format("User reset for %s was successful",userId);
+    }
+    
+    @Descriptor("Baseline user")
+    public static String baseline(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    	
+		//Mark as ready to baseline
+		user.setReadyForReset(true);
+		svc.update(user);
+    	
+    	return String.format("User %s marked ready for baseline successful",userId);
     }
 }

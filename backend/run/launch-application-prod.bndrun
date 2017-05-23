@@ -157,5 +157,5 @@
 #-runproperties: org.osgi.service.http.port=8080
 -runproperties:  \
   org.osgi.service.http.port=8080,\
-  felix.fileinstall.dir=conf_prod,\
+  org.amdatu.configurator.properties.dir=conf_prod,\
   org.apache.felix.http.jetty.maxFormSize=1000000000

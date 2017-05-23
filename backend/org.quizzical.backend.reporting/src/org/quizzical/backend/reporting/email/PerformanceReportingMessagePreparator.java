@@ -35,6 +35,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 	private List<TestCategoryRating> doNotMeetRatings;
 	private Map<String, LessonResources> lessonMap;
 	private UserAnalyticsReportingConfiguration config;
+	private List<TestCategoryRating> notStartedRatings;
 
 	public PerformanceReportingMessagePreparator(
 			IMailService service, 
@@ -47,6 +48,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 			final List<TestCategoryRating> goodRatings,
 			final List<TestCategoryRating> needImprovRatings,
 			final List<TestCategoryRating> doNotMeetRatings, 
+			final List<TestCategoryRating> notStartedRatings,
 			Map<String, LessonResources> lessonMap, 
 			UserAnalyticsReportingConfiguration config) throws EmailException {
 		super(service,subject);
@@ -58,6 +60,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 		this.goodRatings = goodRatings;
 		this.needImprovRatings = needImprovRatings;
 		this.doNotMeetRatings = doNotMeetRatings;
+		this.notStartedRatings = notStartedRatings;
 		this.lessonMap = lessonMap;
 		this.config = config;
 	}
@@ -91,6 +94,7 @@ public class PerformanceReportingMessagePreparator extends MailPreparator {
 		vec.put("excellentRatings", excellentRatings);
 		vec.put("goodRatings", goodRatings);
 		vec.put("needImprovRatings", needImprovRatings);
+		vec.put("notStartedRatings", notStartedRatings);
 		vec.put("lessonMap", lessonMap);
 		vec.put("config", config);
 		

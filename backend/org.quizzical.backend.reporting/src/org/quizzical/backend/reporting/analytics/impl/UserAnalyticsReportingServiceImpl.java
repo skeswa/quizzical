@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.mail.EmailException;
 import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemCategoryLesson;
@@ -69,8 +70,18 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 		generateLessons(lessonMap, goodRatings);
 		final List<TestCategoryRating> needImprovRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_GOOD-1);
 		generateLessons(lessonMap, needImprovRatings);
-		final List<TestCategoryRating> doNotMeetRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, 0, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING-1);
+		List<TestCategoryRating> doNotMeetRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, 0, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING-1);
 		generateLessons(lessonMap, doNotMeetRatings);
+		
+		final List<TestCategoryRating> notStartedRatings = doNotMeetRatings.stream()
+				.filter(c -> {
+					return c.getDateOfLastAttempt() == null;
+				}).collect(Collectors.toList());
+		
+		doNotMeetRatings = doNotMeetRatings.stream()
+				.filter(c -> {
+					return c.getDateOfLastAttempt() != null;
+				}).collect(Collectors.toList());
 
 		
 		final String subject = String.format("%s's q7l Progress Report @ %s", user.getFirstName(),new SimpleDateFormat("EEE, d MMM yyyy HH:mm").format(new Date()) );
@@ -86,6 +97,7 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 				goodRatings,
 				needImprovRatings,
 				doNotMeetRatings,
+				notStartedRatings,
 				lessonMap,
 				config);
 		try {
@@ -119,16 +131,20 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 	@Override
 	public void handleEvent(Event event) {
 		if (config.getHandleEmailResultsEvent()) {
-	        String userId = (String) event.getProperty(EVENT_TOPIC_PROP_USERID);
+	        Long userPk = (Long) event.getProperty(EVENT_TOPIC_PROP_USERID);
 	        try {
+	        	User user = userService.getByPrimaryKey(userPk);
 	        	if (config.getBcc() != null && !config.getBcc().isEmpty())
-	        		emailDailyReport(userId,config.getBcc());
+	        		emailDailyReport(user.getEmailAddress(),config.getBcc());
 	        	else
-	        		emailDailyReport(userId,Collections.emptyList());
+	        		emailDailyReport(user.getEmailAddress(),Collections.emptyList());
 			} catch (ApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchModelException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

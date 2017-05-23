@@ -19,10 +19,17 @@ class SplashPage extends Component {
   }
 
   @autobind
-  onSignInClicked() {
+  onGoToLessonsClicked() {
     this.setState(
       { visible: false },
-      () => setTimeout(() => this.props.history.push('/userlessons'), 300))
+      () => setTimeout(() => this.props.history.push('/lessons'), 300))
+  }
+
+  @autobind
+  onTakeAQuizClicked() {
+    this.setState(
+      { visible: false },
+      () => setTimeout(() => this.props.history.push('/quiz'), 300))
   }
 
   componentDidMount() {
@@ -47,12 +54,21 @@ class SplashPage extends Component {
             at the math section of the SAT.
           </div>
           <RaisedButton
-            style={{ width: '14rem' }}
-            label="Continue"
-            onClick={this.onSignInClicked}
+            style={{ width: '20rem' }}
+            label="Go to Lessons"
+            onClick={this.onGoToLessonsClicked}
             labelColor="#754aec"
             labelStyle={{ fontSize: '1.8rem' }}
             backgroundColor="#ffffff" />
+
+         <span></span>
+         <RaisedButton
+           style={{ width: '20rem' }}
+           label="Take a quiz"
+           onClick={this.onTakeAQuizClicked}
+           labelColor="#754aec"
+           labelStyle={{ fontSize: '1.8rem' }}
+           backgroundColor="#ffffff" />
         </div>
       </div>
     )
