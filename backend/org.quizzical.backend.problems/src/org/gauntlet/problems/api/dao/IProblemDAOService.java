@@ -1,5 +1,6 @@
 package org.gauntlet.problems.api.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public interface IProblemDAOService extends IBaseService {
 
 	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  throws ApplicationException;
 
-	public List<Problem> findByCategoryNotInIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+	public List<Problem> findByCategoryNotIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
 			throws ApplicationException;
 	
 	List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
@@ -66,6 +67,11 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public List<Problem> getAllNonQAedProblems( Integer limit )
 			throws ApplicationException;
+	
+	public List<Problem> findByAnyDifficultyAndCategoryNotIn(final Boolean requiresCalc, final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException;
+	
+	public long countByCategoryNotIn(final Long categoryId, final List<Long> ids)  throws ApplicationException;
 	
 	public void markAsQAed(Problem problem) throws ApplicationException, NoSuchModelException;
 	
@@ -128,5 +134,5 @@ public interface IProblemDAOService extends IBaseService {
 	//Problem Picture
 	public ProblemPicture getProblemPictureByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
 
-	ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
+	public ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
 }

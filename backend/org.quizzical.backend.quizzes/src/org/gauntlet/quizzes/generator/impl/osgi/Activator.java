@@ -109,6 +109,7 @@ public class Activator extends DependencyActivatorBase {
 				.setImplementation(ByWeaknessGeneratorImpl.class)
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestDesignTemplateGeneratorService.class).setRequired(true))
 				.add(createServiceDependency().setService(ITestUserAnalyticsDAOService.class).setRequired(true))

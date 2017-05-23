@@ -32,6 +32,7 @@ import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubTy
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateItem;
 import org.quizzical.backend.testdesign.api.model.TestDesignTemplateSection;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
+import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizProblemResponseDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -52,6 +53,8 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	
 	private volatile IProblemDAOService problemDAOService;
 	
+	private volatile IQuizProblemDAOService quizProblemDAOService;
+	
 	private volatile IQuizProblemResponseDAOService problemResponseDAOService;
 	
 	private volatile ITestDesignTemplateGeneratorService testDesignTemplateGeneratorService;
@@ -63,7 +66,22 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	@Override
 	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
 		//-- Get weakness categories
-		final List<TestCategoryRating> performanceByCategories = testUserAnalyticsDAOService.findWeakestCategories(user, params.getQuizSize());
+		List<TestCategoryRating> performanceByCategories = testUserAnalyticsDAOService.findWeakestCategories(user, params.getQuizSize());
+		
+		performanceByCategories = performanceByCategories.stream()
+				.filter(c -> {
+					//--
+					boolean res = false;
+					try {
+						List<Long> ids = quizProblemDAOService.findUnpractisedProblemsByUserAndCategory(user, c.getName());
+						res = !ids.isEmpty();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return res;
+				})
+				.collect(Collectors.toList());
+		
 		final List<String> performanceCategoryCodes = performanceByCategories
 				.stream()
 	    		.map(rating -> {
@@ -76,6 +94,7 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	    			return (String)null;
 		    	})
 	    		.collect(Collectors.toList());
+		
 		
 		//-- Create quiz
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
@@ -118,8 +137,11 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 						
 						final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
 						long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), allExcludedIds);
-						if (count < 1)
-							throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+						if (count < 1) {
+							count = problemDAOService.countByCategoryNotIn(cat.getId(), allExcludedIds);
+							if (count < 1)
+								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
+						}
 						int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 						
 						final Problem problem = fuzzyMatchProblem(false,includedProblemIds, item, cat, diff, randomOffset);
@@ -228,9 +250,9 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 			ProblemCategory cat, ProblemDifficulty diff, int randomOffset) throws ApplicationException {
 		
 		List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
-		if (problems.isEmpty()) {
+		if (problems.size() < 2) {
 			allowsCalc = !allowsCalc;
-			problems = problemDAOService.findByDifficultyAndCategoryNotInIn(allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
+			problems = problemDAOService.findByCategoryNotIn(cat.getId(),new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 		}
 		if (problems.iterator().hasNext()) {
 			final Problem problem = problems.iterator().next();

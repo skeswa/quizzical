@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,6 +24,7 @@ import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
 import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
@@ -44,6 +46,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	
 	private volatile EntityManager em;
 	
+	
 	@Override
 	public LogService getLogger() {
 		return logger;
@@ -62,6 +65,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	public List<TestCategoryRating> findWeakestCategories(final User user, final Integer categoryLimit) throws ApplicationException {
 		List<TestCategoryRating> resultList = null;
 		try {
+			//--
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
 			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
 			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
@@ -73,10 +77,6 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			query.select(rootEntity).where(builder.equal(rootEntity.get("analytics").get("userId"),userIdParam));
 			pes.put(userIdParam, user.getId());
 			
-			//userId
-/*			ParameterExpression<Integer> ratingParam = builder.parameter(Integer.class);
-			query.select(rootEntity).where(builder.le(rootEntity.get("rating"),ratingParam));
-			pes.put(ratingParam, user.getId());*/
 			
 			query.orderBy(builder.asc(rootEntity.get("rating")));
 			
@@ -86,6 +86,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 				resultList = findWithDynamicQueryAndParams(query,pes);
 			else
 				resultList = findWithDynamicQueryAndParams(query,pes,0,adjustedLimit);
+			
 			
 			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
 		}
@@ -136,7 +137,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			return 2;//org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE;
 		else if (categoryLimit > org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE &&
 				categoryLimit < org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SIZE)
-			return 6;//org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SIZE;
+			return 4;//org.quizzical.backend.testdesign.api.model.Constants.QUIZ_MEDIUM_SIZE;
 		else
 			return -1;//org.quizzical.backend.testdesign.api.model.Constants.QUIZ_FULL_SIZE;
 	}
@@ -307,6 +308,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			pes.put(nameParam, name);
 			
 			result = JPAEntityUtil.copy(findOneWithDynamicQueryAndParams(query,pes), TestCategoryRating.class);
+		}
+		catch (NoResultException e) {
+			//Just not found
 		}
 		catch (Exception e) {
 			throw processException(e);

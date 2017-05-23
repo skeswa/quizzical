@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import javax.persistence.NoResultException;
+
 import org.apache.commons.math.fraction.Fraction;
 import org.apache.commons.math.fraction.FractionFormat;
 import org.gauntlet.core.api.ApplicationException;
@@ -192,7 +194,11 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		TestCategoryRating rating = null;
 		int cnt = 1;
 		for (TestDesignTemplateContentSubType subType : subTypes) {
-			rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
+			try {
+				rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
+			} catch(NoResultException e) {			
+			} catch (Exception e) {
+			}
 			if (rating == null) {
 				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
 				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);

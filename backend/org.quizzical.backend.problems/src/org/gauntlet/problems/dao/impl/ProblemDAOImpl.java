@@ -445,8 +445,55 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		
 		return result;
 	}
+	
 	@Override
-	public List<Problem> findByCategoryNotInIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+	public List<Problem> findByAnyDifficultyAndCategoryNotIn(final Boolean requiresCalc, final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (ids.isEmpty())
+				ids.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			
+			ParameterExpression<Boolean> pCalc = builder.parameter(Boolean.class);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("category").get("id"),pCat),
+					builder.equal(rootEntity.get("requiresCalculator"),pCalc),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pCat, categoryId);
+			typedQuery.setParameter(pCalc, requiresCalc);
+			typedQuery.setParameter(pIn, ids);
+			
+			typedQuery.setFirstResult(offset);
+			typedQuery.setMaxResults(limit);
+			
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public List<Problem> findByCategoryNotIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
 			throws ApplicationException {
 		List<Problem> result = null;
 		try {
@@ -470,9 +517,10 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			TypedQuery typedQuery = getEm().createQuery(cq);
 			typedQuery.setParameter(pCat, categoryId);
 			typedQuery.setParameter(pIn, ids);
-			
-			typedQuery.setFirstResult(offset);
-			typedQuery.setMaxResults(limit);
+			if (offset >= 0)
+				typedQuery.setFirstResult(offset);
+			if (limit >= 0)
+				typedQuery.setMaxResults(limit);
 			
 			
 			List<JPAProblem> resultList = typedQuery.getResultList();
@@ -518,6 +566,47 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			typedQuery.setParameter(pDiff, difficultyId);
 			typedQuery.setParameter(pCat, categoryId);
 			typedQuery.setParameter(pCalc, requiresCalc);
+			typedQuery.setParameter(pIn, ids);
+			
+			count = (long) typedQuery.getSingleResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return count;		
+	}	
+	
+	@Override 
+	public long countByCategoryNotIn(final Long categoryId, final List<Long> ids)  
+			throws ApplicationException {
+		long count = 0;
+		try {
+			if (ids.isEmpty())
+				ids.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			
+			ParameterExpression<Boolean> pCalc = builder.parameter(Boolean.class);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(qb.count(rootEntity));
+			cq.where(builder.and(
+					builder.equal(rootEntity.get("category").get("id"),pCat),
+					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
+					builder.equal(rootEntity.get("requiresCalculator"),pCalc),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pCat, categoryId);
 			typedQuery.setParameter(pIn, ids);
 			
 			count = (long) typedQuery.getSingleResult();

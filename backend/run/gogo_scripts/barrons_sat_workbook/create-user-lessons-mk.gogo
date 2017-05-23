@@ -22,3 +22,5 @@ lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
 addlesson ${lessonid} mduduzi.keswa@gmail.com
 lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
 addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "Lesson 6-1: Basic Geometry Facts")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
