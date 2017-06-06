@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
@@ -21,7 +20,7 @@ import org.gauntlet.core.service.impl.BaseServiceImpl;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
 import org.gauntlet.problems.api.model.Problem;
 import org.gauntlet.problems.api.model.ProblemCategory;
-import org.gauntlet.problems.model.jpa.JPAProblem;
+import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.quizzes.api.dao.IQuizProblemDAOService;
 import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.model.jpa.JPAQuizProblem;
@@ -66,12 +65,6 @@ public class QuizProblemDAOImpl extends BaseServiceImpl implements IQuizProblemD
 		try {
 			//--
 			final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(categoryCode);
-			final List<Problem> catProbs = problemDAOService.findAllByCategory(cat.getId());
-			final List<Long> catProbIds = catProbs.stream()
-					.map(p -> {
-						return p.getId();
-					})
-					.collect(Collectors.toList());
 			
 			//--
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -79,16 +72,16 @@ public class QuizProblemDAOImpl extends BaseServiceImpl implements IQuizProblemD
 			Root<JPAQuizProblem> rootEntity = query.from(JPAQuizProblem.class);
 			
 			ParameterExpression<Long> p1 = builder.parameter(Long.class);
-			ParameterExpression<Collection> p2 = builder.parameter(Collection.class);
+			ParameterExpression<Long> p2 = builder.parameter(Long.class);
 			query.select(rootEntity).where(
 					builder.and(
 					builder.equal(rootEntity.get("quiz").get("userId"),p1),
-					rootEntity.get("problemId").in(p2)
+					builder.equal(rootEntity.get("categoryId"),p2)
 					)
 					);
 			Map<ParameterExpression,Object> pes = new HashMap<>();
 			pes.put(p1, user.getId());
-			pes.put(p2, catProbIds);
+			pes.put(p2, cat.getId());
 			
 			List<JPAQuizProblem> resultList = findWithDynamicQueryAndParams(query,pes);
 			
@@ -121,6 +114,63 @@ public class QuizProblemDAOImpl extends BaseServiceImpl implements IQuizProblemD
 		
 		return res;
 	}
+	
+	@Override 
+	public List<Long> findUnpractisedProblemsByUserAndDifficulty(User user, String diffcultyCode, final Integer limit) throws ApplicationException {
+		List<Long> res;
+		try {
+			//--
+			final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(diffcultyCode);
+			
+			//--
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizProblem> query = builder.createQuery(JPAQuizProblem.class);
+			Root<JPAQuizProblem> rootEntity = query.from(JPAQuizProblem.class);
+			
+			ParameterExpression<Long> p1 = builder.parameter(Long.class);
+			ParameterExpression<Long> p2 = builder.parameter(Long.class);
+			query.select(rootEntity).where(
+					builder.and(
+					builder.equal(rootEntity.get("quiz").get("userId"),p1),
+					builder.equal(rootEntity.get("difficultyId"),p2)
+					)
+					);
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p1, user.getId());
+			pes.put(p2, diff.getId());
+			
+			
+			List<JPAQuizProblem> resultList = findWithDynamicQueryAndParams(query,pes);
+			
+			res = resultList.stream()
+					.map(qp -> qp.getProblemId())
+					.collect(Collectors.toList());
+			
+			res = findByDifficultyNotIn(user,diffcultyCode,res,limit);
+			
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;		
+	}
+	
+	@Override
+	public List<Long> findByDifficultyNotIn(final User user, final String difficultyCode, final Collection ids, final Integer limit)  
+			throws ApplicationException {
+		List<Long> res;
+		try {
+			List<Problem> resultList = problemDAOService.findByDifficultyNotIn(problemDAOService.getProblemDifficultyByCode(difficultyCode).getId(), ids, 0, limit);
+			res = resultList.stream()
+					.map(p -> p.getId())
+					.collect(Collectors.toList());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return res;
+	}	
 	
 	
 	@Override

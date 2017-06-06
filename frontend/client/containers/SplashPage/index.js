@@ -26,6 +26,13 @@ class SplashPage extends Component {
   }
 
   @autobind
+  onGoToQuizzesClicked() {
+    this.setState(
+      { visible: false },
+      () => setTimeout(() => this.props.history.push('/quizzes'), 300))
+  }
+
+  @autobind
   onTakeAQuizClicked() {
     this.setState(
       { visible: false },
@@ -66,6 +73,14 @@ class SplashPage extends Component {
            style={{ width: '20rem' }}
            label="Take a quiz"
            onClick={this.onTakeAQuizClicked}
+           labelColor="#754aec"
+           labelStyle={{ fontSize: '1.8rem' }}
+           backgroundColor="#ffffff" />
+         <span></span>
+         <RaisedButton
+           style={{ width: '20rem' }}
+           label="Go to Quizzes"
+           onClick={this.onGoToQuizzesClicked}
            labelColor="#754aec"
            labelStyle={{ fontSize: '1.8rem' }}
            backgroundColor="#ffffff" />

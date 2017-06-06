@@ -162,7 +162,7 @@ public class UserLesson extends BaseEntity implements Serializable {
 	}
 	
 	public UserLesson(Long userId, Lesson lesson, Quiz quiz) {
-		this.code = String.format("%s-%d", lesson.getCode(), userId);
+		this.code = String.format("%s-%d-%d", lesson.getCode(), userId, System.currentTimeMillis());
 		this.name = lesson.getName();
 		this.quizId = quiz.getId();
 		this.userId = userId;

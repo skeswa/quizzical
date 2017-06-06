@@ -28,7 +28,7 @@ public interface ITestUserAnalyticsDAOService {
 
 	TestUserAnalytics getByName(String name) throws ApplicationException;
 
-	void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException;
+	void updateRatings(String tuaCode, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException;
 
 	List<TestCategoryRating> findWeakestCategories(User user, Integer categoryLimit) throws ApplicationException;
 

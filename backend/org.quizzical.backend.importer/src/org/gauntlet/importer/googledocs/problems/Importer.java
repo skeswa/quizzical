@@ -20,6 +20,7 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.QuizType;
 import org.osgi.service.log.LogService;
@@ -91,6 +92,8 @@ public class Importer {
 							//-- Lookup category
 							final ProblemCategory cat = problemService.provideProblemCategory(categoryName);
 							
+							final ProblemType pt = problemService.provideProblemType(typeName);
+							
 							//-- Lookup difficulty
 							ProblemDifficulty prob = new ProblemDifficulty(difficulty, difficulty, difficultyColor);
 							final ProblemDifficulty dif = problemService.provideProblemDifficulty(prob);
@@ -117,6 +120,7 @@ public class Importer {
 							Problem newProblem = new Problem(answerKey, 
 									pSource, // source,
 									cat, // category,
+									pt,// type
 									iPageNum, iIndexInPageNum, 
 									dif, // ProblemDifficulty
 									answerPicture, // byte[] questionPicture,
@@ -154,8 +158,7 @@ public class Importer {
 			if (out != null)
 				out.close();
 		}
-		final String code = Long.toString(System.currentTimeMillis()) + fileName;
-		pp = new ProblemPicture(code, code, content, ct, cs);
+		pp = new ProblemPicture(fileName, content, ct, cs);
 		return pp;
 	}
 }

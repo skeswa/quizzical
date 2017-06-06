@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class LessonCommands {
     public final static String SCOPE = "lssn";
-    public final static String[] FUNCTIONS = new String[] { "create","del","list","addplan","resetplan","listplans","addlesson","schedulenext","getid"};
+    public final static String[] FUNCTIONS = new String[] { "create","del","deluserlesson","list","listuserlessons","addplan","resetplan","listplans","addlesson","schedulenext","getid"};
 
     //-- Lesson
     @Descriptor("Creates lesson from problems whose source id is sourceId")
@@ -81,6 +81,19 @@ public class LessonCommands {
     	return "Updated lesson successfully!";
     }
     
+    @Descriptor("List user lessons")
+    public static void listuserlessons(@Descriptor("Email address as userid") String userId) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+    	User user = uSvc.getByEmail(userId);
+    	
+    	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+        List<UserLesson> lessons = lsvc.findAllUserLessons(user);
+        lessons.stream()
+        	.forEach(cat -> {
+        		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
+        	});
+    }  
+    
     @Descriptor("List lessons")
     public static void list() throws Exception {
     	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
@@ -89,7 +102,7 @@ public class LessonCommands {
         	.forEach(cat -> {
         		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
         	});
-    }  
+    } 
     
     
     @Descriptor("Deletes lesson ")
@@ -105,6 +118,14 @@ public class LessonCommands {
     	lsvc.delete(lessonId);
         
         return "Deleted lesson successfully!";
+    }
+    
+    @Descriptor("Deletes user lesson ")
+    public static String deluserlesson(@Descriptor("Lesson ID") Long lessonId) throws Exception {
+    	ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);
+    	lsvc.deleteUserLesson(lessonId);
+        
+        return "Deleted user lesson successfully!";
     }
     
     @Descriptor("Creates user lesson plan")

@@ -52,6 +52,7 @@
    		<class>org.gauntlet.problems.model.jpa.JPAProblemDifficulty</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemSource</class>
    		<class>org.gauntlet.problems.model.jpa.JPAProblemPicture</class>
+   		<class>org.gauntlet.problems.model.jpa.JPAProblemType</class> 
    		  	
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>  

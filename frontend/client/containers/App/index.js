@@ -28,6 +28,7 @@ import QuestionsPage from 'containers/QuestionsPage'
 import WorkbenchPage from 'containers/WorkbenchPage'
 import QuizAttemptsPage from 'containers/QuizAttemptsPage'
 import StudentLessonsPage from 'containers/StudentLessonsPage'
+import StudentQuizzesPage from 'containers/StudentQuizzesPage'
 import QuizAutoGenerationPage from 'containers/QuizAutoGenerationPage'
 import QuizGenerationQAPage from 'containers/QuizGenerationQAPage'
 import LessonsPage from 'containers/LessonsPage'
@@ -55,6 +56,7 @@ const App = props =>
             <PublicRoute exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/workbench" component={WorkbenchPage} />
             <PrivateRoute exact path="/lessons" component={StudentLessonsPage} />
+            <PrivateRoute exact path="/quizzes" component={StudentQuizzesPage} />
             <PrivateRoute exact path="/" component={SplashPage} />
             <Route path="" component={NotFoundPage} />
           </Switch>

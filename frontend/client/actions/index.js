@@ -8,6 +8,7 @@ import quizgeneration from './quiz-generation'
 import quiz from './quiz'
 import source from './source'
 import userLesson from './user-lesson'
+import userQuiz from './user-quiz'
 import lessonStatus from './lesson-status'
 import lessonType from './lesson-type'
 
@@ -21,6 +22,7 @@ export default {
   quiz,
   source,
   userLesson,
+  userQuiz,
   lessonStatus,
   lessonType,
 }

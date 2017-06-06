@@ -95,7 +95,12 @@ public class QuizResource  {
 		final Quiz quiz = quizGeneratorManagerService.generate(user,params);
 		quiz.getQuestions().stream()
 				.forEach(e -> {
-					e.getProblem().getCategory().setLessons(null);
+					try {
+						e.getProblem().getCategory().setLessons(null);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					e.setQuiz(null);
 				});
 		return quiz;

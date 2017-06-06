@@ -474,4 +474,109 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 		}
 		return resultList;		
 	}	
+	
+	@Override 
+	public QuizSubmission findLatestQuizSubmission(User user) throws ApplicationException {
+		QuizSubmission result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizSubmission> query = builder.createQuery(JPAQuizSubmission.class);
+			Root<JPAQuizSubmission> rootEntity = query.from(JPAQuizSubmission.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			query.orderBy(builder.desc(rootEntity.get("dateCreated")));
+			
+			//dateCreated
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("quiz").get("userId"),p));
+			pes.put(p, user.getId());
+			
+			
+			List<JPAQuizSubmission> resultList = findWithDynamicQueryAndParams(query,pes,0,1);
+			if (!resultList.isEmpty()) {
+				result = updateScore(resultList.iterator().next());
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}	
+	
+	private QuizSubmission updateScore(JPAQuizSubmission qs) {
+		int totalProblems = qs.getResponses().size();
+		final List<JPAQuizProblemResponse> correct = qs.getResponses().stream()
+			.filter(r -> {
+				return r.getCorrect() != null && r.getCorrect();
+			})
+			.collect(Collectors.toList());
+		final List<JPAQuizProblemResponse> skipped = qs.getResponses().stream()
+				.filter(r -> {
+					return r.getSkipped() != null && r.getSkipped();
+				})
+				.collect(Collectors.toList());
+		
+		QuizSubmission qs_ = JPAEntityUtil.copy(qs, QuizSubmission.class);
+		
+		qs_.setQuizScore((int)((correct.size()/totalProblems)*100));
+		qs_.setSkipped(skipped.size());
+		qs_.setTotalQuestions(totalProblems);
+		
+		return qs_;
+	}
+
+	@Override 
+	public List<QuizSubmission> findMostRecentUserSubmissions(User user, Integer limit) throws ApplicationException {
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAQuizSubmission> query = builder.createQuery(JPAQuizSubmission.class);
+			Root<JPAQuizSubmission> rootEntity = query.from(JPAQuizSubmission.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			query.orderBy(builder.desc(rootEntity.get("dateCreated")));
+			
+			//dateCreated
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("quiz").get("userId"),p));
+			pes.put(p, user.getId());
+			
+			
+			final List<JPAQuizSubmission> resultList_ = findWithDynamicQueryAndParams(query,pes,0,limit);
+			
+			List<QuizSubmission> resultList = resultList_.stream()
+				.map(qs -> {
+					return updateScore(qs);
+				})
+				.collect(Collectors.toList());
+			
+			return resultList;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+	
+	@Override 
+	public List<Quiz> findQuizzesWithNoSubmission(User user) throws ApplicationException {
+		List<Quiz> result = new ArrayList<>();
+		try {
+			List<Quiz> quizzes = quizService.findByUser(user);
+			quizzes.stream()
+				.forEach(q -> {
+					QuizSubmission qs = null;
+					try {
+						qs = findByQuizId(user, q.getId());
+					} catch (Exception e) {
+					}
+					if (qs == null)
+						result.add(q);
+				});
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
 }

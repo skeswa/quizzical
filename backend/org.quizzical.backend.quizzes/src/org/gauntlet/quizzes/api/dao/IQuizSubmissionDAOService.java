@@ -5,6 +5,7 @@ import java.util.List;
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.api.service.IBaseService;
+import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -29,7 +30,13 @@ public interface IQuizSubmissionDAOService extends IBaseService {
 	
 	public QuizSubmission submit(User user, QuizSubmission quizSubmission) throws ApplicationException, NoSuchModelException;
 
-	QuizSubmission findByQuizId(User user, Long quizId) throws ApplicationException;
+	public QuizSubmission findByQuizId(User user, Long quizId) throws ApplicationException;
 
-	List<QuizSubmission> findQuizSubmissionsMadeToday(User user) throws ApplicationException;
+	public List<QuizSubmission> findQuizSubmissionsMadeToday(User user) throws ApplicationException;
+
+	public QuizSubmission findLatestQuizSubmission(User user) throws ApplicationException;
+
+	public List<Quiz> findQuizzesWithNoSubmission(User user) throws ApplicationException;
+
+	public List<QuizSubmission> findMostRecentUserSubmissions(User user, Integer limit) throws ApplicationException;
 }

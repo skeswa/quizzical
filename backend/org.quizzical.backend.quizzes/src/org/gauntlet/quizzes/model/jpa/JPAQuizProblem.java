@@ -29,6 +29,10 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 	
 	private Long problemId;
 	
+	private Long categoryId;
+	
+	private Long difficultyId;
+	
 	@ManyToOne(targetEntity = JPAQuiz.class)
 	@JoinColumn
 	private JPAQuiz quiz;
@@ -92,6 +96,22 @@ public class JPAQuizProblem extends JPABaseEntity implements Serializable {
 
 	public void setQuiz(JPAQuiz quiz) {
 		this.quiz = quiz;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Long getDifficultyId() {
+		return difficultyId;
+	}
+
+	public void setDifficultyId(Long difficultyId) {
+		this.difficultyId = difficultyId;
 	}	
 }
 

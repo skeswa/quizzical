@@ -13,6 +13,7 @@ import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.problems.model.jpa.JPAProblemPicture;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -75,6 +76,9 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public void markAsQAed(Problem problem) throws ApplicationException, NoSuchModelException;
 	
+	public List<Problem> findByDifficultyNotIn(Long difficultyId, Collection ids, Integer offset, Integer limit)
+			throws ApplicationException;
+	
 	//ProblemDifficulty
 	public List<ProblemDifficulty> findAllProblemDifficulties(int start, int end) throws ApplicationException;
 	
@@ -135,4 +139,21 @@ public interface IProblemDAOService extends IBaseService {
 	public ProblemPicture getProblemPictureByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
 
 	public ProblemPicture updateProblemPicture(ProblemPicture record) throws ApplicationException;
+	
+	//ProblemType
+	public List<ProblemType> findAllProblemTypes(int start, int end) throws ApplicationException;
+	
+	public long countAllProblemTypes() throws ApplicationException;
+	
+	public ProblemType getProblemTypeByPrimary(Long pk)  throws ApplicationException, NoSuchModelException;
+	
+	public ProblemType provideProblemType(ProblemType record) throws ApplicationException;
+	
+	public ProblemType provideProblemType(String name) throws ApplicationException;
+	
+	public ProblemType getProblemTypeByCode(String code) throws ApplicationException;
+	
+	public ProblemType getProblemTypeByName(String name) throws ApplicationException;
+	
+	public ProblemType deleteProblemType(Long id) throws ApplicationException, NoSuchModelException;
 }

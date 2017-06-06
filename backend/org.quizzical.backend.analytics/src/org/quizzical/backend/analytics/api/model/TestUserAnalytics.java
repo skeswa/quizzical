@@ -16,10 +16,11 @@ public class TestUserAnalytics extends BaseEntity implements Serializable {
 	private List<TestCategoryRating> ratings;
 	
 	public TestUserAnalytics() {
+		super();
 	}
 	
-	public TestUserAnalytics(final Long userId, final String code, final String name) {
-		super.setCode(code);
+	public TestUserAnalytics(final Long userId, final String name) {
+		this();
 		super.setName(name);
 		this.userId = userId;
 	}

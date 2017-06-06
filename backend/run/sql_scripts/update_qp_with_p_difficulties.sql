@@ -1,0 +1,1 @@
+update quizzical.gnt_problem set type_id = 112951;

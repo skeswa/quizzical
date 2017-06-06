@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.gauntlet.core.model.BaseEntity;
 
@@ -36,6 +37,7 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	private List<TestCategoryRatingSubmission>  ratingSubmissions;
 	
 	public TestCategoryRating() {
+		super();
 	}
 	
 	public TestCategoryRating(final TestUserAnalytics userAnalytics,
@@ -44,6 +46,7 @@ public class TestCategoryRating extends BaseEntity implements Serializable {
 	}
 	
 	public TestCategoryRating(final Long categoryId, final String name, final String description) {
+		super();
 		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;

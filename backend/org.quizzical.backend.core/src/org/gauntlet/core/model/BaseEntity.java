@@ -39,7 +39,7 @@ public abstract class BaseEntity extends SuperEntity
     protected Boolean synchonized = false;    
     protected String parentRefId;
     protected String name;
-    protected String code = UUID.randomUUID().toString();
+    protected String code;
     protected String refId;
     protected String description;
     protected String portalId;
@@ -106,6 +106,14 @@ public abstract class BaseEntity extends SuperEntity
 
 	public void setProcessId(String processId) {
 		this.processId = processId;
+	}
+	
+	protected BaseEntity() {
+		generateUuid();
+	}
+
+	private void generateUuid() {
+		this.code = UUID.randomUUID().toString();
 	}
 
 	/**

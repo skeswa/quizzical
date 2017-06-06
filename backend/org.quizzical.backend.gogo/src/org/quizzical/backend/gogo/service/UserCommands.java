@@ -3,6 +3,8 @@ package org.quizzical.backend.gogo.service;
 import org.apache.felix.service.command.Descriptor;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.UserLesson;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class UserCommands {
     public final static String SCOPE = "usr";
-    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","requiresNoDiagnostic","requiresDiagnostic","reset2cat","activate","showactive","lru","category","ptest","baseline","sori"};
+    public final static String[] FUNCTIONS = new String[] { "submissions","add", "welcome", "whois", "deactivate","reset","requiresNoDiagnostic","requiresDiagnostic","reset2cat","activate","showactive","lru","category","ptest","baseline","sori","prblmtype","delana"};
 
     
     @Descriptor("Creates a new user")
@@ -160,6 +162,23 @@ public class UserCommands {
        	return "MakeNextRunPracticeSkippedOrIncorrect ("+user.getFirstName()+") set";
     } 
     
+    @Descriptor("Set problem type for user")
+    public static String prblmtype(@Descriptor("Email address as userid") String userId, @Descriptor("Problem type") String pType) throws Exception {
+    	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
+    	User user = svc.getUserByEmail(userId);
+    	if (user == null)
+    		return "User ("+userId+") not found";
+    	
+    	IProblemDAOService psvc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+    	ProblemType ptype = psvc.getProblemTypeByCode(pType);
+    		
+       	user.setCurrentProblemTypeId(ptype.getId());
+       	svc.update(user);
+       	return "CurrentProblemTypeId set to ("+ptype.getName()+")";
+    } 
+    
+    
+    
     @Descriptor("Text reminder")
     public static String remindViaText(@Descriptor("Email address as userid") String userId) throws Exception {
     	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
@@ -262,5 +281,19 @@ public class UserCommands {
 		svc.update(user);
     	
     	return String.format("User %s marked ready for baseline successful",userId);
+    }
+    
+    @Descriptor("Deletes lesson ")
+    public static String delana(@Descriptor("ANA ID") Long anaId, @Descriptor("Admin userId") String adminUserId, @Descriptor("Admin password") String adminPassword) throws Exception {
+    	IUserDAOService uSvc  = (IUserDAOService) createServiceFromServiceType(IUserDAOService.class);
+    	try {
+			uSvc.getUserByEmailAndPassword(adminUserId, adminPassword);
+		} catch (Exception e) {
+			return "Admin creds invalid.";
+		}
+    	ITestUserAnalyticsDAOService tsvc = (ITestUserAnalyticsDAOService)createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
+    	tsvc.delete(anaId);
+        
+        return "Deleted user ana successfully!";
     }
 }

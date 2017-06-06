@@ -59,8 +59,10 @@ public class UserLessonResource  {
 				Quiz quiz;
 				try {
 					quiz = quizService.getByPrimary(ul.getQuizId());
-					quiz.setQuestions(null);
-					ul.setQuiz(quiz);
+					if (quiz != null) {
+						quiz.setQuestions(null);
+						ul.setQuiz(quiz);
+					}
 					ul.getLesson().setQuestions(null);
 					
 					ContentItem ci = contentService.getByPrimary(ul.getLesson().getContentItemId());
@@ -87,7 +89,8 @@ public class UserLessonResource  {
 				return lesson;
 			
 			Quiz quiz = quizService.getByPrimary(lesson.getQuizId());
-			quiz.setQuestions(null);
+			if (quiz != null)
+				quiz.setQuestions(null);
 			lesson.setQuiz(quiz);
 			lesson.getLesson().setQuestions(null);
 		} catch (Exception e) {

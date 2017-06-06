@@ -3,6 +3,7 @@ package org.gauntlet.problems.api.model;
 import java.io.Serializable;
 
 import org.gauntlet.core.model.BaseEntity;
+import org.gauntlet.problems.model.jpa.JPAProblemType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,6 +15,8 @@ public class Problem extends BaseEntity implements Serializable {
 	private ProblemSource source;
 	
 	private ProblemCategory category;
+	
+	private ProblemType type;	
 	
 	private Integer sourcePageNumber;
 	
@@ -59,6 +62,14 @@ public class Problem extends BaseEntity implements Serializable {
 
 	public void setCategory(ProblemCategory category) {
 		this.category = category;
+	}
+
+	public ProblemType getType() {
+		return type;
+	}
+
+	public void setType(ProblemType type) {
+		this.type = type;
 	}
 
 	public Integer getSourcePageNumber() {
@@ -142,13 +153,22 @@ public class Problem extends BaseEntity implements Serializable {
 		this.qaEd = qaEd;
 	}
 
-	public Problem(String answer, ProblemSource source, ProblemCategory category, Integer sourcePageNumber,
-			Integer sourceIndexWithinPage, ProblemDifficulty difficulty, ProblemPicture answerPicture, ProblemPicture questionPicture,
-			boolean multipleChoice, Boolean requiresCalculator) {
+	public Problem(String answer, 
+			ProblemSource source, 
+			ProblemCategory category, 
+			ProblemType type, 
+			Integer sourcePageNumber,
+			Integer sourceIndexWithinPage, 
+			ProblemDifficulty difficulty, 
+			ProblemPicture answerPicture, 
+			ProblemPicture questionPicture,
+			boolean multipleChoice, 
+			Boolean requiresCalculator) {
 		this();
 		this.answer = answer;
 		this.source = source;
 		this.category = category;
+		this.type = type;
 		this.sourcePageNumber = sourcePageNumber;
 		this.sourceIndexWithinPage = sourceIndexWithinPage;
 		this.difficulty = difficulty;

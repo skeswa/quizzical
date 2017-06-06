@@ -8,6 +8,7 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class ProblemCommands {
     public final static String SCOPE = "prblm";
-    public final static String[] FUNCTIONS = new String[] { "showdiffs","adddiff","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del","delbysrc"};
+    public final static String[] FUNCTIONS = new String[] { "showdiffs","adddiff","add","apicupdate","qpicupdate","addcatlesson","addcat","showcat","showcats","addsource","showsources","calcs","answer","index","page","pages","source","diff","src","calc","mc","del","delbysrc","addtype","showtypes"};
 
     //-- Category
     @Descriptor("Adds lesson to problem category")
@@ -36,6 +37,13 @@ public class ProblemCommands {
         CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
         IProblemDAOService svc = (IProblemDAOService)cmd.get();
         return svc.provideProblemCategory(catName).getId();
+    }
+    
+    @Descriptor("Adds new problem type")
+    public static Long addtype(@Descriptor("Type name") String typeName) throws Exception {
+        CommandProblems cmd = new CommandProblems((IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class));
+        IProblemDAOService svc = (IProblemDAOService)cmd.get();
+        return svc.provideProblemType(typeName).getId();
     }
     
     @Descriptor("Shows a problem category by code")
@@ -54,6 +62,15 @@ public class ProblemCommands {
         	});
     }  
     
+    @Descriptor("Shows  problem types")
+    public static void showtypes() throws Exception {
+    	IProblemDAOService svc = (IProblemDAOService)createServiceFromServiceType(IProblemDAOService.class);
+        List<ProblemType> types = svc.findAllProblemTypes(0, 100);
+        types.stream()
+        	.forEach(cat -> {
+        		System.out.println(String.format("%d-%s",cat.getId(),cat.getCode()));
+        	});
+    }  
     
     //-- Source
     @Descriptor("Adds new problem source")
@@ -98,6 +115,7 @@ public class ProblemCommands {
     		@Descriptor("Source Page") Integer sourcePage,
     		@Descriptor("Index in Page") Integer indexInPage,
     		@Descriptor("Category ID") Long categoryId,
+    		@Descriptor("Type ID") Long typeId,
     		@Descriptor("Difficulty ID") Long difficultyId,
     		@Descriptor("Calculator Allowed?") Boolean calcAllowed,
     		@Descriptor("MultipleChoice?") Boolean multipleChoice,
@@ -115,13 +133,11 @@ public class ProblemCommands {
 			File f = new File(qPicPath);
 			fis = new FileInputStream(f);
 			qcontent = IOUtils.toByteArray(fis);
-			String code = Long.toString(System.currentTimeMillis()) + f.getName();
-			qpic = new ProblemPicture(code, code, qcontent, "image/png", f.length());
+			qpic = new ProblemPicture(f.getName(), qcontent, "image/png", f.length());
 			
 			fis = new FileInputStream(new File(aPicPath));
 			acontent = IOUtils.toByteArray(fis);
-			code = Long.toString(System.currentTimeMillis()) + f.getName();
-			apic = new ProblemPicture(code, code, acontent, "image/png", f.length());
+			apic = new ProblemPicture(f.getName(), acontent, "image/png", f.length());
 		} finally {
 			if (fis != null)
 				fis.close();
@@ -130,6 +146,7 @@ public class ProblemCommands {
 		Problem newProblem = new Problem(answer, 
     			psvc.getProblemSourceByPrimary(sourceId), 
     			psvc.getProblemCategoryByPrimary(categoryId), 
+    			psvc.getProblemTypeByPrimary(categoryId),
     			sourcePage, 
     			indexInPage, 
     			psvc.getProblemDifficultyByPrimary(difficultyId), 

@@ -133,6 +133,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	
 	private Integer generateAdjustedLimit(final Integer categoryLimit)
 			throws ApplicationException {
+		if (categoryLimit < 1)
+			return categoryLimit;
+		
 		if (categoryLimit <= org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE)
 			return 2;//org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE;
 		else if (categoryLimit > org.quizzical.backend.testdesign.api.model.Constants.QUIZ_SMALL_SIZE &&
@@ -173,15 +176,19 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		JPATestUserAnalytics jpaEntity = (JPATestUserAnalytics) super.findByPrimaryKey(JPATestUserAnalytics.class, pk);
 		return JPAEntityUtil.copy(jpaEntity, TestUserAnalytics.class);
 	}
+	
+	public JPATestUserAnalytics getByPrimary_(Long pk) throws ApplicationException, NoSuchModelException {
+		return (JPATestUserAnalytics) super.findByPrimaryKey(JPATestUserAnalytics.class, pk);
+	}
 
 	@Override
 	public TestUserAnalytics provide(TestUserAnalytics record)
 			  throws ApplicationException {
-		TestUserAnalytics existingTestDesignTemplate = getByCode(record.getCode());
+		TestUserAnalytics existingTestDesignTemplate = getByName(record.getName());
 		if (Validator.isNull(existingTestDesignTemplate))
 		{
 			JPATestUserAnalytics td = toJPAEntity(record);
-			JPABaseEntity res = super.add(td);
+			JPABaseEntity res = super.merge(td);
 			existingTestDesignTemplate = toDTO((JPATestUserAnalytics)res);//JPAEntityUtil.copy(res, TestUserAnalytics.class);
 		}
 
@@ -189,7 +196,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 	
 	private TestUserAnalytics toDTO(JPATestUserAnalytics res) {
-		TestUserAnalytics anaDTO = new  TestUserAnalytics(res.getUserId(), res.getCode(), res.getName());
+		TestUserAnalytics anaDTO = new  TestUserAnalytics(res.getUserId(), res.getName());
 		List<TestCategoryRating> ratings = res.getRatings().stream()
 			.map(r -> {
 				TestCategoryRating rDTO = JPAEntityUtil.copy(r, TestCategoryRating.class);
@@ -212,7 +219,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 
 	private JPATestUserAnalytics toJPAEntity(TestUserAnalytics record) {
-		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getUserId(),record.getCode(),record.getName());
+		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getUserId(),record.getName());
 		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(recordCopy, JPATestUserAnalytics.class);
     	try {
 			final List<JPATestCategoryRating> ratings = record.getRatings()
@@ -281,6 +288,11 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		JPATestUserAnalytics jpaEntity = (JPATestUserAnalytics) super.findWithAttribute(JPATestUserAnalytics.class, String.class,"name", name);
 		return JPAEntityUtil.copy(jpaEntity, TestUserAnalytics.class);
 	}
+	
+	private JPATestUserAnalytics getByName_(String name) throws ApplicationException {
+		return  (JPATestUserAnalytics) super.findWithAttribute(JPATestUserAnalytics.class, String.class,"name", name);
+	}
+
 
 	@Override
 	public void createDefaults() throws ApplicationException, Exception {
@@ -326,8 +338,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 	
 	@Override
-	public void updateRatings(String code, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException {
-		JPATestUserAnalytics analytics = getByCode_(code);
+	public void updateRatings(String tuaCode, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException {
+		JPATestUserAnalytics analytics = (JPATestUserAnalytics) getByCode_(tuaCode);
+		
 		for (JPATestCategoryRating rating : analytics.getRatings()) {
 			final TestCategoryRating newRating = newCategoryRatingsMap.get(rating.getCategoryId());
 			if (newRating != null) {

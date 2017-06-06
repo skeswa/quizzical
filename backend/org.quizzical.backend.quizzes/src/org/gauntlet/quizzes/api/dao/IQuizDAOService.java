@@ -38,6 +38,10 @@ public interface IQuizDAOService extends IBaseService {
 	public int countByQuizType(Long difficultyId) throws ApplicationException;
 	
 	public int countByQuizTypeCode(User user, String typeCode) throws ApplicationException;
+	
+	public List<Quiz> findQuizzesTakenToday(User user) throws ApplicationException;
+
+	public Quiz forceDelete(Long id) throws ApplicationException, NoSuchModelException;
 
 	//QuizType
 	public List<QuizType> findAllQuizTypes(int start, int end) throws ApplicationException;
@@ -59,5 +63,5 @@ public interface IQuizDAOService extends IBaseService {
 
 	public boolean userHasTakenDiagnoticTest(User user) throws ApplicationException;
 
-	List<Quiz> findQuizzesTakenToday(User user) throws ApplicationException;
+
 }

@@ -1,0 +1,98 @@
+#Params
+lessonTitle = "Chapter 2: Signals, Signs and Pavement Markings"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Anathi/q7l/DMV/DriversPermit/ch2"
+sourceIdParam = (prblm:addsource "PA_DOT_DriversPermit_Lesson2")
+sourcePageParam = 63
+categoryIdParam = (prblm:addcat  "PA DOT Drivers Permit/Signals, Signs and Pavement Markings")
+typeIdParam = (prblm:addtype  "PADoTPermit")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q4.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q5.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q6.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q7.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q8.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q9.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q10.png" "${lessondir}/blank_answer.png" B
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q11.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q12.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q13.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q14.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q15.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q16.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q17.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q18.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q19.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q20.png" "${lessondir}/blank_answer.png" A
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q21.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q22.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q23.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q24.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q25.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q26.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q27.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q28.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q29.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q30.png" "${lessondir}/blank_answer.png" A
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 31 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q31.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 32 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q32.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 33 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q33.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 34 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q34.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 35 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q35.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q36.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 37 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q37.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 38 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q38.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 39 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q39.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q40.png" "${lessondir}/blank_answer.png" A
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 41 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q41.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 42 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q42.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 43 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q43.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 44 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q44.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 45 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q45.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 46 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q46.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 47 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q47.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 48 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q48.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 49 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q49.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 50 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q50.png" "${lessondir}/blank_answer.png" C
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 51 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q51.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 52 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q52.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 53 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q53.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 54 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q54.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 55 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q55.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 56 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q56.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 57 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q57.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 58 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q58.png" "${lessondir}/blank_answer.png" A
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/chapter2.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+

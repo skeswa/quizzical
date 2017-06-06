@@ -33,12 +33,14 @@ import org.gauntlet.problems.api.model.ProblemCategoryLesson;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.gauntlet.problems.model.jpa.JPAProblemCategory;
 import org.gauntlet.problems.model.jpa.JPAProblemCategoryLesson;
 import org.gauntlet.problems.model.jpa.JPAProblemDifficulty;
 import org.gauntlet.problems.model.jpa.JPAProblemPicture;
 import org.gauntlet.problems.model.jpa.JPAProblemSource;
+import org.gauntlet.problems.model.jpa.JPAProblemType;
 
 
 @SuppressWarnings("restriction")
@@ -533,6 +535,47 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		return result;
 	}
 	
+	@Override
+	public List<Problem> findByDifficultyNotIn(final Long difficultyId, final Collection ids, final Integer offset, final Integer limit)  
+			throws ApplicationException {
+		List<Problem> result = null;
+		try {
+			if (ids.isEmpty())
+				ids.add(-1L);
+			
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pCat = builder.parameter(Long.class);
+			
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("difficulty").get("id"),pCat),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
+			
+			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pCat, difficultyId);
+			typedQuery.setParameter(pIn, ids);
+			if (offset >= 0)
+				typedQuery.setFirstResult(offset);
+			if (limit >= 0)
+				typedQuery.setMaxResults(limit);
+			
+			
+			List<JPAProblem> resultList = typedQuery.getResultList();
+			result = JPAEntityUtil.copy(resultList, Problem.class);		
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		
+		return result;
+	}
+	
 	@Override 
 	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  
 			throws ApplicationException {
@@ -984,6 +1027,86 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 		ProblemPicture dto = JPAEntityUtil.copy(res, ProblemPicture.class);
 		return dto;	
 	}
+	
+	//ProblemType
+	@Override 
+	public List<ProblemType> findAllProblemTypes(int start, int end) throws ApplicationException {
+		List<ProblemType> result = new ArrayList<>();
+		try {
+			final List<JPABaseEntity> resultList = super.findAll(JPAProblemType.class,start,end);
+			result = JPAEntityUtil.copy(resultList, ProblemType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
+	public long countAllProblemTypes() throws ApplicationException {
+		long res = 0;
+		try {
+			res = super.countAll(JPAProblemType.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return res;
+	}	
+	
+	@Override
+	public ProblemType getProblemTypeByPrimary(Long pk) throws ApplicationException, NoSuchModelException {
+		JPAProblemType jpaEntity = (JPAProblemType) super.findByPrimaryKey(JPAProblemType.class, pk);
+		return JPAEntityUtil.copy(jpaEntity, ProblemType.class);
+	}
+	
+	@Override 
+	public ProblemType provideProblemType(ProblemType record) throws ApplicationException {
+		ProblemType recordEntity = getProblemTypeByCode(record.getCode());
+		if (Validator.isNull(recordEntity))
+		{
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemType.class));
+			recordEntity = JPAEntityUtil.copy(res, ProblemType.class);
+		}
+
+		return recordEntity;	
+	}
+	
+	@Override
+	public ProblemType provideProblemType(String name) throws ApplicationException {
+		ProblemType recordEntity = getProblemTypeByCode(name);
+		if (Validator.isNull(recordEntity))
+		{
+			final ProblemSource record = new ProblemSource(name,name);
+			JPABaseEntity res = super.add(JPAEntityUtil.copy(record, JPAProblemType.class));
+			recordEntity = JPAEntityUtil.copy(res, ProblemType.class);
+		}
+
+		return recordEntity;			
+	}
+	
+	
+	public ProblemType updateProblemType(JPAProblemType record) throws ApplicationException {
+		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPAProblemType.class));
+		ProblemType dto = JPAEntityUtil.copy(res, ProblemType.class);
+		return dto;	
+	}	
+	
+	public ProblemType getProblemTypeByCode(String code) throws ApplicationException{
+		JPAProblemType jpaEntity = (JPAProblemType) super.findWithAttribute(JPAProblemType.class, String.class,"code", code);
+		return JPAEntityUtil.copy(jpaEntity, ProblemType.class);		
+	}
+	
+	public ProblemType getProblemTypeByName(String code) throws ApplicationException{
+		JPAProblemType jpaEntity = (JPAProblemType) super.findWithAttribute(JPAProblemType.class, String.class,"name", code);
+		return JPAEntityUtil.copy(jpaEntity, ProblemType.class);		
+	}
+	
+	public ProblemType deleteProblemType(Long id) throws ApplicationException, NoSuchModelException {
+		JPAProblemType jpaEntity = (JPAProblemType) super.findByPrimaryKey(JPAProblemType.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, ProblemType.class);
+	}	
 	
 	@Override
 	public void createDefaults() throws ApplicationException {

@@ -1,6 +1,7 @@
 package org.gauntlet.quizzes.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
+import org.gauntlet.quizzes.api.model.Quiz;
+import org.gauntlet.quizzes.api.model.QuizProblem;
 import org.gauntlet.quizzes.api.model.QuizProblemResponse;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.osgi.service.log.LogService;
@@ -58,6 +61,50 @@ public class QuizSubmissionResource {
 		});
     	submission.getQuiz().setQuestions(null);
     	return submission;
+    }
+    
+    @GET 
+    @Path("latest") 
+    @Produces(MediaType.APPLICATION_JSON) 
+    public QuizSubmission latest(@Context HttpServletRequest request) throws NoSuchModelException, ApplicationException, JsonParseException, JsonMappingException, IOException {
+    	final User user = tokenService.extractUser(request);
+    	final QuizSubmission submission = quizSubmissionDAOService.findLatestQuizSubmission(user);
+    	if (submission != null) {
+	    	submission.getQuiz().setQuestions(null);
+	    	return submission;
+    	}
+    	else
+    		return null;
+    }
+    
+    @GET 
+    @Path("unsubmitted") 
+    @Produces(MediaType.APPLICATION_JSON) 
+    public List<Quiz> unsubmitted(@Context HttpServletRequest request) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		List<Quiz> res  = quizSubmissionDAOService.findQuizzesWithNoSubmission(user);
+		for (Quiz quiz : res) {
+			quiz.setQuestions(new ArrayList<QuizProblem>());
+			List<QuizProblem> qproblems = quiz.getQuestions();
+/*			for (QuizProblem qproblem : qproblems) {
+				Problem problem = problemService.getByPrimary(qproblem.getProblemId());
+				qproblem.setProblem(problem);
+			}*/
+		}
+		return res;
+    }
+    
+    @GET 
+    @Path("recent") 
+    @Produces(MediaType.APPLICATION_JSON) 
+    public List<QuizSubmission> recent(@Context HttpServletRequest request) throws ApplicationException, NoSuchModelException, JsonParseException, JsonMappingException, IOException {
+		final User user = tokenService.extractUser(request);
+		List<QuizSubmission> res  = quizSubmissionDAOService.findMostRecentUserSubmissions(user, 5);
+		res.stream().forEach(qs -> {
+			qs.getQuiz().setQuestions(null);
+		});
+		
+		return res;
     }
     
     @PUT

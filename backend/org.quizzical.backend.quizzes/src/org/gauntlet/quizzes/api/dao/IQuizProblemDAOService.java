@@ -16,4 +16,9 @@ public interface IQuizProblemDAOService extends IBaseService {
 	public List<Long> findByCategoryNotIn(final User user, final String categoryCode, final Collection ids)  throws ApplicationException;
 	
 	List<Long> getAllUserProblemIds(User user) throws ApplicationException;
+
+	public List<Long> findByDifficultyNotIn(final User user, final String difficultyCode, final Collection ids, final Integer limit)  
+			throws ApplicationException;
+
+	public List<Long> findUnpractisedProblemsByUserAndDifficulty(User user, String diffcultyCode, final Integer limit) throws ApplicationException;
 }

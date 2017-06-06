@@ -1,0 +1,1 @@
+update quizzical.gnt_quiz_prob set categoryid = p.category_id from quizzical.gnt_problem p where p.id = problemid;

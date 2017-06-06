@@ -1,0 +1,6 @@
+resetplan anathik47@gmail.com
+usr:requiresNoDiagnostic anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 1: Permit Info")
+addlesson ${lessonid} anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 2: Signals, Signs and Pavement Markings")
+addlesson ${lessonid} anathik47@gmail.com

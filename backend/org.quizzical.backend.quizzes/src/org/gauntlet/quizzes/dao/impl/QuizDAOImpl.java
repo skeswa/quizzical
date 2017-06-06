@@ -171,6 +171,13 @@ public class QuizDAOImpl extends BaseServiceImpl implements IQuizDAOService {
 		
 		return JPAEntityUtil.copy(jpaEntity, Quiz.class);
 	}
+	
+	@Override
+	public Quiz forceDelete(Long id) throws ApplicationException, NoSuchModelException {
+		JPAQuiz jpaEntity = (JPAQuiz) super.findByPrimaryKey(JPAQuiz.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, Quiz.class);
+	}
 
 	private boolean isLessonType(JPAQuiz jpaEntity) {
 		return jpaEntity.getQuizType() != null && jpaEntity.getQuizType().getCode().equals(Constants.QUIZ_TYPE_LESSON_CODE);

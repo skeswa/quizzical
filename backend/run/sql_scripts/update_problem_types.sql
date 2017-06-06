@@ -1,0 +1,1 @@
+update quizzical.gnt_quiz_prob set difficultyid = p.difficulty_id from quizzical.gnt_problem p where p.id = problemid;

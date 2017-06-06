@@ -268,7 +268,7 @@ class QuizTakePage extends Component {
     if (loadingError) return this.renderError(loadingError, quizFinished)
     if (isDataLoading || !quiz) return this.renderLoading(quizFinished)
     if (quizResults) return this.renderFinishSplash(quizResults)
-    if (quiz && quiz.questions.length > 1) return this.renderQuizTaker()
+    if (quiz && quiz.questions.length >= 1) return this.renderQuizTaker()
 
     return this.renderError(
       'The generated quiz had no questions due to an unforeseen error. ' +

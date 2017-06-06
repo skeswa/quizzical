@@ -1,0 +1,29 @@
+
+.main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.section {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+}
+
+.heading {
+  color: #fff;
+  font-size: 2rem;
+  padding-left: 2rem;
+  text-shadow: 0 .1rem .1rem rgba(0, 0, 0, .4);
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+}

@@ -19,4 +19,7 @@ public class UserAnalyticsReportingCommands {
     	svc.emailDailyReport(userId, bccList);
         return "Daily Progress Report ("+userId+") sent successfully!";
     } 
+    
+    
 }
+

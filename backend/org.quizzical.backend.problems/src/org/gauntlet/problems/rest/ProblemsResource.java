@@ -39,6 +39,7 @@ import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemDifficulty;
 import org.gauntlet.problems.api.model.ProblemPicture;
 import org.gauntlet.problems.api.model.ProblemSource;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.quizzical.backend.security.authentication.jwt.api.IJWTTokenService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
@@ -129,6 +130,7 @@ public class ProblemsResource {
 		Boolean requiresCalculator = null;
 		Long sourceId = null;
 		Long categoryId = null;
+		Long typeId = null;
 		Long difficultyId = null;
 		ProblemPicture answerPicture = null;
 		ProblemPicture questionPicture = null;
@@ -152,6 +154,7 @@ public class ProblemsResource {
 			requiresCalculator = Boolean.valueOf(map.get("requiresCalculator").getString());
 			sourceId = Long.valueOf(map.get("sourceId").getString());
 			categoryId = Long.valueOf(map.get("categoryId").getString());
+			typeId = Long.valueOf(map.get("typeId").getString());
 			difficultyId = Long.valueOf(map.get("difficultyId").getString());
 
 			answerPicture = convertFileItemtoProblemPicture((DiskFileItem) map.get("answerPicture"));
@@ -159,10 +162,12 @@ public class ProblemsResource {
 
 			ProblemSource ps = problemService.getProblemSourceByPrimary(sourceId);
 			ProblemCategory pc = problemService.getProblemCategoryByPrimary(categoryId);
+			ProblemType pt = problemService.getProblemTypeByPrimary(typeId);
 			ProblemDifficulty pd = problemService.getProblemDifficultyByPrimary(difficultyId);
 
 			newProblem = new Problem(answer, ps, // source,
 					pc, // category,
+					pt,// type
 					sourcePageNumber, sourceIndexWithinPage, pd, // ProblemDifficulty
 																	// difficulty,
 					answerPicture, // byte[] answerPicture,
@@ -204,8 +209,7 @@ public class ProblemsResource {
 			String ct = fi.getContentType();
 			long cs = fi.getSize();
 			String fileName = ((FileItem) fi).getName();
-			final String code = Long.toString(System.currentTimeMillis()) + fileName;
-			pp = new ProblemPicture(code, code, content, ct, cs);
+			pp = new ProblemPicture(fileName, content, ct, cs);
 		} finally {
 			((FileItem) fi).delete();
 		}

@@ -495,7 +495,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		String stacktrace = sw.toString();
-		System.out.println(e.getMessage());
+		System.out.println(stacktrace);
 		return new ApplicationException(stacktrace);
 	}
 

@@ -18,9 +18,8 @@ public class ProblemPicture extends BaseEntity implements Serializable {
 	public ProblemPicture() {
 	}
 	
-	public ProblemPicture(String name, String code, byte[] picture, String mimeType, long sizeInBytes) {
+	public ProblemPicture(String name, byte[] picture, String mimeType, long sizeInBytes) {
 		setName(name);
-		setCode(code);
 		this.picture = picture;
 		this.mimeType = mimeType;
 		this.sizeInBytes = sizeInBytes;

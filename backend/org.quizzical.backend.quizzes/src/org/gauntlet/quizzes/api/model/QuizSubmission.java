@@ -13,6 +13,12 @@ public class QuizSubmission extends BaseEntity implements Serializable {
 
 	private Long quizId;
 	
+	private Integer quizScore;
+	
+	private Integer totalQuestions;
+	
+	private Integer skipped;
+	
 	private List<QuizProblemResponse> responses = new ArrayList<>();
 	
 	public QuizSubmission() {}
@@ -41,8 +47,35 @@ public class QuizSubmission extends BaseEntity implements Serializable {
 		this.responses = responses;
 	}
 	
+	
+	
+	public Integer getQuizScore() {
+		return quizScore;
+	}
+
+	public void setQuizScore(Integer quizScore) {
+		this.quizScore = quizScore;
+	}
+	
+	public Integer getTotalQuestions() {
+		return totalQuestions;
+	}
+
+	public void setTotalQuestions(Integer totalQuestions) {
+		this.totalQuestions = totalQuestions;
+	}
+
+	public Integer getSkipped() {
+		return skipped;
+	}
+
+	public void setSkipped(Integer skipped) {
+		this.skipped = skipped;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("{\"id\":%d,\"date\":\"%s\",\"code\":\"%s\"}",getId(),getDateCreated(),getCode());
 	}
+
 }

@@ -62,9 +62,10 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 
 	@Override
 	public QuizSubmission score(User user, QuizSubmission quizSubmission, boolean ensureBaline) throws ApplicationException, NoSuchModelException {
+		TestUserAnalytics tua = null;
 		//Ensure baseline
 		if (ensureBaline) 
-			ensureAnalyticsBaseline(user);
+			tua  = ensureAnalyticsBaseline(user);
 		
 		
 		final Map<Long,TestCategoryRating> categoryRatingsMap = new ConcurrentHashMap<>();
@@ -149,10 +150,9 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
     	quizSubmission.setResponses(augmentedResponses);
     	
     	//Process analytics
-		final String code_ = String.format("User(%d) analytics", quiz.getUserId()); 
-		TestUserAnalytics tua = null;
-		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE)) {
-	    	tua = new TestUserAnalytics( user.getId(), code_, code_);
+		final String name_ = String.format("User(%d) analytics", quiz.getUserId()); 
+		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE) ||
+			!user.getRequiresDiagnosticTest()) {
 			//Baseline across all categories
 			final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 			TestCategoryRating rating = null;
@@ -168,27 +168,19 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 				}
 				tua.addRating(rating);
 			}
-			testUserAnalyticsDAOService.provide(tua);
 		}
-		else {
-			testUserAnalyticsDAOService.updateRatings(code_,categoryRatingsMap);
-		}
+		testUserAnalyticsDAOService.updateRatings(tua.getCode(),categoryRatingsMap);
     	
 		return quizSubmission;
 	}
 
 
-	private void ensureAnalyticsBaseline(User user) throws ApplicationException {
+	private TestUserAnalytics ensureAnalyticsBaseline(User user) throws ApplicationException {
 		//Ensure base lining
-		final String code_ = String.format("User(%d) analytics", user.getId());
+		final String name_ = String.format("User(%d) analytics", user.getId());
 		
-		TestUserAnalytics tua = null;
-		tua = testUserAnalyticsDAOService.getByCode(code_);
-		if (tua == null) {
-			tua = new TestUserAnalytics( user.getId(), code_, code_);
-			tua = testUserAnalyticsDAOService.provide(tua);
-			//Baseline across all categories
-		}
+		TestUserAnalytics tua = new TestUserAnalytics( user.getId(), name_);
+		tua = testUserAnalyticsDAOService.provide(tua);
 		
 		final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 		TestCategoryRating rating = null;
@@ -216,6 +208,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 			user.setReadyForReset(false);
 			userService.update(user);
 		}
+		
+		return tua;
 	}
 
 

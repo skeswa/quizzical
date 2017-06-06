@@ -76,6 +76,7 @@ public class User extends BaseEntity{
 	private String prictureUrl;
 	private String mobileNumber;
 	private Boolean readyForReset;
+	private Long currentProblemTypeId;
 	
 	public User() {
 		super();
@@ -541,7 +542,14 @@ public class User extends BaseEntity{
 	public void setRequiresDiagnosticTest(Boolean requiresDiagnosticTest) {
 		this.requiresDiagnosticTest = requiresDiagnosticTest;
 	}
+	
+	public Long getCurrentProblemTypeId() {
+		return currentProblemTypeId;
+	}
 
+	public void setCurrentProblemTypeId(Long currentProblemTypeId) {
+		this.currentProblemTypeId = currentProblemTypeId;
+	}
 
 	public String getName() {
 		if (getFirstName() != null && getLastName() != null)

@@ -38,6 +38,10 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 	@JoinColumn	
 	private JPAProblemDifficulty difficulty;	
 	
+	@ManyToOne(targetEntity = JPAProblemType.class)
+	@JoinColumn	
+	private JPAProblemType type;	
+	
 	@OneToOne(targetEntity = JPAProblemPicture.class, cascade=CascadeType.ALL)
 	@JoinColumn
 	private JPAProblemPicture answerPicture;

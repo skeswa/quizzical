@@ -4,6 +4,7 @@ import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.LessonStatus;
 import org.gauntlet.lessons.api.model.LessonType;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Constants;
 import org.gauntlet.quizzes.api.model.QuizType;
@@ -74,6 +75,21 @@ public class Controller {
 
 		qt = new QuizType(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE, Constants.QUIZ_TYPE_DIAGNOSTIC_NAME);
 		quizService.provideQuizType(qt);
+		
+		//-- Problem Related
+		ProblemType pt = new ProblemType(
+					org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_NEW_SAT, 
+					org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_NEW_SAT);
+		problemService.provideProblemType(pt);
+		pt = new ProblemType(
+				org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_SAT2_MATH, 
+				org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_SAT2_MATH);
+		problemService.provideProblemType(pt);
+		pt = new ProblemType(
+				org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_PA_DOT_PERMIT, 
+				org.gauntlet.problems.api.model.Constants.PROBLEM_TYPE_PA_DOT_PERMIT);
+		problemService.provideProblemType(pt);
+		
 		//-- Users
 		//MK
 		User user = new User();
@@ -107,6 +123,17 @@ public class Controller {
 		user.setQa(true);
 		user.setPasswordEncrypted(true);
 		user.setPassword("q7lqa");
+		
+		userService.provide(user);
+		
+		//AK
+		user = new User();
+		user.setCode("ak");
+		user.setFirstName("Anathi");
+		user.setEmailAddress("anathik47@gmail.com");
+		
+		user.setPasswordEncrypted(true);
+		user.setPassword("test");
 		
 		userService.provide(user);
 		
