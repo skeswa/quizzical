@@ -155,6 +155,6 @@
 	org.quizzical.backend.gogo;version=latest
 ## Uncomment if you need to change the HTTP port
 #-runproperties: org.osgi.service.http.port=8080
--runproperties:  \
-  org.osgi.service.http.port=8080,\
-  org.apache.felix.http.jetty.maxFormSize=1000000000
+-runproperties: \
+	org.osgi.service.http.port=8080,\
+	org.apache.felix.http.jetty.maxFormSize=1000000000

@@ -188,7 +188,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		if (Validator.isNull(existingTestDesignTemplate))
 		{
 			JPATestUserAnalytics td = toJPAEntity(record);
-			JPABaseEntity res = super.merge(td);
+			JPABaseEntity res = super.add(td);
 			existingTestDesignTemplate = toDTO((JPATestUserAnalytics)res);//JPAEntityUtil.copy(res, TestUserAnalytics.class);
 		}
 
@@ -196,7 +196,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 	
 	private TestUserAnalytics toDTO(JPATestUserAnalytics res) {
-		TestUserAnalytics anaDTO = new  TestUserAnalytics(res.getUserId(), res.getName());
+		TestUserAnalytics anaDTO = new  TestUserAnalytics(res.getUserId());
 		List<TestCategoryRating> ratings = res.getRatings().stream()
 			.map(r -> {
 				TestCategoryRating rDTO = JPAEntityUtil.copy(r, TestCategoryRating.class);
@@ -219,8 +219,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 
 	private JPATestUserAnalytics toJPAEntity(TestUserAnalytics record) {
-		final TestUserAnalytics recordCopy = new TestUserAnalytics(record.getUserId(),record.getName());
-		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(recordCopy, JPATestUserAnalytics.class);
+		final JPATestUserAnalytics jpaTestUserAnalytics = JPAEntityUtil.copy(record, JPATestUserAnalytics.class);
     	try {
 			final List<JPATestCategoryRating> ratings = record.getRatings()
 				.stream()

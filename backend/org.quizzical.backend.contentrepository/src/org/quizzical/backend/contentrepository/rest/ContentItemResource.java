@@ -157,7 +157,7 @@ public class ContentItemResource {
 			final ContentItem item = contentService.getByPrimary(contentItemId);
 			// Stream it back to the client.
 			final InputStream pictureStream = new ByteArrayInputStream(item.getContent());
-			return Response.ok().entity(pictureStream).type(item.getMimeType()).header("Content-Disposition",  String.format("filename=%s.pdf",item.getName())).build();
+			return Response.ok().entity(pictureStream).type(item.getMimeType()).header("Content-Disposition",  String.format("filename=\"%s.pdf\"",item.getName())).build();
 		} catch (NoSuchModelException e) {
 			return Response.status(404).build();
 		}

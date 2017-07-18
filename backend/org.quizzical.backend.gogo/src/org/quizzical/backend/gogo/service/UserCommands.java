@@ -225,6 +225,8 @@ public class UserCommands {
 		TestUserAnalytics tua = uasvc.getByCode(code_);
 		if (tua != null)
 			uasvc.delete(tua.getId());
+		tua = new TestUserAnalytics(user.getId());
+		tua = uasvc.provide(tua);
 		
 		//Delete user lessons
 		ILessonsDAOService lsvc = (ILessonsDAOService)createServiceFromServiceType(ILessonsDAOService.class);

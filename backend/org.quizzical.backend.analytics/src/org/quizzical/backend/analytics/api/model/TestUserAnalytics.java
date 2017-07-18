@@ -19,9 +19,9 @@ public class TestUserAnalytics extends BaseEntity implements Serializable {
 		super();
 	}
 	
-	public TestUserAnalytics(final Long userId, final String name) {
+	public TestUserAnalytics(final Long userId) {
 		this();
-		super.setName(name);
+		super.setName(String.format("User(%d) analytics", userId));
 		this.userId = userId;
 	}
 	

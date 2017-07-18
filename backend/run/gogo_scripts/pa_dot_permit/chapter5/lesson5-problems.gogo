@@ -1,0 +1,36 @@
+#Params
+lessonTitle = "Chapter 5: Laws and Related Issues"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Anathi/q7l/DMV/DriversPermit/ch5"
+sourceIdParam = (prblm:addsource "PA_DOT_DriversPermit_Lesson5")
+sourcePageParam = 87
+categoryIdParam = (prblm:addcat  "PA DOT Drivers Permit/Laws and Related Issues")
+typeIdParam = (prblm:addtype  "PADoTPermit")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/blank.png" "${lessondir}/blank.png" A
+ # Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/chapter5.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+

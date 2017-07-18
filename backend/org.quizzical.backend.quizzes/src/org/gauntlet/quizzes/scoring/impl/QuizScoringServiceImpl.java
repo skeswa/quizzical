@@ -150,7 +150,6 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
     	quizSubmission.setResponses(augmentedResponses);
     	
     	//Process analytics
-		final String name_ = String.format("User(%d) analytics", quiz.getUserId()); 
 		if (quizSubmission.getQuiz().getQuizType().getCode().equals(Constants.QUIZ_TYPE_DIAGNOSTIC_CODE) ||
 			!user.getRequiresDiagnosticTest()) {
 			//Baseline across all categories
@@ -177,10 +176,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 
 	private TestUserAnalytics ensureAnalyticsBaseline(User user) throws ApplicationException {
 		//Ensure base lining
-		final String name_ = String.format("User(%d) analytics", user.getId());
-		
-		TestUserAnalytics tua = new TestUserAnalytics( user.getId(), name_);
-		tua = testUserAnalyticsDAOService.provide(tua);
+		TestUserAnalytics tua = new TestUserAnalytics( user.getId());
+		tua = testUserAnalyticsDAOService.getByName(tua.getName());
 		
 		final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
 		TestCategoryRating rating = null;

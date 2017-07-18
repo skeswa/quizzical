@@ -4,3 +4,13 @@ lessonid = (lssn:getid "Chapter 1: Permit Info")
 addlesson ${lessonid} anathik47@gmail.com
 lessonid = (lssn:getid "Chapter 2: Signals, Signs and Pavement Markings")
 addlesson ${lessonid} anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 3: Learning to drive")
+addlesson ${lessonid} anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 4: Driving Record Information")
+addlesson ${lessonid} anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 5: Laws and Related Issues")
+addlesson ${lessonid} anathik47@gmail.com
+lessonid = (lssn:getid "Chapter 6: References")
+addlesson ${lessonid} anathik47@gmail.com
+
+

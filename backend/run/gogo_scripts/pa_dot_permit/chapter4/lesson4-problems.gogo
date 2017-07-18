@@ -1,0 +1,52 @@
+#Params
+lessonTitle = "Chapter 4: Driving Record Information"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Anathi/q7l/DMV/DriversPermit/ch4"
+sourceIdParam = (prblm:addsource "PA_DOT_DriversPermit_Lesson4")
+sourcePageParam = 84
+categoryIdParam = (prblm:addcat  "PA DOT Drivers Permit/Driving Record Information")
+typeIdParam = (prblm:addtype  "PADoTPermit")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question1.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question2.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question3.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question4.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question5.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question6.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question7.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question8.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question9.png" "${lessondir}/blank_answer.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question10.png" "${lessondir}/blank_answer.png" D  
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question11.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question12.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question13.png" "${lessondir}/blank_answer.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question14.png" "${lessondir}/blank_answer.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question15.png" "${lessondir}/blank_answer.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/question16.png" "${lessondir}/blank_answer.png" C
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/chapter4.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+

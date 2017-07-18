@@ -96,6 +96,7 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 	private long columnBitmask;
 	private String mobileNumber;
 	private Boolean readyForReset;
+	private Long currentProblemTypeId;
 	
 	public JPAUser() {
 		super();
@@ -538,6 +539,14 @@ public class JPAUser extends org.gauntlet.core.model.JPABaseEntity{
 
 	public void setReadyForReset(Boolean readyForReset) {
 		this.readyForReset = readyForReset;
+	}
+	
+	public Long getCurrentProblemTypeId() {
+		return currentProblemTypeId;
+	}
+
+	public void setCurrentProblemTypeId(Long currentProblemTypeId) {
+		this.currentProblemTypeId = currentProblemTypeId;
 	}
 
 	public String getName() {

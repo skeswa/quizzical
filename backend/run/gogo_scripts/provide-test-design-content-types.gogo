@@ -18,4 +18,13 @@ td:addsubtype "Passport to Advanced Math/Basic Trogonometry"
 td:addsubtype "Passport to Advanced Math/The Unit Circle"
 td:addsubtype "PA DOT Drivers Permit/Info"
 td:addsubtype "PA DOT Drivers Permit/Signals, Signs and Pavement Markings"
+td:addsubtype "PA DOT Drivers Permit/Learning to drive"
+td:addsubtype "PA DOT Drivers Permit/Driving Record Information"
+td:addsubtype "PA DOT Drivers Permit/Laws and Related Issues"
+td:addsubtype "PA DOT Drivers Permit/References"
+
+td:addsubtype "SATIIMath/Functions"
+td:addsubtype "SATIIMath/Linear Functions"
+td:addsubtype "SATIIMath/Quadratic Functions"
+td:addsubtype "SATIIMath/Higher Degree Polynomials"
 
