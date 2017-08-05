@@ -1,0 +1,67 @@
+#Params
+lessonTitle = "Chapter 7: Trigonometric Functions"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/ch7"
+sourceIdParam = (prblm:addsource "Barrons_SATII_Math_Lesson7")
+sourcePageParam = 94
+categoryIdParam = (prblm:addcat  "SATIIMath/Trigonometric Functions")
+typeIdParam = (prblm:addtype  "SAT2MATH")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/a1.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/a2.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/a3.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q4.png" "${lessondir}/a4.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q5.png" "${lessondir}/a5.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q6.png" "${lessondir}/a6.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q7.png" "${lessondir}/a7.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q8.png" "${lessondir}/a8.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q9.png" "${lessondir}/a9.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q10.png" "${lessondir}/a10.png" A 
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q11.png" "${lessondir}/a11.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q12.png" "${lessondir}/a12.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q13.png" "${lessondir}/a13.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q14.png" "${lessondir}/a14.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q15.png" "${lessondir}/a15.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q16.png" "${lessondir}/a16.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q17.png" "${lessondir}/a17.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q18.png" "${lessondir}/a18.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q19.png" "${lessondir}/a19.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q20.png" "${lessondir}/a20.png" D
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q21.png" "${lessondir}/a21.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q22.png" "${lessondir}/a22.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q23.png" "${lessondir}/a23.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q24.png" "${lessondir}/a24.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q25.png" "${lessondir}/a25.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q26.png" "${lessondir}/a26.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q27.png" "${lessondir}/a27.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q28.png" "${lessondir}/a28.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q29.png" "${lessondir}/a29.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q30.png" "${lessondir}/a30.png" E
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson7.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+

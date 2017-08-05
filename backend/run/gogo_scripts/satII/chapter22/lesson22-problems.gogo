@@ -1,0 +1,44 @@
+#Params
+lessonTitle = "Chapter 22: Probability"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/ch22"
+sourceIdParam = (prblm:addsource "Barrons_SATII_Math_Lesson22")
+sourcePageParam = 198
+categoryIdParam = (prblm:addcat  "SATIIMath/Probability")
+typeIdParam = (prblm:addtype  "SAT2MATH")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/a1.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/a2.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/a3.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q4.png" "${lessondir}/a4.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q5.png" "${lessondir}/a5.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q6.png" "${lessondir}/a6.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q7.png" "${lessondir}/a7.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q8.png" "${lessondir}/a8.png" D
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson22.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+
+

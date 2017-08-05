@@ -1,0 +1,44 @@
+#1
+cat1param = (prblm:addcat  "SATIIMath/Functions")
+#2
+cat2param = (prblm:addcat  "SATIIMath/Linear Functions")
+#3
+cat3param = (prblm:addcat  "SATIIMath/Quadratic Functions")
+#4
+cat4param = (prblm:addcat  "SATIIMath/Higher Degree Polynomials")
+#5
+cat5param = (prblm:addcat  "SATIIMath/Solving Polynomial lnequalities")
+#6
+cat6param = (prblm:addcat  "SATIIMath/Triangle Trigonometry")
+#7
+cat7param = (prblm:addcat  "SATIIMath/Trigonometric Functions")
+#8
+cat8param = (prblm:addcat  "SATIIMath/Exponential and Logarithmic Functions")
+#9
+cat9param = (prblm:addcat  "SATIIMath/Rational Functions")
+#10
+cat10param = (prblm:addcat  "SATIIMath/Parametric Equations")
+#11
+cat11param = (prblm:addcat  "SATIIMath/Piecewise Functions")
+#12
+cat12param = (prblm:addcat  "SATIIMath/Transformations and Symmetry")
+#13
+cat13param = (prblm:addcat  "SATIIMath/Conic Sections")
+#14
+cat14param = (prblm:addcat  "SATIIMath/Polar Coordinates")
+#15
+cat15param = (prblm:addcat  "SATIIMath/Three-Dimensional Geometry")
+#16
+cat16param = (prblm:addcat  "SATIIMath/Counting")
+#17
+cat17param = (prblm:addcat  "SATIIMath/Complex Numbers")
+#18
+cat18param = (prblm:addcat  "SATIIMath/Matrices")
+#19
+cat19param = (prblm:addcat  "SATIIMath/Sequences and Series")
+#20
+cat20param = (prblm:addcat  "SATIIMath/Vectors")
+#21
+cat21param = (prblm:addcat  "SATIIMath/Statistics")
+#22
+cat22param = (prblm:addcat  "SATIIMath/Probability")

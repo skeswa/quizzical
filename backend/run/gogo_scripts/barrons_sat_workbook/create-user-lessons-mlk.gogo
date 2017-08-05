@@ -1,36 +1,67 @@
 resetplan mandisakeswa999@gmail.com
 usr:requiresNoDiagnostic mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 4-4: Converting Units of Measurement")
+lessonid = (lssn:getid "Chapter 1: Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 4-5: Linear and Exponential Functions")
+lessonid = (lssn:getid "Chapter 2: Linear Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 4-6: Graphs and Tables")
+lessonid = (lssn:getid "Chapter 3: Quadratic Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 4-7: Scatterplots and Sampling")
+lessonid = (lssn:getid "Chapter 4: Higher Degree Polynomials")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 4-8: Summerizing Data Using Statistics")
+
+lessonid = (lssn:getid "Chapter 5: Solving Polynomial lnequalities")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-1: Rational Exponents")
+lessonid = (lssn:getid "Chapter 6: Triangle Trigonometry")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-2: Advanced Algebraic Exponents")
+lessonid = (lssn:getid "Chapter 7: Trigonometric Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-3: Complex Numbers")
+lessonid = (lssn:getid "Chapter 8: Exponential and Logarithmic Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-4: Completing the square")
+
+
+lessonid = (lssn:getid "Chapter 9: Rational Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-5: The parabola and equations")
+lessonid = (lssn:getid "Chapter 10: Parametric Equations")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 5-6: Transforming Function Graphs")
+lessonid = (lssn:getid "Chapter 11: Piecewise Functions")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-1: Basic Geometry Facts")
+lessonid = (lssn:getid "Chapter 12: Transformations and Symmetry")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-2: Area of plane figures")
+
+lessonid = (lssn:getid "Chapter 13: Conic Sections")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-3: Circles and their equations")
+lessonid = (lssn:getid "Chapter 14: Polar Coordinates")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-4: Solid Figures")
+lessonid = (lssn:getid "Chapter 15: Three-Dimensional Geometry")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-5: Basic Trogonometry")
+lessonid = (lssn:getid "Chapter 16: Counting")
 addlesson ${lessonid} mandisakeswa999@gmail.com
-lessonid = (lssn:getid "Lesson 6-6: The Unit Circle")
+
+lessonid = (lssn:getid "Chapter 17: Complex Numbers")
 addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 18: Matrices")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 19: Sequences and Series")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 20: Vectors")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+
+lessonid = (lssn:getid "Chapter 21: Statistics")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 22: Probability")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

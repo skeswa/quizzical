@@ -28,3 +28,27 @@ td:addsubtype "SATIIMath/Linear Functions"
 td:addsubtype "SATIIMath/Quadratic Functions"
 td:addsubtype "SATIIMath/Higher Degree Polynomials"
 
+td:addsubtype "SATIIMath/Solving Polynomial lnequalities"
+td:addsubtype "SATIIMath/Triangle Trigonometry"
+td:addsubtype "SATIIMath/Trigonometric Functions"
+td:addsubtype "SATIIMath/Exponential and Logarithmic Functions"
+
+td:addsubtype "SATIIMath/Rational Functions"
+td:addsubtype "SATIIMath/Parametric Equations"
+td:addsubtype "SATIIMath/Piecewise Functions"
+td:addsubtype "SATIIMath/Transformations and Symmetry"
+
+
+td:addsubtype "SATIIMath/Conic Sections"
+td:addsubtype "SATIIMath/Polar Coordinates"
+td:addsubtype "SATIIMath/Three-Dimensional Geometry"
+td:addsubtype "SATIIMath/Counting"
+
+
+td:addsubtype "SATIIMath/Complex Numbers"
+td:addsubtype "SATIIMath/Matrices"
+td:addsubtype "SATIIMath/Sequences and Series"
+td:addsubtype "SATIIMath/Vectors"
+
+td:addsubtype "SATIIMath/Statistics"
+td:addsubtype "SATIIMath/Probability"

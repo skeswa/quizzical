@@ -1,0 +1,38 @@
+#Params
+lessonTitle = "Chapter 20: Vectors"
+lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/ch20"
+sourceIdParam = (prblm:addsource "Barrons_SATII_Math_Lesson20")
+sourcePageParam = 184
+categoryIdParam = (prblm:addcat  "SATIIMath/Vectors")
+typeIdParam = (prblm:addtype  "SAT2MATH")
+difficultyIdParam = (prblm:adddiff "Medium")
+# Questions
+# Page: 88
+# Source: 78401
+# Parameters:
+#1.      Long   Source ID
+#2.      Integer   Source Page
+#3.      Integer   Index in Page
+#4.      Long   Category ID
+#4.      Long   Type ID
+#5.      Long   Difficulty ID
+#6.      Boolean   Calculator Allowed?
+#7.      Boolean   MultipleChoice?
+#8.      String   Path to Q image
+#9.      String   Path to A image
+#10.     String   Answer
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/a1.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/a2.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${categoryIdParam} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/a3.png" D
+# Add lesson pdf
+lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson20.pdf")
+# Add lesson
+#create - Creates lesson from problems whose source id is sourceId
+#   scope: lssn
+#   parameters:
+#      String   Lesson name
+#      Long   Source Id
+#      Long   Category Id
+#      Long   Content Id
+lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
+

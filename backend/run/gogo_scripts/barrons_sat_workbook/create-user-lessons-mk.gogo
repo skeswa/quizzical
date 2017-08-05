@@ -9,4 +9,12 @@ addlesson ${lessonid} mduduzi.keswa@gmail.com
 lessonid = (lssn:getid "Chapter 4: Higher Degree Polynomials")
 addlesson ${lessonid} mduduzi.keswa@gmail.com
 
+lessonid = (lssn:getid "SATIIMath/Solving Polynomial lnequalities")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "SATIIMath/Triangle Trigonometry")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "SATIIMath/Trigonometric Functions")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
+lessonid = (lssn:getid "SATIIMath/Exponential and Logarithmic Functions")
+addlesson ${lessonid} mduduzi.keswa@gmail.com
 
