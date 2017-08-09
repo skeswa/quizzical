@@ -53,9 +53,9 @@ public interface IProblemDAOService extends IBaseService {
 	
 	public int countByCategory(Long categoryId) throws ApplicationException;	
 	
-	public List<Problem> findByDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final Collection ids, final Integer randomOffset, final Integer limit)  throws ApplicationException;
+	public List<Problem> findByDifficultyAndCategoryNotInIn(Long problemTypeId, final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final Collection ids, final Integer randomOffset, final Integer limit)  throws ApplicationException;
 
-	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  throws ApplicationException;
+	public long countByCalcAndDifficultyAndCategoryNotInIn(Long problemTypeId, final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  throws ApplicationException;
 
 	public List<Problem> findByCategoryNotIn(final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
 			throws ApplicationException;
@@ -63,7 +63,7 @@ public interface IProblemDAOService extends IBaseService {
 	List<Problem> getAllUserQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
 			throws ApplicationException;
 
-	List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)
+	List<Problem> getAllUserNonQuizzedProblems(Long problemTypeId, User user, List<Long> usedInQuizProblemIds, Integer limit)
 			throws ApplicationException;
 	
 	public List<Problem> getAllNonQAedProblems( Integer limit )

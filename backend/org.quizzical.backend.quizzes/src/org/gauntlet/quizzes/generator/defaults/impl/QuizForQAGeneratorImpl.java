@@ -41,7 +41,7 @@ public class QuizForQAGeneratorImpl implements IQuizGeneratorService {
 	
 	
 	@Override
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user,  Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
 				Constants.QUIZ_TYPE_LRU_CODE,

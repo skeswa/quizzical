@@ -164,5 +164,13 @@ public class JPAProblem extends JPABaseEntity implements Serializable {
 
 	public void setQaEd(Boolean qaEd) {
 		this.qaEd = qaEd;
+	}
+
+	public JPAProblemType getType() {
+		return type;
+	}
+
+	public void setType(JPAProblemType type) {
+		this.type = type;
 	} 
 }

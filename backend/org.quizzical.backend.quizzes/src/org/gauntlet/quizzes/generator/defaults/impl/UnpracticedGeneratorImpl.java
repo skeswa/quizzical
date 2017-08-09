@@ -40,7 +40,7 @@ public class UnpracticedGeneratorImpl implements IQuizGeneratorService {
 	private volatile IQuizProblemResponseDAOService quizProblemResponseService;
 	
 	@Override
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user,  Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
 				Constants.QUIZ_TYPE_UNPRACTICED_CODE,
@@ -60,8 +60,8 @@ public class UnpracticedGeneratorImpl implements IQuizGeneratorService {
 		
 		final Counter counter = new Counter(0);
 		
-		final List<Long> userProblemIds = quizProblemResponseService.getAllUserPracticedProblemIds(user);
-		final List<Problem> problems = problemDAOService.getAllUserNonQuizzedProblems(user, userProblemIds, params.getQuizSize());
+		final List<Long> userProblemIds = quizProblemResponseService.getAllUserPracticedProblemIds(problemTypeId,user);
+		final List<Problem> problems = problemDAOService.getAllUserNonQuizzedProblems(problemTypeId, user, userProblemIds, params.getQuizSize());
 		final List<QuizProblem> unorderedQuizProblems = problems
 				.stream()
 				.map(problem -> {

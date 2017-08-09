@@ -65,7 +65,7 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	private volatile ITestDesignTemplateContentTypeDAOService testDesignContentTypeDAOService;
 	
 	@Override
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user, Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		//-- Get difficulty HARD
 		final ProblemDifficulty diffHard = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(TestDesignTemplateItemDifficultyType.HARD));
 		
@@ -162,7 +162,7 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 							ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 							
 							final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
-							long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(false,diff.getId(), cat.getId(), allExcludedIds);
+							long count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(problemTypeId,false,diff.getId(), cat.getId(), allExcludedIds);
 							if (count < 1) {
 								count = problemDAOService.countByCategoryNotIn(cat.getId(), allExcludedIds);
 								if (count < 1)
@@ -170,7 +170,7 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 							}
 							int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 							
-							final Problem problem = fuzzyMatchProblem(false,includedProblemIds, item, cat, diff, randomOffset);
+							final Problem problem = fuzzyMatchProblem(problemTypeId, false,includedProblemIds, item, cat, diff, randomOffset);
 							
 							if (problem != null) {
 								includedProblemIds.put(problem.getId(),problem);
@@ -208,12 +208,12 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 								final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
 								
 								final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
-								count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(true,diff.getId(), cat.getId(), allExcludedIds);
+								count = problemDAOService.countByCalcAndDifficultyAndCategoryNotInIn(problemTypeId,true,diff.getId(), cat.getId(), allExcludedIds);
 								if (count < 1)
 									throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),true,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
 								int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 								
-								final Problem problem = fuzzyMatchProblem(true,includedProblemIds, item, cat, diff, randomOffset);
+								final Problem problem = fuzzyMatchProblem(problemTypeId, true,includedProblemIds, item, cat, diff, randomOffset);
 								
 								if (problem != null) {
 									includedProblemIds.put(problem.getId(),problem);
@@ -277,10 +277,10 @@ public class ByWeaknessGeneratorImpl implements IQuizGeneratorService {
 		return persistedQuiz;
 	}
 
-	private Problem fuzzyMatchProblem(Boolean allowsCalc, Map<Long, Problem> includedProblemIds, TestDesignTemplateItem item,
+	private Problem fuzzyMatchProblem(Long problemTypeId, Boolean allowsCalc, Map<Long, Problem> includedProblemIds, TestDesignTemplateItem item,
 			ProblemCategory cat, ProblemDifficulty diff, int randomOffset) throws ApplicationException {
 		
-		List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
+		List<Problem> problems = problemDAOService.findByDifficultyAndCategoryNotInIn(problemTypeId,allowsCalc,diff.getId(), cat.getId(), new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 		if (problems.size() < 2) {
 			allowsCalc = !allowsCalc;
 			problems = problemDAOService.findByCategoryNotIn(cat.getId(),new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);

@@ -33,6 +33,9 @@ public interface Constants {
 	public static final String QUIZ_TYPE_UNPRACTICED_CODE = "Unpracticed";
 	public static final String QUIZ_TYPE_UNPRACTICED_NAME = "Unpracticed Quiz";
 	
+	public static final String QUIZ_TYPE_NON_SAT_CODE = "NonSAT";
+	public static final String QUIZ_TYPE_NON_SAT_NAME = "NonSAT Quiz";
+	
 	public static final String QUIZ_TYPE_CATEGORY_CODE = "Category";
 	public static final String QUIZ_TYPE_CATEGORY_NAME = "By Category Quiz";
 	

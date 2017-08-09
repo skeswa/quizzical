@@ -6,5 +6,5 @@ import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 import org.quizzical.backend.security.authorization.api.model.user.User;
 
 public interface IQuizGeneratorService {
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException;
+	public Quiz generate(User user, Long oroblemTypeId, QuizGenerationParameters params) throws ApplicationException;
 }

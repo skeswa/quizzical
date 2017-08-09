@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gauntlet.core.api.ApplicationException;
+import org.gauntlet.core.api.dao.NoSuchModelException;
+import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.ProblemType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
@@ -30,6 +33,8 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	private volatile IUserDAOService userService;
 	
+	private volatile IProblemDAOService problemService;
+	
     private Map<String, ServiceReference> references = new HashMap<String, ServiceReference>();
 	
 	protected void addGenerator(final ServiceReference ref) {
@@ -48,36 +53,48 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		//refresh user
 		user = userService.getByEmail(user.getEmailAddress());
 		
-		if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 
-				!params.getGeneratorType().equals(Constants.GENERATOR_TYPE_REALISTIC_TEST)))
-			throw new UserHasNotTakenDiagnosticTestException(user.getCode());
 		
-
-		ServiceReference generatorRef = references.get(params.getGeneratorType());		
-		
-		//Check if next quiz is a practice test
-		if (Constants.GENERATOR_TYPE_BY_SOURCE.equals(params.getGeneratorType()))
-			generatorRef = references.get(Constants.GENERATOR_TYPE_BY_SOURCE);
-		else if (user.getMakeNextRunAPracticeTest())
-			generatorRef = references.get(Constants.GENERATOR_TYPE_PRACTICE_TEST);
-		else if (user.getMakeNextRunLeastRecentlyPractice())
-			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);
-		else if (user.getMakeNextRunPracticeSkippedOrIncorrect())
-			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE);
-		else if (user.getMakeNextRunOnCategory() != null && user.getMakeNextRunOnCategory() > 0) {
-			params.setProblemCategoryId(user.getMakeNextRunOnCategory());
-			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_CATEGORY_CODE);
+		//
+		ProblemType problemType = null;
+		try {
+			problemType = problemService.getProblemTypeByPrimary(user.getCurrentProblemTypeId());
+		} catch (NoSuchModelException e) {
 		}
-		else if (user.getMakeNextRunUnpracticed())
-			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_UNPRACTICED_CODE);
-		else if (user.getQa())
-			generatorRef = references.get(Constants.GENERATOR_TYPE_QA_CHECK);
+		
+		ServiceReference generatorRef = references.get(params.getGeneratorType());
+		if (problemType != null && problemType.getNonSAT()) {
+			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_CODE);
+		}
+		else {
+			if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 
+					!params.getGeneratorType().equals(Constants.GENERATOR_TYPE_REALISTIC_TEST)))
+				throw new UserHasNotTakenDiagnosticTestException(user.getCode());
+
+			
+			//Check if next quiz is a practice test
+			if (Constants.GENERATOR_TYPE_BY_SOURCE.equals(params.getGeneratorType()))
+				generatorRef = references.get(Constants.GENERATOR_TYPE_BY_SOURCE);
+			else if (user.getMakeNextRunAPracticeTest())
+				generatorRef = references.get(Constants.GENERATOR_TYPE_PRACTICE_TEST);
+			else if (user.getMakeNextRunLeastRecentlyPractice())
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_LRU_CODE);
+			else if (user.getMakeNextRunPracticeSkippedOrIncorrect())
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_SKIPPED_OR_INCORRECT_CODE);
+			else if (user.getMakeNextRunOnCategory() != null && user.getMakeNextRunOnCategory() > 0) {
+				params.setProblemCategoryId(user.getMakeNextRunOnCategory());
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_CATEGORY_CODE);
+			}
+			else if (user.getMakeNextRunUnpracticed())
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_UNPRACTICED_CODE);
+			else if (user.getQa())
+				generatorRef = references.get(Constants.GENERATOR_TYPE_QA_CHECK);
+		}
 		
 		final IQuizGeneratorService generator = (IQuizGeneratorService) ctx.getService(generatorRef);
 		
 		Quiz quiz = null;
 		try {
-			quiz = generator.generate(user,params);
+			quiz = generator.generate(user,user.getCurrentProblemTypeId(), params);
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));

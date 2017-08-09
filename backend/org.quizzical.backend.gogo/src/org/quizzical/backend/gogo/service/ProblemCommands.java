@@ -146,7 +146,7 @@ public class ProblemCommands {
 		Problem newProblem = new Problem(answer, 
     			psvc.getProblemSourceByPrimary(sourceId), 
     			psvc.getProblemCategoryByPrimary(categoryId), 
-    			psvc.getProblemTypeByPrimary(categoryId),
+    			psvc.getProblemTypeByPrimary(typeId),
     			sourcePage, 
     			indexInPage, 
     			psvc.getProblemDifficultyByPrimary(difficultyId), 

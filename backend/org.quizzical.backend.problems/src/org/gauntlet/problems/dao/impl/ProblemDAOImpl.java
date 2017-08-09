@@ -401,7 +401,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}		
 	
 	@Override
-	public List<Problem> findByDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
+	public List<Problem> findByDifficultyAndCategoryNotInIn(final Long problemTypeId, final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final Collection ids, final Integer offset, final Integer limit)  
 			throws ApplicationException {
 		List<Problem> result = null;
 		try {
@@ -409,6 +409,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 				ids.add(-1L);
 			
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pType = builder.parameter(Long.class);
 			
 			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
 			
@@ -422,6 +424,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
 			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
 			cq.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("type").get("id"),pType),
 					builder.equal(rootEntity.get("category").get("id"),pCat),
 					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
 					builder.equal(rootEntity.get("requiresCalculator"),pCalc),
@@ -429,6 +432,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 					));
 			
 			TypedQuery typedQuery = getEm().createQuery(cq);
+			typedQuery.setParameter(pType, problemTypeId);
 			typedQuery.setParameter(pDiff, difficultyId);
 			typedQuery.setParameter(pCat, categoryId);
 			typedQuery.setParameter(pCalc, requiresCalc);
@@ -577,7 +581,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override 
-	public long countByCalcAndDifficultyAndCategoryNotInIn(final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  
+	public long countByCalcAndDifficultyAndCategoryNotInIn(final Long problemTypeId,final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final List<Long> ids)  
 			throws ApplicationException {
 		long count = 0;
 		try {
@@ -585,6 +589,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 				ids.add(-1L);
 			
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			
+			ParameterExpression<Long> pType = builder.parameter(Long.class);
 			
 			ParameterExpression<Long> pDiff = builder.parameter(Long.class);
 			
@@ -599,6 +605,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
 			cq.select(qb.count(rootEntity));
 			cq.where(builder.and(
+					builder.equal(rootEntity.get("type").get("id"),pType),
 					builder.equal(rootEntity.get("category").get("id"),pCat),
 					builder.equal(rootEntity.get("difficulty").get("id"),pDiff),
 					builder.equal(rootEntity.get("requiresCalculator"),pCalc),
@@ -606,6 +613,8 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 					));
 			
 			TypedQuery typedQuery = getEm().createQuery(cq);
+
+			typedQuery.setParameter(pType, problemTypeId);
 			typedQuery.setParameter(pDiff, difficultyId);
 			typedQuery.setParameter(pCat, categoryId);
 			typedQuery.setParameter(pCalc, requiresCalc);
@@ -677,7 +686,10 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
 			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
 			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
+			
 			cq.select(rootEntity).where(rootEntity.get("id").in(pIn));
+			
+			
 			
 			TypedQuery typedQuery = getEm().createQuery(cq);
 			typedQuery.setParameter(pIn, usedInQuizProblemIds);
@@ -697,7 +709,7 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}
 	
 	@Override
-	public List<Problem> getAllUserNonQuizzedProblems(User user, List<Long> usedInQuizProblemIds, Integer limit)  
+	public List<Problem> getAllUserNonQuizzedProblems(Long problemTypeId, User user, List<Long> usedInQuizProblemIds, Integer limit)  
 			throws ApplicationException {
 		List<Problem> result = null;
 		try {
@@ -708,14 +720,20 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 			
 			
 			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			ParameterExpression<Long> pType = builder.parameter(Long.class);
 			
 			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
 			CriteriaQuery<JPAProblem> cq = qb.createQuery(JPAProblem.class);
 			Root<JPAProblem> rootEntity = cq.from(JPAProblem.class);
-			cq.select(rootEntity).where(builder.not(rootEntity.get("id").in(pIn)));
+
+			cq.where(builder.and(
+					builder.equal(rootEntity.get("type").get("id"),pType),
+					builder.not(rootEntity.get("id").in(pIn))
+					));
 			
 			TypedQuery typedQuery = getEm().createQuery(cq);
 			typedQuery.setParameter(pIn, usedInQuizProblemIds);
+			typedQuery.setParameter(pType, problemTypeId);
 			
 			typedQuery.setFirstResult(0);
 			typedQuery.setMaxResults(limit);

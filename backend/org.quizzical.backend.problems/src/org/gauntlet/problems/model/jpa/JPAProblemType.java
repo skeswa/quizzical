@@ -18,6 +18,8 @@ import org.gauntlet.core.model.JPABaseEntity;
 	+"problem_ptpe")
 public class JPAProblemType extends JPABaseEntity implements Serializable {
 	private static final long serialVersionUID = 7260383537297519563L;
+	
+	private Boolean nonSAT;
 
 	public JPAProblemType() {
 		super();
@@ -27,6 +29,14 @@ public class JPAProblemType extends JPABaseEntity implements Serializable {
 		this();
 		this.name = name;
 		this.code = code;
+	}
+
+	public Boolean getNonSAT() {
+		return nonSAT;
+	}
+
+	public void setNonSAT(Boolean nonSAT) {
+		this.nonSAT = nonSAT;
 	}
 }
 

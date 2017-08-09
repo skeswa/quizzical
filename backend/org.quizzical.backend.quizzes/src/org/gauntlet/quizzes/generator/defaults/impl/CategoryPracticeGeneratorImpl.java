@@ -47,7 +47,7 @@ public class CategoryPracticeGeneratorImpl implements IQuizGeneratorService {
 	
 	
 	@Override
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user,  Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		
 		Quiz persistedQuiz = null;
 		try {

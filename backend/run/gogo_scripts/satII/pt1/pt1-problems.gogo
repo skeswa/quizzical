@@ -1,9 +1,7 @@
 #Params
-lessonTitle = "Chapter 22: Probability"
-lessondir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/ch22"
-sourceIdParam = (prblm:addsource "Barrons_SATII_Math_Lesson22")
-sourcePageParam = 198
-categoryIdParam = (prblm:addcat  "SATIIMath/Probability")
+ptdir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/pt1"
+sourceIdParam = (prblm:addsource "Barrons_SATII_Math_PracticeTest1")
+sourcePageParam = 208
 typeIdParam = (prblm:addtype  "SAT2MATH")
 difficultyIdParam = (prblm:adddiff "Medium")
 # Questions
@@ -22,71 +20,57 @@ difficultyIdParam = (prblm:adddiff "Medium")
 #9.      String   Path to A image
 #10.     String   Answer
 #
-prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q1.png" "${lessondir}/a1.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${cat21param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q2.png" "${lessondir}/a2.png" A
-prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${cat9param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q3.png" "${lessondir}/a3.png" A
-prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q4.png" "${lessondir}/a4.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q5.png" "${lessondir}/a5.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q6.png" "${lessondir}/a6.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q7.png" "${lessondir}/a7.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q8.png" "${lessondir}/a8.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q9.png" "${lessondir}/a9.png" E
-prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q10.png" "${lessondir}/a10.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q1.png" "${ptdir}/a1.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${cat21param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q2.png" "${ptdir}/a2.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${cat9param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q3.png" "${ptdir}/a3.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q4.png" "${ptdir}/a4.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q5.png" "${ptdir}/a5.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q6.png" "${ptdir}/a6.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q7.png" "${ptdir}/a7.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q8.png" "${ptdir}/a8.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q9.png" "${ptdir}/a9.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q10.png" "${ptdir}/a10.png" D
 #
-prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q11.png" "${lessondir}/a11.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q12.png" "${lessondir}/a12.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${cat10param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q13.png" "${lessondir}/a13.png" E
-prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q14.png" "${lessondir}/a14.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q15.png" "${lessondir}/a15.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q16.png" "${lessondir}/a16.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q17.png" "${lessondir}/a17.png" A
-prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q18.png" "${lessondir}/a18.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q19.png" "${lessondir}/a19.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q20.png" "${lessondir}/a20.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q11.png" "${ptdir}/a11.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q12.png" "${ptdir}/a12.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${cat10param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q13.png" "${ptdir}/a13.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q14.png" "${ptdir}/a14.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q15.png" "${ptdir}/a15.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q16.png" "${ptdir}/a16.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q17.png" "${ptdir}/a17.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q18.png" "${ptdir}/a18.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q19.png" "${ptdir}/a19.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q20.png" "${ptdir}/a20.png" D
 #
-prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q21.png" "${lessondir}/a21.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q22.png" "${lessondir}/a22.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q23.png" "${lessondir}/a23.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q24.png" "${lessondir}/a24.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${cat16param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q25.png" "${lessondir}/a25.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q26.png" "${lessondir}/a26.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q27.png" "${lessondir}/a27.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q28.png" "${lessondir}/a28.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${cat3param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q29.png" "${lessondir}/a29.png" E
-prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q30.png" "${lessondir}/a30.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q21.png" "${ptdir}/a21.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q22.png" "${ptdir}/a22.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q23.png" "${ptdir}/a23.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q24.png" "${ptdir}/a24.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${cat16param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q25.png" "${ptdir}/a25.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q26.png" "${ptdir}/a26.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q27.png" "${ptdir}/a27.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q28.png" "${ptdir}/a28.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${cat3param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q29.png" "${ptdir}/a29.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q30.png" "${ptdir}/a30.png" C
 #
-prblm:add ${sourceIdParam} ${sourcePageParam} 31 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q31.png" "${lessondir}/a31.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 32 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q32.png" "${lessondir}/a32.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 33 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q33.png" "${lessondir}/a33.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 34 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q34.png" "${lessondir}/a34.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 35 ${cat5param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q35.png" "${lessondir}/a35.png" E
-prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${cat11param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q36.png" "${lessondir}/a36.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 37 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q37.png" "${lessondir}/a37.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 38 ${cat16param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q38.png" "${lessondir}/a38.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 39 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q39.png" "${lessondir}/a39.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q40.png" "${lessondir}/a40.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 31 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q31.png" "${ptdir}/a31.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 32 ${cat19param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q32.png" "${ptdir}/a32.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 33 ${cat13param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q33.png" "${ptdir}/a33.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 34 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q34.png" "${ptdir}/a34.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 35 ${cat5param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q35.png" "${ptdir}/a35.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${cat11param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q36.png" "${ptdir}/a36.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 37 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q37.png" "${ptdir}/a37.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 38 ${cat16param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q38.png" "${ptdir}/a38.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 39 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q39.png" "${ptdir}/a39.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${cat4param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q40.png" "${ptdir}/a40.png" D
 #
-prblm:add ${sourceIdParam} ${sourcePageParam} 41 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q41.png" "${lessondir}/a41.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 42 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q42.png" "${lessondir}/a42.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 43 ${cat20param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q43.png" "${lessondir}/a43.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 44 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q44.png" "${lessondir}/a44.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 45 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q45.png" "${lessondir}/a45.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 46 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q46.png" "${lessondir}/a46.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 47 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q47.png" "${lessondir}/a47.png" D
-prblm:add ${sourceIdParam} ${sourcePageParam} 48 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q48.png" "${lessondir}/a48.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 49 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q49.png" "${lessondir}/a49.png" B
-prblm:add ${sourceIdParam} ${sourcePageParam} 50 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${lessondir}/q50.png" "${lessondir}/a50.png" B
-
-# Add lesson pdf
-lessonPDFContentId = (cntrepo:addpdf  ${lessonTitle} "${lessondir}/lesson22.pdf")
-# Add lesson
-#create - Creates lesson from problems whose source id is sourceId
-#   scope: lssn
-#   parameters:
-#      String   Lesson name
-#      Long   Source Id
-#      Long   Category Id
-#      Long   Content Id
-lessonTempltId = (lssn:create ${lessonTitle} ${sourceIdParam} ${lessonPDFContentId} ${categoryIdParam})
-
-
+prblm:add ${sourceIdParam} ${sourcePageParam} 41 ${cat2param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q41.png" "${ptdir}/a41.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 42 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q42.png" "${ptdir}/a42.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 43 ${cat20param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q43.png" "${ptdir}/a43.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 44 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q44.png" "${ptdir}/a44.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 45 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q45.png" "${ptdir}/a45.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 46 ${cat8param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q46.png" "${ptdir}/a46.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 47 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q47.png" "${ptdir}/a47.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 48 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q48.png" "${ptdir}/a48.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 49 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q49.png" "${ptdir}/a49.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 50 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q50.png" "${ptdir}/a50.png" B

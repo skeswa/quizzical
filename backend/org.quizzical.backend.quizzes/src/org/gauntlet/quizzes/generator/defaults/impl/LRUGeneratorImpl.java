@@ -41,7 +41,7 @@ public class LRUGeneratorImpl implements IQuizGeneratorService {
 	
 	
 	@Override
-	public Quiz generate(User user, QuizGenerationParameters params) throws ApplicationException {
+	public Quiz generate(User user,  Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
 				Constants.QUIZ_TYPE_LRU_CODE,
@@ -60,7 +60,7 @@ public class LRUGeneratorImpl implements IQuizGeneratorService {
 		Map<Long,Problem> includedProblemIds = new HashMap<>();
 		
 		final List<Long> userProblemIds = quizProblemService.getAllUserProblemIds(user);
-		final List<Problem> problems = problemDAOService.getAllUserNonQuizzedProblems(user, userProblemIds, params.getQuizSize());
+		final List<Problem> problems = problemDAOService.getAllUserNonQuizzedProblems(problemTypeId, user, userProblemIds, params.getQuizSize());
 		final List<QuizProblem> unorderedQuizProblems = problems
 				.stream()
 				.map(problem -> {

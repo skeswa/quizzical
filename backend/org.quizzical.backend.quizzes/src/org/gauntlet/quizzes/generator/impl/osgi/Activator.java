@@ -18,6 +18,7 @@ import org.gauntlet.quizzes.generator.defaults.impl.ByWeaknessGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.CategoryPracticeGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.DiagnosticTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.LRUGeneratorImpl;
+import org.gauntlet.quizzes.generator.defaults.impl.NonSATByWeaknessGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.PracticeTestGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.QuizForQAGeneratorImpl;
 import org.gauntlet.quizzes.generator.defaults.impl.SkippedOrIncorrectGeneratorImpl;
@@ -47,6 +48,7 @@ public class Activator extends DependencyActivatorBase {
 						.setRequired(false))
 				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(IUserDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
 				.add(createServiceDependency().setService(LogService.class).setRequired(false)));
 		
 		
@@ -181,6 +183,22 @@ public class Activator extends DependencyActivatorBase {
 				.add(createServiceDependency().setService(LogService.class).setRequired(false))
 	            ;
 		dm.add(component);
+		
+		//--
+		properties = new Properties();
+		properties.put(Constants.GENERATOR_TYPE_PARAM, org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_CODE);
+		component = dm.createComponent()
+				.setInterface(IQuizGeneratorService.class.getName(), properties)
+				.setImplementation(NonSATByWeaknessGeneratorImpl.class)
+				.add(createServiceDependency().setService(IQuizDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IProblemDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(IQuizProblemResponseDAOService.class).setRequired(true))
+				.add(createServiceDependency().setService(LogService.class).setRequired(false))
+	            ;
+		dm.add(component);
+		
+		
+		
 
 		//--
 		properties = new Properties();
