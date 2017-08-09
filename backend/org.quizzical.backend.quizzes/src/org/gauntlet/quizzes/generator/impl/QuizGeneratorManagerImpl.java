@@ -2,8 +2,13 @@ package org.gauntlet.quizzes.generator.impl;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.persistence.NoResultException;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
@@ -12,8 +17,14 @@ import org.gauntlet.problems.api.model.ProblemType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
+import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
+import org.quizzical.backend.analytics.api.model.TestCategoryRating;
+import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
 import org.gauntlet.quizzes.api.dao.IQuizDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.generator.api.Constants;
@@ -35,6 +46,10 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 	
 	private volatile IProblemDAOService problemService;
 	
+	private volatile ITestDesignTemplateContentTypeDAOService testDesignTemplateContentTypeDAOService;
+	
+	private volatile ITestUserAnalyticsDAOService testUserAnalyticsDAOService;
+	
     private Map<String, ServiceReference> references = new HashMap<String, ServiceReference>();
 	
 	protected void addGenerator(final ServiceReference ref) {
@@ -53,7 +68,6 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		//refresh user
 		user = userService.getByEmail(user.getEmailAddress());
 		
-		
 		//
 		ProblemType problemType = null;
 		try {
@@ -63,7 +77,12 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		
 		ServiceReference generatorRef = references.get(params.getGeneratorType());
 		if (problemType != null && problemType.getNonSAT()) {
-			generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_CODE);
+			if (user.getMakeNextRunUnpracticed()) {
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_UNPRACTICED_CODE);
+			}
+			else {
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_WEAKNESS_CODE);
+			}
 		}
 		else {
 			if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 

@@ -1,6 +1,7 @@
 package org.quizzical.backend.gogo.service;
 
 import org.apache.felix.service.command.Descriptor;
+import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.lessons.api.dao.ILessonsDAOService;
 import org.gauntlet.lessons.api.model.UserLesson;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
@@ -10,14 +11,20 @@ import org.gauntlet.quizzes.api.dao.IQuizSubmissionDAOService;
 import org.gauntlet.quizzes.api.model.Quiz;
 import org.gauntlet.quizzes.api.model.QuizSubmission;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
+import org.quizzical.backend.analytics.api.model.TestCategoryAttempt;
+import org.quizzical.backend.analytics.api.model.TestCategoryRating;
 import org.quizzical.backend.analytics.api.model.TestUserAnalytics;
 import org.quizzical.backend.scheduler.api.IQuizTakerReminderService;
 import org.quizzical.backend.security.authorization.api.dao.user.IUserDAOService;
 import org.quizzical.backend.security.authorization.api.model.user.User;
+import org.quizzical.backend.testdesign.api.dao.ITestDesignTemplateContentTypeDAOService;
+import org.quizzical.backend.testdesign.api.model.TestDesignTemplateContentSubType;
 
 import static org.quizzical.backend.gogo.service.ServiceUtil.createServiceFromServiceType;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -278,12 +285,42 @@ public class UserCommands {
     	if (user == null)
     		return "User ("+userId+") not found";
     	
-		//Mark as ready to baseline
-		user.setReadyForReset(true);
-		svc.update(user);
+    	ensureAnalyticsBaseline(user);
     	
-    	return String.format("User %s marked ready for baseline successful",userId);
+    	return String.format("User %s baselined successful",userId);
     }
+	private static void ensureAnalyticsBaseline(User user) throws Exception {
+		ITestDesignTemplateContentTypeDAOService testDesignTemplateContentTypeDAOService = (ITestDesignTemplateContentTypeDAOService)createServiceFromServiceType(ITestDesignTemplateContentTypeDAOService.class);
+
+		ITestUserAnalyticsDAOService testUserAnalyticsDAOService = (ITestUserAnalyticsDAOService)createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
+		//Ensure base lining
+		TestUserAnalytics tua = new TestUserAnalytics( user.getId());
+		tua = testUserAnalyticsDAOService.getByName(tua.getName());
+		
+		final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
+		TestCategoryRating rating = null;
+		int cnt = 1;
+		for (TestDesignTemplateContentSubType subType : subTypes) {
+			System.out.println("#####"+subType.getCode());
+			try {
+				rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
+			} catch (Exception e) {
+			}
+			if (rating == null) {
+				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
+				if (subType.getCode().contains("SATII"))
+					System.out.println("!!!!!"+subType.getCode());
+				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
+				rating.setRating(0);
+				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false,-1);
+				rating.setRatingSubmissions(Collections.emptyList());
+				tua.addRating(rating);
+			}
+		}
+		
+		testUserAnalyticsDAOService.update(tua);
+	}
+
     
     @Descriptor("Deletes lesson ")
     public static String delana(@Descriptor("ANA ID") Long anaId, @Descriptor("Admin userId") String adminUserId, @Descriptor("Admin password") String adminPassword) throws Exception {

@@ -51,6 +51,8 @@ public interface IProblemDAOService extends IBaseService {
 	
 	List<Problem> findAllBySource(Long sourceId) throws ApplicationException;
 	
+	public List<Problem> findAllByType(Long typeId) throws ApplicationException;
+	
 	public int countByCategory(Long categoryId) throws ApplicationException;	
 	
 	public List<Problem> findByDifficultyAndCategoryNotInIn(Long problemTypeId, final Boolean requiresCalc, final Long difficultyId, final Long categoryId, final Collection ids, final Integer randomOffset, final Integer limit)  throws ApplicationException;
@@ -98,6 +100,8 @@ public interface IProblemDAOService extends IBaseService {
 	
 	//ProblemCategory
 	public List<ProblemCategory> findAllProblemCategories(int start, int end) throws ApplicationException;
+	
+	public List<ProblemCategory> findAllProblemCategoriesByProblemType(Long problemTypeId) throws ApplicationException;
 	
 	public long countAllProblemCategories() throws ApplicationException;
 	

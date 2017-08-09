@@ -1,5 +1,6 @@
 package org.quizzical.backend.analytics.api.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ public interface ITestUserAnalyticsDAOService {
 
 	List<TestCategoryRating> findWeakestCategories(User user, Integer categoryLimit) throws ApplicationException;
 
+	public List<TestCategoryRating> findWeakestCategories(final User user, final Collection onlyInNames, final Integer categoryLimit) throws ApplicationException;
+	
 	List<TestCategoryRating> findWeakestCategoriesLowerThanRating(User user, Integer startRatingCutoffIncl,
 			Integer endRatingCutoffIncl) throws ApplicationException;
 

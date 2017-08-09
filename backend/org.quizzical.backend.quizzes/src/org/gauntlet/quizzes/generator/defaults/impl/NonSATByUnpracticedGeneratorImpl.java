@@ -25,7 +25,7 @@ import org.gauntlet.quizzes.api.model.QuizType;
 import org.gauntlet.quizzes.generator.api.IQuizGeneratorService;
 import org.gauntlet.quizzes.generator.api.model.QuizGenerationParameters;
 
-public class UnpracticedGeneratorImpl implements IQuizGeneratorService { 
+public class NonSATByUnpracticedGeneratorImpl implements IQuizGeneratorService { 
 	private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -43,16 +43,16 @@ public class UnpracticedGeneratorImpl implements IQuizGeneratorService {
 	public Quiz generate(User user,  Long problemTypeId, QuizGenerationParameters params) throws ApplicationException {
 		
 		final QuizType quizType = quizDAOService.provideQuizType(new QuizType(
-				Constants.QUIZ_TYPE_UNPRACTICED_CODE,
-				Constants.QUIZ_TYPE_UNPRACTICED_NAME));
+				Constants.QUIZ_TYPE_NON_SAT_UNPRACTICED_CODE,
+				Constants.QUIZ_TYPE_NON_SAT_UNPRACTICED__NAME));
 		final String quizCode = String.format(
-				"unpracticed-%s-%d-%d",
+				"non-sat-%s-%d-%d",
 				params.getGeneratorType(),
 				params.getQuizSize(),
 				System.currentTimeMillis());
 		final Date quizDateTime = Calendar.getInstance().getTime();
 		final String quizName = String.format(
-				"Unpracticed at %s on %s",
+				"Non SAT at %s on %s",
 				timeFormat.format(quizDateTime),
 				dateFormat.format(quizDateTime));
 		

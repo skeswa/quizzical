@@ -62,7 +62,7 @@ public class QuizProblemResponseDAOImpl extends BaseServiceImpl implements IQuiz
 	
 	
 	@Override
-	public List<Long> getAllUserPracticedProblemIds(Long problemTypeId, User user) throws ApplicationException {
+	public List<Long> getAllUserPracticedProblemIds(User user) throws ApplicationException {
 		List<Long> res;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();

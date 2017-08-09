@@ -62,10 +62,8 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 
 	@Override
 	public QuizSubmission score(User user, QuizSubmission quizSubmission, boolean ensureBaline) throws ApplicationException, NoSuchModelException {
-		TestUserAnalytics tua = null;
-		//Ensure baseline
-		if (ensureBaline) 
-			tua  = ensureAnalyticsBaseline(user);
+		TestUserAnalytics tua = new TestUserAnalytics( user.getId());
+		tua = testUserAnalyticsDAOService.getByName(tua.getName());
 		
 		
 		final Map<Long,TestCategoryRating> categoryRatingsMap = new ConcurrentHashMap<>();
@@ -171,42 +169,6 @@ public class QuizScoringServiceImpl implements IQuizScoringService {
 		testUserAnalyticsDAOService.updateRatings(tua.getCode(),categoryRatingsMap);
     	
 		return quizSubmission;
-	}
-
-
-	private TestUserAnalytics ensureAnalyticsBaseline(User user) throws ApplicationException {
-		//Ensure base lining
-		TestUserAnalytics tua = new TestUserAnalytics( user.getId());
-		tua = testUserAnalyticsDAOService.getByName(tua.getName());
-		
-		final List<TestDesignTemplateContentSubType> subTypes = testDesignTemplateContentTypeDAOService.findAllContentSubTypes();
-		TestCategoryRating rating = null;
-		int cnt = 1;
-		for (TestDesignTemplateContentSubType subType : subTypes) {
-			try {
-				rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
-			} catch(NoResultException e) {			
-			} catch (Exception e) {
-			}
-			if (rating == null) {
-				final String description = String.format("Rating(%s) on Category %s", user.getCode(),subType.getCode());
-				rating = new TestCategoryRating(subType.getId(), subType.getCode(), description);
-				rating.setRating(0);
-				TestCategoryAttempt attempt = new TestCategoryAttempt(-1L, -1L,new Date(),false,false,-1);
-				rating.setRatingSubmissions(Collections.emptyList());
-				tua.addRating(rating);
-			}
-		}
-		
-		testUserAnalyticsDAOService.update(tua);
-		
-		
-		if (user.getReadyForReset()) {
-			user.setReadyForReset(false);
-			userService.update(user);
-		}
-		
-		return tua;
 	}
 
 

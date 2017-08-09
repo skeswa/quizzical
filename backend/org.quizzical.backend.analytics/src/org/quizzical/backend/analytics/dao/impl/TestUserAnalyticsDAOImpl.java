@@ -1,6 +1,7 @@
 package org.quizzical.backend.analytics.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -95,6 +96,51 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 		}
 		return resultList;		
 	}
+	
+	@Override 
+	public List<TestCategoryRating> findWeakestCategories(final User user, final Collection onlyInNames, final Integer categoryLimit) throws ApplicationException {
+		List<TestCategoryRating> resultList = null;
+		try {
+			//--
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
+			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//user
+			ParameterExpression<Long> userIdParam = builder.parameter(Long.class);
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
+			
+			query.select(rootEntity).where(builder.equal(rootEntity.get("analytics").get("userId"),userIdParam));
+			
+			query.select(rootEntity).select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("analytics").get("userId"),userIdParam),
+					rootEntity.get("name").in(pIn)
+					));
+			
+			
+			pes.put(userIdParam, user.getId());
+			pes.put(pIn, onlyInNames);
+			
+			
+			query.orderBy(builder.asc(rootEntity.get("rating")));
+			
+			int adjustedLimit = generateAdjustedLimit(categoryLimit);
+			
+			if (adjustedLimit < 0) //No limit
+				resultList = findWithDynamicQueryAndParams(query,pes);
+			else
+				resultList = findWithDynamicQueryAndParams(query,pes,0,adjustedLimit);
+			
+			
+			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}	
 	
 	@Override 
 	public List<TestCategoryRating> findWeakestCategoriesLowerThanRating(final User user, final Integer startRatingCutoffIncl, final Integer endRatingCutoffIncl) throws ApplicationException {
@@ -260,7 +306,8 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 
 	@Override
 	public TestUserAnalytics update(TestUserAnalytics record) throws ApplicationException {
-		JPABaseEntity res = super.update(JPAEntityUtil.copy(record, JPATestUserAnalytics.class));
+		JPATestUserAnalytics jpaEntity = toJPAEntity(record);
+		JPABaseEntity res = super.update(jpaEntity);
 		TestUserAnalytics dto = JPAEntityUtil.copy(res, TestUserAnalytics.class);
 		return dto;	
 	}	

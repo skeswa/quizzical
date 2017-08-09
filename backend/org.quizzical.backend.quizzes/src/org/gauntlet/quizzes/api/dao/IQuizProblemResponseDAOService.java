@@ -25,5 +25,5 @@ public interface IQuizProblemResponseDAOService extends IBaseService {
 
 	public List<Long> getAllUserCorrectAndWithinTimeProblemIds(User user) throws ApplicationException;
 
-	List<Long> getAllUserPracticedProblemIds(Long problemTypeId, User user) throws ApplicationException;
+	List<Long> getAllUserPracticedProblemIds(User user) throws ApplicationException;
 }

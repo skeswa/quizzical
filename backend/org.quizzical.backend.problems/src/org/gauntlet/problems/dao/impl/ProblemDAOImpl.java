@@ -283,6 +283,29 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	}	
 	
 	@Override 
+	public List<Problem> findAllByType(Long typeId) throws ApplicationException {
+		List<Problem> resultList = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPAProblem> query = builder.createQuery(JPAProblem.class);
+			Root<JPAProblem> rootEntity = query.from(JPAProblem.class);
+			
+			ParameterExpression<Long> p = builder.parameter(Long.class);
+			query.select(rootEntity).where(builder.equal(rootEntity.get("type").get("id"),p));
+
+			Map<ParameterExpression,Object> pes = new HashMap<>();
+			pes.put(p, typeId);
+			
+			resultList = findWithDynamicQueryAndParams(query,pes);
+			resultList = JPAEntityUtil.copy(resultList, Problem.class);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return resultList;		
+	}		
+	
+	@Override 
 	public List<Problem> findByDifficulty(Long difficultyId, int start, int end) throws ApplicationException {
 		List<Problem> resultList = null;
 		try {
@@ -950,6 +973,24 @@ public class ProblemDAOImpl extends BaseServiceImpl implements IProblemDAOServic
 	public void removeProblemCategoryLesson(Long categoryLessonId) throws ApplicationException, NoSuchModelException {
 		JPAProblemCategoryLesson jpaEntity = (JPAProblemCategoryLesson) super.findByPrimaryKey(JPAProblemCategoryLesson.class, categoryLessonId);
 		super.remove(jpaEntity);
+	}
+	
+	@Override 
+	public List<ProblemCategory> findAllProblemCategoriesByProblemType(Long problemTypeId) throws ApplicationException {
+		List<Problem> problems = findAllByType(problemTypeId);
+		
+		
+		Map<Long,ProblemCategory> result = new HashMap<>();
+		try {
+			problems.stream()
+				.forEach(p -> {
+					result.put(p.getCategory().getId(), JPAEntityUtil.copy(p.getCategory(), ProblemCategory.class));
+				});
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return new ArrayList(result.values());		
 	}
 	
 	//ProblemSource
