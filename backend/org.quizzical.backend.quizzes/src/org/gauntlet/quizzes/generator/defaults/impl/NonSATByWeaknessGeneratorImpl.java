@@ -104,6 +104,7 @@ public class NonSATByWeaknessGeneratorImpl implements IQuizGeneratorService {
 					}
 	    			return (String)null;
 		    	})
+	    		.limit(2)
 	    		.collect(Collectors.toList());
 		
 		final Date quizDateTime = Calendar.getInstance().getTime();
@@ -146,71 +147,28 @@ public class NonSATByWeaknessGeneratorImpl implements IQuizGeneratorService {
 		    		.collect(Collectors.toList());
 			
 			//-- Derive TestDesign based on Cat Weakness/Performance
-			final TestDesignTemplate tdTemplate = testDesignTemplateGeneratorService.generateByCategoriesAndTestSize(user, ratingCatCodes, params.getQuizSize());
+			final TestDesignTemplate tdTemplate = testDesignTemplateGeneratorService.generateByCategoriesAndTestSize(user, ratingCatCodes, 4);
 			
 			TestDesignTemplateSection nonCalSec = null;
 			TestDesignTemplateSection calSec = null;
 
 			final List<TestDesignTemplateSection> sections = tdTemplate.getOrderedSections();
-			nonCalSec = sections.get(0);
 			calSec = sections.get(1);
-			
-			//=== NonCalc
-			nonCalSec.getOrderedItems()
-					.stream()
-	        		.forEach(item -> {
-	        			QuizProblem qp = null;
-	        			try {
-							ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
-							ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
-							
-							final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
-							long count = problemDAOService.countByCategoryNotIn(cat.getId(), allExcludedIds);
-							if (count < 1)
-								throw new RuntimeException(String.format("Test Item %s cannot match a problem with reqCalc=%b cat=%s, diff=%s not in [%s]",item.getCode(),false,cat.getCode(),diff.getCode(),includedProblemIds.keySet()));
-							int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
-							
-							final Problem problem = fuzzyMatchProblem(problemTypeId, false,includedProblemIds, item, cat, diff, randomOffset);
-							
-							if (problem != null) {
-								includedProblemIds.put(problem.getId(),problem);
-								qp = new QuizProblem(
-										quizCode,
-										counter.incr(),
-										item.getSection().getOrdinal(),
-										counterWithInfoCards.incr(),
-										problem.getId(),
-										problem);
-							}
-						} catch (Exception e) {
-							StringWriter sw = new StringWriter();
-							e.printStackTrace(new PrintWriter(sw));
-							String stacktrace = sw.toString();
-							System.out.println(e.getMessage());
-							//logger.log(LogService.LOG_ERROR,stacktrace);
-							//throw new RuntimeException(String.format("Error processing TestDesign item %s",item.getCode()));
-						}
-	        			
-	        			if (qp != null)
-	        				unorderedQuizProblems.add(qp);
-	    	    	});
-		
 			
 			
 			//=== Calc
 			calSec.getOrderedItems()
 					.stream()
+					.limit(params.getQuizSize()-unorderedQuizProblems.size())
 	        		.forEach(item -> {
 	        			QuizProblem qp = null;
 	        			long count = 0;
 							try {
 								final ProblemCategory cat = problemDAOService.getProblemCategoryByCode(item.getContentSubType().getCode());
-								final ProblemDifficulty diff = problemDAOService.getProblemDifficultyByCode(GeneratorUtil.getDifficultyCode(item.getDifficultyType()));
-								
 								final List<Long> allExcludedIds = Stream.concat(excludeIds.stream(), includedProblemIds.keySet().stream()).collect(Collectors.toList());
 								count = problemDAOService.countByCategoryNotIn(cat.getId(), allExcludedIds);								int randomOffset = (int)GeneratorUtil.generateRandowOffset(count);
 								
-								final Problem problem = fuzzyMatchProblem(problemTypeId, true,includedProblemIds, item, cat, diff, randomOffset);
+								final Problem problem = fuzzyMatchProblem(problemTypeId, true,includedProblemIds, item, cat, randomOffset);
 								
 								if (problem != null) {
 									includedProblemIds.put(problem.getId(),problem);
@@ -272,7 +230,7 @@ public class NonSATByWeaknessGeneratorImpl implements IQuizGeneratorService {
 	}
 
 	private Problem fuzzyMatchProblem(Long problemTypeId, Boolean allowsCalc, Map<Long, Problem> includedProblemIds, TestDesignTemplateItem item,
-			ProblemCategory cat, ProblemDifficulty diff, int randomOffset) throws ApplicationException {
+			ProblemCategory cat, int randomOffset) throws ApplicationException {
 		
 		List<Problem> problems = problemDAOService.findByCategoryNotIn(cat.getId(),new ArrayList<Long>(includedProblemIds.keySet()),randomOffset,1);
 		if (problems.iterator().hasNext()) {

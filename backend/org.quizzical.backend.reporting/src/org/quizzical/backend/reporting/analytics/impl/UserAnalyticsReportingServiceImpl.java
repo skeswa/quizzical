@@ -63,14 +63,20 @@ public class UserAnalyticsReportingServiceImpl implements IUserAnalyticsReportin
 		
 		Map<String,LessonResources> lessonMap = new HashMap<>();
 		
+		List<ProblemCategory> cats = problemService.findAllProblemCategoriesByProblemType(user.getCurrentProblemTypeId());
+		List<String> catNames = cats.stream()
+			.map(c -> {
+				return c.getCode();
+			}).collect(Collectors.toList());
 		
-		final List<TestCategoryRating> excellentRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_EXCELLENT, 100);
+		
+		final List<TestCategoryRating> excellentRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, catNames, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_EXCELLENT, 100);
 		generateLessons(lessonMap, excellentRatings);
-		final List<TestCategoryRating> goodRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_GOOD, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_EXCELLENT-1);
+		final List<TestCategoryRating> goodRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, catNames, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_GOOD, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_EXCELLENT-1);
 		generateLessons(lessonMap, goodRatings);
-		final List<TestCategoryRating> needImprovRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_GOOD-1);
+		final List<TestCategoryRating> needImprovRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, catNames, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_GOOD-1);
 		generateLessons(lessonMap, needImprovRatings);
-		List<TestCategoryRating> doNotMeetRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user, 0, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING-1);
+		List<TestCategoryRating> doNotMeetRatings = userAnalyticsService.findWeakestCategoriesLowerThanRating(user,catNames,  0, QUIZ_RATING_PERFORMANCE_RATING_THRESHOLD_IMPROVING-1);
 		generateLessons(lessonMap, doNotMeetRatings);
 		
 		final List<TestCategoryRating> notStartedRatings = doNotMeetRatings.stream()

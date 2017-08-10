@@ -143,7 +143,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}	
 	
 	@Override 
-	public List<TestCategoryRating> findWeakestCategoriesLowerThanRating(final User user, final Integer startRatingCutoffIncl, final Integer endRatingCutoffIncl) throws ApplicationException {
+	public List<TestCategoryRating> findWeakestCategoriesLowerThanRating(final User user, final Collection<String> catNames, final Integer startRatingCutoffIncl, final Integer endRatingCutoffIncl) throws ApplicationException {
 		List<TestCategoryRating> resultList = null;
 		try {
 			CriteriaBuilder builder = getEm().getCriteriaBuilder();
@@ -151,6 +151,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			ParameterExpression<Long> userIdParam = builder.parameter(Long.class);
 			ParameterExpression<Integer> startRatingCutoffInclExpr = builder.parameter(Integer.class);
 			ParameterExpression<Integer> endRatingCutoffInclExpr = builder.parameter(Integer.class);
+			ParameterExpression<Collection> pIn = builder.parameter(Collection.class);
 
 			CriteriaBuilder qb =  getEm().getCriteriaBuilder();
 			CriteriaQuery<JPATestCategoryRating> cq = qb.createQuery(JPATestCategoryRating.class);
@@ -158,8 +159,9 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			cq.select(rootEntity).where(builder.and(
 					builder.equal(rootEntity.get("analytics").get("userId"),userIdParam),
 					builder.ge(rootEntity.get("rating"),startRatingCutoffInclExpr),
-					builder.le(rootEntity.get("rating"),endRatingCutoffInclExpr
-							)));
+					builder.le(rootEntity.get("rating"),endRatingCutoffInclExpr),
+					rootEntity.get("name").in(pIn)
+					));
 			
 			cq.orderBy(builder.asc(rootEntity.get("rating")));
 			
@@ -167,6 +169,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			typedQuery.setParameter(userIdParam, user.getId());
 			typedQuery.setParameter(startRatingCutoffInclExpr, startRatingCutoffIncl);
 			typedQuery.setParameter(endRatingCutoffInclExpr, endRatingCutoffIncl);
+			typedQuery.setParameter(pIn, catNames);
 			
 			resultList = typedQuery.getResultList();
 			resultList = JPAEntityUtil.copy(resultList, TestCategoryRating.class);
