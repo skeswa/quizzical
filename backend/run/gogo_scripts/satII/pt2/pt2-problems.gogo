@@ -47,7 +47,7 @@ prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${cat8param} ${typeIdParam}  ${
 prblm:add ${sourceIdParam} ${sourcePageParam} 37 ${cat8param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q37.png" "${ptdir}/a37.png" D
 prblm:add ${sourceIdParam} ${sourcePageParam} 38 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q38.png" "${ptdir}/a38.png" B
 prblm:add ${sourceIdParam} ${sourcePageParam} 39 ${cat20param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q39.png" "${ptdir}/a39.png" C
-prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${cat40param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q40.png" "${ptdir}/a40.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${cat9param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q40.png" "${ptdir}/a40.png" E
 #
 prblm:add ${sourceIdParam} ${sourcePageParam} 41 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q41.png" "${ptdir}/a41.png" D
 prblm:add ${sourceIdParam} ${sourcePageParam} 42 ${cat22param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q42.png" "${ptdir}/a42.png" B

@@ -3,7 +3,6 @@ package org.quizzical.backend.analytics.dao.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,10 +23,7 @@ import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.core.commons.util.Validator;
 import org.gauntlet.core.commons.util.jpa.JPAEntityUtil;
 import org.gauntlet.core.model.JPABaseEntity;
-import org.gauntlet.core.service.impl.AttrPair;
 import org.gauntlet.core.service.impl.BaseServiceImpl;
-import org.gauntlet.problems.api.dao.IProblemDAOService;
-import org.gauntlet.problems.model.jpa.JPAProblem;
 import org.osgi.service.log.LogService;
 import org.quizzical.backend.analytics.api.dao.ITestUserAnalyticsDAOService;
 import org.quizzical.backend.analytics.api.model.TestCategoryRating;
@@ -323,6 +320,13 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	}
 	
 	@Override
+	public TestCategoryRating deleteRating(Long id) throws ApplicationException, NoSuchModelException {
+		JPATestCategoryRating jpaEntity = (JPATestCategoryRating) super.findByPrimaryKey(JPATestCategoryRating.class, id);
+		super.remove(jpaEntity);
+		return JPAEntityUtil.copy(jpaEntity, TestCategoryRating.class);
+	}
+	
+	@Override
 	public TestUserAnalytics getByCode(String code) throws ApplicationException {
 		JPATestUserAnalytics jpaEntity = getByCode_(code);
 		return JPAEntityUtil.copy(jpaEntity, TestUserAnalytics.class);
@@ -368,7 +372,47 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 			pes.put(analyticsIdParam, analyticsId);
 			pes.put(nameParam, name);
 			
-			result = JPAEntityUtil.copy(findOneWithDynamicQueryAndParams(query,pes), TestCategoryRating.class);
+			try {
+				result = JPAEntityUtil.copy(findOneWithDynamicQueryAndParams(query,pes), TestCategoryRating.class);
+			} catch (NonUniqueResultException e) {
+				throw processException(e);
+			}
+		}
+		catch (NoResultException e) {
+			//Just not found
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		return result;		
+	}
+	
+	@Override
+	public List<TestCategoryRating> getCategoryRatingsByName(Long analyticsId, String name) throws ApplicationException {
+		List<TestCategoryRating> result = null;
+		try {
+			CriteriaBuilder builder = getEm().getCriteriaBuilder();
+			CriteriaQuery<JPATestCategoryRating> query = builder.createQuery(JPATestCategoryRating.class);
+			Root<JPATestCategoryRating> rootEntity = query.from(JPATestCategoryRating.class);
+			
+			final Map<ParameterExpression,Object> pes = new HashMap<>();
+			
+			//user
+			ParameterExpression<Long> analyticsIdParam = builder.parameter(Long.class);
+			ParameterExpression<String> nameParam = builder.parameter(String.class);
+			query.select(rootEntity).where(builder.and(
+					builder.equal(rootEntity.get("analytics").get("id"),analyticsIdParam),
+					builder.equal(rootEntity.get("name"),nameParam))
+					);
+			pes.put(analyticsIdParam, analyticsId);
+			pes.put(nameParam, name);
+			
+			try {
+				List<JPATestCategoryRating> findWithDynamicQueryAndParams = findWithDynamicQueryAndParams(query,pes);
+				result = JPAEntityUtil.copy(findWithDynamicQueryAndParams, TestCategoryRating.class);
+			} catch (NonUniqueResultException e) {
+				throw processException(e);
+			}
 		}
 		catch (NoResultException e) {
 			//Just not found
@@ -388,7 +432,7 @@ public class TestUserAnalyticsDAOImpl extends BaseServiceImpl implements ITestUs
 	
 	@Override
 	public void updateRatings(String tuaCode, Map<Long, TestCategoryRating> newCategoryRatingsMap) throws ApplicationException {
-		JPATestUserAnalytics analytics = (JPATestUserAnalytics) getByCode_(tuaCode);
+		JPATestUserAnalytics analytics = getByCode_(tuaCode);
 		
 		for (JPATestCategoryRating rating : analytics.getRatings()) {
 			final TestCategoryRating newRating = newCategoryRatingsMap.get(rating.getCategoryId());

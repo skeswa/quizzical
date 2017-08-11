@@ -57,10 +57,20 @@ addlesson ${lessonid} mandisakeswa999@gmail.com
 
 
 
-
-
-
-
+lessonid = (lssn:getid "Chapter 22: Probability")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 10: Parametric Equations")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 13: Conic Sections")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 19: Sequences and Series")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 8: Exponential and Logarithmic Functions")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 7: Trigonometric Functions")
+addlesson ${lessonid} mandisakeswa999@gmail.com
+lessonid = (lssn:getid "Chapter 1: Functions")
+addlesson ${lessonid} mandisakeswa999@gmail.com
 
 
 

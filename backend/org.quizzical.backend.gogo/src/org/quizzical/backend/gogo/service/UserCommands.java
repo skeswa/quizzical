@@ -278,12 +278,23 @@ public class UserCommands {
        	return String.format("User reset for %s was successful",userId);
     }
     
+    
+    
     @Descriptor("Baseline user")
     public static String baseline(@Descriptor("Email address as userid") String userId) throws Exception {
     	IUserDAOService svc = (IUserDAOService)createServiceFromServiceType(IUserDAOService.class);
     	User user = svc.getUserByEmail(userId);
     	if (user == null)
     		return "User ("+userId+") not found";
+    	
+    	//Delete UA's
+    	ITestUserAnalyticsDAOService uasvc = (ITestUserAnalyticsDAOService)createServiceFromServiceType(ITestUserAnalyticsDAOService.class);
+    	final String code_ = String.format("User(%d) analytics", user.getId());
+		TestUserAnalytics tua = uasvc.getByCode(code_);
+		if (tua != null)
+			uasvc.delete(tua.getId());
+		tua = new TestUserAnalytics(user.getId());
+		tua = uasvc.provide(tua);
     	
     	ensureAnalyticsBaseline(user);
     	
@@ -303,7 +314,24 @@ public class UserCommands {
 		for (TestDesignTemplateContentSubType subType : subTypes) {
 			System.out.println("#####"+subType.getCode());
 			try {
-				rating = testUserAnalyticsDAOService.getCategoryRatingByName(tua.getId(), subType.getCode());
+				rating = null;
+				List<TestCategoryRating> ratings_ = testUserAnalyticsDAOService.getCategoryRatingsByName(tua.getId(), subType.getCode());
+				if (ratings_.size() != 0) {
+					if (ratings_.size() == 1) {
+						rating = ratings_.get(0);
+					}
+					else {
+						
+						ratings_.stream().forEach(r -> {
+							try {
+								testUserAnalyticsDAOService.deleteRating(r.getId());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						});
+					}
+				}
 			} catch (Exception e) {
 			}
 			if (rating == null) {

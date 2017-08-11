@@ -24,6 +24,8 @@ public interface ITestUserAnalyticsDAOService {
 	TestUserAnalytics update(TestUserAnalytics record) throws ApplicationException;
 
 	TestUserAnalytics delete(Long id) throws ApplicationException, NoSuchModelException;
+	
+	TestCategoryRating deleteRating(Long id) throws ApplicationException, NoSuchModelException;
 
 	TestUserAnalytics getByCode(String code) throws ApplicationException;
 
@@ -42,4 +44,6 @@ public interface ITestUserAnalyticsDAOService {
 
 	//--
 	public TestCategoryRating getCategoryRatingByName(Long analyticsId, String code) throws ApplicationException;
+	
+	public List<TestCategoryRating> getCategoryRatingsByName(Long analyticsId, String name) throws ApplicationException;
 }

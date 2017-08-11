@@ -7,12 +7,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.NoResultException;
 
 import org.gauntlet.core.api.ApplicationException;
 import org.gauntlet.core.api.dao.NoSuchModelException;
 import org.gauntlet.problems.api.dao.IProblemDAOService;
+import org.gauntlet.problems.api.model.ProblemCategory;
 import org.gauntlet.problems.api.model.ProblemType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -76,13 +78,14 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		}
 		
 		ServiceReference generatorRef = references.get(params.getGeneratorType());
-		if (problemType != null && problemType.getNonSAT()) {
-			if (user.getMakeNextRunUnpracticed()) {
+		if (params.getGeneratorType().equals(Constants.GENERATOR_TYPE_BY_SOURCE)) {
+			generatorRef = references.get(Constants.GENERATOR_TYPE_BY_SOURCE);
+		}
+		else if (problemType != null && problemType.getNonSAT() || user.getMakeNextRunUnpracticed()) {
+			if (!categoriesOfWeaknessExists(user) || user.getMakeNextRunUnpracticed())
 				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_UNPRACTICED_CODE);
-			}
-			else {
-				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_WEAKNESS_CODE);
-			}
+		   else 
+			   generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_WEAKNESS_CODE);
 		}
 		else {
 			if (!(user.getQa() || user.getAdmin()) && (!quizService.userHasTakenDiagnoticTest(user) && 
@@ -141,5 +144,17 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 			
 		
 		return quiz;
+	}
+
+	private boolean categoriesOfWeaknessExists(User user) throws ApplicationException {
+		List<ProblemCategory> weakCats = problemService.findAllProblemCategoriesByProblemType(user.getCurrentProblemTypeId());
+		List<String> catNames = weakCats.stream()
+				.map(c -> {
+					return c.getName();
+				})
+				.collect(Collectors.toList());
+				
+		List<TestCategoryRating> performanceByCategories = testUserAnalyticsDAOService.findWeakestCategories(user, catNames, -1);
+		return !performanceByCategories.isEmpty();
 	}
 }
