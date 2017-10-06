@@ -1,0 +1,61 @@
+#Params
+ptdir = "/Users/mduduzikeswa/Documents/Personal/Mandi/SatII/pt3"
+sourceIdParam = (prblm:addsource "Barrons_SATII_Math_PracticeTest3")
+sourcePageParam = 258
+typeIdParam = (prblm:addtype  "SAT2MATH")
+difficultyIdParam = (prblm:adddiff "Medium")
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 1 ${cat2param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q1.png" "${ptdir}/a1.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 2 ${cat4param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q2.png" "${ptdir}/a2.png" C 
+prblm:add ${sourceIdParam} ${sourcePageParam} 3 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q3.png" "${ptdir}/a3.png"  C
+prblm:add ${sourceIdParam} ${sourcePageParam} 4 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q4.png" "${ptdir}/a4.png"  A
+prblm:add ${sourceIdParam} ${sourcePageParam} 5 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q5.png" "${ptdir}/a5.png"  C
+prblm:add ${sourceIdParam} ${sourcePageParam} 6 ${cat15param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q6.png" "${ptdir}/a6.png"  B
+prblm:add ${sourceIdParam} ${sourcePageParam} 7 ${cat3param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q7.png" "${ptdir}/a7.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 8 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q8.png" "${ptdir}/a8.png"  C
+prblm:add ${sourceIdParam} ${sourcePageParam} 9 ${cat12param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q9.png" "${ptdir}/a9.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 10 ${cat9param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q10.png" "${ptdir}/a10.png" E 
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 11 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q11.png" "${ptdir}/a11.png"  C
+prblm:add ${sourceIdParam} ${sourcePageParam} 12 ${cat7param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q12.png" "${ptdir}/a12.png"  A
+prblm:add ${sourceIdParam} ${sourcePageParam} 13 ${cat11param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q13.png" "${ptdir}/a13.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 14 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q14.png" "${ptdir}/a14.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 15 ${cat4param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q15.png" "${ptdir}/a15.png"  A
+prblm:add ${sourceIdParam} ${sourcePageParam} 16 ${cat20param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q16.png" "${ptdir}/a16.png"  C
+prblm:add ${sourceIdParam} ${sourcePageParam} 17 ${cat16param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q17.png" "${ptdir}/a17.png"  B
+prblm:add ${sourceIdParam} ${sourcePageParam} 18 ${cat19param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q18.png" "${ptdir}/a18.png"  B
+prblm:add ${sourceIdParam} ${sourcePageParam} 19 ${cat10param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q19.png" "${ptdir}/a19.png"  E
+prblm:add ${sourceIdParam} ${sourcePageParam} 20 ${cat1param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q20.png" "${ptdir}/a20.png" B
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 21 ${cat1param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q21.png" "${ptdir}/a21.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 22 ${cat6param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q22.png" "${ptdir}/a22.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 23 ${cat7param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q23.png" "${ptdir}/a23.png"  E
+prblm:add ${sourceIdParam} ${sourcePageParam} 24 ${cat19param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q24.png" "${ptdir}/a24.png"  A
+prblm:add ${sourceIdParam} ${sourcePageParam} 25 ${cat17param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q25.png" "${ptdir}/a25.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 26 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q26.png" "${ptdir}/a26.png"  D
+prblm:add ${sourceIdParam} ${sourcePageParam} 27 ${cat15param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q27.png" "${ptdir}/a27.png"  B
+prblm:add ${sourceIdParam} ${sourcePageParam} 28 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q28.png" "${ptdir}/a28.png" B
+prblm:add ${sourceIdParam} ${sourcePageParam} 29 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q29.png" "${ptdir}/a29.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 30 ${cat9param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q30.png" "${ptdir}/a30.png" E
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 31 ${cat8param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q31.png" "${ptdir}/a31.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 32 ${cat4param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q32.png" "${ptdir}/a32.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 33 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q33.png" "${ptdir}/a33.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 34 ${cat19param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q34.png" "${ptdir}/a34.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 35 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q35.png" "${ptdir}/a35.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 36 ${cat16param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q36.png" "${ptdir}/a36.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 37 ${cat1param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q37.png" "${ptdir}/a37.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 38 ${cat15param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q38.png" "${ptdir}/a38.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 39 ${cat1param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q39.png" "${ptdir}/a39.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 40 ${cat22param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q40.png" "${ptdir}/a40.png" A
+#
+prblm:add ${sourceIdParam} ${sourcePageParam} 41 ${cat1param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q41.png" "${ptdir}/a41.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 42 ${cat4param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q42.png" "${ptdir}/a42.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 43 ${cat6param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q43.png" "${ptdir}/a43.png" C
+prblm:add ${sourceIdParam} ${sourcePageParam} 44 ${cat11param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q44.png" "${ptdir}/a44.png" A
+prblm:add ${sourceIdParam} ${sourcePageParam} 45 ${cat12param} ${typeIdParam}  ${difficultyIdParam} false true "${ptdir}/q45.png" "${ptdir}/a45.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 46 ${cat15param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q46.png" "${ptdir}/a46.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 47 ${cat1param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q47.png" "${ptdir}/a47.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 48 ${cat13param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q48.png" "${ptdir}/a48.png" E
+prblm:add ${sourceIdParam} ${sourcePageParam} 49 ${cat22param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q49.png" "${ptdir}/a49.png" D
+prblm:add ${sourceIdParam} ${sourcePageParam} 50 ${cat4param} ${typeIdParam}  ${difficultyIdParam} true true "${ptdir}/q50.png" "${ptdir}/a50.png" A

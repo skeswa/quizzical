@@ -570,7 +570,7 @@ public class QuizSubmissionDAOImpl extends BaseServiceImpl implements IQuizSubmi
 						qs = findByQuizId(user, q.getId());
 					} catch (Exception e) {
 					}
-					if (qs == null)
+					if (qs == null && !Constants.QUIZ_TYPE_LESSON_NAME.equals(q.getQuizType().getName()))
 						result.add(q);
 				});
 		}

@@ -1,0 +1,13 @@
+Bundle-Version: 1.0.0.${tstamp}
+Export-Package: \
+	org.capaxit.imagegenerator,\
+	org.capaxit.imagegenerator.builders,\
+	org.capaxit.imagegenerator.html,\
+	org.capaxit.imagegenerator.html.tags,\
+	org.capaxit.imagegenerator.imagecallbacks,\
+	org.capaxit.imagegenerator.imageexporter,\
+	org.capaxit.imagegenerator.imageexporter.exporters,\
+	org.capaxit.imagegenerator.impl,\
+	org.capaxit.imagegenerator.textalign,\
+	org.capaxit.imagegenerator.util
+Include-Resource:/=resources/capaxit

@@ -1,0 +1,6 @@
+-exportcontents: *
+Bundle-Version: 1.2.1.${tstamp}
+Export-Package: org.ccil.*
+Include-Resource: \
+	@jars/tagsoup-1.2.1.jar
+DynamicImport-Package: *

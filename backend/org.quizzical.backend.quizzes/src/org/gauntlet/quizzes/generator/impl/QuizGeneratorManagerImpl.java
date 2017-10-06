@@ -117,6 +117,12 @@ public class QuizGeneratorManagerImpl implements IQuizGeneratorManagerService {
 		Quiz quiz = null;
 		try {
 			quiz = generator.generate(user,user.getCurrentProblemTypeId(), params);
+			
+			//If no more unpracticed, just generate by weakness
+			if (quiz.getQuestions().size() < 10 && problemType != null && problemType.getNonSAT() && user.getMakeNextRunUnpracticed()) {
+				generatorRef = references.get(org.gauntlet.quizzes.api.model.Constants.QUIZ_TYPE_NON_SAT_WEAKNESS_CODE);
+				quiz = generator.generate(user,user.getCurrentProblemTypeId(), params);
+			}
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));

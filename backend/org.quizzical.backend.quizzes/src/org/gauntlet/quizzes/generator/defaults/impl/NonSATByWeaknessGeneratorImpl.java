@@ -78,7 +78,7 @@ public class NonSATByWeaknessGeneratorImpl implements IQuizGeneratorService {
 		
 		
 		//----
-		performanceByCategories = performanceByCategories.stream()
+/*		performanceByCategories = performanceByCategories.stream()
 				.filter(c -> {
 					//--
 					boolean res = false;
@@ -90,7 +90,7 @@ public class NonSATByWeaknessGeneratorImpl implements IQuizGeneratorService {
 					}
 					return res;
 				})
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());*/
 		
 		//----
 		final List<String> performanceCategoryCodes = performanceByCategories
